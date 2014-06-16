@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<extension key="nz.co.fuzion.omnipaymultiprocessor" type="module">
+  <file>omnipaymultiprocessor</file>
+  <name>FIXME</name>
+  <description>FIXME</description>
+  <license>FIXME</license>
+  <maintainer>
+    <author>FIXME</author>
+    <email>FIXME@example.com</email>
+  </maintainer>
+  <releaseDate>2014-06-16</releaseDate>
+  <version>1.0</version>
+  <develStage>alpha</develStage>
+  <compatibility>
+    <ver>4.2</ver>
+  </compatibility>
+  <comments>This is a new, undeveloped module</comments>
+  <civix>
+    <namespace>CRM/Omnipaymultiprocessor</namespace>
+  </civix>
+</extension>
