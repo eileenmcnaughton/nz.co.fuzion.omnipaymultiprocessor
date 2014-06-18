@@ -33,7 +33,7 @@
  * $Id$
  *
  */
-class CRM_Core_Payment_Omnipaymultiprocessor extends CRM_Core_PaymentExtende {
+class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExtended {
   /**
    * We only need one instance of this object. So we use the singleton
    * pattern and cache the instance in this variable
@@ -47,7 +47,7 @@ class CRM_Core_Payment_Omnipaymultiprocessor extends CRM_Core_PaymentExtende {
    * For code clarity declare is_test as a boolean
    * @var bool
    */
-  private $_is_test = FALSE;
+  protected $_is_test = FALSE;
 
   /**
    * singleton function used to manage this object
@@ -61,7 +61,7 @@ class CRM_Core_Payment_Omnipaymultiprocessor extends CRM_Core_PaymentExtende {
    * @return object
    * @static
    */
-  static function &singleton($mode, &$paymentProcessor, &$paymentForm = NULL, $force = FALSE) {
+  static function singleton($mode = 'test', &$paymentProcessor, &$paymentForm = NULL, $force = FALSE) {
     $processorName = $paymentProcessor['name'];
     if (!isset(self::$_singleton[$processorName]) || self::$_singleton[$processorName] === NULL) {
       self::$_singleton[$processorName] = new CRM_Core_Payment_Omnipaymultiprocessor($mode, $paymentProcessor);
@@ -110,8 +110,7 @@ class CRM_Core_Payment_Omnipaymultiprocessor extends CRM_Core_PaymentExtende {
     //$this->_is_test = TRUE;
     $this->_component = strtolower($component);
 
-
-    $gateway = Omnipay::create($this->_paymentProcessor['payment_processor_type']);
+    $gateway = Omnipay::create(str_replace('Ominpay_', '', $this->_paymentProcessor['payment_processor_type']));
     $gateway->setUsername($this->_paymentProcessor['user_name']);
     $gateway->setPassword($this->_paymentProcessor['password']);
     $gateway->setTestMode($this->_is_test);
