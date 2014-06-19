@@ -1,6 +1,7 @@
 <?php
 
 require_once 'omnipaymultiprocessor.civix.php';
+require_once 'vendor/autoload.php';
 
 /**
  * Implementation of hook_civicrm_config
@@ -67,4 +68,18 @@ function omnipaymultiprocessor_civicrm_upgrade($op, CRM_Queue_Queue $queue = NUL
  */
 function omnipaymultiprocessor_civicrm_managed(&$entities) {
   return _omnipaymultiprocessor_civix_civicrm_managed($entities);
+}
+
+
+/**
+ * is version of at least the version provided
+ *
+ * @param number $version
+ * @return boolean
+ */
+function omnipaymultiprocessor__versionAtLeast($version) {
+  $codeVersion = explode('.', CRM_Utils_System::version());
+  if (version_compare($codeVersion[0] . '.' . $codeVersion[1], $version) >= 0) {
+    return TRUE;
+  }
 }

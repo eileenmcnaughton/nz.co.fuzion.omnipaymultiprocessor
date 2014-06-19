@@ -149,7 +149,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     $validParts = array();
     if (isset($params['description'])) {
       $uninformativeStrings = array(ts('Online Event Registration: '), ts('Online Contribution: '));
-      $params['description'] = str_replace($params['description'], $uninformativeStrings, '');
+      $params['description'] = str_replace($uninformativeStrings, '', $params['description']);
     }
     foreach ($parts as $part) {
       if ((!empty($params[$part]))) {
@@ -172,14 +172,19 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return mixed
    */
   protected function handleError($level, $message, $context, $errorCode = 9001, $userMessage = NULL) {
-    //@todo separate function pre & post 4.5
-    $log = new CRM_Utils_SystemLogger();
-    $log->log($level, $message, $context);
-    if ($userMessage) {
-      $message = $userMessage;
+    if (omnipaymultiprocessor__versionAtLeast(4.5)) {
+      $log = new CRM_Utils_SystemLogger();
+      $log->log($level, $message, $context);
+      if ($userMessage) {
+        $message = $userMessage;
+      }
+      $e = CRM_Core_Error::singleton();
+      $e->push($errorCode, 0, array(), $message);
+      return $e;
     }
-    $e = CRM_Core_Error::singleton();
-    $e->push($errorCode, 0, array(), $message);
-    return $e;
+    else {
+      CRM_Core_Session::setStatus($message . $userMessage);
+      CRM_Core_Error::debug(!empty($userMessage) ? $userMessage : $message);
+    }
   }
 }

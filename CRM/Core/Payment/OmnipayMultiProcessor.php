@@ -110,9 +110,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     //$this->_is_test = TRUE;
     $this->_component = strtolower($component);
 
-    $gateway = Omnipay::create(str_replace('Ominpay_', '', $this->_paymentProcessor['payment_processor_type']));
-    $gateway->setUsername($this->_paymentProcessor['user_name']);
-    $gateway->setPassword($this->_paymentProcessor['password']);
+    $gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
+    if (method_exists($gateway, 'setUserName')) {
+      $gateway->setUsername($this->_paymentProcessor['user_name']);
+    }
+    if (method_exists($gateway, 'setPassword')) {
+      $gateway->setPassword($this->_paymentProcessor['password']);
+    }
+
     $gateway->setTestMode($this->_is_test);
 
     if(method_exists($gateway, 'setSignature')) {
@@ -211,9 +216,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   function getCreditCardOptions($params, $component) {
+    //contribution page in 4.4 passes amount - not sure which passes total_amount if any
+    if(isset($params['total_amount'])) {
+      $amount = (float) CRM_Utils_Rule::cleanMoney($params['total_amount']);
+    }
+    else {
+      $amount = (float) CRM_Utils_Rule::cleanMoney($params['amount']);
+    }
     $creditCardOptions = array(
-      'amount' => (float) CRM_Utils_Rule::cleanMoney($params['total_amount']),
-      'currency' => $params['currency'],
+      'amount' => $amount,
+      //contribution page in 4.4 passes currencyID - not sure which passes currency (if any)
+      'currency' => !empty($params['currencyID']) ? $params['currencyID'] : $params['currency'],
       'description' => $this->getPaymentDescription($params),
       'transactionId' => isset($params['contributionID']) ? $params['contributionID'] : '',
       'clientIp' => CRM_Utils_System::ipAddress(),

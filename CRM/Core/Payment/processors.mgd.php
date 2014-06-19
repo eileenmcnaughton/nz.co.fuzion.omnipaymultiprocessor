@@ -17,7 +17,7 @@ return array(
         array(
           'version' => 3,
           'title' => 'OmniPay - Stripe',
-          'name' => 'omnipay_stripe',
+          'name' => 'omnipay_Stripe',
           'description' => 'Omnipay Strip Payment Processor',
           'user_name_label' => 'Secret Key',
           'password_label' => 'Publishable Key',
