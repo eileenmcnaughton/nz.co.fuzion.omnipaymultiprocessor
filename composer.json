@@ -1,5 +1,9 @@
 {
   "require": {
-    "omnipay/omnipay": "~2.0"
+    "omnipay/omnipay": "~2.0",
+    "omnipay/tests": "~2.0"
+  },
+  "require-dev": {
+    "omnipay/tests": "~2.0"
   }
 }

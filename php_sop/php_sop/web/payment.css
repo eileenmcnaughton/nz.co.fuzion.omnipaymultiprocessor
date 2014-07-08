@@ -1,0 +1,26 @@
+a {
+    font-size: 1.0em;
+    text-decoration: none;
+}
+
+input[type=submit] {
+    margin-top: 10px;
+}
+
+span {
+    font-weight: bold;
+    width: 350px;
+    display: inline-block;
+}
+
+.fieldName {
+    width: 400px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.fieldValue {
+    width: 400px;
+    font-weight: normal;
+    vertical-align: top;
+}
