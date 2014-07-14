@@ -1,0 +1,31 @@
+{
+    "name": "dioscouri/omnipay-cybersource",
+    "type": "library",
+    "description": "Cybersource support for Omnipay payment processing library",
+    "keywords": [
+        "cybersource",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "purchase"
+    ],
+    "homepage": "https://github.com/dioscouri/omnipay-cybersource",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rafael Diaz-Tushman",
+            "email": "rdiaztushman@dioscouri.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Cybersource\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    }
+}
