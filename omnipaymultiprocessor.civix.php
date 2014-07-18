@@ -21,8 +21,9 @@ function _omnipaymultiprocessor_civix_civicrm_config(&$config = NULL) {
       $template->template_dir = array( $extDir, $template->template_dir );
   }
 
-  $include_path = $extRoot . PATH_SEPARATOR . get_include_path( );
+  $include_path = $extRoot . PATH_SEPARATOR . $extRoot . DIRECTORY_SEPARATOR . 'vendor' . PATH_SEPARATOR . get_include_path( );
   set_include_path( $include_path );
+  require_once 'vendor/autoload.php';
 }
 
 /**

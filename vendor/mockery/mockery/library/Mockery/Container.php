@@ -85,6 +85,8 @@ class Container
      * names or partials - just so long as it's something that can be mocked.
      * I'll refactor it one day so it's easier to follow.
      *
+     * @throws Exception\RuntimeException
+     * @throws Exception
      * @return \Mockery\Mock
      */
     public function mock()
@@ -242,8 +244,35 @@ class Container
     }
 
     /**
+     * @param string $method
+     * @return string|null
+     */
+    public function getKeyOfDemeterMockFor($method)
+    {
+
+        $keys = array_keys($this->_mocks);
+        $match = preg_grep("/__demeter_{$method}$/", $keys);
+        if (count($match) == 1) {
+            $res = array_values($match);
+            if (count($res) > 0) {
+                return $res[0];
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMocks()
+    {
+        return $this->_mocks;
+    }
+
+    /**
      *  Tear down tasks for this container
      *
+     * @throws \Exception
      * @return void
      */
     public function mockery_teardown()
@@ -432,7 +461,25 @@ class Container
             return $r->newInstanceArgs($constructorArgs);
         }
 
-        $return = unserialize(sprintf('O:%d:"%s":0:{}', strlen($mockName), $mockName));
+        $isInternal = $r->isInternal();
+        $child = $r;
+        while (!$isInternal && $parent = $child->getParentClass()) {
+            $isInternal = $parent->isInternal();
+            $child = $parent;
+        }
+
+        if (version_compare(PHP_VERSION, '5.4') < 0 || $isInternal) {
+            $return = unserialize(sprintf(
+                '%s:%d:"%s":0:{}', 
+                // see https://github.com/sebastianbergmann/phpunit-mock-objects/pull/176/files
+                (version_compare(PHP_VERSION, '5.4', '>') && $r->implementsInterface('Serializable') ? 'C' : 'O'),
+                strlen($mockName), 
+                $mockName)
+            );
+        } else {
+            $return = $r->newInstanceWithoutConstructor();
+        }
+
         return $return;
     }
 

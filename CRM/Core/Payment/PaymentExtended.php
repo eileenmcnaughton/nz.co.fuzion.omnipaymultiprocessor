@@ -178,9 +178,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       if ($userMessage) {
         $message = $userMessage;
       }
-      $e = CRM_Core_Error::singleton();
-      $e->push($errorCode, 0, array(), $message);
-      return $e;
+      CRM_Core_Session::setStatus($message);
     }
     else {
       CRM_Core_Session::setStatus($message . $userMessage);

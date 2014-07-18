@@ -23,10 +23,10 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Omnipay\\Mollie\\" : "src/" }
+        "psr-4": { "Omnipay\\Mollie\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "~2.0"
+        "omnipay/common": "~2.2"
     },
     "require-dev": {
         "omnipay/tests": "~2.0"

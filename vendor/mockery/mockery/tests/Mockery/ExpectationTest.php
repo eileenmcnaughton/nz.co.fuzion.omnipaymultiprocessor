@@ -184,7 +184,7 @@ class ExpectationTest extends PHPUnit_Framework_TestCase
     }
 
     public function testAndThrowExceptions()
-    {   
+    {
         $this->mock->shouldReceive('foo')->andThrowExceptions(array(
             new OutOfBoundsException,
             new InvalidArgumentException,
@@ -210,7 +210,7 @@ class ExpectationTest extends PHPUnit_Framework_TestCase
      * @expectedExceptionMessage You must pass an array of exception objects to andThrowExceptions
      */
     public function testAndThrowExceptionsCatchNonExceptionArgument()
-    {   
+    {
         $this->mock
             ->shouldReceive('foo')
             ->andThrowExceptions(array('NotAnException'));
@@ -1544,7 +1544,7 @@ class ExpectationTest extends PHPUnit_Framework_TestCase
     }
 
     /** @issue #253 */
-    public function testShouldIgnoreMissingDefaultSelfAndReturnsSelf() 
+    public function testShouldIgnoreMissingDefaultSelfAndReturnsSelf()
     {
         $this->mock->shouldIgnoreMissing($this->container->self());
         $this->assertSame($this->mock, $this->mock->a()->b());
@@ -1758,24 +1758,6 @@ class ExpectationTest extends PHPUnit_Framework_TestCase
         $mock->shouldReceive('foo->bar->baz')->andReturn('Spam!');
         $demeter = new Mockery_UseDemeter($mock);
         $this->assertSame('Spam!', $demeter->doitWithArgs());
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error_Warning
-     * @runInSeparateProcess
-     */
-    public function testPregMatchThrowsDelimiterWarningWithXdebugScreamTurnedOn()
-    {
-        if (!extension_loaded('xdebug')) {
-            $this->markTestSkipped('ext/xdebug not installed');
-        }
-
-        ini_set('xdebug.scream', 1);
-
-        $mock = $this->container->mock('foo');
-        $mock->shouldReceive('foo')->with('bar', 'baz');
-
-        $mock->foo('spam', 'ham');
     }
 
     public function testPassthruEnsuresRealMethodCalledForReturnValues()

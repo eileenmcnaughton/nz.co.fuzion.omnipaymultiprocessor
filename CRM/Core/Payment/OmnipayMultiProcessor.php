@@ -26,6 +26,7 @@
 */
 
   use Omnipay\Omnipay;
+
 /**
  *
  * @package CRM
@@ -48,6 +49,18 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @var bool
    */
   protected $_is_test = FALSE;
+
+  /**
+   * names of fields in payment processor table that relate to configuration of the processor instance
+   * @var array
+   */
+  protected $_configurationFields = array('user_name', 'password', 'signature', 'subject');
+
+  /**
+   * Omnipay gateway
+   * @var object
+   */
+  protected $gateway;
 
   /**
    * singleton function used to manage this object
@@ -107,29 +120,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @public
    */
   function doDirectPayment(&$params, $component = 'contribute') {
-    //$this->_is_test = TRUE;
+
     $this->_component = strtolower($component);
-
-    $gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
-    if (method_exists($gateway, 'setUserName')) {
-      $gateway->setUsername($this->_paymentProcessor['user_name']);
-    }
-    if (method_exists($gateway, 'setPassword')) {
-      $gateway->setPassword($this->_paymentProcessor['password']);
-    }
-
-    $gateway->setTestMode($this->_is_test);
-
-    if(method_exists($gateway, 'setSignature')) {
-      //so far paypal supports & payment express doesn't - will we need a wrapper for maybe supported functions?
-      $gateway->setSignature($this->_paymentProcessor['signature']);
-    }
-
-    //@todo - interrogate processors
-    //$settings = $gateway->getDefaultParameters();
+    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
+    $this->setProcessorFields();
+    //remove this!!!!!
+    $this->gateway->setTestMode(TRUE);
 
     try {
-      $response = $gateway->purchase($this->getCreditCardOptions($params, $component))->send();
+      $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))->send();
       if ($response->isSuccessful()) {
         // mark order as complete
         $params['trxn_id'] = $response->getTransactionReference();
@@ -138,6 +137,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       elseif ($response->isRedirect()) {
         //ie off site processor
+        echo $response->getRedirectResponse();
         $response->redirect();
       }
       else {
@@ -149,6 +149,62 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       //@todo - looks like invalid credit card numbers are winding up here too - we could handle separately by capturing that exception type - what is good fraud practice?
       return $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), 'Sorry, there was an error processing your payment. Please try again later.');
     }
+  }
+
+  /**
+   * Set fields on payment processor based on the labels in the payment_processor_type table & the values in the payment_processor table
+   * @throws CRM_Core_Exception
+   */
+  function setProcessorFields() {
+    $fields = $this->getProcessorFields();
+    try {
+      foreach ($fields as $name => $value) {
+        $fn = "set{$name}";
+        $this->gateway->$fn($value);
+      }
+      if (in_array('testMode', array_keys($this->gateway->getDefaultParameters))) {
+        $this->gateway->setTestMode($this->_is_test);
+      }
+    }
+    catch (Exception $e) {
+      throw new CRM_Core_Exception('Processor is incorrectly configured');
+    }
+  }
+
+  /**
+   * get array of payment processor configuration fields keyed by the relevant payment processor properties
+   * For example the field might be displayed as 'Secret Key' - the payment processor property is secretKey
+   * We will give 'ID special treatment as it would be pretty ugly to present the end user with a label saying 'Id'
+   *
+   * @return array payment processor configuration fields
+   * @throws CiviCRM_API3_Exception
+   */
+  function getProcessorFields() {
+    $labelFields = $result = array();
+    foreach ($this->_configurationFields as $configField) {
+      if (!empty($this->_paymentProcessor[$configField])) {
+        $labelFields[$configField] = "{$configField}_label";
+      }
+    }
+    $processorFields = civicrm_api3('payment_processor_type', 'getsingle', array(
+      'id' => $this->_paymentProcessor['payment_processor_type_id'],
+      'return' => $labelFields)
+    );
+    foreach ($labelFields as $field => $label) {
+      $result[$this->camelFieldName($processorFields[$label])] = $this->_paymentProcessor[$field];
+    }
+    return $result;
+  }
+
+  /**
+   * get fieldname in format used in gateway functions $this->gateway->setSecretKey
+   * We remove spaces & camel it
+   * @param $fieldName
+   *
+   * @return mixed
+   */
+  function camelFieldName($fieldName) {
+    return str_replace(' ', '', ucwords(strtolower($fieldName)));
   }
 
   /**
@@ -178,10 +234,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'email' => 'email',
       'billingAddress1' => 'billing_street_address-' . $billingID,
       'billingAddress2' => 'supplemental_address-' . $billingID,
-      'billingCity' => 'city-' . $billingID,
+      'billingCity' => 'billing_city-' . $billingID,
       'billingPostcode' => 'billing_postal_code-' . $billingID,
-      'billingState' => 'billing_state_province_id-' . $billingID,
-      'billingCountry' => 'billing_country_id-' . $billingID,
+      'billingState' => 'billing_state_province-' . $billingID,
+      'billingCountry' => 'billing_country-' . $billingID,
       'billingPhone' => 'phone', // we don't specifically anticipate phone to come through - adding this & company as 'best guess'
       'company' => 'organization_name',
       'type' => 'credit_card_type',
@@ -190,11 +246,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     foreach ($basicMappings as $cardField => $civicrmField) {
       $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
     }
-
+    //do we need these if clauses lines? in 4.5 contribution page we don't....
     if(is_numeric($cardFields['billingCountry'])) {
       $cardFields['billingCountry'] = CRM_Core_PseudoConstant::countryIsoCode($cardFields['billingCountry']);
     }
-    if(is_numeric($cardFields['billingCountry'])) {
+    if(is_numeric($cardFields['billingState'])) {
       $cardFields['billingCountry'] = CRM_Core_PseudoConstant::stateProvince($cardFields['billingState']);
     }
 
@@ -228,7 +284,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       //contribution page in 4.4 passes currencyID - not sure which passes currency (if any)
       'currency' => !empty($params['currencyID']) ? $params['currencyID'] : $params['currency'],
       'description' => $this->getPaymentDescription($params),
-      'transactionId' => isset($params['contributionID']) ? $params['contributionID'] : '',
+      'transactionId' => isset($params['contributionID']) ? $params['contributionID'] : rand(0, 1000),
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getReturnSuccessUrl($params['qfKey']),
      // 'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
@@ -245,7 +301,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @public
    */
   function checkConfig() {
-    //@todo check gateway against $gateway->getDefaultParameters();
+    //@todo check gateway against $this->gateway->getDefaultParameters();
   }
 
   /**

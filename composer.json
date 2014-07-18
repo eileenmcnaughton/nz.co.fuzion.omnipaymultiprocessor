@@ -1,9 +1,21 @@
 {
-  "require": {
-    "omnipay/omnipay": "~2.0",
-    "omnipay/tests": "~2.0"
-  },
-  "require-dev": {
-    "omnipay/tests": "~2.0"
-  }
+    "repositories": [
+        {
+            "type": "git",
+            "url":  "https://github.com/eileenmcnaughton/omnipay-cybersource.git"
+        }
+    ],
+    "require":
+    {
+        "omnipay/omnipay": "~2.0",
+        "dioscouri/omnipay-cybersource": "master",
+        "alfaproject/omnipay-skrill": "dev-master",
+        "omnipay/bitpay": "dev-master"
+    },
+    "require-dev":
+    {
+        "omnipay/tests": "~2.0"
+    },
+    "minimum-stability": "dev"
+
 }
