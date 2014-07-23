@@ -70,11 +70,17 @@ function omnipaymultiprocessor_civicrm_upgrade($op, CRM_Queue_Queue $queue = NUL
  *
  * Generate a list of entities to create/deactivate/delete when this module
  * is installed, disabled, uninstalled.
+ * @param $entities
  */
 function omnipaymultiprocessor_civicrm_managed(&$entities) {
   return _omnipaymultiprocessor_civix_civicrm_managed($entities);
 }
 
+/**
+ * @param $version
+ *
+ * @return bool
+ */
 function omnipaymultiprocessor__versionAtLeast($version) {
   $codeVersion = explode('.', CRM_Utils_System::version());
   if (version_compare($codeVersion[0] . '.' . $codeVersion[1], $version) >= 0) {

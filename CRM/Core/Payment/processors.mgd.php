@@ -87,7 +87,4 @@ return array(
         'payment_type' => 1,
       ),
   ),
-  4 => array(
-
-  )
 );
