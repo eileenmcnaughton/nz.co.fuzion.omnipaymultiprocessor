@@ -16,6 +16,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
     protected $endpoint = '';
     protected $isUsOrCanada = FALSE;
 
+    public function sendData($data)
+    {
+        return $this->response = new Response($this, $data, $this->getEndpoint());
+    }
     public function getProfileId()
     {
         return $this->getParameter('profileId');
@@ -121,5 +125,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
         }
         $pairs = implode(',', $data_to_sign);
         return base64_encode(hash_hmac('sha256', $pairs, $secret_key, TRUE));
+    }
+
+    function supportsDeleteCard() {
+        return FALSE;
     }
 }

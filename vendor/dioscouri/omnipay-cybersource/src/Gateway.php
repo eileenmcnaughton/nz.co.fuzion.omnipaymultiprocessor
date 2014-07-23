@@ -23,7 +23,6 @@ class Gateway extends AbstractGateway
             'profileId' => '',
             'secretKey' => '',
             'accessKey' => '',
-            'transactionType' => 'card',
         );
     }
 
@@ -54,6 +53,15 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\Cybersource\Message\PurchaseRequest', $parameters);
     }
 
+  /**
+   * @param array $parameters
+   * @return \Omnipay\Cybersource\Message\PurchaseRequest
+   */
+  public function completePurchase(array $parameters = array())
+  {
+    return $this->createRequest('\Omnipay\Cybersource\Message\CompletePurchaseRequest', $parameters);
+  }
+
     /**
      * @param array $parameters
      * @return \Omnipay\Cybersource\Message\CreateCardRequest
@@ -70,15 +78,6 @@ class Gateway extends AbstractGateway
     public function updateCard(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Cybersource\Message\UpdateCardRequest', $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     * @return \Omnipay\Cybersource\Message\DeleteCardRequest
-     */
-    public function deleteCard(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Cybersource\Message\DeleteCardRequest', $parameters);
     }
 
     public function getProfileId()

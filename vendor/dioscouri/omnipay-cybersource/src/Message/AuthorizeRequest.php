@@ -8,11 +8,6 @@ namespace Omnipay\Cybersource\Message;
 class AuthorizeRequest extends AbstractRequest
 {
 
-    public function sendData($data)
-    {
-        return $this->response = new Response($this, $data, $this->getEndpoint());
-    }
-
     public function getData()
     {
         $this->validate('currency', 'amount');
@@ -21,7 +16,6 @@ class AuthorizeRequest extends AbstractRequest
         $data['signed_date_time'] = gmdate("Y-m-d\TH:i:s\Z");
         $data['unsigned_field_names'] = 'card_type,card_number,card_expiry_date';
         $data['signed_field_names'] = implode(',', array_keys($data)) . ',signed_field_names';
-        // $data['signed_field_names'] = 'access_key,profile_id,transaction_uuid,signed_field_names,unsigned_field_names,signed_date_time,locale,transaction_type,reference_number,amount,currency,payment_method,bill_to_forename,bill_to_surname,bill_to_email,bill_to_phone,bill_to_address_line1,bill_to_address_line2,bill_to_address_city,bill_to_address_state,bill_to_address_country,bill_to_address_postal_code,bill_to_company_name';
         $data['signature'] = $this->signData($data);
 
         // this is in progress - at this stage let's just pass the cc fields through but really we need to return a form for them to enter it

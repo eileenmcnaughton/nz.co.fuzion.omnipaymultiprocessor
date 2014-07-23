@@ -28,6 +28,11 @@ class Response extends AbstractResponse implements RedirectResponseInterface
         return TRUE;
     }
 
+    public function isTransparentRedirect()
+    {
+      return TRUE;
+    }
+
     public function getRedirectUrl()
     {
         return $this->redirectUrl;

@@ -28,12 +28,4 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\Cybersource\Message\CompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
-
-    public function testFetchTransaction()
-    {
-        $request = $this->gateway->fetchTransaction(array('transactionReference' => 'abc123'));
-
-        $this->assertInstanceOf('Omnipay\Cybersource\Message\FetchTransactionRequest', $request);
-        $this->assertSame('abc123', $request->getTransactionReference());
-    }
 }
