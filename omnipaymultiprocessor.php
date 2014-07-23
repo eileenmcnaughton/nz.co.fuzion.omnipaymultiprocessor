@@ -4,6 +4,8 @@ require_once 'omnipaymultiprocessor.civix.php';
 
 /**
  * Implementation of hook_civicrm_config
+ *
+ * @param $config
  */
 function omnipaymultiprocessor_civicrm_config(&$config) {
   _omnipaymultiprocessor_civix_civicrm_config($config);
@@ -22,6 +24,10 @@ function omnipaymultiprocessor_civicrm_xmlMenu(&$files) {
  * Implementation of hook_civicrm_install
  */
 function omnipaymultiprocessor_civicrm_install() {
+  CRM_Core_DAO::executeQuery("
+    ALTER TABLE `civicrm_payment_processor`
+    CHANGE COLUMN `signature` `signature` LONGTEXT NULL DEFAULT NULL;
+  ");
   return _omnipaymultiprocessor_civix_civicrm_install();
 }
 
