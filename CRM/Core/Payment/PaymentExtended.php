@@ -185,4 +185,55 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       CRM_Core_Error::debug(!empty($userMessage) ? $userMessage : $message);
     }
   }
+
+  /**
+   * get array of fields that should be displayed on the payment form
+   * @return array
+   * @throws CiviCRM_API3_Exception
+   */
+  public function getPaymentFormFields() {
+    $billingMode = civicrm_api3('option_value', 'getvalue', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type', 'return' => 'name'));
+    $fn = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $billingMode))) . 'FormFields';
+    return $this->$fn();
+  }
+
+  /**
+   * get array of fields that should be displayed on the payment form for credit cards
+   * @return array
+   */
+  protected function getCreditCardFormFields() {
+    return array(
+      'credit_card_type',
+      'credit_card_number',
+      'cvv2',
+      'credit_card_expiry',
+    );
+  }
+
+  /**
+   * get array of fields that should be displayed on the payment form for direct debits
+   * @return array
+   */
+  protected function getDirectDebitFormFields() {
+    return array(
+      'account_holder',
+      'bank_account_number',
+      'bank_identification_number',
+      'bank_name',
+    );
+  }
+
+  /**
+   * get array of fields that should be displayed on the payment form for credit cards using off-site post
+   * @return array
+   */
+  protected function getCreditCardOffSitePostFormFields() {
+    return array(
+      'credit_card_type',
+      'credit_card_number',
+      'cvv2',
+      'credit_card_number',
+    );
+  }
 }
+
