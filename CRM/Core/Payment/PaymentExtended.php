@@ -54,7 +54,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     $this->_mode = $mode;
     $this->_is_test = ($mode == 'live') ? FALSE : TRUE;
     $this->_paymentProcessor = $paymentProcessor;
-    $this->_processorName = $paymentProcessor['payment_processor_type'];
+    $this->_processorName = !empty($paymentProcessor['payment_processor_type']) ? $paymentProcessor['payment_processor_type'] : $paymentProcessor['name'];
   }
 
   /**
@@ -234,6 +234,14 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       'cvv2',
       'credit_card_number',
     );
+  }
+
+  /**
+   * handle response from processor
+   * (this doesn't do anything but by virtue of it existing at least the logger fires :-)
+   */
+  public function handlePaymentNotification() {
+
   }
 }
 

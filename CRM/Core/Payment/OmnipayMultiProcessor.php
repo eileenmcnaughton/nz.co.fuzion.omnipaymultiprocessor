@@ -136,8 +136,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
-        //ie off site processor
-        echo $response->getRedirectResponse();
+        if ($response->isTransparentRedirect()) {
+          CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/payment/details', $response->getRedirectData() + array(
+              'payment_processor_id' => $this->_paymentProcessor['id'],
+              'post_submit_url' => $response->getRedirectURL(),
+            )));
+        }
         $response->redirect();
       }
       else {
@@ -305,11 +309,107 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * implement doTransferCheckout. We treat transfer checkouts the same as direct payments & rely on our
+   * abstracted library to action the differences
    * @param $params
    * @param string $component
    */
   function doTransferCheckout(&$params, $component = 'contribute') {
     $this->doDirectPayment($params, $component);
+  }
+
+  /**
+   * Get the fields to display for transparent direct method
+   * This is the method where we post first to CiviCRM & then do a form POST to the off site processor
+   * with extra fields not included in the CiviCRM form.
+   *
+   * It is conceivable that we could POST to the processor first but that possibility is not yet applicable to
+   * the processors we have
+   *
+   * at this stage we only have the scenario of cybersource - later we can get metadata from
+   * omnipay depending how it develops or use our own yml file (if we go down the yml path the mgd.php file
+   * should parse it to avoid duplication https://groups.google.com/forum/#!topic/omnipay/hjxBCU5blaU
+   * @return array
+   */
+  function getTransparentDirectDisplayFields() {
+    $corePaymentFields = $this->getCorePaymentFields();
+    $paymentFieldMappings = $this->getPaymentFieldMapping();
+    foreach ($paymentFieldMappings as $fieldName => $fieldSpec) {
+      $paymentFieldMappings[$fieldName] = array_merge($corePaymentFields[$fieldSpec['core_field_name']], $fieldSpec);
+    }
+    return $paymentFieldMappings;
+  }
+
+  /**
+   * we are just getting the cybersource specific mapping for now - see comments on
+   * getTransparentDirectDisplayFields
+   * @return array
+   */
+  function getPaymentFieldMapping() {
+    return array(
+      'card_type' => array(
+        'core_field_name' => 'credit_card_type',
+        'attributes' => array(
+          '' => ts('- select -'),
+          '001' => 'Visa',
+          '002' => 'Mastercard',
+          '003' => 'Amex',
+          '004' => 'Discovery',
+        )
+      ),
+      'card_number' => array('core_field_name' => 'credit_card_number',),
+      'card_expiry_date' => array('core_field_name' => 'credit_card_exp_date'),
+    );
+  }
+
+  /**
+   * get core CiviCRM payment fields
+   * @return array
+   */
+  function getCorePaymentFields() {
+    $creditCardType = array('' => ts('- select -')) + CRM_Contribute_PseudoConstant::creditCard();
+    return array(
+      'credit_card_number' => array(
+        'htmlType' => 'text',
+        'name' => 'credit_card_number',
+        'title' => ts('Card Number'),
+        'cc_field' => TRUE,
+        'attributes' => array('size' => 20, 'maxlength' => 20, 'autocomplete' => 'off'),
+        'is_required' => TRUE,
+      ),
+      'cvv2' => array(
+        'htmlType' => 'text',
+        'name' => 'cvv2',
+        'title' => ts('Security Code'),
+        'cc_field' => TRUE,
+        'attributes' => array('size' => 5, 'maxlength' => 10, 'autocomplete' => 'off'),
+        'is_required' => TRUE,
+      ),
+      'credit_card_exp_date' => array(
+        'htmlType' => 'date',
+        'name' => 'credit_card_exp_date',
+        'title' => ts('Expiration Date'),
+        'cc_field' => TRUE,
+        'attributes' => CRM_Core_SelectValues::date('creditCard'),
+        'is_required' => TRUE,
+      ),
+      'credit_card_type' => array(
+        'htmlType' => 'select',
+        'name' => 'credit_card_type',
+        'title' => ts('Card Type'),
+        'cc_field' => TRUE,
+        'attributes' => $creditCardType,
+        'is_required' => FALSE,
+      )
+    );
+  }
+
+  /**
+   * hand response from processor
+   */
+  public function handlePaymentNotification() {
+    echo "<pre>";
+    print_r($_REQUEST);
   }
 }
 
