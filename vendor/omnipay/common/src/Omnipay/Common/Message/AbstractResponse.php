@@ -87,7 +87,7 @@ abstract class AbstractResponse implements ResponseInterface
     <head>
         <title>Redirecting...</title>
     </head>
-    <body >
+    <body onload="document.forms[0].submit();">
         <form action="%1$s" method="post">
             <p>Redirecting to payment page...</p>
             <p>
