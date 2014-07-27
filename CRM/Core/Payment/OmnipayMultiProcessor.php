@@ -166,7 +166,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $fn = "set{$name}";
         $this->gateway->$fn($value);
       }
-      if (in_array('testMode', array_keys($this->gateway->getDefaultParameters))) {
+      if (in_array('testMode', array_keys($this->gateway->getDefaultParameters()))) {
         $this->gateway->setTestMode($this->_is_test);
       }
     }
@@ -286,7 +286,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $creditCardOptions = array(
       'amount' => $amount,
       //contribution page in 4.4 passes currencyID - not sure which passes currency (if any)
-      'currency' => !empty($params['currencyID']) ? $params['currencyID'] : $params['currency'],
+      'currency' => strtoupper(!empty($params['currencyID']) ? $params['currencyID'] : $params['currency']),
       'description' => $this->getPaymentDescription($params),
       'transactionId' => isset($params['contributionID']) ? $params['contributionID'] : rand(0, 1000),
       'clientIp' => CRM_Utils_System::ipAddress(),
@@ -405,11 +405,44 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
-   * hand response from processor
+   * handle response from processor. We simply get the params from the REQUEST and pass them to a static function that
+   * can also be called / tested outside the normal process
    */
   public function handlePaymentNotification() {
-    echo "<pre>";
-    print_r($_REQUEST);
+    $params = $_REQUEST;
+    $paymentProcessorID = $params['processor_id'];
+    $this->_paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
+    $this->processPaymentNotification($params);
+  }
+
+  /**
+   * Update Transaction based on outcome of the API
+   * @param $params
+   *
+   * @throws CRM_Core_Exception
+   * @throws CiviCRM_API3_Exception
+   */
+  public function processPaymentNotification($params) {
+
+    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['name']));
+    $this->setProcessorFields();
+    $originalRequest = $_REQUEST;
+    $_REQUEST = $params;
+    $response = $this->gateway->completePurchase($params)->send();
+    if ($response->isSuccessful()) {
+      civicrm_api3('contribution', 'completetransaction', array('id' => $response->getTransactionReference));
+    }
+    elseif (($contributionID = $response->getTransactionReference) != FALSE) {
+      civicrm_api3('contribution', 'create', array('id' => $contributionID, 'contribution_status_id' => 'Failed'));
+    }
+    $_REQUEST = $originalRequest;
+  }
+
+  static function processPaymentResponse($params) {
+    $processor =  civicrm_api3('payment_processor', 'getsingle', array('id' => $params['processor_id']));
+    $responder = new CRM_Core_Payment_OmnipayMultiProcessor('live', $processor);
+    $responder->processPaymentNotification($params);
+    return TRUE;
   }
 }
 
