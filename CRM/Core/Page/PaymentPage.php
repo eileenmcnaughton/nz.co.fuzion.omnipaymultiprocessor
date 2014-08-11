@@ -9,6 +9,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
 
 
   function run(){
+    CRM_Utils_System::setTitle(ts('Enter your payment details'));
     $paymentProcessorID = CRM_Utils_Request::retrieve('payment_processor_id', 'Integer', CRM_Core_DAO::$_nullObject, TRUE);
 
     $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
@@ -17,8 +18,6 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
     $this->assign('hidden_fields', array_diff_key($_GET, $displayFields));
     $this->assign('display_fields', $displayFields);
     $this->assign('post_url', CRM_Utils_Request::retrieve('post_submit_url', 'String', CRM_Core_DAO::$_nullObject, TRUE));
-    $tmpPostURL = 'http://civi45/civicrm/payment/ipn?processor_id=17';
-    //$this->assign('post_url', $tmpPostURL);
     return parent::run();
   }
 
