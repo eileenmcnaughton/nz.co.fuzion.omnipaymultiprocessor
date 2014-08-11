@@ -7,7 +7,7 @@ use Omnipay\Common\Message\RequestInterface;
  *
  * @method \Omnipay\Cybersource\Message\Response send()
  */
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest implements RequestInterface
+abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $liveEndpoint = 'https://secureacceptance.cybersource.com/silent';
     protected $testEndpoint = 'https://testsecureacceptance.cybersource.com/silent';
