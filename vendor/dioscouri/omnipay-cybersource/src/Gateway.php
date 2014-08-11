@@ -12,6 +12,7 @@ use Omnipay\Cybersource\Message\RefundRequest;
  */
 class Gateway extends AbstractGateway
 {
+
     public function getName()
     {
         return 'Cybersource';
@@ -22,12 +23,13 @@ class Gateway extends AbstractGateway
         return array(
             'profileId' => '',
             'secretKey' => '',
-            'accessKey' => '',
+            'accessKey' => ''
         );
     }
 
     /**
-     * @param array $parameters
+     *
+     * @param array $parameters            
      * @return \Omnipay\Cybersource\Message\AuthorizeRequest
      */
     public function authorize(array $parameters = array())
@@ -36,7 +38,8 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     *
+     * @param array $parameters            
      * @return \Omnipay\Cybersource\Message\CaptureRequest
      */
     public function capture(array $parameters = array())
@@ -45,7 +48,8 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     *
+     * @param array $parameters            
      * @return \Omnipay\Cybersource\Message\PurchaseRequest
      */
     public function purchase(array $parameters = array())
@@ -53,17 +57,28 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\Cybersource\Message\PurchaseRequest', $parameters);
     }
 
-  /**
-   * @param array $parameters
-   * @return \Omnipay\Cybersource\Message\PurchaseRequest
-   */
-  public function completePurchase(array $parameters = array())
-  {
-    return $this->createRequest('\Omnipay\Cybersource\Message\CompletePurchaseRequest', $parameters);
-  }
-
+    /**
+     *
+     * @param array $parameters            
+     * @return \Omnipay\Cybersource\Message\CompletePurchaseRequest
+     */
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Cybersource\Message\CompletePurchaseRequest', $parameters);
+    }
+    
     /**
      * @param array $parameters
+     * @return \Omnipay\Cybersource\Message\CompleteAuthorizeRequest
+     */
+    public function completeAuthorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Cybersource\Message\CompleteAuthorizeRequest', $parameters);
+    }    
+
+    /**
+     *
+     * @param array $parameters            
      * @return \Omnipay\Cybersource\Message\CreateCardRequest
      */
     public function createCard(array $parameters = array())
@@ -72,7 +87,8 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
+     *
+     * @param array $parameters            
      * @return \Omnipay\Cybersource\Message\UpdateCardRequest
      */
     public function updateCard(array $parameters = array())
@@ -120,4 +136,15 @@ class Gateway extends AbstractGateway
         return $this->setParameter('transactionType', $value);
     }
 
+    public function generateSignature($data)
+    {
+        $data_to_sign = array();
+        foreach ($data as $key => $value)
+        {
+            $data_to_sign[] = $key . "=" . $value;
+        }
+        $pairs = implode(',', $data_to_sign);
+        
+        return base64_encode(hash_hmac('sha256', $pairs, $this->getSecretKey(), true));
+    }
 }

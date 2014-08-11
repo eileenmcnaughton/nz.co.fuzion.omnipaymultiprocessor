@@ -1,18 +1,16 @@
 <?php
-
 namespace Omnipay\Cybersource\Message;
 
 use Omnipay\Common\Message\RequestInterface;
 
 /**
- * Stripe Abstract Request
  *
  * @method \Omnipay\Cybersource\Message\Response send()
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest implements RequestInterface
 {
     protected $liveEndpoint = 'https://secureacceptance.cybersource.com/silent';
-    protected $testEndpoint = 'https://testsecureacceptance.cybersource.com/silent/';
+    protected $testEndpoint = 'https://testsecureacceptance.cybersource.com/silent';
     protected $endpoint = '';
     protected $isUsOrCanada = FALSE;
 
@@ -20,6 +18,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
     {
         return $this->response = new Response($this, $data, $this->getEndpoint());
     }
+
     public function getProfileId()
     {
         return $this->getParameter('profileId');
@@ -75,7 +74,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
-
     public function getHttpMethod()
     {
         return 'POST';
@@ -99,7 +97,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
             'carte_bleue' => '036',
             'carta_si' => '037',
             'maestro_international' => '042',
-            'ge_money_uk_card' => '043',
+            'ge_money_uk_card' => '043'
         );
     }
 
@@ -111,23 +109,27 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
     }
 
     /**
-     * @param array $data
-     * @param array $fields
-     * @param $secret_key
      *
+     * @param array $data            
+     * @param array $fields            
+     * @param
+     *            $secret_key
+     *            
      * @return string
      */
     public function generateSignature($data, $fields, $secret_key)
     {
         $data_to_sign = array();
-        foreach ($fields as $field) {
+        foreach ($fields as $field)
+        {
             $data_to_sign[] = $field . "=" . $data[$field];
         }
         $pairs = implode(',', $data_to_sign);
         return base64_encode(hash_hmac('sha256', $pairs, $secret_key, TRUE));
     }
 
-    function supportsDeleteCard() {
+    function supportsDeleteCard()
+    {
         return FALSE;
     }
 }

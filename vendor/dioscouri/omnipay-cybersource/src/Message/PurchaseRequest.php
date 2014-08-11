@@ -7,4 +7,8 @@ namespace Omnipay\Cybersource\Message;
  */
 class PurchaseRequest extends AuthorizeRequest
 {
+  public function getTransactionType()
+  {
+    return 'sale';
+  }
 }
