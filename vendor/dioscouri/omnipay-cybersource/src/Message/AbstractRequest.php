@@ -105,16 +105,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $types = $this->getCardTypes();
         $brand = $this->getCard()->getBrand();
-        return $types[$brand];
+        return empty($types[$brand]) ? NULL : $types[$brand];
     }
 
     /**
      *
-     * @param array $data            
-     * @param array $fields            
-     * @param
-     *            $secret_key
-     *            
+     * @param array $data
+     * @param array $fields
+     * @param string $secret_key
+     *
      * @return string
      */
     public function generateSignature($data, $fields, $secret_key)

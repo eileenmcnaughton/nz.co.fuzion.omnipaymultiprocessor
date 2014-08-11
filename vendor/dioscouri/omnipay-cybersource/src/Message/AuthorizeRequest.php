@@ -32,7 +32,7 @@ class AuthorizeRequest extends AbstractRequest
 
     public function buildDataToSign($data)
     {
-        $signedFieldNames = $signedFieldNames = explode(",", $data["signed_field_names"]);;
+        $signedFieldNames = explode(",", $data["signed_field_names"]);
         foreach ($signedFieldNames as $field) {
             $dataToSign[] = $field . "=" . $data[$field];
         }
