@@ -116,6 +116,13 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
   $billingLocationID = $form->get('bltID');
   $billingDetailsFields = omnipaymultiprocessor_getBillingPersonalDetailsFields($billingLocationID);
 
+  //we trick CiviCRM into adding the credit card form so we can remove the parts we don't want (the credit card fields)
+  //for a transparent redirect like Cybersource
+  $billingMode = $form->_paymentProcessor['billing_mode'];
+  $form->_paymentProcessor['billing_mode'] = CRM_Core_Payment::BILLING_MODE_FORM;
+  CRM_Core_Payment_Form::buildCreditCard($form);
+  $form->_paymentProcessor['billing_mode'] = $billingMode;
+
   //CiviCRM assumes that if it is Not a credit card it MUST be a direct debit & makes those required
   $suppressedFields =  omnipaymultiprocessor_get_suppressed_billing_fields((array) $billingDetailsFields, (array) $paymentFields, (array) $form->_paymentFields);
 

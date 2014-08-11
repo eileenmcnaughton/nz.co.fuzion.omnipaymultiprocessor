@@ -62,6 +62,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected $gateway;
 
+
   /**
    * singleton function used to manage this object
    *
@@ -120,12 +121,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @public
    */
   function doDirectPayment(&$params, $component = 'contribute') {
-
     $this->_component = strtolower($component);
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
     $this->setProcessorFields();
     //remove this!!!!!
     $this->gateway->setTestMode(TRUE);
+    $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
+    $this->storeReturnUrls($params['qfKey']);
+    $this->saveBillingAddressIfRequired($params);
 
     try {
       $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))->send();
@@ -198,6 +201,38 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $result[$this->camelFieldName($processorFields[$label])] = $this->_paymentProcessor[$field];
     }
     return $result;
+  }
+
+  /**
+   * Core specifically won't save billing address if you use notify mode so we make up for that here
+   * For example a transparent Redirect (POST credit card form off-site) processor has some features of each.
+   *
+   * Rather than try to categorise the processor we say 'if a contribution exists and it does not have a billing address but we have billing
+   * fields in our form we will create a billing address for the payment
+   *
+   * @param array $params
+   */
+  function saveBillingAddressIfRequired($params) {
+    if (!empty($params['contributionID']) && $this->hasBillingAddressFields($params)) {
+      $contribution = civicrm_api3('contribution', 'getsingle', array('id' => $params['contributionID'], 'return' => 'address_id'));
+      if (empty($contribution['address_id'])) {
+        civicrm_api3('contribution', 'create', array(
+            'id' => $params['contributionID'],
+            'address_id' => CRM_Contribute_BAO_Contribution::createAddress($params, CRM_Core_BAO_LocationType::getBilling())
+        ));
+      }
+    }
+  }
+
+  /**
+   * Are there any billing address fields in the params array (not including billing-first-name - only true address fields)
+   * @param $params
+   *
+   * @return bool
+   */
+  function hasBillingAddressFields($params) {
+    $billingFields = array_intersect_key($params, array_flip($this->getBillingAddressFields()));
+    return !empty($billingFields);
   }
 
   /**
@@ -299,7 +334,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       //contribution page in 4.4 passes currencyID - not sure which passes currency (if any)
       'currency' => strtoupper(!empty($params['currencyID']) ? $params['currencyID'] : $params['currency']),
       'description' => $this->getPaymentDescription($params),
-      'transactionId' => isset($params['contributionID']) ? $params['contributionID'] : rand(0, 1000),
+      'transactionId' => $this->transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getReturnSuccessUrl($params['qfKey']),
      // 'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
@@ -417,6 +452,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * get core CiviCRM payment fields
+   * @return array
+   */
+  function getBillingAddressFields() {
+    $billingFields = array();
+    foreach (array('street_address', 'city', 'state_province_id', 'postal_code', 'country_id',) as $addressField) {
+      $billingFields[]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
+    }
+    return $billingFields;
+  }
+  /**
    * handle response from processor. We simply get the params from the REQUEST and pass them to a static function that
    * can also be called / tested outside the normal process
    */
@@ -424,6 +470,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $params = $_REQUEST;
     $paymentProcessorID = $params['processor_id'];
     $this->_paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
+    $this->_paymentProcessor['name'] = civicrm_api3('payment_processor_type', 'getvalue', array('id' => $this->_paymentProcessor['payment_processor_type_id'], 'return' => 'name'));
     $this->processPaymentNotification($params);
   }
 
@@ -441,13 +488,24 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
     $response = $this->gateway->completePurchase($params)->send();
-    if ($response->isSuccessful()) {
-      civicrm_api3('contribution', 'completetransaction', array('id' => $response->getTransactionReference));
+    if ($response->getTransactionReference()) {
+      $this->setTransactionID($response->getTransactionReference());
     }
-    elseif (($contributionID = $response->getTransactionReference) != FALSE) {
-      civicrm_api3('contribution', 'create', array('id' => $contributionID, 'contribution_status_id' => 'Failed'));
+    if ($response->isSuccessful()) {
+      try {
+        civicrm_api3('contribution', 'completetransaction', array('id' => $this->transaction_id));
+      }
+      catch (CiviCRM_API3_Exception $e) {
+        if (!stristr($e->getMessage(), 'Contribution already completed')) {
+          $this->handleError('error', $this->transaction_id  . $e->getMessage(), 'ipn_completion', 9000, 'An error may have occurred. Please check your receipt is correct');
+        }
+      }
+    }
+    elseif ($this->transaction_id) {
+      civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
     }
     $_REQUEST = $originalRequest;
+    CRM_Utils_System::redirect($this->getStoredUrl('success'));
   }
 
   static function processPaymentResponse($params) {
