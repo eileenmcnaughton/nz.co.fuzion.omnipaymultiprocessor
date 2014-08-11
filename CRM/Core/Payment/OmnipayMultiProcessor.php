@@ -232,8 +232,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $basicMappings = array(
       'firstName' => 'billing_first_name',
       'lastName' => 'billing_last_name',
-      'cvv' => 'cvv2',
-      'number' => 'credit_card_number',
       'currency' => 'currency',
       'email' => 'email',
       'billingAddress1' => 'billing_street_address-' . $billingID,
@@ -250,6 +248,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     foreach ($basicMappings as $cardField => $civicrmField) {
       $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
     }
+
+    if(empty($cardFields['email']) && !empty($params['email-' . $billingID])) {
+      $cardFields['email'] = $params['email-' . $billingID];
+    }
     //do we need these if clauses lines? in 4.5 contribution page we don't....
     if(is_numeric($cardFields['billingCountry'])) {
       $cardFields['billingCountry'] = CRM_Core_PseudoConstant::countryIsoCode($cardFields['billingCountry']);
@@ -257,14 +259,23 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if(is_numeric($cardFields['billingState'])) {
       $cardFields['billingCountry'] = CRM_Core_PseudoConstant::stateProvince($cardFields['billingState']);
     }
+    return $cardFields;
+  }
 
+  function getSensitiveCreditCardObjectOptions($params) {
+    $basicMappings = array(
+      'cvv' => 'cvv2',
+      'number' => 'credit_card_number',
+    );
+    foreach ($basicMappings as $cardField => $civicrmField) {
+      $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
+    }
     if(!empty($params['credit_card_exp_date'])) {
       $cardFields['expiryMonth'] = $params['credit_card_exp_date']['M'];
       $cardFields['expiryYear'] = $params['credit_card_exp_date']['Y'];
     }
     return $cardFields;
   }
-
   /**
    * Get options for credit card
    * Not yet implemented
@@ -292,9 +303,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getReturnSuccessUrl($params['qfKey']),
      // 'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
-      'card' => $this->getCreditCardObjectParams($params)
+      'card' => $this->getCreditCardObjectParams($params),
     );
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
+    $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
     return $creditCardOptions;
   }
 
