@@ -356,11 +356,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * implement doTransferCheckout. We treat transfer checkouts the same as direct payments & rely on our
    * abstracted library to action the differences
+   *
    * @param $params
    * @param string $component
+   *
+   * @throws CRM_Core_Exception
    */
   function doTransferCheckout(&$params, $component = 'contribute') {
     $this->doDirectPayment($params, $component);
+    throw new CRM_Core_Exception('Payment redirect failed');
   }
 
   /**
