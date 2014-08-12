@@ -28,4 +28,15 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\Cybersource\Message\CompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
+
+    public function testCompletePurchaseSend()
+    {
+      $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => array(
+        'firstName' => 'Pokemon',
+        'lastName' => 'The second',
+      )))->send();
+
+      $this->assertInstanceOf('Omnipay\Cybersource\Message\Response', $request);
+      $this->assertTrue($request->isTransparentRedirect());
+    }
 }
