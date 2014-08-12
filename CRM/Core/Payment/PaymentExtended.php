@@ -230,7 +230,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       'credit_card_type',
       'credit_card_number',
       'cvv2',
-      'credit_card_expiry',
+      'credit_card_exp_date',
     );
   }
 
@@ -253,10 +253,6 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    */
   protected function getCreditCardOffSitePostFormFields() {
     return array(
-      'credit_card_type',
-      'credit_card_number',
-      'cvv2',
-      'credit_card_number',
     );
   }
 
