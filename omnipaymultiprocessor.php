@@ -28,6 +28,13 @@ function omnipaymultiprocessor_civicrm_install() {
     ALTER TABLE `civicrm_payment_processor`
     CHANGE COLUMN `signature` `signature` LONGTEXT NULL DEFAULT NULL;
   ");
+  $logExists = CRM_Core_DAO::singleValueQuery("SHOW TABLES LIKE 'log_civicrm_payment_processor'");
+  if ($logExists) {
+    CRM_Core_DAO::executeQuery("
+    ALTER TABLE `log_civicrm_payment_processor`
+    CHANGE COLUMN `signature` `signature` LONGTEXT NULL DEFAULT NULL;
+  ");
+  }
   return _omnipaymultiprocessor_civix_civicrm_install();
 }
 
