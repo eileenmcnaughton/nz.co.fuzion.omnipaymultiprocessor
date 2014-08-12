@@ -137,7 +137,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
-        if ($response->isTransparentRedirect()) {
+        if ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect)) {
           CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/payment/details', $response->getRedirectData() + array(
               'payment_processor_id' => $this->_paymentProcessor['id'],
               'post_submit_url' => $response->getRedirectURL(),
