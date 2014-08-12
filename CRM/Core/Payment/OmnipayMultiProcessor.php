@@ -377,7 +377,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     //for now we will cheat & just use the really blunt characteristics option - ie.
     // ie billing mode 1 or payment type 3 get billing fields.
     // we really want this to be metadata of the payment processors
-    if ($this->_paymentProcessor['billing_mode'] != 1 && $this->_paymentProcessor['class_name'] != 3) {
+    if ($this->_paymentProcessor['billing_mode'] != 1 && $this->_paymentProcessor['payment_type'] != 3) {
       return array();
     }
     return array(
