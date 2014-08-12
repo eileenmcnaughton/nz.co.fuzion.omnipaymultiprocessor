@@ -207,6 +207,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       CRM_Core_Error::debug(!empty($userMessage) ? $userMessage . " " . $message : $message);
     }
     CRM_Core_Session::setStatus(empty($userMessage) ? $message : $userMessage);
+    return new CRM_Core_Error();
   }
 
   /**
