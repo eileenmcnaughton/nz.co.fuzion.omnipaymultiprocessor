@@ -535,6 +535,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     CRM_Utils_System::redirect($this->getStoredUrl('success'));
   }
 
+  /**
+   * Static wrapper for IPN / Payment response handling - this allows us to re-call from the api
+   * @param $params
+   *
+   * @return bool
+   * @throws CiviCRM_API3_Exception
+   */
   static function processPaymentResponse($params) {
     $processor =  civicrm_api3('payment_processor', 'getsingle', array('id' => $params['processor_id']));
     $responder = new CRM_Core_Payment_OmnipayMultiProcessor('live', $processor);
