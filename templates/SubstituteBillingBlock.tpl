@@ -69,28 +69,28 @@
         </div>
       {/if}
     </fieldset>
-
-    {if $profileAddressFields}
-      <input type="checkbox" id="billingcheckbox" value="0"> <label for="billingcheckbox">{ts}My billing address is the same as above{/ts}</label>
+    {if $billingDetailsFields}
+      {if $profileAddressFields}
+        <input type="checkbox" id="billingcheckbox" value="0"> <label for="billingcheckbox">{ts}My billing address is the same as above{/ts}</label>
+      {/if}
+      <fieldset class="billing_name_address-group">
+        <legend>{ts}Billing Name and Address{/ts}</legend>
+        <div class="crm-section billing_name_address-section">
+          {foreach from=$billingDetailsFields item=billingField}
+            <div class="crm-section {$form.$billingField.name}-section">
+              <div class="label">{$form.$billingField.label} {$reqMark}</div>
+              <div class="content">{$form.$billingField.html}</div>
+              <div class="clear"></div>
+            </div>
+          {/foreach}
+        </div>
+      </fieldset>
     {/if}
-    <fieldset class="billing_name_address-group">
-      <legend>{ts}Billing Name and Address{/ts}</legend>
-      <div class="crm-section billing_name_address-section">
-        {foreach from=$billingDetailsFields item=billingField}
-          <div class="crm-section {$form.$billingField.name}-section">
-            <div class="label">{$form.$billingField.label} {$reqMark}</div>
-            <div class="content">{$form.$billingField.html}</div>
-            <div class="clear"></div>
-          </div>
-        {/foreach}
-      </div>
-    </fieldset>
-    <fieldset class="suppressed-fields">
-      {* @todo we do this purely to hack around core e-notices due to brittle assumptions about it being debit card if not credit card *}
-      {foreach from=$suppressedFields item=suppressedField}
-        <input name="{$suppressedField}" type = 'hidden'> </input>
-      {/foreach}
-    </fieldset>
+
+    {* @todo we do this purely to hack around core e-notices due to assumptions about it being debit card if not credit card *}
+    {foreach from=$suppressedFields item=suppressedField}
+      <input name="{$suppressedField}" type = 'hidden'> </input>
+    {/foreach}
   {/if}
 </div>
 
