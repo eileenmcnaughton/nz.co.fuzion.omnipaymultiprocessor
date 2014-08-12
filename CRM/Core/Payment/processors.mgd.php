@@ -9,6 +9,7 @@
 // database as appropriate. For more details, see "hook_civicrm_managed" at:
 // http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
 return array(
+  /*
   0 =>
     array(
       'name' => 'OmniPay - Stripe',
@@ -30,6 +31,7 @@ return array(
           'is_active' => 0,
         ),
     ),
+  */
   1 =>
     array(
       'name' => 'OmniPay - Cybersource',
@@ -47,9 +49,10 @@ return array(
           'url_site_default' => 'https://testsecureacceptance.cybersource.com/silent/pay',
           'url_api_default' => 'https://testsecureacceptance.cybersource.com/silent/pay',
           'billing_mode' => 4,
-          'payment_type' => 1,
+          'payment_type' => 3,
         ),
     ),
+  /*
   2 =>
     array(
       'name' => 'OmniPay - BitPay',
@@ -87,4 +90,43 @@ return array(
         'payment_type' => 1,
       ),
   ),
+  4 => array(
+    'name' => 'OmniPay - Authorize AIM',
+    'entity' => 'payment_processor_type',
+    'params' =>
+      array(
+        'version' => 3,
+        'title' => 'OmniPay - Authorize AIM',
+        'name' => 'omnipay_AuthorizeNet_AIM',
+        'description' => 'Omnipay OmniPay - Authorize AIM Payment Processor',
+        'user_name_label' => 'Api Login ID',
+        'password_label' => 'Transaction Key',
+        'signature_label' => 'Hash Secret',
+        'class_name' => 'Payment_OmnipayMultiProcessor',
+        'url_site_default' => 'https://secure.authorize.net/gateway/transact.dll',
+        'url_api_default' => 'https://secure.authorize.net/gateway/transact.dll',
+        'billing_mode' => 1,
+        'payment_type' => 1,
+      ),
+  ),
+  5 => array(
+    'name' => 'OmniPay - Authorize SIM',
+    'entity' => 'payment_processor_type',
+    'params' =>
+      array(
+        'version' => 3,
+        'title' => 'OmniPay - Authorize SIM',
+        'name' => 'omnipay_AuthorizeNet_SIM',
+        'description' => 'Omnipay OmniPay - Authorize SIM Payment Processor',
+        'user_name_label' => 'Api Login ID',
+        'password_label' => 'Transaction Key',
+        'signature_label' => 'Hash Secret',
+        'class_name' => 'Payment_OmnipayMultiProcessor',
+        'url_site_default' => 'https://secure.authorize.net/gateway/transact.dll',
+        'url_api_default' => 'https://secure.authorize.net/gateway/transact.dll',
+        'billing_mode' => 4,
+        'payment_type' => 1,
+      ),
+  ),
+  */
 );
