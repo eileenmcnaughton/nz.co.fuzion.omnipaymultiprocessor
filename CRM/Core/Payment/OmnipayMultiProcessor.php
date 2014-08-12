@@ -368,6 +368,30 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Get billing fields required for this block
+   * @todo move this metadata requirement onto the class - or the mgd files
+   * @return array
+   */
+  function getBillingBlockFields() {
+    $billingID = $locationTypes = CRM_Core_BAO_LocationType::getBilling();
+    //for now we will cheat & just use the really blunt characteristics option - ie.
+    // ie billing mode 1 or payment type 3 get billing fields.
+    // we really want this to be metadata of the payment processors
+    if ($this->_paymentProcessor['billing_mode'] != 1 && $this->_paymentProcessor['class_name'] != 3) {
+      return array();
+    }
+    return array(
+      'first_name' => 'billing_first_name',
+      'middle_name' => 'billing_middle_name',
+      'last_name' => 'billing_last_name',
+      'street_address' => "billing_street_address-{$billingID}",
+      'city' => "billing_city-{$billingID}",
+      'country' => "billing_country_id-{$billingID}",
+      'state_province' => "billing_state_province_id-{$billingID}",
+      'postal_code' => "billing_postal_code-{$billingID}",
+    );
+  }
+  /**
    * Get the fields to display for transparent direct method
    * This is the method where we post first to CiviCRM & then do a form POST to the off site processor
    * with extra fields not included in the CiviCRM form.
@@ -454,16 +478,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
-   * get core CiviCRM payment fields
+   * get core CiviCRM address fields
    * @return array
    */
   function getBillingAddressFields() {
     $billingFields = array();
     foreach (array('street_address', 'city', 'state_province_id', 'postal_code', 'country_id',) as $addressField) {
-      $billingFields[]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
+      $billingFields[$addressField]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
     }
     return $billingFields;
   }
+
   /**
    * handle response from processor. We simply get the params from the REQUEST and pass them to a static function that
    * can also be called / tested outside the normal process

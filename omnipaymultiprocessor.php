@@ -103,7 +103,7 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
 
   $form->assign('paymentTypeName', $paymentType['name']);
 
-  $paymentFields = omnipaymultiprocessor_get_valid_form_payment_fields($formName == 'CRM_Contribute_Form_Contribution_Main' ? 'contribute' : 'event', $form->_paymentProcessor, $form->_paymentFields);
+  $paymentFields = omnipaymultiprocessor_get_valid_form_payment_fields($formName == 'CRM_Contribute_Form_Contribution_Main' ? 'contribute' : 'event', $form->_paymentProcessor, (empty($form->_paymentFields) ? array() : $form->_paymentFields));
   if(!empty($paymentFields)) {
     $form->assign('paymentFields', $paymentFields);
     $form->assign('paymentTypeLabel', ts($paymentType['label'] . ' Information'));
@@ -114,7 +114,7 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
   }
 
   $billingLocationID = $form->get('bltID');
-  $billingDetailsFields = omnipaymultiprocessor_getBillingPersonalDetailsFields($billingLocationID);
+  $billingDetailsFields = omnipaymultiprocessor_getBillingPersonalDetailsFields($form->_paymentProcessor);
 
   //we trick CiviCRM into adding the credit card form so we can remove the parts we don't want (the credit card fields)
   //for a transparent redirect like Cybersource
@@ -154,21 +154,13 @@ function omnipaymultiprocessor_get_suppressed_billing_fields($billingDetailField
 /**
  * get billing fields
  * note we should consider calling the payment processor for this information like we do for payment fields
- * @param integer $billingLocationID
+ * @param array $paymentProcessor
  *
  * @return array
  */
-function omnipaymultiprocessor_getBillingPersonalDetailsFields($billingLocationID) {
-  return array(
-    'first_name' => 'billing_first_name',
-    'middle_name' => 'billing_middle_name',
-    'last_name' => 'billing_last_name',
-    'street_address' => "billing_street_address-{$billingLocationID}",
-    'city' => "billing_city-{$billingLocationID}",
-    'country' => "billing_country_id-{$billingLocationID}",
-    'state_province' => "billing_state_province_id-{$billingLocationID}",
-    'postal_code' => "billing_postal_code-{$billingLocationID}",
-  );
+function omnipaymultiprocessor_getBillingPersonalDetailsFields($paymentProcessor) {
+  $processor = omnipaymultiprocessor_get_payment_processor_object('contribute', $paymentProcessor);
+  return $processor->getBillingBlockFields();
 }
 
 /**
