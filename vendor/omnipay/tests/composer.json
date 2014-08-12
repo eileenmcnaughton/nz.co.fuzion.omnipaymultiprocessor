@@ -1,0 +1,39 @@
+{
+    "name": "omnipay/tests",
+    "type": "library",
+    "description": "Testing components for Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "purchase"
+    ],
+    "homepage": "https://github.com/omnipay/tests",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Macneil",
+            "email": "adrian@adrianmacneil.com"
+        },
+        {
+            "name": "Omnipay Contributors",
+            "homepage": "https://github.com/omnipay/tests/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Omnipay\\Tests\\" : "src/" }
+    },
+    "require": {
+        "guzzle/plugin-mock": "~3.1",
+        "mockery/mockery": "~0.8",
+        "phpunit/phpunit": "~3.7.0",
+        "squizlabs/php_codesniffer": "~1.4"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

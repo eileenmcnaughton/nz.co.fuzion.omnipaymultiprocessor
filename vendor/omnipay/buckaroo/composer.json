@@ -23,7 +23,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Omnipay\\Buckaroo\\" : "src/" }
+        "psr-4": { "Omnipay\\Buckaroo\\" : "src/" }
     },
     "require": {
         "omnipay/common": "~2.0"

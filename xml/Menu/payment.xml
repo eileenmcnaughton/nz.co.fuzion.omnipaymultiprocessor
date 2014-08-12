@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<menu>
+    <item>
+        <path>civicrm/payment/details</path>
+        <page_callback>CRM_Core_Page_PaymentPage</page_callback>
+        <title>Payment</title>
+        <access_arguments>make online contributions</access_arguments>
+    </item>
+</menu>

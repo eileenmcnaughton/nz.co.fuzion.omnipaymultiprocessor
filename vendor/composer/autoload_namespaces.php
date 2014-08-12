@@ -6,12 +6,15 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
-    'Omnipay\\Mollie\\' => array($vendorDir . '/omnipay/mollie/src'),
+    'Omnipay\\Tests\\' => array($vendorDir . '/omnipay/tests/src'),
+    'Omnipay\\Skrill\\' => array($vendorDir . '/alfaproject/omnipay-skrill/src'),
     'Omnipay\\Common\\' => array($vendorDir . '/omnipay/common/src'),
-    'Omnipay\\Buckaroo\\' => array($vendorDir . '/omnipay/buckaroo/src'),
+    'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Guzzle\\Stream' => array($vendorDir . '/guzzle/stream'),
+    'Guzzle\\Plugin\\Mock' => array($vendorDir . '/guzzle/plugin-mock'),
     'Guzzle\\Parser' => array($vendorDir . '/guzzle/parser'),
     'Guzzle\\Http' => array($vendorDir . '/guzzle/http'),
     'Guzzle\\Common' => array($vendorDir . '/guzzle/common'),
