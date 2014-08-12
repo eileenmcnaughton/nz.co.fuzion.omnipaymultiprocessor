@@ -10,7 +10,8 @@
 // http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
 return array(
   /*
-  0 =>
+   * Omnipay was enabled as a test- but it also requires a js script
+   0 =>
     array(
       'name' => 'OmniPay - Stripe',
       'entity' => 'payment_processor_type',
