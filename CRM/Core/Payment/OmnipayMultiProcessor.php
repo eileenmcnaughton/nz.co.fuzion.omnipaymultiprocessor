@@ -216,6 +216,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if (empty($contribution['address_id'])) {
         civicrm_api3('contribution', 'create', array(
             'id' => $params['contributionID'],
+            'contribution_status_id' => $contribution['contribution_status_id'],// required due to CRM-15105
             'address_id' => CRM_Contribute_BAO_Contribution::createAddress($params, CRM_Core_BAO_LocationType::getBilling())
         ));
       }
