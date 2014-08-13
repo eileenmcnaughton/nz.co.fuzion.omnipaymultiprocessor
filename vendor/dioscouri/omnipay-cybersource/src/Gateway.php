@@ -23,13 +23,14 @@ class Gateway extends AbstractGateway
         return array(
             'profileId' => '',
             'secretKey' => '',
-            'accessKey' => ''
+            'accessKey' => '',
+            'testMode' => false,
         );
     }
 
     /**
      *
-     * @param array $parameters            
+     * @param array $parameters
      * @return \Omnipay\Cybersource\Message\AuthorizeRequest
      */
     public function authorize(array $parameters = array())
