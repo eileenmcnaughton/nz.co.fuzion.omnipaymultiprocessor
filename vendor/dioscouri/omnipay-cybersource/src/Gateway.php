@@ -40,7 +40,7 @@ class Gateway extends AbstractGateway
 
     /**
      *
-     * @param array $parameters            
+     * @param array $parameters
      * @return \Omnipay\Cybersource\Message\CaptureRequest
      */
     public function capture(array $parameters = array())
@@ -50,7 +50,7 @@ class Gateway extends AbstractGateway
 
     /**
      *
-     * @param array $parameters            
+     * @param array $parameters
      * @return \Omnipay\Cybersource\Message\PurchaseRequest
      */
     public function purchase(array $parameters = array())
@@ -60,14 +60,14 @@ class Gateway extends AbstractGateway
 
     /**
      *
-     * @param array $parameters            
+     * @param array $parameters
      * @return \Omnipay\Cybersource\Message\CompletePurchaseRequest
      */
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Cybersource\Message\CompletePurchaseRequest', $parameters);
     }
-    
+
     /**
      * @param array $parameters
      * @return \Omnipay\Cybersource\Message\CompleteAuthorizeRequest
@@ -75,11 +75,11 @@ class Gateway extends AbstractGateway
     public function completeAuthorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Cybersource\Message\CompleteAuthorizeRequest', $parameters);
-    }    
+    }
 
     /**
      *
-     * @param array $parameters            
+     * @param array $parameters
      * @return \Omnipay\Cybersource\Message\CreateCardRequest
      */
     public function createCard(array $parameters = array())
@@ -89,7 +89,7 @@ class Gateway extends AbstractGateway
 
     /**
      *
-     * @param array $parameters            
+     * @param array $parameters
      * @return \Omnipay\Cybersource\Message\UpdateCardRequest
      */
     public function updateCard(array $parameters = array())
@@ -145,7 +145,7 @@ class Gateway extends AbstractGateway
             $data_to_sign[] = $key . "=" . $value;
         }
         $pairs = implode(',', $data_to_sign);
-        
+
         return base64_encode(hash_hmac('sha256', $pairs, $this->getSecretKey(), true));
     }
 }
