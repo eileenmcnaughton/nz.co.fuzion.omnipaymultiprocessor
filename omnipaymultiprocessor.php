@@ -104,12 +104,14 @@ function omnipaymultiprocessor__versionAtLeast($version) {
 function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
   if ($formName == 'CRM_Admin_Form_PaymentProcessor') {
     foreach (array('signature', 'test_signature') as $fieldName) {
-      $label = $form->_elements[$form->_elementIndex[$fieldName]]->_label;
-      $form->removeElement($fieldName);
-      $form->add('textarea', $fieldName,
-        $label,
-        array('rows' => 4, 'cols' => 40,)
-      );
+      if ($form->elementExists($fieldName)) {
+        $label = $form->_elements[$form->_elementIndex[$fieldName]]->_label;
+        $form->removeElement($fieldName);
+        $form->add('textarea', $fieldName,
+          $label,
+          array('rows' => 4, 'cols' => 40,)
+        );
+      }
     }
   }
   if (!omnipaymultiprocessor_is_credit_card_form($formName)  || $form->_paymentProcessor['class_name'] !='Payment_OmnipayMultiProcessor')  {
