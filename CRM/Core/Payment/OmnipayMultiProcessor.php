@@ -212,12 +212,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   function saveBillingAddressIfRequired($params) {
     if (!empty($params['contributionID']) && $this->hasBillingAddressFields($params)) {
-      $contribution = civicrm_api3('contribution', 'getsingle', array('id' => $params['contributionID'], 'return' => 'address_id'));
+      $contribution = civicrm_api3('contribution', 'getsingle', array('id' => $params['contributionID'], 'return' => 'address_id, contribution_status_id'));
       if (empty($contribution['address_id'])) {
         civicrm_api3('contribution', 'create', array(
-            'id' => $params['contributionID'],
-            'contribution_status_id' => $contribution['contribution_status_id'],// required due to CRM-15105
-            'address_id' => CRM_Contribute_BAO_Contribution::createAddress($params, CRM_Core_BAO_LocationType::getBilling())
+          'id' => $params['contributionID'],
+          'contribution_status_id' => $contribution['contribution_status_id'],// required due to CRM-15105
+          'address_id' => CRM_Contribute_BAO_Contribution::createAddress($params, CRM_Core_BAO_LocationType::getBilling())
         ));
       }
     }
@@ -383,7 +383,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     }
     return array(
       'first_name' => 'billing_first_name',
-      'middle_name' => 'billing_middle_name',
+      //'middle_name' => 'billing_middle_name',
       'last_name' => 'billing_last_name',
       'street_address' => "billing_street_address-{$billingID}",
       'city' => "billing_city-{$billingID}",
