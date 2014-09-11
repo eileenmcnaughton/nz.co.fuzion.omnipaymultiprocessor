@@ -283,8 +283,20 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
     }
 
-    if(empty($cardFields['email']) && !empty($params['email-' . $billingID])) {
-      $cardFields['email'] = $params['email-' . $billingID];
+    if(empty($cardFields['email'])) {
+      if (!empty($params['email-' . $billingID])) {
+        $cardFields['email'] = $params['email-' . $billingID];
+      }
+      elseif (!empty($params['email-Primary'])) {
+        $cardFields['email'] = $params['email-Primary'];
+      }
+      else {
+        foreach ($params as $fieldName => $value) {
+          if (substr($fieldName, 0, 5) == 'email') {
+            $cardFields['email'] = $value;
+          }
+        }
+      }
     }
     //do we need these if clauses lines? in 4.5 contribution page we don't....
     if(is_numeric($cardFields['billingCountry'])) {
