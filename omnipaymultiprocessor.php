@@ -69,6 +69,8 @@ function omnipaymultiprocessor_civicrm_disable() {
  *                for 'enqueue', returns void
  */
 function omnipaymultiprocessor_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
+  //@todo fix me - when I grow up I want to be a proper upgrade hook (or possibly removed since there should be no new installs requiring this)
+  CRM_Core_DAO::executeQuery("UPDATE civicrm_menu SET is_public = 1 WHERE path = 'civicrm/payment/details'");
   return _omnipaymultiprocessor_civix_civicrm_upgrade($op, $queue);
 }
 
