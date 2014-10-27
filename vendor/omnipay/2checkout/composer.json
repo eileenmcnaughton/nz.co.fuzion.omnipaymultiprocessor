@@ -12,7 +12,7 @@
         "payment",
         "twocheckout"
     ],
-    "homepage": "https://github.com/omnipay/2checkout",
+    "homepage": "https://github.com/thephpleague/omnipay-2checkout",
     "license": "MIT",
     "authors": [
         {
@@ -21,7 +21,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/2checkout/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-2checkout/contributors"
         }
     ],
     "autoload": {

@@ -11,7 +11,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/omnipay/bitpay",
+    "homepage": "https://github.com/thephpleague/omnipay-bitpay",
     "license": "MIT",
     "authors": [
         {
@@ -20,7 +20,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/bitpay/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-bitpay/contributors"
         }
     ],
     "autoload": {

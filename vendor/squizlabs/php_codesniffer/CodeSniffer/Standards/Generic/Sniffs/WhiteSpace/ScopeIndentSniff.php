@@ -69,15 +69,26 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     protected $nonIndentingScopes = array();
 
     /**
-     * Stores the indent of the last PHP open tag we found.
+     * Stores the indent of the PHP open tags we found.
      *
      * This value is used to calculate the expected indent of top level structures
      * so we don't assume they are always at column 1. If PHP code is embedded inside
      * HTML (etc.) code, then the starting column for that code may not be column 1.
      *
-     * @var int
+     * @var int[]
      */
-    private $_openTagIndent = 0;
+    private $_openTagIndents = array();
+
+    /**
+     * Stores the indent of the PHP close tags we found.
+     *
+     * This value is used to calculate the expected indent of top level structures
+     * so we don't assume they are always at column 1. If PHP code is embedded inside
+     * HTML (etc.) code, then the starting column for that code may not be column 1.
+     *
+     * @var int[]
+     */
+    private $_closeTagIndents = array();
 
 
     /**
@@ -89,6 +100,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     {
         $tokens   = PHP_CodeSniffer_Tokens::$scopeOpeners;
         $tokens[] = T_OPEN_TAG;
+        $tokens[] = T_OPEN_TAG_WITH_ECHO;
+        $tokens[] = T_CLOSE_TAG;
         return $tokens;
 
     }//end register()
@@ -108,10 +121,27 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         // We only want to record the indent of open tags, not process them.
-        if ($tokens[$stackPtr]['code'] == T_OPEN_TAG) {
-            if (empty($tokens[$stackPtr]['conditions']) === true) {
-                // Only record top-level PHP tags.
-                $this->_openTagIndent = ($tokens[$stackPtr]['column'] - 1);
+        if ($tokens[$stackPtr]['code'] == T_OPEN_TAG
+            || $tokens[$stackPtr]['code'] == T_OPEN_TAG_WITH_ECHO
+        ) {
+            $indent = ($tokens[$stackPtr]['column'] - 1);
+            if (empty($this->_closeTagIndents) === false
+                && $indent === $this->_closeTagIndents[0]
+            ) {
+                array_shift($this->_closeTagIndents);
+            } else {
+                array_unshift($this->_openTagIndents, $indent);
+            }
+
+            return;
+        }
+
+        if ($tokens[$stackPtr]['code'] == T_CLOSE_TAG) {
+            $indent = ($tokens[$stackPtr]['column'] - 1);
+            if ($indent === $this->_openTagIndents[0]) {
+                array_shift($this->_openTagIndents);
+            } else {
+                array_unshift($this->_closeTagIndents, $indent);
             }
 
             return;
@@ -330,7 +360,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }//end if
                 }//end if
 
-                // The token at the start of the line, needs to have its' column
+                // The token at the start of the line, needs to have its column
                 // greater than the relative indent we set above. If it is less,
                 // an error should be shown.
                 if ($column !== $indent) {
@@ -387,7 +417,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 // carefully in another sniff.
                 return $tokens[$stackPtr]['column'];
             } else {
-                return ($this->_openTagIndent + 1);
+                return ($this->_openTagIndents[0] + 1);
             }
         }
 
@@ -401,9 +431,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 continue;
             }
 
-            if ($condition === T_CLOSURE && $inParenthesis === true) {
-                // Closures cause problems with indents when they are
-                // used as function arguments because the code inside them
+            if ($condition === T_CLOSURE) {
+                // Closures cause problems with indents because the code inside them
                 // is not technically inside the function yet, so the indent
                 // is always off by one. So instead, use the
                 // indent of the closure as the base value.
@@ -426,9 +455,17 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             $indent += $this->indent;
         }//end foreach
 
+        // Take the indent of the open tag into account.
+        if ($this->_openTagIndents[0] > $indent) {
+            $indent = $this->_openTagIndents[0];
+        } else {
+            $indent += $this->_openTagIndents[0];
+        }
+
         // Increase by 1 to indiciate that the code should start at a specific column.
         // E.g., code indented 4 spaces should start at column 5.
         $indent++;
+
         return $indent;
 
     }//end calculateExpectedIndent()

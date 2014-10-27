@@ -10,7 +10,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/omnipay/netbanx",
+    "homepage": "https://github.com/thephpleague/omnipay-netbanx",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/netbanx/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-netbanx/contributors"
         }
     ],
     "autoload": {

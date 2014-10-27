@@ -56,8 +56,17 @@ class WithFormatterExpectationTest extends PHPUnit_Framework_TestCase
             array(
                 array('a string', 98768, array('a', 'nother', 'array')),
                 ''
-            )
+            ),
         );
+    }
+
+    /** @test */
+    public function format_objects_should_not_call_getters_with_params()
+    {
+        $obj = new ClassWithGetterWithParam();
+        $string = Mockery::formatObjects(array($obj));
+
+        $this->assertNotContains('Missing argument 1 for', $string);
     }
 
 }
@@ -66,12 +75,18 @@ class ClassWithGetter
 {
     private $dep;
 
-    function __construct($dep)
+    public function __construct($dep)
     {
         $this->dep = $dep;
     }
+
     public function getFoo()
     {
         return $this->dep->doBar('bar', $this);
     }
+}
+
+class ClassWithGetterWithParam
+{
+    public function getBar($bar) {}
 }

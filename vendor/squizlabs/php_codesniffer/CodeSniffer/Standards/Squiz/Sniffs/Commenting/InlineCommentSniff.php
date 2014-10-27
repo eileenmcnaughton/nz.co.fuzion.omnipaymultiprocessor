@@ -124,14 +124,14 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
 
                 // Only error once per comment.
                 if (substr($tokens[$stackPtr]['content'], 0, 3) === '/**') {
-                    $error  = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
+                    $error = 'Inline doc block comments are not allowed; use "/* Comment */" or "// Comment" instead';
                     $phpcsFile->addError($error, $stackPtr, 'DocBlock');
                 }
             }//end if
         }//end if
 
         if ($tokens[$stackPtr]['content']{0} === '#') {
-            $error  = 'Perl-style comments are not allowed; use "// Comment" instead';
+            $error = 'Perl-style comments are not allowed; use "// Comment" instead';
             $phpcsFile->addError($error, $stackPtr, 'WrongStyle');
         }
 
@@ -162,7 +162,15 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         }
 
         $spaceCount = 0;
-        for ($i = 2; $i < strlen($comment); $i++) {
+        $tabFound   = false;
+
+        $commentLength = strlen($comment);
+        for ($i = 2; $i < $commentLength; $i++) {
+            if ($comment[$i] === "\t") {
+                $tabFound = true;
+                break;
+            }
+
             if ($comment[$i] !== ' ') {
                 break;
             }
@@ -170,25 +178,29 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             $spaceCount++;
         }
 
-        if ($spaceCount === 0) {
+        if ($tabFound === true) {
+            $error = 'Tab found before comment text; expected "// %s" but found "%s"';
+            $data  = array(
+                      ltrim(substr($comment, 2)),
+                      $comment,
+                     );
+            $phpcsFile->addError($error, $stackPtr, 'TabBefore', $data);
+        } else if ($spaceCount === 0) {
             $error = 'No space before comment text; expected "// %s" but found "%s"';
             $data  = array(
                       substr($comment, 2),
                       $comment,
                      );
             $phpcsFile->addError($error, $stackPtr, 'NoSpaceBefore', $data);
-        }
-
-        if ($spaceCount > 1) {
-            $error = '%s spaces found before inline comment line; use block comment if you need indentation';
+        } else if ($spaceCount > 1) {
+            $error = 'Expected 1 space before comment text but found %s; use block comment if you need indentation';
             $data  = array(
                       $spaceCount,
                       substr($comment, (2 + $spaceCount)),
                       $comment,
                      );
             $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
-        }
-
+        }//end if
 
         // The below section determines if a comment block is correctly capitalised,
         // and ends in a full-stop. It will find the last comment in a block, and
@@ -248,25 +260,25 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             $phpcsFile->addError($error, $stackPtr, 'InvalidEndChar', $data);
         }
 
-        // Finally, the line below the last comment cannot be empty.
-        $start = false;
-        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
-                if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                    return;
+        // Finally, the line below the last comment cannot be empty if this inline
+        // comment is on a line by itself.
+        if ($tokens[$previousContent]['line'] < $tokens[$stackPtr]['line']) {
+            $start = false;
+            for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+                if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
+                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                        return;
+                    }
+                } else if ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
+                    break;
                 }
-            } else if ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
-                break;
             }
-        }
 
-        $error = 'There must be no blank line following an inline comment';
-        $phpcsFile->addError($error, $stackPtr, 'SpacingAfter');
+            $error = 'There must be no blank line following an inline comment';
+            $phpcsFile->addError($error, $stackPtr, 'SpacingAfter');
+        }
 
     }//end process()
 
 
 }//end class
-
-
-?>

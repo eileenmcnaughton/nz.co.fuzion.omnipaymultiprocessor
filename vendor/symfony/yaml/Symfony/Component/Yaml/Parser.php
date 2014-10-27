@@ -22,11 +22,11 @@ class Parser
 {
     const FOLDED_SCALAR_PATTERN = '(?P<separator>\||>)(?P<modifiers>\+|\-|\d+|\+\d+|\-\d+|\d+\+|\d+\-)?(?P<comments> +#.*)?';
 
-    private $offset         = 0;
-    private $lines          = array();
-    private $currentLineNb  = -1;
-    private $currentLine    = '';
-    private $refs           = array();
+    private $offset = 0;
+    private $lines = array();
+    private $currentLineNb = -1;
+    private $currentLine = '';
+    private $refs = array();
 
     /**
      * Constructor
@@ -94,8 +94,8 @@ class Parser
                 if (!isset($values['value']) || '' == trim($values['value'], ' ') || 0 === strpos(ltrim($values['value'], ' '), '#')) {
                     $c = $this->getRealCurrentLineNb() + 1;
                     $parser = new Parser($c);
-                    $parser->refs =& $this->refs;
-                    $data[] = $parser->parse($this->getNextEmbedBlock(), $exceptionOnInvalidType, $objectSupport, $objectForMap);
+                    $parser->refs = & $this->refs;
+                    $data[] = $parser->parse($this->getNextEmbedBlock(null, true), $exceptionOnInvalidType, $objectSupport, $objectForMap);
                 } else {
                     if (isset($values['leadspaces'])
                         && ' ' == $values['leadspaces']
@@ -104,7 +104,7 @@ class Parser
                         // this is a compact notation element, add to next block and parse
                         $c = $this->getRealCurrentLineNb();
                         $parser = new Parser($c);
-                        $parser->refs =& $this->refs;
+                        $parser->refs = & $this->refs;
 
                         $block = $values['value'];
                         if ($this->isNextLineIndented()) {
@@ -116,14 +116,14 @@ class Parser
                         $data[] = $this->parseValue($values['value'], $exceptionOnInvalidType, $objectSupport, $objectForMap);
                     }
                 }
-            } elseif (preg_match('#^(?P<key>'.Inline::REGEX_QUOTED_STRING.'|[^ \'"\[\{].*?) *\:(\s+(?P<value>.+?))?\s*$#u', $this->currentLine, $values) && false === strpos($values['key'],' #')) {
+            } elseif (preg_match('#^(?P<key>'.Inline::REGEX_QUOTED_STRING.'|[^ \'"\[\{].*?) *\:(\s+(?P<value>.+?))?\s*$#u', $this->currentLine, $values) && (false === strpos($values['key'],' #') || in_array($values['key'][0], array('"', "'")))) {
                 if ($context && 'sequence' == $context) {
                     throw new ParseException('You cannot define a mapping item when in a sequence');
                 }
                 $context = 'mapping';
 
                 // force correct settings
-                Inline::parse(null, $exceptionOnInvalidType, $objectSupport, $objectForMap);
+                Inline::parse(null, $exceptionOnInvalidType, $objectSupport, $objectForMap, $this->refs);
                 try {
                     $key = Inline::parseScalar($values['key']);
                 } catch (ParseException $e) {
@@ -161,7 +161,7 @@ class Parser
                         }
                         $c = $this->getRealCurrentLineNb() + 1;
                         $parser = new Parser($c);
-                        $parser->refs =& $this->refs;
+                        $parser->refs = & $this->refs;
                         $parsed = $parser->parse($value, $exceptionOnInvalidType, $objectSupport, $objectForMap);
 
                         if (!is_array($parsed)) {
@@ -212,7 +212,7 @@ class Parser
                     } else {
                         $c = $this->getRealCurrentLineNb() + 1;
                         $parser = new Parser($c);
-                        $parser->refs =& $this->refs;
+                        $parser->refs = & $this->refs;
                         $value = $parser->parse($this->getNextEmbedBlock(), $exceptionOnInvalidType, $objectSupport, $objectForMap);
                         // Spec: Keys MUST be unique; first one wins.
                         // But overwriting is allowed when a merge node is used in current block.
@@ -233,7 +233,7 @@ class Parser
                 $lineCount = count($this->lines);
                 if (1 === $lineCount || (2 === $lineCount && empty($this->lines[1]))) {
                     try {
-                        $value = Inline::parse($this->lines[0], $exceptionOnInvalidType, $objectSupport, $objectForMap);
+                        $value = Inline::parse($this->lines[0], $exceptionOnInvalidType, $objectSupport, $objectForMap, $this->refs);
                     } catch (ParseException $e) {
                         $e->setParsedLine($this->getRealCurrentLineNb() + 1);
                         $e->setSnippet($this->currentLine);
@@ -317,15 +317,20 @@ class Parser
     /**
      * Returns the next embed block of YAML.
      *
-     * @param int     $indentation The indent level at which the block is to be read, or null for default
+     * @param int  $indentation The indent level at which the block is to be read, or null for default
+     * @param bool $inSequence  True if the enclosing data structure is a sequence
      *
      * @return string A YAML string
      *
      * @throws ParseException When indentation problem are detected
      */
-    private function getNextEmbedBlock($indentation = null)
+    private function getNextEmbedBlock($indentation = null, $inSequence = false)
     {
-        $this->moveToNextLine();
+        $oldLineIndentation = $this->getCurrentLineIndentation();
+
+        if (!$this->moveToNextLine()) {
+            return;
+        }
 
         if (null === $indentation) {
             $newIndent = $this->getCurrentLineIndentation();
@@ -340,6 +345,14 @@ class Parser
         }
 
         $data = array(substr($this->currentLine, $newIndent));
+
+        if ($inSequence && $oldLineIndentation === $newIndent && '-' === $data[0][0]) {
+            // the previous line contained a dash but no item content, this line is a sequence item with the same indentation
+            // and therefore no nested list or mapping
+            $this->moveToPreviousLine();
+
+            return;
+        }
 
         $isItUnindentedCollection = $this->isStringUnIndentedCollectionItem($this->currentLine);
 
@@ -441,7 +454,7 @@ class Parser
         }
 
         try {
-            return Inline::parse($value, $exceptionOnInvalidType, $objectSupport, $objectForMap);
+            return Inline::parse($value, $exceptionOnInvalidType, $objectSupport, $objectForMap, $this->refs);
         } catch (ParseException $e) {
             $e->setParsedLine($this->getRealCurrentLineNb() + 1);
             $e->setSnippet($this->currentLine);
@@ -671,5 +684,4 @@ class Parser
     {
         return (0 === strpos($this->currentLine, '- '));
     }
-
 }

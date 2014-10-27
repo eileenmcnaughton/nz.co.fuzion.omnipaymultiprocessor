@@ -16,13 +16,17 @@
 
 namespace test\Mockery;
 
-class MockClassWithUnknownTypeHintTest extends \PHPUnit_Framework_TestCase
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+
+class MockClassWithUnknownTypeHintTest extends MockeryTestCase
 {
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->container = new \Mockery\Container;
     }
 
-    protected function tearDown() {
+    protected function tearDown()
+    {
         $this->container->mockery_close();
     }
 

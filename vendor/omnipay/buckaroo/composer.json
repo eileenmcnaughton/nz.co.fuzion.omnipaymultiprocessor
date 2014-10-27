@@ -10,7 +10,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/omnipay/buckaroo",
+    "homepage": "https://github.com/thephpleague/omnipay-buckaroo",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/buckaroo/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-buckaroo/contributors"
         }
     ],
     "autoload": {

@@ -10,7 +10,7 @@
         "payment",
         "purchase"
     ],
-    "homepage": "https://github.com/omnipay/tests",
+    "homepage": "https://github.com/thephpleague/omnipay-tests",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/tests/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-tests/contributors"
         }
     ],
     "autoload": {

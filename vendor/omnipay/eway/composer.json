@@ -10,7 +10,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/omnipay/eway",
+    "homepage": "https://github.com/thephpleague/omnipay-eway",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/eway/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-eway/contributors"
         }
     ],
     "autoload": {

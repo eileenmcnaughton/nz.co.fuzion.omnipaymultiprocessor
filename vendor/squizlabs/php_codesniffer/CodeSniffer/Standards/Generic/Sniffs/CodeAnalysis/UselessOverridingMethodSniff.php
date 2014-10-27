@@ -43,7 +43,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
-     * @return array(integer)
+     * @return int[]
      */
     public function register()
     {
@@ -169,7 +169,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         $parameters = array_filter($parameters);
 
         if (count($parameters) === count($signature) && $parameters === $signature) {
-            $phpcsFile->addWarning('Useless method overriding detected', $stackPtr, 'Found');
+            $phpcsFile->addWarning('Possible useless method overriding detected', $stackPtr, 'Found');
         }
 
     }//end process()

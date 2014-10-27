@@ -69,7 +69,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '1.5.3';
+    const VERSION = '1.5.5';
 
     /**
      * Package stability; either stable or beta.
@@ -684,26 +684,37 @@ class PHP_CodeSniffer
 
         $di = new RecursiveIteratorIterator($rdi, 0, RecursiveIteratorIterator::CATCH_GET_CHILD);
 
+        $dirLen = strlen($directory);
+
         foreach ($di as $file) {
-            $fileName = $file->getFilename();
+            $filename = $file->getFilename();
 
             // Skip hidden files.
-            if (substr($fileName, 0, 1) === '.') {
+            if (substr($filename, 0, 1) === '.') {
                 continue;
             }
 
             // We are only interested in PHP and sniff files.
-            $fileParts = explode('.', $fileName);
+            $fileParts = explode('.', $filename);
             if (array_pop($fileParts) !== 'php') {
                 continue;
             }
 
-            $basename = basename($fileName, '.php');
+            $basename = basename($filename, '.php');
             if (substr($basename, -5) !== 'Sniff') {
                 continue;
             }
 
             $path = $file->getPathname();
+
+            // Skip files in hidden directories within the Sniffs directory of this
+            // standard. We use the offset with strpos() to allow hidden directories
+            // before, valid example:
+            // /home/foo/.composer/vendor/drupal/coder/coder_sniffer/Drupal/Sniffs/...
+            if (strpos($path, DIRECTORY_SEPARATOR.'.', $dirLen) !== false) {
+                continue;
+            }
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> $path".PHP_EOL;
@@ -1244,7 +1255,7 @@ class PHP_CodeSniffer
         }
 
         foreach ($this->ignorePatterns as $pattern => $type) {
-            if (is_array($pattern) === true) {
+            if (is_array($type) === true) {
                 // A sniff specific ignore pattern.
                 continue;
             }
@@ -1506,7 +1517,7 @@ class PHP_CodeSniffer
     /**
      * Gets the array of PHP_CodeSniffer_Sniff's.
      *
-     * @return array(PHP_CodeSniffer_Sniff)
+     * @return PHP_CodeSniffer_Sniff[]
      */
     public function getSniffs()
     {
@@ -1518,7 +1529,7 @@ class PHP_CodeSniffer
     /**
      * Gets the array of PHP_CodeSniffer_Sniff's indexed by token type.
      *
-     * @return array()
+     * @return array
      */
     public function getTokenSniffs()
     {
@@ -1925,6 +1936,33 @@ class PHP_CodeSniffer
 
 
     /**
+     * Get a list paths where standards are installed.
+     *
+     * @return array
+     */
+    public static function getInstalledStandardPaths()
+    {
+        $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
+        $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
+        if ($configPaths !== null) {
+            $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
+        }
+
+        $resolvedInstalledPaths = array();
+        foreach ($installedPaths as $installedPath) {
+            if (substr($installedPath, 0, 1) === '.') {
+                $installedPath = dirname(__FILE__).'/'.$installedPath;
+            }
+
+            $resolvedInstalledPaths[] = $installedPath;
+        }
+
+        return $resolvedInstalledPaths;
+
+    }//end getInstalledStandardPaths()
+
+
+    /**
      * Get a list of all coding standards installed.
      *
      * Coding standards are directories located in the
@@ -1948,11 +1986,7 @@ class PHP_CodeSniffer
         $installedStandards = array();
 
         if ($standardsDir === '') {
-            $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
-            $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
-            if ($configPaths !== null) {
-                $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
-            }
+            $installedPaths = self::getInstalledStandardPaths();
         } else {
             $installedPaths = array($standardsDir);
         }
@@ -1968,10 +2002,9 @@ class PHP_CodeSniffer
                         continue;
                     }
 
-                    // Valid coding standard dirs include a standard class.
+                    // Valid coding standard dirs include a ruleset.
                     $csFile = $file->getPathname().'/ruleset.xml';
                     if (is_file($csFile) === true) {
-                        // We found a coding standard directory.
                         $installedStandards[] = $filename;
                     }
                 }
@@ -2035,12 +2068,7 @@ class PHP_CodeSniffer
      */
     public static function getInstalledStandardPath($standard)
     {
-        $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
-        $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
-        if ($configPaths !== null) {
-            $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
-        }
-
+        $installedPaths = self::getInstalledStandardPaths();
         foreach ($installedPaths as $installedPath) {
             $path = realpath($installedPath.'/'.$standard.'/ruleset.xml');
             if (is_file($path) === true) {

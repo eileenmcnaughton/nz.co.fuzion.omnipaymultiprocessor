@@ -15,6 +15,7 @@ return array(
     'Omnipay\\Pin\\' => array($vendorDir . '/omnipay/pin/src'),
     'Omnipay\\PaymentExpress\\' => array($vendorDir . '/omnipay/paymentexpress/src'),
     'Omnipay\\Payflow\\' => array($vendorDir . '/omnipay/payflow/src'),
+    'Omnipay\\Paybox\\' => array($vendorDir . '/fuzion/omnipay-paybox/src'),
     'Omnipay\\PayPal\\' => array($vendorDir . '/omnipay/paypal/src'),
     'Omnipay\\PayFast\\' => array($vendorDir . '/omnipay/payfast/src'),
     'Omnipay\\Netaxept\\' => array($vendorDir . '/omnipay/netaxept/src'),

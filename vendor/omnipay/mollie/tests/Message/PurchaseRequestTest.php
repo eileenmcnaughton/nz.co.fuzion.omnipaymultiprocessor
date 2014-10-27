@@ -1,12 +1,13 @@
 <?php
-
 namespace Omnipay\Mollie\Message;
 
 use Omnipay\Tests\TestCase;
 
 class PurchaseRequestTest extends TestCase
 {
+
     /**
+     *
      * @var \Omnipay\Mollie\Message\PurchaseRequest
      */
     protected $request;
@@ -21,7 +22,7 @@ class PurchaseRequestTest extends TestCase
             'description' => 'Description',
             'returnUrl'   => 'https://www.example.com/return',
             'method'      => 'ideal',
-            'metadata'    => 'meta',
+            'metadata'    => 'meta'
         ));
     }
 
@@ -34,7 +35,7 @@ class PurchaseRequestTest extends TestCase
             'returnUrl'     => 'https://www.example.com/return',
             'paymentMethod' => 'ideal',
             'metadata'      => 'meta',
-            'issuer'        => 'my bank',
+            'issuer'        => 'my bank'
         ));
 
         $data = $this->request->getData();
@@ -46,6 +47,31 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame('meta', $data['metadata']);
         $this->assertSame('my bank', $data['issuer']);
         $this->assertCount(6, $data);
+    }
+
+    public function testGetDataWithWebhook()
+    {
+        $this->request->initialize(array(
+            'apiKey'        => 'mykey',
+            'amount'        => '12.00',
+            'description'   => 'Description',
+            'returnUrl'     => 'https://www.example.com/return',
+            'paymentMethod' => 'ideal',
+            'metadata'      => 'meta',
+            'issuer'        => 'my bank',
+            'notifyUrl'    => 'https://www.example.com/hook'
+        ));
+
+        $data = $this->request->getData();
+
+        $this->assertSame("12.00", $data['amount']);
+        $this->assertSame('Description', $data['description']);
+        $this->assertSame('https://www.example.com/return', $data['redirectUrl']);
+        $this->assertSame('ideal', $data['method']);
+        $this->assertSame('meta', $data['metadata']);
+        $this->assertSame('my bank', $data['issuer']);
+        $this->assertSame('https://www.example.com/hook', $data['webhookUrl']);
+        $this->assertCount(7, $data);
     }
 
     public function testSendSuccess()
@@ -78,5 +104,33 @@ class PurchaseRequestTest extends TestCase
         $this->assertNull($response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());
         $this->assertSame("The issuer is invalid", $response->getMessage());
+    }
+
+    public function testIssuerFailure()
+    {
+        $this->setMockHttpResponse('PurchaseIssuerFailure.txt');
+        $response = $this->request->send();
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getRedirectUrl());
+        $this->assertNull($response->getRedirectData());
+        $this->assertSame("Issuer failure", $response->getMessage());
+    }
+
+    public function testSystemFailure()
+    {
+        $this->setMockHttpResponse('PurchaseSystemFailure.txt');
+        $response = $this->request->send();
+
+        $this->assertInstanceOf('Omnipay\Mollie\Message\PurchaseResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getRedirectUrl());
+        $this->assertNull($response->getRedirectData());
+        $this->assertSame("Payment platform for this payment method temporarily not available", $response->getMessage());
     }
 }
