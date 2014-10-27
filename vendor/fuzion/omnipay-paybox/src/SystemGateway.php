@@ -2,8 +2,6 @@
 namespace Omnipay\Paybox;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\PayboxSystem\Message\PurchaseRequest;
-use Omnipay\PayboxSystem\Message\RefundRequest;
 
 /**
  * Paybox System Gateway
@@ -32,70 +30,70 @@ class SystemGateway extends AbstractGateway
     /**
      *
      * @param array $parameters
-     * @return \Omnipay\PayboxSystem\Message\AuthorizeRequest
+     * @return \Omnipay\Paybox\Message\AuthorizeRequest
      */
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayboxSystem\Message\AuthorizeRequest', $parameters);
+        return $this->createRequest('\Omnipay\Paybox\Message\AuthorizeRequest', $parameters);
     }
 
     /**
      *
      * @param array $parameters
-     * @return \Omnipay\PayboxSystem\Message\CaptureRequest
+     * @return \Omnipay\Paybox\Message\CaptureRequest
      */
     public function capture(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayboxSystem\Message\CaptureRequest', $parameters);
+        return $this->createRequest('\Omnipay\Paybox\Message\CaptureRequest', $parameters);
     }
 
     /**
      *
      * @param array $parameters
-     * @return \Omnipay\PayboxSystem\Message\PurchaseRequest
+     * @return \Omnipay\Paybox\Message\PurchaseRequest
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayboxSystem\Message\PurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\Paybox\Message\PurchaseRequest', $parameters);
     }
 
     /**
      *
      * @param array $parameters
-     * @return \Omnipay\PayboxSystem\Message\CompletePurchaseRequest
+     * @return \Omnipay\Paybox\Message\CompletePurchaseRequest
      */
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayboxSystem\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\Paybox\Message\CompletePurchaseRequest', $parameters);
     }
 
     /**
      * @param array $parameters
-     * @return \Omnipay\PayboxSystem\Message\CompleteAuthorizeRequest
+     * @return \Omnipay\Paybox\Message\CompleteAuthorizeRequest
      */
     public function completeAuthorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayboxSystem\Message\CompleteAuthorizeRequest', $parameters);
+        return $this->createRequest('\Omnipay\Paybox\Message\CompleteAuthorizeRequest', $parameters);
     }
 
     /**
      *
      * @param array $parameters
-     * @return \Omnipay\PayboxSystem\Message\CreateCardRequest
+     * @return \Omnipay\Paybox\Message\CreateCardRequest
      */
     public function createCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayboxSystem\Message\CreateCardRequest', $parameters);
+        return $this->createRequest('\Omnipay\Paybox\Message\CreateCardRequest', $parameters);
     }
 
     /**
      *
      * @param array $parameters
-     * @return \Omnipay\PayboxSystem\Message\UpdateCardRequest
+     * @return \Omnipay\Paybox\Message\UpdateCardRequest
      */
     public function updateCard(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayboxSystem\Message\UpdateCardRequest', $parameters);
+        return $this->createRequest('\Omnipay\Paybox\Message\UpdateCardRequest', $parameters);
     }
 
     public function getSite()

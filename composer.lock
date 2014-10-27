@@ -108,7 +108,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-                "reference": "ef97ee2be9c70418bce1ac1610ea487b733f5f72"
+                "reference": "e06cf445650fc8f95ccb9177d08cb5201e278944"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -132,7 +132,7 @@
                 }
             ],
             "description": "Paybox support for Omnipay payment processing library",
-            "homepage": "https://github.com/fuzion/omnipay-paybox",
+            "homepage": "https://github.com/eileenmcnaughton/omnipay-paybox",
             "keywords": [
                 "gateway",
                 "merchant",
@@ -142,7 +142,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-10-27 15:30:07"
+            "time": "2014-10-27 16:55:49"
         },
         {
             "name": "guzzle/common",

@@ -4,7 +4,7 @@ namespace Omnipay\Paybox;
 
 use Omnipay\Tests\GatewayTestCase;
 
-class GatewayTest extends GatewayTestCase
+class DirectGatewayTest extends GatewayTestCase
 {
     public function setUp()
     {

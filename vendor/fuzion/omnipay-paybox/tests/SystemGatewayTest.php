@@ -4,8 +4,13 @@ namespace Omnipay\Paybox;
 
 use Omnipay\Tests\GatewayTestCase;
 
-class GatewayTest extends GatewayTestCase
+class SystemGatewayTest extends GatewayTestCase
 {
+  /**
+   * @var SystemGateway
+   */
+    public $gateway;
+
     public function setUp()
     {
         parent::setUp();
