@@ -53,6 +53,46 @@ return array(
           'payment_type' => 3,
         ),
     ),
+  2 =>
+    array(
+      'name' => 'OmniPay - Paybox System',
+      'entity' => 'payment_processor_type',
+      'params' =>
+        array(
+          'version' => 3,
+          'title' => 'OmniPay - PayboxSystem',
+          'name' => 'omnipay_PayboxSystem',
+          'description' => 'Omnipay Paybox Payment Processor',
+          'user_name_label' => 'Site',
+          'password_label' => 'Identifiant',
+          'signature_label' => 'Rang',
+          'class_name' => 'Payment_OmnipayMultiProcessor',
+          'url_site_default' => 'https://dummyurl.com',
+          'url_api_default' => 'https://dummyurl.com',
+          'billing_mode' => 4,
+          'payment_type' => 1,
+        ),
+    ),
+  3 =>
+    array(
+      'name' => 'OmniPay - Paybox Direct',
+      'entity' => 'payment_processor_type',
+      'params' =>
+        array(
+          'version' => 3,
+          'title' => 'OmniPay - PayboxDirect',
+          'name' => 'omnipay_PayboxDirect',
+          'description' => 'Omnipay Paybox Payment Processor',
+          'user_name_label' => 'Site',
+          'password_label' => 'Identifiant',
+          'signature_label' => 'Rang',
+          'class_name' => 'Payment_OmnipayMultiProcessor',
+          'url_site_default' => 'https://dummyurl.com',
+          'url_api_default' => 'https://dummyurl.com',
+          'billing_mode' => 1,
+          'payment_type' => 1,
+        ),
+    ),
   /*
   2 =>
     array(

@@ -3,6 +3,10 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-cybersource.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/eileenmcnaughton/omnipay-paybox.git"
         }
     ],
     "require":
@@ -10,7 +14,8 @@
         "omnipay/omnipay": "~2.0",
         "dioscouri/omnipay-cybersource": "master",
         "alfaproject/omnipay-skrill": "dev-master",
-        "omnipay/bitpay": "dev-master"
+        "omnipay/bitpay": "dev-master",
+        "fuzion/omnipay-paybox": "dev-master"
     },
     "require-dev":
     {
