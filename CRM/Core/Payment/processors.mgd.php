@@ -61,7 +61,7 @@ return array(
         array(
           'version' => 3,
           'title' => 'OmniPay - PayboxSystem',
-          'name' => 'omnipay_PayboxSystem',
+          'name' => 'omnipay_Paybox_System',
           'description' => 'Omnipay Paybox Payment Processor',
           'user_name_label' => 'Site',
           'password_label' => 'Identifiant',
@@ -80,7 +80,7 @@ return array(
       'params' =>
         array(
           'version' => 3,
-          'title' => 'OmniPay - PayboxDirect',
+          'title' => 'OmniPay - Paybox_Direct',
           'name' => 'omnipay_PayboxDirect',
           'description' => 'Omnipay Paybox Payment Processor',
           'user_name_label' => 'Site',
