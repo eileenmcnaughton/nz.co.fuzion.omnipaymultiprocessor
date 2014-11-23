@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "16d086eeaeb777c34e313f7115a54c24",
+    "hash": "5ddeb3cbed8881d9f7a6581bdfeb23c5",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -66,7 +66,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
-                "reference": "7f83ea20a6b6698bd26219d58efc1f639bb2ce20"
+                "reference": "159121d4e1d03ef9d1bc8cc7456ff3c3aebca5b7"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -100,7 +100,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-10-27 15:28:28"
+            "time": "2014-10-29 08:42:24"
         },
         {
             "name": "fuzion/omnipay-paybox",
@@ -108,7 +108,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-                "reference": "e06cf445650fc8f95ccb9177d08cb5201e278944"
+                "reference": "ecb53ec940ecf3cde14bbff362f57972593446ce"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -142,7 +142,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-10-27 16:55:49"
+            "time": "2014-11-23 21:19:20"
         },
         {
             "name": "guzzle/common",
@@ -1653,16 +1653,16 @@
         },
         {
             "name": "omnipay/paypal",
-            "version": "v2.3.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paypal.git",
-                "reference": "c323164929de91d877661a519d0991515ef5e762"
+                "reference": "10c4cde14064bb214ca71fddb541dfac841c40c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/c323164929de91d877661a519d0991515ef5e762",
-                "reference": "c323164929de91d877661a519d0991515ef5e762",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/10c4cde14064bb214ca71fddb541dfac841c40c3",
+                "reference": "10c4cde14064bb214ca71fddb541dfac841c40c3",
                 "shasum": ""
             },
             "require": {
@@ -1674,7 +1674,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "2.3.x-dev"
                 }
             },
             "autoload": {
@@ -1707,7 +1707,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2014-09-17 00:39:56"
+            "time": "2014-11-21 15:23:24"
         },
         {
             "name": "omnipay/pin",
@@ -2054,18 +2054,64 @@
             "time": "2014-09-17 00:37:18"
         },
         {
+            "name": "sergej-koscejev/omnipay-gopay",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sergej-koscejev/omnipay-gopay.git",
+                "reference": "b2e385e4649e41f9a1ce8ed72f372f818be6e30a"
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Gopay\\": "src/"
+                }
+            },
+            "license": [
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "Sergej Koščejev",
+                    "email": "sergej@koscejev.cz"
+                }
+            ],
+            "description": "GoPay driver for the Omnipay payment processing library",
+            "homepage": "https://github.com/sergej-koscejev/omnipay-gopay",
+            "keywords": [
+                "gateway",
+                "gopay",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment"
+            ],
+            "time": "2014-11-23 20:23:56"
+        },
+        {
             "name": "symfony/event-dispatcher",
             "version": "dev-master",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "294bdb3cb597536221354a5382f1b90e6dc9bb95"
+                "reference": "9fc60b31d309612fd757fec278515d2b036c051b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/294bdb3cb597536221354a5382f1b90e6dc9bb95",
-                "reference": "294bdb3cb597536221354a5382f1b90e6dc9bb95",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/9fc60b31d309612fd757fec278515d2b036c051b",
+                "reference": "9fc60b31d309612fd757fec278515d2b036c051b",
                 "shasum": ""
             },
             "require": {
@@ -2085,7 +2131,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -2109,21 +2155,21 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-10-26 07:50:57"
+            "time": "2014-11-20 13:24:36"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "dev-master",
+            "version": "2.7.x-dev",
             "target-dir": "Symfony/Component/HttpFoundation",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "2f3efcba131a1275b5fb491bed9897ceaf7947e2"
+                "reference": "3681fb2d09c35c405f0fe206f8d2f9af965e9984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/2f3efcba131a1275b5fb491bed9897ceaf7947e2",
-                "reference": "2f3efcba131a1275b5fb491bed9897ceaf7947e2",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/3681fb2d09c35c405f0fe206f8d2f9af965e9984",
+                "reference": "3681fb2d09c35c405f0fe206f8d2f9af965e9984",
                 "shasum": ""
             },
             "require": {
@@ -2135,7 +2181,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -2162,7 +2208,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2014-10-26 07:46:28"
+            "time": "2014-11-20 13:24:30"
         }
     ],
     "packages-dev": [
@@ -2222,12 +2268,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "8e567de2249a8f7eb8051a855b9d0a6472d38c8e"
+                "reference": "4055c0e8577dfbc841fd384797487ff3fc75afff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/8e567de2249a8f7eb8051a855b9d0a6472d38c8e",
-                "reference": "8e567de2249a8f7eb8051a855b9d0a6472d38c8e",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/4055c0e8577dfbc841fd384797487ff3fc75afff",
+                "reference": "4055c0e8577dfbc841fd384797487ff3fc75afff",
                 "shasum": ""
             },
             "require": {
@@ -2280,7 +2326,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-10-16 09:15:15"
+            "time": "2014-11-18 13:37:25"
         },
         {
             "name": "omnipay/tests",
@@ -2790,17 +2836,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "dev-master",
+            "version": "2.7.x-dev",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "4c0baf9a5b5c9e50ddd7a46f3c75cb85baf5d6c5"
+                "reference": "75deb1b183d2bbf12f4b54c644c0caafca338fbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4c0baf9a5b5c9e50ddd7a46f3c75cb85baf5d6c5",
-                "reference": "4c0baf9a5b5c9e50ddd7a46f3c75cb85baf5d6c5",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/75deb1b183d2bbf12f4b54c644c0caafca338fbe",
+                "reference": "75deb1b183d2bbf12f4b54c644c0caafca338fbe",
                 "shasum": ""
             },
             "require": {
@@ -2809,7 +2855,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
@@ -2833,7 +2879,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-10-26 07:46:28"
+            "time": "2014-11-20 13:24:30"
         }
     ],
     "aliases": [],
@@ -2841,7 +2887,8 @@
     "stability-flags": {
         "alfaproject/omnipay-skrill": 20,
         "omnipay/bitpay": 20,
-        "fuzion/omnipay-paybox": 20
+        "fuzion/omnipay-paybox": 20,
+        "sergej-koscejev/omnipay-gopay": 20
     },
     "prefer-stable": false,
     "platform": [],

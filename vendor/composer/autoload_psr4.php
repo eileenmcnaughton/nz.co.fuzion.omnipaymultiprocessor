@@ -24,6 +24,7 @@ return array(
     'Omnipay\\Mollie\\' => array($vendorDir . '/omnipay/mollie/src'),
     'Omnipay\\Migs\\' => array($vendorDir . '/omnipay/migs/src'),
     'Omnipay\\Manual\\' => array($vendorDir . '/omnipay/manual/src'),
+    'Omnipay\\Gopay\\' => array($vendorDir . '/sergej-koscejev/omnipay-gopay/src'),
     'Omnipay\\GoCardless\\' => array($vendorDir . '/omnipay/gocardless/src'),
     'Omnipay\\FirstData\\' => array($vendorDir . '/omnipay/firstdata/src'),
     'Omnipay\\Eway\\' => array($vendorDir . '/omnipay/eway/src'),

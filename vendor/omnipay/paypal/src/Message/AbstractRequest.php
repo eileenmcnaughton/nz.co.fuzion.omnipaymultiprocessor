@@ -142,6 +142,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('addressOverride', $value);
     }
 
+    public function getMaxAmount()
+    {
+        return $this->getParameter('maxAmount');
+    }
+
+    public function setMaxAmount($value)
+    {
+        return $this->setParameter('maxAmount', $value);
+    }
+
     public function getTaxAmount()
     {
         return $this->getParameter('taxAmount');
@@ -190,6 +200,43 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setInsuranceAmount($value)
     {
         return $this->setParameter('insuranceAmount', $value);
+    }
+
+    public function getLocaleCode()
+    {
+        return $this->getParameter('localeCode');
+    }
+
+    /*
+     * Used to change the locale of PayPal pages.
+     * Accepts 2 or 5 character language codes as described here:
+     * https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECCustomizing/
+     *
+     * If no value/invalid value is passed, the gateway will default it for you
+    */
+    public function setLocaleCode($value)
+    {
+        return $this->setParameter('localeCode', $value);
+    }
+
+    public function setCustomerServiceNumber($value)
+    {
+        return $this->setParameter('customerServiceNumber', $value);
+    }
+
+    public function getCustomerServiceNumber()
+    {
+        return $this->getParameter('customerServiceNumber');
+    }
+
+    public function setSellerPaypalAccountId($value)
+    {
+        return $this->setParameter('sellerPaypalAccountId', $value);
+    }
+
+    public function getSellerPaypalAccountId()
+    {
+        return $this->getParameter('sellerPaypalAccountId');
     }
 
     protected function getBaseData()

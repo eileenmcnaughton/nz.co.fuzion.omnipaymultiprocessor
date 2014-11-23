@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 07 Jan 2014 11:58:07 GMT
+Content-Type: text/xml; charset=ISO-8859-1
+Transfer-Encoding: chunked
+Connection: keep-alive
+Set-Cookie: MB_LANGUAGE=EN; domain=.moneybookers.com; path=/; expires=Fri, 05-Jan-2024 11:58:07 GMT
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+Pragma: no-cache
+Cache-control: no-cache
+X-skrill-status: ::::::
+P3P: policyref="/w3c/p3p.xml", CP="NOI DSP COR NID CURa OUR NOR STA"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+  <sid>761d416b605f1d438326b890025ad562</sid>
+</response>

@@ -38,9 +38,11 @@ class ExpressAuthorizeRequestTest extends TestCase
             'subject' => 'demo@example.com',
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 0,
+            'localeCode' => 'EN',
             'allowNote' => 0,
             'addressOverride' => 0,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'customerServiceNumber' => '1-801-FLOWERS',
         ));
 
         $data = $this->request->getData();
@@ -55,8 +57,10 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
         $this->assertSame(0, $data['NOSHIPPING']);
         $this->assertSame(0, $data['ALLOWNOTE']);
+        $this->assertSame('EN', $data['LOCALECODE']);
         $this->assertSame(0, $data['ADDROVERRIDE']);
         $this->assertSame('Dunder Mifflin Paper Company, Inc.', $data['BRANDNAME']);
+        $this->assertSame('1-801-FLOWERS', $data['CUSTOMERSERVICENUMBER']);
     }
 
     public function testGetDataWithCard()
@@ -74,8 +78,12 @@ class ExpressAuthorizeRequestTest extends TestCase
             'allowNote' => 1,
             'addressOverride' => 1,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'maxAmount' => 123.45,
             'logoImageUrl' => 'https://www.example.com/logo.jpg',
             'borderColor' => 'CCCCCC',
+            'localeCode' => 'EN',
+            'customerServiceNumber' => '1-801-FLOWERS',
+            'sellerPaypalAccountId' => 'billing@example.com',
         ));
 
         $card = new CreditCard(array(
@@ -121,6 +129,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '555-555-5555',
             'EMAIL' => 'test@email.com',
             'BRANDNAME' => 'Dunder Mifflin Paper Company, Inc.',
+            'MAXAMT' => 123.45,
             'PAYMENTREQUEST_0_TAXAMT' => null,
             'PAYMENTREQUEST_0_SHIPPINGAMT' => null,
             'PAYMENTREQUEST_0_HANDLINGAMT' => null,
@@ -128,6 +137,9 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_INSURANCEAMT' => null,
             'LOGOIMG' => 'https://www.example.com/logo.jpg',
             'CARTBORDERCOLOR' => 'CCCCCC',
+            'LOCALECODE' => 'EN',
+            'CUSTOMERSERVICENUMBER' => '1-801-FLOWERS',
+            'PAYMENTREQUEST_0_SELLERPAYPALACCOUNTID' => 'billing@example.com',
         );
 
         $this->assertEquals($expected, $this->request->getData());
@@ -191,5 +203,16 @@ class ExpressAuthorizeRequestTest extends TestCase
 
         $data = $this->request->getData();
         $this->assertEquals('https://www.example.com/header.jpg', $data['HDRIMG']);
+    }
+
+    public function testMaxAmount()
+    {
+        $this->request->setMaxAmount(321.54);
+
+        $this->assertSame(321.54, $this->request->getMaxAmount());
+
+        $data = $this->request->getData();
+
+        $this->assertSame(321.54, $data['MAXAMT']);
     }
 }
