@@ -93,6 +93,33 @@ return array(
           'payment_type' => 1,
         ),
     ),
+  4 =>
+    array(
+        'name' => 'OmniPay - GoPay',
+        'entity' => 'payment_processor_type',
+        'params' =>
+            array(
+                'version' => 3,
+                'title' => 'OmniPay - GoPay',
+                'name' => 'omnipay_Gopay',
+                'description' => 'Omnipay GoPay Payment Processor',
+
+                // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
+                'user_name_label' => 'Go Id',
+                'password_label' => 'Secure Key',
+                'signature_label' => '',
+
+                'class_name' => 'Payment_OmnipayMultiProcessor',
+
+                'url_site_default' => 'unused',
+                'url_api_default' => 'unused',
+                'url_site_test_default' => 'unused',
+                'url_api_test_default' => 'unused',
+
+                'billing_mode' => 4,
+                'payment_type' => 1,
+            ),
+    ),
   /*
   2 =>
     array(
