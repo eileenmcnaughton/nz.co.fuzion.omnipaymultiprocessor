@@ -15,6 +15,7 @@ class SystemCompleteAuthorizeRequest extends AbstractRequest
 
         return $this->httpRequest->request->all();
     }
+
     public function sendData($data)
     {
         return $this->response = new SystemCompleteAuthorizeResponse($this, $data);

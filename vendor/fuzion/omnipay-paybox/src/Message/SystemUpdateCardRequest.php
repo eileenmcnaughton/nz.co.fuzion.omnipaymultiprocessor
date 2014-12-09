@@ -24,6 +24,7 @@ class SystemUpdateCardRequest extends SystemAuthorizeRequest
 
         return $data;
     }
+
     public function getTransactionType()
     {
         return '00056';

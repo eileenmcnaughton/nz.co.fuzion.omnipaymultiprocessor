@@ -13,6 +13,11 @@ class AbstractRequestTest extends TestCase
      */
     public $key = '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF';
 
+    /**
+     * @var SystemPurchaseRequest
+     */
+    public $request;
+
     public function setUp()
     {
         $this->request = new SystemPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
@@ -37,17 +42,17 @@ class AbstractRequestTest extends TestCase
         $data = array(
             "PBX_SITE" => "1999888",
             "PBX_RANG" => 32,
-            "PBX_IDENTIFIANT" => "2",
+            "PBX_IDENTIFIANT" => "107904482",
             "PBX_TOTAL" => "1000",
             "PBX_DEVISE" => "978",
-            "PBX_CMD" => "TESTPaybox",
+            "PBX_CMD" => "TEST zyxwv",
             "PBX_PORTEUR" => "test@paybox.com",
             "PBX_RETOUR" => "Mt:M;Ref:R;Auto:A;Erreur:E",
             "PBX_HASH" => "SHA512",
-            "PBX_TIME" => "2011-02-28T11:01:50+01:00",
+            "PBX_TIME" => "2014-12-01T00:00:00+00:00",
         );
         $signature = $this->request->generateSignature($data);
-        $expected = "F2A799494504F9E50E91E44C129A45BBA26D23F2760CDF92B93166652B9787463E12BAD4C660455FB0447F882B22256DE6E703AD6669B73C59B034AF0CFC7E";
+        $expected = "7D15A9C93C4B1A3E11427C35A4CE539CD146182A8EE9E2964E82AA99385007D8B08823272399B384E037F53DEA5008F66F37011FEF44CD65A8B4D964FB55FD10";
         $this->assertEquals($expected, $signature);
     }
 }

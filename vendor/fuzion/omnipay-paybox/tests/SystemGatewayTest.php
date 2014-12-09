@@ -6,9 +6,9 @@ use Omnipay\Tests\GatewayTestCase;
 
 class SystemGatewayTest extends GatewayTestCase
 {
-  /**
-   * @var SystemGateway
-   */
+    /**
+     * @var SystemGateway
+     */
     public $gateway;
 
     public function setUp()
@@ -22,7 +22,7 @@ class SystemGatewayTest extends GatewayTestCase
     {
         $request = $this->gateway->purchase(array('amount' => '10.00'));
 
-        $this->assertInstanceOf('Omnipay\Paybox\Message\PurchaseRequest', $request);
+        $this->assertInstanceOf('Omnipay\Paybox\Message\SystemPurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
 
@@ -30,18 +30,19 @@ class SystemGatewayTest extends GatewayTestCase
     {
         $request = $this->gateway->completePurchase(array('amount' => '10.00'));
 
-        $this->assertInstanceOf('Omnipay\Paybox\Message\CompletePurchaseRequest', $request);
+        $this->assertInstanceOf('Omnipay\Paybox\Message\SystemCompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testCompletePurchaseSend()
     {
-      $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => array(
-        'firstName' => 'Pokemon',
-        'lastName' => 'The second',
-      )))->send();
+        $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => array(
+            'firstName' => 'Pokemon',
+            'lastName' => 'The second',
+            'email' => 'test@paybox.com',
+        )))->send();
 
-      $this->assertInstanceOf('Omnipay\Paybox\Message\Response', $request);
-      $this->assertTrue($request->isTransparentRedirect());
+        $this->assertInstanceOf('Omnipay\Paybox\Message\SystemResponse', $request);
+        $this->assertTrue($request->isTransparentRedirect());
     }
 }

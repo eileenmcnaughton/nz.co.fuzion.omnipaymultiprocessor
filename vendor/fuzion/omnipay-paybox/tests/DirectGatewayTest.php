@@ -10,33 +10,25 @@ class DirectGatewayTest extends GatewayTestCase
     {
         parent::setUp();
 
-        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+        $this->gateway = new DirectGateway($this->getHttpClient(), $this->getHttpRequest());
     }
 
     public function testPurchase()
     {
         $request = $this->gateway->purchase(array('amount' => '10.00'));
 
-        $this->assertInstanceOf('Omnipay\Paybox\Message\PurchaseRequest', $request);
-        $this->assertSame('10.00', $request->getAmount());
-    }
-
-    public function testCompletePurchase()
-    {
-        $request = $this->gateway->completePurchase(array('amount' => '10.00'));
-
-        $this->assertInstanceOf('Omnipay\Paybox\Message\CompletePurchaseRequest', $request);
+        $this->assertInstanceOf('Omnipay\Paybox\Message\DirectPurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testCompletePurchaseSend()
     {
-      $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => array(
-        'firstName' => 'Pokemon',
-        'lastName' => 'The second',
-      )))->send();
+        $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => array(
+            'firstName' => 'Pokemon',
+            'lastName' => 'The second',
+        )))->send();
 
-      $this->assertInstanceOf('Omnipay\Paybox\Message\Response', $request);
-      $this->assertTrue($request->isTransparentRedirect());
+        $this->assertInstanceOf('Omnipay\Paybox\Message\Response', $request);
+        $this->assertTrue($request->isTransparentRedirect());
     }
 }

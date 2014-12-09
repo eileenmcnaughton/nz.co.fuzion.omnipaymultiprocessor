@@ -9,12 +9,13 @@ use Omnipay\Common\Exception\InvalidRequestException;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    public function validateCardFields () {
+    public function validateCardFields()
+    {
         $card = $this->getCard();
         foreach ($this->getRequiredCardFields() as $field) {
             $fn = 'get' . ucfirst($field);
             $value = $card->$fn();
-            if ($value === NULL) {
+            if ($value === null) {
                 throw new InvalidRequestException("The $field parameter is required");
             }
         }
@@ -28,6 +29,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function generateSignature($data)
     {
         $msg = array();
+        if (isset($data['PBX_HASH'])) {
+            unset($data['PBX_HASH']);
+        }
         foreach ($data as $key => $value) {
             $msg[] = "{$key}={$value}";
         }
@@ -76,7 +80,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('identifiant', $value);
     }
 
-    public function getRequiredFields() {
+    public function getRequiredFields()
+    {
         return array_merge($this->getRequiredCardFields(), $this->getRequiredCardFields());
     }
 }

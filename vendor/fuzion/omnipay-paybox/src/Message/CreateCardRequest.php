@@ -24,9 +24,9 @@ class CreateCardRequest extends AuthorizeRequest
 
         return $data;
     }
+
     public function getTransactionType()
     {
-      return '00056';
+        return '00056';
     }
-
 }

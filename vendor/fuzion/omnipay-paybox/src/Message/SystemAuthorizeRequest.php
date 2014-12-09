@@ -2,8 +2,6 @@
 
 namespace Omnipay\Paybox\Message;
 
-use Omnipay\Paybox\Message\AbstractRequest;
-
 /**
  * Paybox System Authorize Request
  */
@@ -113,9 +111,9 @@ class SystemAuthorizeRequest extends AbstractRequest
     }
 
     /**
-    * @return string
-    * http://www1.paybox.com/wp-content/uploads/2014/02/ManuelIntegrationPayboxSystem_V6.2_EN.pdf
-    */
+     * @return string
+     * http://www1.paybox.com/wp-content/uploads/2014/02/ManuelIntegrationPayboxSystem_V6.2_EN.pdf
+     */
     public function getEndpoint()
     {
         return 'https://preprod-tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi';

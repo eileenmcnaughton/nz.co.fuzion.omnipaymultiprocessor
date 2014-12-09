@@ -14,7 +14,7 @@ class DirectGateway extends AbstractGateway
 
     public function getName()
     {
-        return 'PayboxSystem';
+        return 'PayboxDirect';
     }
 
     public function getDefaultParameters()
