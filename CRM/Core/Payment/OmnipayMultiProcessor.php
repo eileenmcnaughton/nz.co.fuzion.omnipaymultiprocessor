@@ -58,7 +58,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
   /**
    * Omnipay gateway
-   * @var object
+   * @var Omnipay\Common\AbstractGateway
    */
   protected $gateway;
 

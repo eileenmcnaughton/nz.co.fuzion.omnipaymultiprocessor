@@ -216,8 +216,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @throws CiviCRM_API3_Exception
    */
   public function getPaymentFormFields() {
-    $billingMode = civicrm_api3('option_value', 'getvalue', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type', 'return' => 'name'));
-    $fn = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $billingMode))) . 'FormFields';
+    $paymentType = civicrm_api3('option_value', 'getvalue', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type', 'return' => 'name'));
+    $fn = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $paymentType))) . 'FormFields';
+    if ($fn == 'getCreditCardFormFields' && $this->_paymentProcessor['billing_mode'] == 4) {
+      //@todo this is a traditional off-site processor
+      return array();
+    }
     return $this->$fn();
   }
 

@@ -116,6 +116,11 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
       }
     }
   }
+
+   if (!method_exists('CRM_Core_Payment_Form', 'buildCreditCard')) {
+    //presumably we are on 4.6 & the following code is no longer required
+    return;
+  }
   if (!omnipaymultiprocessor_is_credit_card_form($formName)  || $form->_paymentProcessor['class_name'] !='Payment_OmnipayMultiProcessor')  {
     return;
   }
