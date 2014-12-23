@@ -2246,50 +2246,6 @@
         ]
     },
     {
-        "name": "fuzion/omnipay-paybox",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-            "reference": "ecb53ec940ecf3cde14bbff362f57972593446ce"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2014-11-23 21:19:20",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Paybox\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Eileen McNaughton",
-                "email": "eileen@fuzion.co.nz"
-            }
-        ],
-        "description": "Paybox support for Omnipay payment processing library",
-        "homepage": "https://github.com/eileenmcnaughton/omnipay-paybox",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "paybox",
-            "payment",
-            "purchase"
-        ]
-    },
-    {
         "name": "omnipay/common",
         "version": "2.3.2",
         "version_normalized": "2.3.2.0",
@@ -2988,5 +2944,49 @@
         ],
         "description": "Symfony EventDispatcher Component",
         "homepage": "http://symfony.com"
+    },
+    {
+        "name": "fuzion/omnipay-paybox",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
+            "reference": "edf91d0a54e2536b17aef5e12b100a1302383289"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2014-12-09 23:27:58",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Paybox\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eileen McNaughton",
+                "email": "eileen@fuzion.co.nz"
+            }
+        ],
+        "description": "Paybox support for Omnipay payment processing library",
+        "homepage": "https://github.com/eileenmcnaughton/omnipay-paybox",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "paybox",
+            "payment",
+            "purchase"
+        ]
     }
 ]
