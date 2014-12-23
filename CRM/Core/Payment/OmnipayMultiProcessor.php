@@ -551,7 +551,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     elseif ($this->transaction_id) {
       civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
     }
-    $this->handleError('error', $this->transaction_id  . $response->getMessage(), 'processor_error', 9002);
+    $userMessage = $response->getMessage();
+    if (method_exists($response, 'getInvalidFields')) {
+      $userMessage = ts('Invalid data entered in fields ' . implode(', ', $response->getInvalidFields()));
+    }
+    $this->handleError('error', $this->transaction_id  . ' ' . $response->getMessage(), 'processor_error', 9002, $userMessage);
 
     $_REQUEST = $originalRequest;
     CRM_Utils_System::redirect($this->getStoredUrl('fail'));

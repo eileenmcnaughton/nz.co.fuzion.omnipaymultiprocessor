@@ -100,15 +100,17 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return string
    */
   protected function getReturnFailUrl($key, $participantID = NULL) {
+    $test =  $this->_is_test ? '&action=preview' : '';
+
     if ($this->_component == "event") {
       return CRM_Utils_System::url('civicrm/event/confirm',
-        "reset=1&cc=fail&participantId=$participantID",
+        "reset=1&cc=fail&participantId={$participantID}{$test}",
         FALSE, NULL, FALSE
       );
     }
     else {
       return CRM_Utils_System::url('civicrm/contribute/transact',
-        "_qf_Main_display=1&cancel=1&qfKey={$key}",
+        "_qf_Main_display=1&cancel=1&qfKey={$key}{$test}",
         FALSE, NULL, FALSE
       );
     }
