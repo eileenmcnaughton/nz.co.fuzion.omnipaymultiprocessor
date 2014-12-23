@@ -43,6 +43,6 @@ class SystemGatewayTest extends GatewayTestCase
         )))->send();
 
         $this->assertInstanceOf('Omnipay\Paybox\Message\SystemResponse', $request);
-        $this->assertTrue($request->isTransparentRedirect());
+        $this->assertFalse($request->isTransparentRedirect());
     }
 }

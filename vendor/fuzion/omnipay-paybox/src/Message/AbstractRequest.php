@@ -29,9 +29,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function generateSignature($data)
     {
         $msg = array();
-        if (isset($data['PBX_HASH'])) {
-            unset($data['PBX_HASH']);
-        }
         foreach ($data as $key => $value) {
             $msg[] = "{$key}={$value}";
         }

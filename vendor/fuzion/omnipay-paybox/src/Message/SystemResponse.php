@@ -31,7 +31,7 @@ class SystemResponse extends AbstractResponse implements RedirectResponseInterfa
 
     public function isTransparentRedirect()
     {
-        return true;
+        return false;
     }
 
     public function getRedirectUrl()
