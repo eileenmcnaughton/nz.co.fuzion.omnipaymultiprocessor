@@ -125,7 +125,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
     $this->setProcessorFields();
     $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
-    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params));
+    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
     $this->saveBillingAddressIfRequired($params);
 
     try {
@@ -552,9 +552,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
     }
     $userMessage = $response->getMessage();
-    if (method_exists($response, 'getInvalidFields')) {
-      $userMessage = ts('Invalid data entered in fields ' . implode(', ', $response->getInvalidFields()));
+    if (method_exists($response, 'getInvalidFields') && ($invalidFields = $response->getInvalidFields()) != array()) {
+      $userMessage = ts('Invalid data entered in fields ' . implode(', ', $invalidFields));
     }
+
     $this->handleError('error', $this->transaction_id  . ' ' . $response->getMessage(), 'processor_error', 9002, $userMessage);
 
     $_REQUEST = $originalRequest;

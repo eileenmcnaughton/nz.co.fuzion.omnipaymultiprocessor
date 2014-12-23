@@ -97,14 +97,14 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   /**
    * @param $key
    * @param null $participantID
+   * @param null $eventID
    * @return string
    */
-  protected function getReturnFailUrl($key, $participantID = NULL) {
+  protected function getReturnFailUrl($key, $participantID = NULL, $eventID = NULL) {
     $test =  $this->_is_test ? '&action=preview' : '';
-
     if ($this->_component == "event") {
-      return CRM_Utils_System::url('civicrm/event/confirm',
-        "reset=1&cc=fail&participantId={$participantID}{$test}",
+      return CRM_Utils_System::url('civicrm/event/register',
+        "reset=1&cc=fail&participantId={$participantID}&id={$eventID}{$test}&qfKey={$key}",
         FALSE, NULL, FALSE
       );
     }
@@ -163,10 +163,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   /**
    * Store the URL for browser redirection in the session for use upon return
    * @param $qfKey
+   * @param null $participantID
+   * @param null $eventID
    */
-  protected function storeReturnUrls($qfKey, $participantID = NULL) {
+  protected function storeReturnUrls($qfKey, $participantID = NULL, $eventID = NULL) {
     CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($qfKey));
-    CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($qfKey, $participantID));
+    CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($qfKey, $participantID, $eventID));
   }
 
   /**
