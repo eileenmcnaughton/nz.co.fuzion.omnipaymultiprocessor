@@ -125,7 +125,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
     $this->setProcessorFields();
     $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
-    $this->storeReturnUrls($params['qfKey']);
+    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participant_id', $params));
     $this->saveBillingAddressIfRequired($params);
 
     try {
@@ -545,12 +545,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           $this->handleError('error', $this->transaction_id  . $e->getMessage(), 'ipn_completion', 9000, 'An error may have occurred. Please check your receipt is correct');
         }
       }
+      $_REQUEST = $originalRequest;
+      CRM_Utils_System::redirect($this->getStoredUrl('success'));
     }
     elseif ($this->transaction_id) {
       civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
     }
+    $this->handleError('error', $this->transaction_id  . $response->getMessage(), 'processor_error', 9002);
+
     $_REQUEST = $originalRequest;
-    CRM_Utils_System::redirect($this->getStoredUrl('success'));
+    CRM_Utils_System::redirect($this->getStoredUrl('fail'));
   }
 
   /**
