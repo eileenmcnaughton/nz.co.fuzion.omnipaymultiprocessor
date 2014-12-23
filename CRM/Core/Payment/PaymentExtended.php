@@ -148,6 +148,15 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
+   * Store the data required on the payment form.
+   * @param string $key
+   * @param array $data
+   */
+  protected function storeTransparentRedirectFormData($key, $data) {
+    CRM_Core_Session::singleton()->set("transparent_redirect_data" . $key, json_encode($data));
+  }
+
+  /**
    * Get URL out of session
    *
    * @param string $type result type
