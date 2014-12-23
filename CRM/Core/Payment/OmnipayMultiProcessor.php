@@ -125,7 +125,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
     $this->setProcessorFields();
     $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
-    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participant_id', $params));
+    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params));
     $this->saveBillingAddressIfRequired($params);
 
     try {
