@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
- * FlashBagTest
+ * FlashBagTest.
  *
  * @author Drak <drak@zikula.org>
  */
@@ -91,7 +91,7 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
         $this->bag->set('error', 'Bar');
         $this->assertEquals(array(
             'notice' => array('Foo'),
-            'error' => array('Bar'),), $this->bag->all()
+            'error' => array('Bar'), ), $this->bag->all()
         );
 
         $this->assertEquals(array(), $this->bag->all());

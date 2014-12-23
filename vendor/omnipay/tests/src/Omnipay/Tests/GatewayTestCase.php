@@ -235,16 +235,18 @@ abstract class GatewayTestCase extends TestCase
 
     public function testPurchaseParameters()
     {
-        foreach ($this->gateway->getDefaultParameters() as $key => $default) {
-            // set property on gateway
-            $getter = 'get'.ucfirst($key);
-            $setter = 'set'.ucfirst($key);
-            $value = uniqid();
-            $this->gateway->$setter($value);
+        if ($this->gateway->supportsPurchase()) {
+            foreach ($this->gateway->getDefaultParameters() as $key => $default) {
+                // set property on gateway
+                $getter = 'get'.ucfirst($key);
+                $setter = 'set'.ucfirst($key);
+                $value = uniqid();
+                $this->gateway->$setter($value);
 
-            // request should have matching property, with correct value
-            $request = $this->gateway->purchase();
-            $this->assertSame($value, $request->$getter());
+                // request should have matching property, with correct value
+                $request = $this->gateway->purchase();
+                $this->assertSame($value, $request->$getter());
+            }
         }
     }
 

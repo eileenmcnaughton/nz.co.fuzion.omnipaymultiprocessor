@@ -75,7 +75,7 @@ class Request
     protected static $httpMethodParameterOverride = false;
 
     /**
-     * Custom parameters
+     * Custom parameters.
      *
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      *
@@ -84,7 +84,7 @@ class Request
     public $attributes;
 
     /**
-     * Request body parameters ($_POST)
+     * Request body parameters ($_POST).
      *
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      *
@@ -93,7 +93,7 @@ class Request
     public $request;
 
     /**
-     * Query string parameters ($_GET)
+     * Query string parameters ($_GET).
      *
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      *
@@ -102,7 +102,7 @@ class Request
     public $query;
 
     /**
-     * Server and execution environment parameters ($_SERVER)
+     * Server and execution environment parameters ($_SERVER).
      *
      * @var \Symfony\Component\HttpFoundation\ServerBag
      *
@@ -111,7 +111,7 @@ class Request
     public $server;
 
     /**
-     * Uploaded files ($_FILES)
+     * Uploaded files ($_FILES).
      *
      * @var \Symfony\Component\HttpFoundation\FileBag
      *
@@ -120,7 +120,7 @@ class Request
     public $files;
 
     /**
-     * Cookies ($_COOKIE)
+     * Cookies ($_COOKIE).
      *
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      *
@@ -129,7 +129,7 @@ class Request
     public $cookies;
 
     /**
-     * Headers (taken from the $_SERVER)
+     * Headers (taken from the $_SERVER).
      *
      * @var \Symfony\Component\HttpFoundation\HeaderBag
      *
@@ -696,7 +696,7 @@ class Request
     /**
      * Checks whether support for the _method request parameter is enabled.
      *
-     * @return bool    True when the _method request parameter is enabled, false otherwise
+     * @return bool True when the _method request parameter is enabled, false otherwise
      */
     public static function getHttpMethodParameterOverride()
     {
@@ -718,15 +718,27 @@ class Request
      * It is better to explicitly get request parameters from the appropriate
      * public property instead (query, attributes, request).
      *
-     * @param string  $key     the key
-     * @param mixed   $default the default value
-     * @param bool    $deep    is parameter deep in multidimensional array
+     * @param string $key     the key
+     * @param mixed  $default the default value
+     * @param bool   $deep    is parameter deep in multidimensional array
      *
      * @return mixed
      */
     public function get($key, $default = null, $deep = false)
     {
-        return $this->query->get($key, $this->attributes->get($key, $this->request->get($key, $default, $deep), $deep), $deep);
+        if ($this !== $result = $this->query->get($key, $this, $deep)) {
+            return $result;
+        }
+
+        if ($this !== $result = $this->attributes->get($key, $this, $deep)) {
+            return $result;
+        }
+
+        if ($this !== $result = $this->request->get($key, $this, $deep)) {
+            return $result;
+        }
+
+        return $default;
     }
 
     /**
@@ -762,7 +774,7 @@ class Request
      * like whether the session is started or not. It is just a way to check if this Request
      * is associated with a Session instance.
      *
-     * @return bool    true when the Request contains a Session object, false otherwise
+     * @return bool true when the Request contains a Session object, false otherwise
      *
      * @api
      */
@@ -1455,7 +1467,7 @@ class Request
     /**
      * Returns the request body content.
      *
-     * @param bool    $asResource If true, a resource will be returned
+     * @param bool $asResource If true, a resource will be returned
      *
      * @return string|resource The request body content or a resource to read the body stream.
      *
@@ -1608,7 +1620,7 @@ class Request
     }
 
     /**
-     * Gets a list of content types acceptable by the client browser
+     * Gets a list of content types acceptable by the client browser.
      *
      * @return array List of content types in preferable order
      *
@@ -1628,9 +1640,10 @@ class Request
      *
      * It works if your JavaScript library sets an X-Requested-With HTTP header.
      * It is known to work with common JavaScript frameworks:
+     *
      * @link http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
      *
-     * @return bool    true if the request is an XMLHttpRequest, false otherwise
+     * @return bool true if the request is an XMLHttpRequest, false otherwise
      *
      * @api
      */

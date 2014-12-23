@@ -72,7 +72,7 @@ class PaymentStatusResponse extends AbstractResponse implements RedirectResponse
     public function getRedirectUrl()
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        $url = $this->getRequest()->getTestMode() ? GopayConfig::TEST_FULL_URL : GopayConfig::TEST_WSDL_URL;
+        $url = $this->getRequest()->getTestMode() ? GopayConfig::TEST_FULL_URL : GopayConfig::PROD_FULL_URL;
 
         /** @noinspection PhpUndefinedMethodInspection */
         $goId = $this->getRequest()->getGoId();
