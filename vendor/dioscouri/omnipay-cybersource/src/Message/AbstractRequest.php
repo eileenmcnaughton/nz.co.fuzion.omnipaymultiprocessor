@@ -12,7 +12,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $liveEndpoint = 'https://secureacceptance.cybersource.com/silent';
     protected $testEndpoint = 'https://testsecureacceptance.cybersource.com/silent';
     protected $endpoint = '';
-    protected $isUsOrCanada = FALSE;
+    protected $isUsOrCanada = false;
 
     public function sendData($data)
     {
@@ -105,7 +105,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $types = $this->getCardTypes();
         $brand = $this->getCard()->getBrand();
-        return empty($types[$brand]) ? NULL : $types[$brand];
+        return empty($types[$brand]) ? null : $types[$brand];
     }
 
     /**
@@ -119,16 +119,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function generateSignature($data, $fields, $secret_key)
     {
         $data_to_sign = array();
-        foreach ($fields as $field)
-        {
+        foreach ($fields as $field) {
             $data_to_sign[] = $field . "=" . $data[$field];
         }
         $pairs = implode(',', $data_to_sign);
-        return base64_encode(hash_hmac('sha256', $pairs, $secret_key, TRUE));
+        return base64_encode(hash_hmac('sha256', $pairs, $secret_key, true));
     }
 
-    function supportsDeleteCard()
+    public function supportsDeleteCard()
     {
-        return FALSE;
+        return false;
     }
 }

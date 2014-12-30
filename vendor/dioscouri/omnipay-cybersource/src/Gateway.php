@@ -8,7 +8,8 @@ use Omnipay\Cybersource\Message\RefundRequest;
 /**
  * CyberSource Secure Acceptance Silent Order POST Gateway
  *
- * @link http://apps.cybersource.com/library/documentation/dev_guides/Secure_Acceptance_SOP/html/wwhelp/wwhimpl/js/html/wwhelp.htm
+ * @link http:
+ * //apps.cybersource.com/library/documentation/dev_guides/Secure_Acceptance_SOP/html/wwhelp/wwhimpl/js/html/wwhelp.htm
  */
 class Gateway extends AbstractGateway
 {
@@ -140,8 +141,7 @@ class Gateway extends AbstractGateway
     public function generateSignature($data)
     {
         $data_to_sign = array();
-        foreach ($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $data_to_sign[] = $key . "=" . $value;
         }
         $pairs = implode(',', $data_to_sign);

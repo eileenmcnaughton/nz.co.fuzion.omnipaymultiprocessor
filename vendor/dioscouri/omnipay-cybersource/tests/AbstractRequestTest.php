@@ -49,6 +49,7 @@ class AbstractRequestTest extends TestCase
     }
 
     public function testGetData() {
+        $this->request->setSecretKey('key');
         $this->request->getData();
     }
 }

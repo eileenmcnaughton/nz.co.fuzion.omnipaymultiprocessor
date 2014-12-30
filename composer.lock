@@ -66,7 +66,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
-                "reference": "159121d4e1d03ef9d1bc8cc7456ff3c3aebca5b7"
+                "reference": "1507d67f189c40e879686984941ebaaa3b51ecf7"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -100,7 +100,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-10-29 08:42:24"
+            "time": "2014-12-23 23:43:51"
         },
         {
             "name": "fuzion/omnipay-paybox",
@@ -2182,12 +2182,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "a16860109680ad9aa016744b6b8fda489b637163"
+                "reference": "75aa9d57bb6377fa89ad40014105ae9bdee28999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/a16860109680ad9aa016744b6b8fda489b637163",
-                "reference": "a16860109680ad9aa016744b6b8fda489b637163",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/75aa9d57bb6377fa89ad40014105ae9bdee28999",
+                "reference": "75aa9d57bb6377fa89ad40014105ae9bdee28999",
                 "shasum": ""
             },
             "require": {
@@ -2226,7 +2226,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-22 16:45:18"
+            "time": "2014-12-23 17:36:18"
         }
     ],
     "packages-dev": [
