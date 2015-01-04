@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ddeb3cbed8881d9f7a6581bdfeb23c5",
+    "hash": "88ef3747ac534f2d936647b0579d6b10",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -2124,23 +2124,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "adcd8d31dcb632d6ff5d843eeaf3b57c274037fa"
+                "reference": "c55100317f62282fd4c0c90ba107927dc1cd450b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/adcd8d31dcb632d6ff5d843eeaf3b57c274037fa",
-                "reference": "adcd8d31dcb632d6ff5d843eeaf3b57c274037fa",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/c55100317f62282fd4c0c90ba107927dc1cd450b",
+                "reference": "c55100317f62282fd4c0c90ba107927dc1cd450b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.5.9"
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.0,>=2.0.5",
-                "symfony/dependency-injection": "~2.6",
-                "symfony/expression-language": "~2.6",
-                "symfony/stopwatch": "~2.3"
+                "symfony/config": "~2.7|~3.0",
+                "symfony/dependency-injection": "~2.7|~3.0",
+                "symfony/expression-language": "~2.7|~3.0",
+                "symfony/stopwatch": "~2.7|~3.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -2173,7 +2173,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-22 16:45:23"
+            "time": "2015-01-03 08:04:30"
         },
         {
             "name": "symfony/http-foundation",
@@ -2182,19 +2182,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "75aa9d57bb6377fa89ad40014105ae9bdee28999"
+                "reference": "f710d0dcf441acf3102585a668975d4e1a42dd7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/75aa9d57bb6377fa89ad40014105ae9bdee28999",
-                "reference": "75aa9d57bb6377fa89ad40014105ae9bdee28999",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/f710d0dcf441acf3102585a668975d4e1a42dd7d",
+                "reference": "f710d0dcf441acf3102585a668975d4e1a42dd7d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "symfony/expression-language": "~2.4"
+                "symfony/expression-language": "~2.4|~3.0.0"
             },
             "type": "library",
             "extra": {
@@ -2226,7 +2226,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-23 17:36:18"
+            "time": "2015-01-03 15:46:01"
         }
     ],
     "packages-dev": [
@@ -2286,12 +2286,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "686f85fa5b3b079cc0157d7cd3e9adb97f0b41e1"
+                "reference": "ee277735d9dea95553ee667bee3292cdd6947574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/686f85fa5b3b079cc0157d7cd3e9adb97f0b41e1",
-                "reference": "686f85fa5b3b079cc0157d7cd3e9adb97f0b41e1",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/ee277735d9dea95553ee667bee3292cdd6947574",
+                "reference": "ee277735d9dea95553ee667bee3292cdd6947574",
                 "shasum": ""
             },
             "require": {
@@ -2344,7 +2344,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-12-22 10:06:19"
+            "time": "2014-12-31 11:42:06"
         },
         {
             "name": "omnipay/tests",
@@ -2859,12 +2859,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "4acdf4ff8dedd856ee5fd1e4e0e16f7f42dca463"
+                "reference": "59180ea818b1fe87de344d979240dd422e2d7892"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4acdf4ff8dedd856ee5fd1e4e0e16f7f42dca463",
-                "reference": "4acdf4ff8dedd856ee5fd1e4e0e16f7f42dca463",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/59180ea818b1fe87de344d979240dd422e2d7892",
+                "reference": "59180ea818b1fe87de344d979240dd422e2d7892",
                 "shasum": ""
             },
             "require": {
@@ -2897,7 +2897,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-22 16:45:18"
+            "time": "2015-01-03 15:46:01"
         }
     ],
     "aliases": [],
