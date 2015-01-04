@@ -20,7 +20,8 @@
         "alfaproject/omnipay-skrill": "dev-master",
         "omnipay/bitpay": "dev-master",
         "fuzion/omnipay-paybox": "dev-master",
-        "sergej-koscejev/omnipay-gopay": "dev-master"
+        "sergej-koscejev/omnipay-gopay": "dev-master",
+        "omnipay/mollie": "~3.0"
     },
     "require-dev":
     {

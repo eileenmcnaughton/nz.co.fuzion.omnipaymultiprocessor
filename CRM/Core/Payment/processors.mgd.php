@@ -140,6 +140,26 @@ return array(
           'payment_type' => 1,
         ),
     ),
+  5 =>
+    array(
+      'name' => 'OmniPay - Mollie',
+      'entity' => 'payment_processor_type',
+      'params' =>
+        array(
+          'version' => 3,
+          'title' => 'OmniPay - Mollie',
+          'name' => 'omnipay_mollie',
+          'description' => 'Omnipay Mollie Payment Processor',
+          'user_name_label' => 'apiKey',
+          'password_label' => 'unused',
+          'signature_label' => 'unused',
+          'class_name' => 'Payment_OmnipayMultiProcessor',
+          'url_site_default' => 'https://mollie.com',
+          'url_api_default' => 'https://mollie.com',
+          'billing_mode' => 4,
+          'payment_type' => 1,
+        ),
+    ),
   /*
   2 =>
     array(
