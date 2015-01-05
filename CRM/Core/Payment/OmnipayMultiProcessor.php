@@ -441,7 +441,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           '001' => 'Visa',
           '002' => 'Mastercard',
           '003' => 'Amex',
-          '004' => 'Discovery',
+          '004' => 'Discover',
         )
       ),
       'card_number' => array('core_field_name' => 'credit_card_number',),
