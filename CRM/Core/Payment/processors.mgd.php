@@ -9,7 +9,7 @@
  *
  * - name - omnipay_{Processor_Name}, Omnipay calls the gateway method create with the processor name as the parameter.
  * To get the processor name take a look at the Readme for the gateway you are adding - you will generally see
- * The following gateways are provided by this package: Mollie
+ * The following gateways are provided by this package: Mollie so the name should be ominpay_Mollie (note matching capitalisation)
  *
  * - user_name_label, password_label, signature_label, subject_label - these are generally about telling the plugin what to call these when they pass them to
  * Omnipay. They are also shown to users so some reformatting is done to turn it into lower-first-letter camel case. Take a look at the gateway file for your gateway. This is directly under src.
@@ -148,7 +148,7 @@ return array(
         array(
           'version' => 3,
           'title' => 'OmniPay - Mollie',
-          'name' => 'omnipay_mollie',
+          'name' => 'omnipay_Mollie',
           'description' => 'Omnipay Mollie Payment Processor',
           'user_name_label' => 'apiKey',
           'password_label' => 'unused',
