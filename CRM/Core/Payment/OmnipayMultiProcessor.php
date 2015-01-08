@@ -356,6 +356,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getReturnSuccessUrl($params['qfKey']),
       'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
+      'notifyUrl' => $this->getNotifyUrl(),
       'card' => $this->getCreditCardObjectParams($params),
     );
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);

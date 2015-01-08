@@ -161,6 +161,24 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
+   * get the notify (aka ipn, web hook or silent post) url
+   * If there is no '.' in it we assume that we are dealing with localhost or
+   * similar and it is unreachable from the web & hence invalid
+   * @return string
+   */
+  protected function getNotifyUrl() {
+    $url = CRM_Utils_System::url(
+      'civicrm/payment/ipn',
+       array(
+         'processor_id' => $this->_paymentProcessor['id'],
+         'mode' => empty($this->_paymentProcessor['is_test']) ? 'live' : 'test',
+       ),
+      TRUE
+    );
+    return (stristr($url, '.')) ? $url : '';
+  }
+
+  /**
    * Store the URL for browser redirection in the session for use upon return
    * @param $qfKey
    * @param null $participantID
