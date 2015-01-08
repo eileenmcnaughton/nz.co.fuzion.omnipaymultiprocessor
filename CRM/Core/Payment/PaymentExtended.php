@@ -252,7 +252,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected function handleError($level, $message, $context, $errorCode = 9001, $userMessage = NULL) {
     if (omnipaymultiprocessor__versionAtLeast(4.5)) {
       $log = new CRM_Utils_SystemLogger();
-      $log->log($level, $message, $context);
+      $log->log($level, $message, (array) $context);
     }
     else {
       CRM_Core_Error::debug($errorCode . ': ' . $message . print_r($context, TRUE));
