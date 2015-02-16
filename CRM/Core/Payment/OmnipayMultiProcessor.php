@@ -499,7 +499,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
-   * get core CiviCRM address fields
+   * Get core CiviCRM address fields.
+   *
    * @return array
    */
   function getBillingAddressFields() {
