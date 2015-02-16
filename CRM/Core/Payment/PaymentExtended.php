@@ -161,17 +161,23 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * get the notify (aka ipn, web hook or silent post) url
+   * Get the notify (aka ipn, web hook or silent post) url.
+   *
    * If there is no '.' in it we assume that we are dealing with localhost or
-   * similar and it is unreachable from the web & hence invalid
+   * similar and it is unreachable from the web & hence invalid.
+   *
+   * Note we do not pass the 'mode' for test as this breaks some processors.
+   * People wanting to use test mode need a version of CiviCRM with
+   * a patch for CRM-15978.
+   *
    * @return string
+   *   URL to notify outcome of transaction.
    */
   protected function getNotifyUrl() {
     $url = CRM_Utils_System::url(
       'civicrm/payment/ipn',
        array(
          'processor_id' => $this->_paymentProcessor['id'],
-         'mode' => empty($this->_paymentProcessor['is_test']) ? 'live' : 'test',
        ),
       TRUE
     );
