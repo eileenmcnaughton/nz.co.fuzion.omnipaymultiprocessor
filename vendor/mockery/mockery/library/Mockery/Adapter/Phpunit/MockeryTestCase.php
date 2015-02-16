@@ -4,7 +4,7 @@ namespace Mockery\Adapter\Phpunit;
 
 use Mockery;
 
-class MockeryTestCase extends \PHPUnit_Framework_TestCase
+abstract class MockeryTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function assertPostConditions()
     {
@@ -12,7 +12,7 @@ class MockeryTestCase extends \PHPUnit_Framework_TestCase
         $this->closeMockery();
 
         parent::assertPostConditions();
-    } 
+    }
 
     protected function addMockeryExpectationsToAssertionCount()
     {

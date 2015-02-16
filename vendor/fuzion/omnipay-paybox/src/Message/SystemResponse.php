@@ -11,12 +11,41 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  */
 class SystemResponse extends AbstractResponse implements RedirectResponseInterface
 {
-    public $endpoint = 'https://preprod-tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi';
+    /**
+     * URl to connect with.
+     *
+     * Test  - https://preprod-tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi
+     *
+     * @var string
+     */
+    protected $endpoint;
 
-    public function __construct(RequestInterface $request, $data)
+    /**
+     * Get end point.
+     *
+     * @return string
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
+     * Set end point.
+     *
+     * @param string $endpoint
+     *   Set URL to redirect to.
+     */
+    public function setEndpoint($endpoint)
+    {
+        $this->endpoint = $endpoint;
+    }
+
+    public function __construct(RequestInterface $request, $data, $end_point)
     {
         $this->request = $request;
         $this->data = $data;
+        $this->setEndpoint($end_point);
     }
 
     public function isSuccessful()

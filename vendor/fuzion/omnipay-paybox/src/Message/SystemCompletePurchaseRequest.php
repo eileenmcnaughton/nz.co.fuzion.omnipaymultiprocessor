@@ -2,7 +2,7 @@
 
 namespace Omnipay\Paybox\Message;
 
-use Omnipay\AuthorizeNet\Message\SystemCompleteAuthorizeResponse;
+use Omnipay\Paybox\Message\SystemCompleteAuthorizeRequest;
 
 /**
  * Paybox Authorize Request

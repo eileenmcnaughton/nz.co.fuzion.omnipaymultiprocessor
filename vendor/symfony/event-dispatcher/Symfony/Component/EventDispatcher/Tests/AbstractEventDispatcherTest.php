@@ -118,7 +118,6 @@ abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\Component\EventDispatcher\Event', $this->dispatcher->dispatch(self::preFoo));
         $event = new Event();
         $return = $this->dispatcher->dispatch(self::preFoo, $event);
-        $this->assertEquals('pre.foo', $event->getName());
         $this->assertSame($event, $return);
     }
 
@@ -237,16 +236,6 @@ abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $this->dispatcher->getListeners(self::preFoo));
         $this->dispatcher->removeSubscriber($eventSubscriber);
         $this->assertFalse($this->dispatcher->hasListeners(self::preFoo));
-    }
-
-    public function testEventReceivesTheDispatcherInstance()
-    {
-        $dispatcher = null;
-        $this->dispatcher->addListener('test', function ($event) use (&$dispatcher) {
-            $dispatcher = $event->getDispatcher();
-        });
-        $this->dispatcher->dispatch('test');
-        $this->assertSame($this->dispatcher, $dispatcher);
     }
 
     public function testEventReceivesTheDispatcherInstanceAsArgument()

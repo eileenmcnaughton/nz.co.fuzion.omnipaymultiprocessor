@@ -30,7 +30,7 @@ class DirectAuthorizeRequest extends AbstractRequest
 
     protected function createResponse($data)
     {
-        return $this->response = new Response($this, $data);
+        return $this->response = new DirectResponse($this, $data);
     }
 
     public function getSite()

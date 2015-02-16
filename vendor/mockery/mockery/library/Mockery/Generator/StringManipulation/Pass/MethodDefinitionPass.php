@@ -10,10 +10,9 @@ class MethodDefinitionPass implements Pass
     public function apply($code, MockConfiguration $config)
     {
         foreach ($config->getMethodsToMock() as $method) {
-
             if ($method->isPublic()) {
                 $methodDef = 'public';
-            } elseif($method->isProtected()) {
+            } elseif ($method->isProtected()) {
                 $methodDef = 'protected';
             } else {
                 $methodDef = 'private';
@@ -50,13 +49,16 @@ class MethodDefinitionPass implements Pass
         $params = $method->getParameters();
         foreach ($params as $param) {
             $paramDef = $param->getTypeHintAsString();
+            $paramDef .= $param->isVariadic() ? '...' : '';
             $paramDef .= $param->isPassedByReference() ? '&' : '';
             $paramDef .= '$' . $param->getName();
 
-            if (false !== $param->isDefaultValueAvailable()) {
-                $paramDef .= ' = ' . var_export($param->getDefaultValue(), true);
-            } elseif ($param->isOptional()) {
-                $paramDef .= ' = null';
+            if (!$param->isVariadic()) {
+                if (false !== $param->isDefaultValueAvailable()) {
+                    $paramDef .= ' = ' . var_export($param->getDefaultValue(), true);
+                } elseif ($param->isOptional()) {
+                    $paramDef .= ' = null';
+                }
             }
 
             $methodParams[] = $paramDef;
@@ -91,7 +93,7 @@ BODY;
             $params = array_values($overrides[$class_name][$method->getName()]);
             $paramCount = count($params);
             for ($i = 0; $i < $paramCount; ++$i) {
-              $param = $params[$i];
+                $param = $params[$i];
                 if (strpos($param, '&') !== false) {
                     $body .= <<<BODY
 if (\$argc > $i) {

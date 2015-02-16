@@ -8,13 +8,41 @@ namespace Omnipay\Paybox\Message;
 class SystemAuthorizeRequest extends AbstractRequest
 {
 
+    /**
+     * Transaction time in timezone format e.g 2011-02-28T11:01:50+01:00.
+     *
+     * @var string
+     */
+    protected $time;
+
+    /**
+     * Get time of the transaction.
+     *
+     * @return string
+     */
+    public function getTime()
+    {
+        return (!empty($this->time)) ? $this->time : date('c');
+    }
+
+    /**
+     * Setter for time (of transaction).
+     *
+     * @param string $time
+     *  Time in 'c' format - e.g 2011-02-28T11:01:50+01:00
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+    }
+
     public function getData()
     {
         foreach ($this->getRequiredCoreFields() as $field) {
             $this->validate($field);
         }
         $this->validateCardFields();
-        $data = $this->getBaseData() + $this->getTransactionData();
+        $data = $this->getBaseData() + $this->getTransactionData() + $this->getURLData();
         $data['PBX_HMAC'] = $this->generateSignature($data);
         return $data;
     }
@@ -26,7 +54,7 @@ class SystemAuthorizeRequest extends AbstractRequest
 
     protected function createResponse($data)
     {
-        return $this->response = new SystemResponse($this, $data);
+        return $this->response = new SystemResponse($this, $data, $this->getEndpoint());
     }
 
     public function getSite()
@@ -84,8 +112,8 @@ class SystemAuthorizeRequest extends AbstractRequest
             'PBX_DEVISE' => $this->getCurrencyNumeric(),
             'PBX_CMD' => $this->getTransactionId(),
             'PBX_PORTEUR' => $this->getCard()->getEmail(),
-            'PBX_RETOUR' => 'Mt:M;Ref:R;Auto:A;Erreur:E',
-            'PBX_TIME' => date("c"),
+            'PBX_RETOUR' => 'Mt:M;Id:R;Ref:A;Erreur:E;sign:K',
+            'PBX_TIME' => $this->getTime(),
         );
     }
 
@@ -102,6 +130,26 @@ class SystemAuthorizeRequest extends AbstractRequest
     }
 
     /**
+     * Get values for IPN and browser return urls.
+     *
+     * Browser return urls should all be set or non set.
+     */
+    public function getURLData()
+    {
+        $data = array();
+        if ($this->getNotifyUrl()) {
+            $data['PBX_REPONDRE_A'] = urlencode($this->getNotifyUrl());
+        }
+        if ($this->getReturnUrl()) {
+            $data['PBX_EFFECTUE'] = $this->getReturnUrl();
+            $data['PBX_REFUSE'] = $this->getReturnUrl();
+            $data['PBX_ANNULE'] = $this->getCancelUrl();
+            $data['PBX_ATTENTE'] = $this->getReturnUrl();
+        }
+        return $data;
+    }
+
+    /**
      * @return string
      */
     public function getUniqueID()
@@ -115,7 +163,11 @@ class SystemAuthorizeRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return 'https://preprod-tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi';
+        if ($this->getTestMode()) {
+            return 'https://preprod-tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi';
+        } else {
+            return 'https://tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi';
+        }
     }
 
     public function getPaymentMethod()

@@ -22,8 +22,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Generate a signature using a secret key
-     * @param $data
+     * Generate a signature using a secret key.
+     *
+     * @param array $data
      * @return string
      */
     public function generateSignature($data)

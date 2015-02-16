@@ -59,9 +59,12 @@ class SystemGateway extends AbstractGateway
     }
 
     /**
+     * Complete purchase.
+     *
+     * e.g based on an IPN or silent url type notification from a processor.
      *
      * @param array $parameters
-     * @return \Omnipay\Paybox\Message\CompletePurchaseRequest
+     * @return \Omnipay\Paybox\Message\SystemCompletePurchaseRequest
      */
     public function completePurchase(array $parameters = array())
     {

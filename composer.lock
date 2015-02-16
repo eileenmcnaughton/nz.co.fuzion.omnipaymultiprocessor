@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "88ef3747ac534f2d936647b0579d6b10",
+    "hash": "44e1256aac8d075a34515ac54f482a94",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -108,7 +108,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-                "reference": "edf91d0a54e2536b17aef5e12b100a1302383289"
+                "reference": "269d09ba9e17c9a5d221c91f25296f182ec85fbd"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -142,7 +142,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-12-09 23:27:58"
+            "time": "2015-02-16 15:43:22"
         },
         {
             "name": "guzzle/common",
@@ -692,16 +692,16 @@
         },
         {
             "name": "omnipay/common",
-            "version": "2.3.2",
+            "version": "v2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-common.git",
-                "reference": "64ed5a3f0a70bcc276109d1345884c95f0d40d75"
+                "reference": "e4c54a314a2529c1008ad3f77e9eef26ed1f311b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/64ed5a3f0a70bcc276109d1345884c95f0d40d75",
-                "reference": "64ed5a3f0a70bcc276109d1345884c95f0d40d75",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/e4c54a314a2529c1008ad3f77e9eef26ed1f311b",
+                "reference": "e4c54a314a2529c1008ad3f77e9eef26ed1f311b",
                 "shasum": ""
             },
             "require": {
@@ -804,7 +804,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-12-16 03:23:25"
+            "time": "2015-01-11 04:54:29"
         },
         {
             "name": "omnipay/dummy",
@@ -1210,16 +1210,16 @@
         },
         {
             "name": "omnipay/multisafepay",
-            "version": "v2.1.1",
+            "version": "V2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-multisafepay.git",
-                "reference": "29f1b794af3abc7705365009255932fbcddca305"
+                "reference": "a0f09abf404ca0dd21b553578d7f95df2bfa5318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-multisafepay/zipball/29f1b794af3abc7705365009255932fbcddca305",
-                "reference": "29f1b794af3abc7705365009255932fbcddca305",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-multisafepay/zipball/a0f09abf404ca0dd21b553578d7f95df2bfa5318",
+                "reference": "a0f09abf404ca0dd21b553578d7f95df2bfa5318",
                 "shasum": ""
             },
             "require": {
@@ -1264,20 +1264,20 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-09-17 00:38:11"
+            "time": "2015-01-14 04:01:43"
         },
         {
             "name": "omnipay/netaxept",
-            "version": "v2.1.1",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-netaxept.git",
-                "reference": "1b99babf51d240b23db95464c5daa3e169a3c502"
+                "reference": "a661c212428703175f17e3f8f0a32f24b06fe9f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-netaxept/zipball/1b99babf51d240b23db95464c5daa3e169a3c502",
-                "reference": "1b99babf51d240b23db95464c5daa3e169a3c502",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-netaxept/zipball/a661c212428703175f17e3f8f0a32f24b06fe9f8",
+                "reference": "a661c212428703175f17e3f8f0a32f24b06fe9f8",
                 "shasum": ""
             },
             "require": {
@@ -1321,7 +1321,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-09-17 00:39:10"
+            "time": "2015-01-12 16:10:59"
         },
         {
             "name": "omnipay/netbanx",
@@ -1671,16 +1671,16 @@
         },
         {
             "name": "omnipay/paypal",
-            "version": "dev-master",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paypal.git",
-                "reference": "095905e0088f2675f3643ea1e1bd69c3fe7e093f"
+                "reference": "e97a944770fd88d023e495af58555650d9cc7e0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/095905e0088f2675f3643ea1e1bd69c3fe7e093f",
-                "reference": "095905e0088f2675f3643ea1e1bd69c3fe7e093f",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/e97a944770fd88d023e495af58555650d9cc7e0c",
+                "reference": "e97a944770fd88d023e495af58555650d9cc7e0c",
                 "shasum": ""
             },
             "require": {
@@ -1725,7 +1725,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2014-12-05 14:42:04"
+            "time": "2015-01-07 19:36:51"
         },
         {
             "name": "omnipay/pin",
@@ -1902,16 +1902,16 @@
         },
         {
             "name": "omnipay/stripe",
-            "version": "v2.1.0",
+            "version": "v2.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/omnipay/stripe.git",
-                "reference": "99c82dc42c7c0b9ec58d8c4fb917f3dc5d1c23e2"
+                "url": "https://github.com/thephpleague/omnipay-stripe.git",
+                "reference": "23a5f77ed5345356c458355419395cbbf0106049"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/omnipay/stripe/zipball/99c82dc42c7c0b9ec58d8c4fb917f3dc5d1c23e2",
-                "reference": "99c82dc42c7c0b9ec58d8c4fb917f3dc5d1c23e2",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/23a5f77ed5345356c458355419395cbbf0106049",
+                "reference": "23a5f77ed5345356c458355419395cbbf0106049",
                 "shasum": ""
             },
             "require": {
@@ -1942,11 +1942,11 @@
                 },
                 {
                     "name": "Omnipay Contributors",
-                    "homepage": "https://github.com/omnipay/stripe/contributors"
+                    "homepage": "https://github.com/thephpleague/omnipay-stripe/contributors"
                 }
             ],
             "description": "Stripe driver for the Omnipay payment processing library",
-            "homepage": "https://github.com/omnipay/stripe",
+            "homepage": "https://github.com/thephpleague/omnipay-stripe",
             "keywords": [
                 "gateway",
                 "merchant",
@@ -1955,7 +1955,7 @@
                 "payment",
                 "stripe"
             ],
-            "time": "2014-04-08 07:07:41"
+            "time": "2015-01-27 17:58:03"
         },
         {
             "name": "omnipay/targetpay",
@@ -2124,12 +2124,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "c55100317f62282fd4c0c90ba107927dc1cd450b"
+                "reference": "07708493abb5e2311b9257c1bf98de58e60fba3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/c55100317f62282fd4c0c90ba107927dc1cd450b",
-                "reference": "c55100317f62282fd4c0c90ba107927dc1cd450b",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/07708493abb5e2311b9257c1bf98de58e60fba3d",
+                "reference": "07708493abb5e2311b9257c1bf98de58e60fba3d",
                 "shasum": ""
             },
             "require": {
@@ -2173,7 +2173,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-03 08:04:30"
+            "time": "2015-02-12 08:47:54"
         },
         {
             "name": "symfony/http-foundation",
@@ -2182,16 +2182,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "f710d0dcf441acf3102585a668975d4e1a42dd7d"
+                "reference": "ce03dcbdbd74eff96616421f05eb9ba77da6afcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/f710d0dcf441acf3102585a668975d4e1a42dd7d",
-                "reference": "f710d0dcf441acf3102585a668975d4e1a42dd7d",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/ce03dcbdbd74eff96616421f05eb9ba77da6afcf",
+                "reference": "ce03dcbdbd74eff96616421f05eb9ba77da6afcf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "require-dev": {
                 "symfony/expression-language": "~2.4|~3.0.0"
@@ -2226,7 +2226,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-03 15:46:01"
+            "time": "2015-02-11 07:17:51"
         }
     ],
     "packages-dev": [
@@ -2286,12 +2286,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "ee277735d9dea95553ee667bee3292cdd6947574"
+                "reference": "f699a69af1f0a5a314107455e6150cfadce33e6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/ee277735d9dea95553ee667bee3292cdd6947574",
-                "reference": "ee277735d9dea95553ee667bee3292cdd6947574",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/f699a69af1f0a5a314107455e6150cfadce33e6b",
+                "reference": "f699a69af1f0a5a314107455e6150cfadce33e6b",
                 "shasum": ""
             },
             "require": {
@@ -2330,7 +2330,7 @@
                     "homepage": "http://davedevelopment.co.uk"
                 }
             ],
-            "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succint API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
+            "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
             "homepage": "http://github.com/padraic/mockery",
             "keywords": [
                 "BDD",
@@ -2344,7 +2344,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-12-31 11:42:06"
+            "time": "2015-02-15 16:05:06"
         },
         {
             "name": "omnipay/tests",
@@ -2859,16 +2859,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "59180ea818b1fe87de344d979240dd422e2d7892"
+                "reference": "43aac3461a5679f486f7c96e4d7e780a59fec997"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/59180ea818b1fe87de344d979240dd422e2d7892",
-                "reference": "59180ea818b1fe87de344d979240dd422e2d7892",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/43aac3461a5679f486f7c96e4d7e780a59fec997",
+                "reference": "43aac3461a5679f486f7c96e4d7e780a59fec997",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "type": "library",
             "extra": {
@@ -2897,7 +2897,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-03 15:46:01"
+            "time": "2015-02-11 07:17:51"
         }
     ],
     "aliases": [],

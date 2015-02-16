@@ -11,6 +11,10 @@
         {
             "type": "git",
             "url":  "https://github.com/sergej-koscejev/omnipay-gopay.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/eileenmcnaughton/omnipay-mollie.git"
         }
     ],
     "require":
