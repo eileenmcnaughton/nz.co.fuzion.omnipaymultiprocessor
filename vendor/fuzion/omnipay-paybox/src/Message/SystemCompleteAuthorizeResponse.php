@@ -16,6 +16,7 @@ class SystemCompleteAuthorizeResponse extends AbstractResponse
         $signed_data_keys = array(
             'Mt',
             'Id',
+            'Ref',
             'Erreur',
         );
         foreach ($signed_data_keys as $key) {
