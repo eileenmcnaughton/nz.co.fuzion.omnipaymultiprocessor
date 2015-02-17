@@ -66,7 +66,31 @@ class SystemGatewayTest extends GatewayTestCase
         $this->assertSame('10.00', $request->getAmount());
     }
 
-    public function testCompletePurchaseSend()
+    public function testCompleteAuthorize()
+    {
+        $options = array(
+            'amount' => '10.00',
+            'transactionId' => '45',
+            'returnUrl' => 'https://www.example.com/return',
+        );
+        $signature = 'opPlzAadVvCor99yZ8oj2NHmE0eAxXkmCZ80C%2BYW8htpF7Wf6krYYFjc1pQnvYHcW7vp3ta3p8Gfh7gAaR6WDOnhe1Xzm39whk11%2BShieXbQCnEKXot4aGkpodxi1cHutXBhh1IBQOLgq1IVM%2BaV9PUeTI%2FGFruSDnA1TExDHZE%3D';
+
+        $this->getHttpRequest()->request->replace(
+            array(
+                'Mt' => 100,
+                'Id' => 45,
+                'Erreur' => '00114',
+                'sign' => $signature,
+            )
+        );
+
+        $response = $this->gateway->completeAuthorize($options)->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame(45, $response->getTransactionReference());
+    }
+
+    public function testPurchaseSend()
     {
         $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => array(
             'firstName' => 'Pokemon',
@@ -79,7 +103,7 @@ class SystemGatewayTest extends GatewayTestCase
     }
 
 
-    public function testCompletePurchaseSendWithSiteData()
+    public function testPurchaseSendWithSiteData()
     {
         $gateway = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'EUR', 'card' => array(
             'firstName' => 'Pokemon',
