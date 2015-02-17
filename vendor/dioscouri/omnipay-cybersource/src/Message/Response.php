@@ -7,7 +7,7 @@ use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
- * Stripe Response
+ * Cybersource Response
  */
 class Response extends AbstractResponse implements RedirectResponseInterface
 {

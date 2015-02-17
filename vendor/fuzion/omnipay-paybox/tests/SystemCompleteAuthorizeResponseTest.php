@@ -11,22 +11,33 @@ class SystemCompleteAuthorizeResponseTest extends TestCase
         $response = new SystemCompleteAuthorizeResponse(
             $this->getMockRequest(),
             array(
+               'Mt' => 100,
+               'Id' => 47,
+               'Ref' => 601957,
                'Erreur' => '00000',
-               'Id' => '12345',
+               'sign' => 'jRk0xXxO6wGwyL9G0K5oj5Xihxbr0s0gxhBkXT7D0k0KAFKywaqy1xd%2BorpeU1hM2Dq5KvDP42byaRzEIx3ymVvAP%2FCtM7jzTXO58tbvsXojPvLGEqz4q9QhrCH%2BOmQL6AfXt6lXImzjTgrKDIvIu6EX%2BNpp5sbcot%2BafOrTVkQ%3D',
                 )
         );
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('12345', $response->getTransactionReference());
+        $this->assertSame(47, $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
     public function testFailure()
     {
-        $response = new SystemCompleteAuthorizeResponse($this->getMockRequest(), array('x_response_code' => '0', 'x_response_reason_text' => 'Declined'));
+        $response = new SystemCompleteAuthorizeResponse(
+            $this->getMockRequest(),
+            array(
+                'Mt' => 100,
+                'Id' => 45,
+                'Erreur' => '00114',
+                'sign' => 'opPlzAadVvCor99yZ8oj2NHmE0eAxXkmCZ80C%2BYW8htpF7Wf6krYYFjc1pQnvYHcW7vp3ta3p8Gfh7gAaR6WDOnhe1Xzm39whk11%2BShieXbQCnEKXot4aGkpodxi1cHutXBhh1IBQOLgq1IVM%2BaV9PUeTI%2FGFruSDnA1TExDHZE%3D',
+            )
+        );
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getTransactionReference());
+        $this->assertSame(45, $response->getTransactionReference());
         $this->assertSame('Transaction failed', $response->getMessage());
     }
 }

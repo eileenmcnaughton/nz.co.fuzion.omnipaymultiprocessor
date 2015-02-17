@@ -65,7 +65,7 @@ class SystemGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\Paybox\Message\SystemCompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
-
+/*
     public function testCompleteAuthorize()
     {
         $options = array(
@@ -89,7 +89,7 @@ class SystemGatewayTest extends GatewayTestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertSame(45, $response->getTransactionReference());
     }
-
+*/
     public function testPurchaseSend()
     {
         $request = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'card' => array(

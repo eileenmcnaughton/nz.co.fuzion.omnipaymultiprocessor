@@ -2382,50 +2382,6 @@
         ]
     },
     {
-        "name": "dioscouri/omnipay-cybersource",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
-            "reference": "1507d67f189c40e879686984941ebaaa3b51ecf7"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2014-12-23 23:43:51",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Cybersource\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Rafael Diaz-Tushman",
-                "email": "rdiaztushman@dioscouri.com"
-            }
-        ],
-        "description": "Cybersource support for Omnipay payment processing library",
-        "homepage": "https://github.com/dioscouri/omnipay-cybersource",
-        "keywords": [
-            "cybersource",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "purchase"
-        ]
-    },
-    {
         "name": "omnipay/common",
         "version": "v2.3.3",
         "version_normalized": "2.3.3.0",
@@ -2782,50 +2738,6 @@
         ]
     },
     {
-        "name": "fuzion/omnipay-paybox",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-            "reference": "269d09ba9e17c9a5d221c91f25296f182ec85fbd"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2015-02-16 15:43:22",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Paybox\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Eileen McNaughton",
-                "email": "eileen@fuzion.co.nz"
-            }
-        ],
-        "description": "Paybox support for Omnipay payment processing library",
-        "homepage": "https://github.com/eileenmcnaughton/omnipay-paybox",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "paybox",
-            "payment",
-            "purchase"
-        ]
-    },
-    {
         "name": "symfony/yaml",
         "version": "2.7.x-dev",
         "version_normalized": "2.7.9999999.9999999-dev",
@@ -2988,5 +2900,93 @@
         ],
         "description": "Symfony HttpFoundation Component",
         "homepage": "http://symfony.com"
+    },
+    {
+        "name": "dioscouri/omnipay-cybersource",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
+            "reference": "42f2bba187288ef8179b35782ee5833317b93109"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-02-16 16:57:48",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Cybersource\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rafael Diaz-Tushman",
+                "email": "rdiaztushman@dioscouri.com"
+            }
+        ],
+        "description": "Cybersource support for Omnipay payment processing library",
+        "homepage": "https://github.com/dioscouri/omnipay-cybersource",
+        "keywords": [
+            "cybersource",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase"
+        ]
+    },
+    {
+        "name": "fuzion/omnipay-paybox",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
+            "reference": "23c069465ee9fe3b77db47241f64989a3cbdf853"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-02-17 03:53:15",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Paybox\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eileen McNaughton",
+                "email": "eileen@fuzion.co.nz"
+            }
+        ],
+        "description": "Paybox support for Omnipay payment processing library",
+        "homepage": "https://github.com/eileenmcnaughton/omnipay-paybox",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "paybox",
+            "payment",
+            "purchase"
+        ]
     }
 ]

@@ -4,13 +4,14 @@ namespace Omnipay\Paybox\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Paybox Complete Authorize Response
  */
 class SystemCompleteAuthorizeResponse extends AbstractResponse
 {
-    public function __construct(SystemCompleteAuthorizeRequest $request, $data)
+    public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
         $signed_data_keys = array(

@@ -66,7 +66,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
-                "reference": "1507d67f189c40e879686984941ebaaa3b51ecf7"
+                "reference": "42f2bba187288ef8179b35782ee5833317b93109"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -100,7 +100,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-12-23 23:43:51"
+            "time": "2015-02-16 16:57:48"
         },
         {
             "name": "fuzion/omnipay-paybox",
@@ -108,7 +108,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-                "reference": "269d09ba9e17c9a5d221c91f25296f182ec85fbd"
+                "reference": "23c069465ee9fe3b77db47241f64989a3cbdf853"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -142,7 +142,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-02-16 15:43:22"
+            "time": "2015-02-17 03:53:15"
         },
         {
             "name": "guzzle/common",

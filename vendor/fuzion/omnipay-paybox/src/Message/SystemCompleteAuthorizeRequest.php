@@ -27,5 +27,4 @@ class SystemCompleteAuthorizeRequest extends AbstractRequest
     {
         return $this->response = new SystemCompleteAuthorizeResponse($this, $data);
     }
-
 }
