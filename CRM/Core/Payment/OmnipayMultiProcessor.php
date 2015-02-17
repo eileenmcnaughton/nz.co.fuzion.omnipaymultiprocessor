@@ -554,7 +554,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
       $_REQUEST = $originalRequest;
-      CRM_Utils_System::redirect($this->getStoredUrl('success'));
+      $this->redirectOrExit('success');
     }
     elseif ($this->transaction_id) {
       civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
@@ -567,7 +567,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->handleError('error', $this->transaction_id  . ' ' . $response->getMessage(), 'processor_error', 9002, $userMessage);
 
     $_REQUEST = $originalRequest;
-    CRM_Utils_System::redirect($this->getStoredUrl('fail'));
+    $this->redirectOrExit('fail');
   }
 
   /**
@@ -582,6 +582,28 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $responder = new CRM_Core_Payment_OmnipayMultiProcessor('live', $processor);
     $responder->processPaymentNotification($params);
     return TRUE;
+  }
+
+  /**
+   * Redirect browser or exit gracefully.
+   *
+   * We don't know if we are dealing with a user browser or an IPN. If a browser
+   * they should have the end point stored in their session so we redirect to it.
+   *
+   * Otherwise we present a blank screen.
+   *
+   * Note - which is worse - risk a blank screen to users or redirect IPNs to
+   * homepage?
+   *
+   * @param string $outcome
+   *  - success
+   *  - fail
+   */
+  protected function redirectOrExit($outcome) {
+    if (($success_url = $this->getStoredUrl($outcome)) != FALSE) {
+      CRM_Utils_System::redirect($success_url);
+    }
+      CRM_Utils_System::civiExit();
   }
 }
 
