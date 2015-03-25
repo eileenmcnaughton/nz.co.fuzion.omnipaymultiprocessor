@@ -228,7 +228,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @param array $params
    */
-  function saveBillingAddressIfRequired($params) {
+  private function saveBillingAddressIfRequired($params) {
     if (!empty($params['contributionID']) && $this->hasBillingAddressFields($params)) {
       $contribution = civicrm_api3('contribution', 'getsingle', array('id' => $params['contributionID'], 'return' => 'address_id, contribution_status_id'));
       if (empty($contribution['address_id'])) {
@@ -265,7 +265,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return string
    */
-  function camelFieldName($fieldName) {
+  private function camelFieldName($fieldName) {
     return str_replace(' ', '', ucwords(strtolower($fieldName)));
   }
 
@@ -281,11 +281,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * - frequency_installments
    * - shipping fields
    *
-   * @param $params
+   * @param array $params
    *
    * @return array
    */
-  function getCreditCardObjectParams($params) {
+  private function getCreditCardObjectParams($params) {
     $billingID = $locationTypes = CRM_Core_BAO_LocationType::getBilling();
     $cardFields = array();
     $basicMappings = array(
@@ -334,7 +334,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     return $cardFields;
   }
 
-  function getSensitiveCreditCardObjectOptions($params) {
+  private function getSensitiveCreditCardObjectOptions($params) {
     $basicMappings = array(
       'cvv' => 'cvv2',
       'number' => 'credit_card_number',
@@ -360,7 +360,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array
    */
-  function getCreditCardOptions($params, $component) {
+  private function getCreditCardOptions($params, $component) {
     // Contribution page in 4.4 passes amount - not sure which passes total_amount if any.
     if (isset($params['total_amount'])) {
       $amount = (float) CRM_Utils_Rule::cleanMoney($params['total_amount']);
@@ -417,7 +417,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @todo move this metadata requirement onto the class - or the mgd files
    * @return array
    */
-  function getBillingBlockFields() {
+  public function getBillingBlockFields() {
     $billingID = $locationTypes = CRM_Core_BAO_LocationType::getBilling();
     //for now we will cheat & just use the really blunt characteristics option - ie.
     // ie billing mode 1 or payment type 3 get billing fields.
@@ -468,7 +468,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array
    */
-  function getPaymentFieldMapping() {
+  private function getPaymentFieldMapping() {
     return array(
       'card_type' => array(
         'core_field_name' => 'credit_card_type',
@@ -490,7 +490,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array
    */
-  function getCorePaymentFields() {
+  private function getCorePaymentFields() {
     $creditCardType = array('' => ts('- select -')) + CRM_Contribute_PseudoConstant::creditCard();
     return array(
       'credit_card_number' => array(
@@ -541,7 +541,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array
    */
-  function getBillingAddressFields() {
+  private function getBillingAddressFields() {
     $billingFields = array();
     foreach (array(
       'street_address',
@@ -625,8 +625,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    * @throws CiviCRM_API3_Exception
    */
-  static function processPaymentResponse($params) {
-    $processor =  civicrm_api3('payment_processor', 'getsingle', array('id' => $params['processor_id']));
+  public static function processPaymentResponse($params) {
+    $processor = civicrm_api3('payment_processor', 'getsingle', array('id' => $params['processor_id']));
     $responder = new CRM_Core_Payment_OmnipayMultiProcessor('live', $processor);
     $responder->processPaymentNotification($params);
     return TRUE;
