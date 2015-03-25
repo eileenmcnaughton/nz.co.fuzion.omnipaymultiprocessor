@@ -9,10 +9,14 @@
       <div class="content">
       {if $field_spec.htmlType == 'text'}
         <input name="{$display_field}" type="text" id="{$core_field_name}" class="medium crm-form-text required"
-          {foreach from=$field_spec.attributes key=attribute item=attribute_value}
-            {$attribute} = "{$attribute_value}"
+          {foreach from=$field_spec.options key=attribute item=option_value}
+            {$attribute} = "{$option_value}"
           {/foreach}
-        />
+        >
+        {if $core_field_name == 'cvv2'} {* this is a hack in core & it's a hack here... *}
+          <span class="cvv2-icon" title="{ts}Usually the last 3-4 digits in the signature area on the back of the card.{/ts}"> </span>
+        {/if}
+
      {elseif $field_spec.htmlType == 'select'}
         <select name="{$display_field}" id="{$core_field_name}" class="crm-form-select">
           {foreach from=$field_spec.attributes key=attribute item=attribute_value}

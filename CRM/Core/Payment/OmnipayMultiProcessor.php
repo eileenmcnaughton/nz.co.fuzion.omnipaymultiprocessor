@@ -526,7 +526,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     return array(
       'card_type' => array(
         'core_field_name' => 'credit_card_type',
-        'attributes' => array(
+        'options' => array(
           '' => ts('- select -'),
           '001' => 'Visa',
           '002' => 'Mastercard',
@@ -536,6 +536,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       ),
       'card_number' => array('core_field_name' => 'credit_card_number'),
       'card_expiry_date' => array('core_field_name' => 'credit_card_exp_date'),
+      'card_cvn' => array('core_field_name' => 'cvv2'),
     );
   }
 
