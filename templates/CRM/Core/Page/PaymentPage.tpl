@@ -13,7 +13,8 @@
             {$attribute} = "{$option_value}"
           {/foreach}
         >
-        {if $core_field_name == 'cvv2'} {* this is a hack in core & it's a hack here... *}
+        {* this is a hack in core & it's a hack here... *}
+        {if $core_field_name == 'cvv2'}
           <span class="cvv2-icon" title="{ts}Usually the last 3-4 digits in the signature area on the back of the card.{/ts}"> </span>
         {/if}
 
@@ -42,17 +43,9 @@
         </select>&nbsp;
         <select class="crm-form-date required" id="{$display_field}_Y" name="card_expiry_date[Y]">
           <option value="">-year-</option>
-          <option value="2014">2014</option>
-          <option value="2015">2015</option>
-          <option value="2016">2016</option>
-          <option value="2017">2017</option>
-          <option value="2018">2018</option>
-          <option value="2019">2019</option>
-          <option value="2020">2020</option>
-          <option value="2021">2021</option>
-          <option value="2022">2022</option>
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
+          {foreach from=$field_spec.options.year item=year}
+            <option value="{$year}">{$year}</option>
+          {/foreach}
         </select>
         <input name="{$display_field}" id="{$display_field}" type='hidden' value=""/>
       {/if}
