@@ -251,7 +251,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return bool
    */
-  function hasBillingAddressFields($params) {
+  private function hasBillingAddressFields($params) {
     $billingFields = array_intersect_key($params, array_flip($this->getBillingAddressFields()));
     return !empty($billingFields);
   }

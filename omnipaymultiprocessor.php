@@ -65,7 +65,8 @@ function omnipaymultiprocessor_civicrm_disable() {
  * @param $op string, the type of operation being performed; 'check' or 'enqueue'
  * @param $queue CRM_Queue_Queue, (for 'enqueue') the modifiable list of pending up upgrade tasks
  *
- * @return mixed  based on op. for 'check', returns array(boolean) (TRUE if upgrades are pending)
+ * @return mixed
+ *   Based on op. for 'check', returns array(boolean) (TRUE if upgrades are pending)
  *                for 'enqueue', returns void
  */
 function omnipaymultiprocessor_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
@@ -75,11 +76,12 @@ function omnipaymultiprocessor_civicrm_upgrade($op, CRM_Queue_Queue $queue = NUL
 }
 
 /**
- * Implementation of hook_civicrm_managed
+ * Implements hook_civicrm_managed().
  *
  * Generate a list of entities to create/deactivate/delete when this module
  * is installed, disabled, uninstalled.
- * @param $entities
+ *
+ * @param array $entities
  */
 function omnipaymultiprocessor_civicrm_managed(&$entities) {
   return _omnipaymultiprocessor_civix_civicrm_managed($entities);
@@ -99,7 +101,8 @@ function omnipaymultiprocessor__versionAtLeast($version) {
 }
 
 /**
- * implement buildForm hook to remove billing fields if elsewhere on the form
+ * Implement buildForm hook to remove billing fields if elsewhere on the form.
+ *
  * @param string $formName
  * @param CRM_Contribute_Form_Contribution_Main|CRM_Event_Form_Registration_Register $form
  */
@@ -111,17 +114,18 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
         $form->removeElement($fieldName);
         $form->add('textarea', $fieldName,
           $label,
-          array('rows' => 4, 'cols' => 40,)
+          array('rows' => 4, 'cols' => 40)
         );
       }
     }
   }
 
-   if (!method_exists('CRM_Core_Payment_Form', 'buildCreditCard')) {
+  if (!method_exists('CRM_Core_Payment_Form', 'buildCreditCard')) {
     //presumably we are on 4.6 & the following code is no longer required
     return;
   }
-  if (!omnipaymultiprocessor_is_credit_card_form($formName)  || $form->_paymentProcessor['class_name'] !='Payment_OmnipayMultiProcessor')  {
+  if (!omnipaymultiprocessor_is_credit_card_form($formName)
+    || $form->_paymentProcessor['class_name'] != 'Payment_OmnipayMultiProcessor') {
     return;
   }
 
@@ -130,7 +134,7 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
   $form->assign('paymentTypeName', $paymentType['name']);
 
   $paymentFields = omnipaymultiprocessor_get_valid_form_payment_fields($formName == 'CRM_Contribute_Form_Contribution_Main' ? 'contribute' : 'event', $form->_paymentProcessor, (empty($form->_paymentFields) ? array() : $form->_paymentFields));
-  if(!empty($paymentFields)) {
+  if (!empty($paymentFields)) {
     $form->assign('paymentFields', $paymentFields);
     $form->assign('paymentTypeLabel', ts($paymentType['label'] . ' Information'));
   }
@@ -149,7 +153,7 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
   $form->_paymentProcessor['billing_mode'] = $billingMode;
 
   //CiviCRM assumes that if it is Not a credit card it MUST be a direct debit & makes those required
-  $suppressedFields =  omnipaymultiprocessor_get_suppressed_billing_fields((array) $billingDetailsFields, (array) $paymentFields, (array) $form->_paymentFields);
+  $suppressedFields = omnipaymultiprocessor_get_suppressed_billing_fields((array) $billingDetailsFields, (array) $paymentFields, (array) $form->_paymentFields);
 
   foreach ($suppressedFields as $suppressedField) {
     $form->_paymentFields[$suppressedField]['is_required'] = FALSE;
@@ -189,7 +193,8 @@ function omnipaymultiprocessor_getBillingPersonalDetailsFields($paymentProcessor
 }
 
 /**
- * get a list of the payment fields to display on the form
+ * Get a list of the payment fields to display on the form.
+ *
  * @param $mode
  * @param $processor
  * @param $formPaymentFields
