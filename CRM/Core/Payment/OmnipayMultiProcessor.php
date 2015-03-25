@@ -412,6 +412,60 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Get array of fields that should be displayed on the payment form.
+   *
+   * This function is new to 4.6 and will not be called on lower versions.
+   *
+   * @return array
+   *
+   * @throws CiviCRM_API3_Exception
+   */
+  public function getPaymentFormFields() {
+    if ($this->_paymentProcessor['billing_mode'] == 4) {
+      $paymentType = civicrm_api3('option_value', 'getsingle', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type'));
+      if ($paymentType['name'] == 'credit_card_off_site_post') {
+        // This name implies transactional redirect at this stage - the only
+        // example currently being Cybersource.
+        return $this->getBillingAddressFields();
+      }
+      return array();
+    }
+    return $this->_paymentProcessor['payment_type'] == 1 ? $this->getCreditCardFormFields() : $this->getDirectDebitFormFields();
+  }
+
+  /**
+   * Get name for the payment information type.
+   * @todo - use option group + name field (like Omnipay does)
+   * @return string
+   */
+  public function getPaymentTypeName() {
+    return $this->_paymentProcessor['payment_type'] == 1 ? 'credit_card' : 'direct_debit';
+  }
+
+  /**
+   * Get label for the payment information type.
+   *
+   * We are overriding this for the transparent redirect use case.
+   * Cybersource (our current example) adds billing details which is what we
+   * are calling this here.
+   *
+   * @return string
+   */
+  public function getPaymentTypeLabel() {
+    switch ($this->_paymentProcessor['payment_type']) {
+      case 1:
+        return 'Credit Card';
+
+      case 2:
+        return 'Direct Debit';
+
+      default:
+        return 'Billing';
+    }
+    return $this->_paymentProcessor['payment_type'] == 1 ? 'Credit Card' : 'Direct Debit';
+  }
+
+  /**
    * Get billing fields required for this block.
    *
    * @todo move this metadata requirement onto the class - or the mgd files
@@ -480,7 +534,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           '004' => 'Discover',
         )
       ),
-      'card_number' => array('core_field_name' => 'credit_card_number',),
+      'card_number' => array('core_field_name' => 'credit_card_number'),
       'card_expiry_date' => array('core_field_name' => 'credit_card_exp_date'),
     );
   }
@@ -550,9 +604,129 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'postal_code',
       'country_id',
       ) as $addressField) {
-        $billingFields[$addressField]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
+      $billingFields[$addressField]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
     }
     return $billingFields;
+  }
+
+  /**
+   * Get metadata for payment form fields.
+   *
+   * @return array
+   */
+  public function getPaymentFormFieldsMetadata() {
+    return self::getBillingAddressFieldsMetadata();
+  }
+
+  /**
+   * Get form metadata for address fields.
+   *
+   * At the moment this is being called from getPaymentFormFields when we are
+   * dealing with a transparent redirect. It is a bit Cybersource use-casey.
+   *
+   * @return array
+   *   Array of metadata for address fields.
+   */
+  private function getBillingAddressFieldsMetadata() {
+    $metadata = array();
+    $billingID = CRM_Core_BAO_LocationType::getBilling();
+    $metadata['billing_first_name'] = array(
+      'htmlType' => 'text',
+      'name' => 'billing_first_name',
+      'title' => ts('Billing First Name'),
+      'cc_field' => TRUE,
+      'attributes' => array(
+        'size' => 30,
+        'maxlength' => 60,
+        'autocomplete' => 'off',
+      ),
+      'is_required' => TRUE,
+    );
+
+    $metadata['billing_middle_name'] = array(
+      'htmlType' => 'text',
+      'name' => 'billing_middle_name',
+      'title' => ts('Billing Middle Name'),
+      'cc_field' => TRUE,
+      'attributes' => array(
+        'size' => 30,
+        'maxlength' => 60,
+        'autocomplete' => 'off',
+      ),
+      'is_required' => FALSE,
+    );
+
+    $metadata['billing_last_name'] = array(
+      'htmlType' => 'text',
+      'name' => 'billing_last_name',
+      'title' => ts('Billing Last Name'),
+      'cc_field' => TRUE,
+      'attributes' => array(
+        'size' => 30,
+        'maxlength' => 60,
+        'autocomplete' => 'off',
+      ),
+      'is_required' => TRUE,
+    );
+
+    $metadata["billing_street_address-{$billingID}"] = array(
+      'htmlType' => 'text',
+      'name' => "billing_street_address-{$billingID}",
+      'title' => ts('Street Address'),
+      'cc_field' => TRUE,
+      'attributes' => array(
+        'size' => 30,
+        'maxlength' => 60,
+        'autocomplete' => 'off',
+      ),
+      'is_required' => TRUE,
+    );
+
+    $metadata["billing_city-{$billingID}"] = array(
+      'htmlType' => 'text',
+      'name' => "billing_city-{$billingID}",
+      'title' => ts('City'),
+      'cc_field' => TRUE,
+      'attributes' => array(
+        'size' => 30,
+        'maxlength' => 60,
+        'autocomplete' => 'off',
+      ),
+      'is_required' => TRUE,
+    );
+
+    $metadata["billing_state_province_id-{$billingID}"] = array(
+      'htmlType' => 'chainSelect',
+      'title' => ts('State/Province'),
+      'name' => "billing_state_province_id-{$billingID}",
+      'cc_field' => TRUE,
+      'is_required' => TRUE,
+    );
+
+    $metadata["billing_postal_code-{$billingID}"] = array(
+      'htmlType' => 'text',
+      'name' => "billing_postal_code-{$billingID}",
+      'title' => ts('Postal Code'),
+      'cc_field' => TRUE,
+      'attributes' => array(
+        'size' => 30,
+        'maxlength' => 60,
+        'autocomplete' => 'off',
+      ),
+      'is_required' => TRUE,
+    );
+
+    $metadata["billing_country_id-{$billingID}"] = array(
+      'htmlType' => 'select',
+      'name' => "billing_country_id-{$billingID}",
+      'title' => ts('Country'),
+      'cc_field' => TRUE,
+      'attributes' => array(
+        '' => ts('- select -'),
+      ) + CRM_Core_PseudoConstant::country(),
+      'is_required' => TRUE,
+    );
+    return $metadata;
   }
 
   /**
