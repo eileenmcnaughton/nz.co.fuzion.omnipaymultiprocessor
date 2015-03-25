@@ -244,7 +244,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Handle processor error. If we pass error handling through this function it will be easy to switch to throwing exceptions later
+   * Handle processor error.
+   *
+   * If we pass error handling through this function it will be easy to switch to throwing exceptions later.
    *
    * @param string $level
    * @param $message
