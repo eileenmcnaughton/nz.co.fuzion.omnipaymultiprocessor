@@ -162,7 +162,7 @@ return array(
     ),
   6 =>
     array(
-      'name' => 'PayPal Standard',
+      'name' => 'OmniPay - PayPal Standard',
       'entity' => 'payment_processor_type',
       'params' =>
         array(
