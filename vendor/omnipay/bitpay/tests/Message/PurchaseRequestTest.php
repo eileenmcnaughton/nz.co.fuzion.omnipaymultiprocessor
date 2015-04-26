@@ -41,4 +41,12 @@ class PurchaseRequestTest extends TestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
     }
+
+    public function testGetEndpoint()
+    {
+        $this->request->setTestMode(false);
+        $this->assertSame('https://bitpay.com/api', $this->request->getEndpoint());
+        $this->request->setTestMode(true);
+        $this->assertSame('https://test.bitpay.com/api', $this->request->getEndpoint());
+    }
 }

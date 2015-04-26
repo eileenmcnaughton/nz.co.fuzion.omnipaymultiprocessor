@@ -1,45 +1,26 @@
 <?php
+/**
+ * eWAY Rapid Purchase Request
+ */
 
 namespace Omnipay\Eway\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
-
 /**
- * eWAY Rapid 3.0 Purchase Request
+ * eWAY Rapid Purchase Request
+ *
+ * Creates a payment URL using eWAY's Transparent Redirect
+ *
+ * @link https://eway.io/api-v3/#transparent-redirect
  */
 class RapidPurchaseRequest extends AbstractRequest
 {
-    protected $liveEndpoint = 'https://api.ewaypayments.com';
-    protected $testEndpoint = 'https://api.sandbox.ewaypayments.com';
-
-    public function getApiKey()
-    {
-        return $this->getParameter('apiKey');
-    }
-
-    public function setApiKey($value)
-    {
-        return $this->setParameter('apiKey', $value);
-    }
-
-    public function getPassword()
-    {
-        return $this->getParameter('password');
-    }
-
-    public function setPassword($value)
-    {
-        return $this->setParameter('password', $value);
-    }
-
     public function getData()
     {
         $this->validate('amount', 'returnUrl');
 
-        $data = array();
+        $data = $this->getBaseData();
         $data['Method'] = 'ProcessPayment';
-        $data['DeviceID'] = 'https://github.com/adrianmacneil/omnipay';
-        $data['CustomerIP'] = $this->getClientIp();
+        $data['TransactionType'] = $this->getTransactionType();
         $data['RedirectUrl'] = $this->getReturnUrl();
 
         $data['Payment'] = array();
@@ -47,21 +28,10 @@ class RapidPurchaseRequest extends AbstractRequest
         $data['Payment']['InvoiceNumber'] = $this->getTransactionId();
         $data['Payment']['InvoiceDescription'] = $this->getDescription();
         $data['Payment']['CurrencyCode'] = $this->getCurrency();
+        $data['Payment']['InvoiceReference'] = $this->getInvoiceReference();
 
-        $data['Customer'] = array();
-        $card = $this->getCard();
-        if ($card) {
-            $data['Customer']['FirstName'] = $card->getFirstName();
-            $data['Customer']['LastName'] = $card->getLastName();
-            $data['Customer']['CompanyName'] = $card->getCompany();
-            $data['Customer']['Street1'] = $card->getAddress1();
-            $data['Customer']['Street2'] = $card->getAddress2();
-            $data['Customer']['City'] = $card->getCity();
-            $data['Customer']['State'] = $card->getState();
-            $data['Customer']['PostalCode'] = $card->getPostCode();
-            $data['Customer']['Country'] = strtolower($card->getCountry());
-            $data['Customer']['Email'] = $card->getEmail();
-            $data['Customer']['Phone'] = $card->getPhone();
+        if ($this->getItems()) {
+            $data['Items'] = $this->getItemData();
         }
 
         return $data;
@@ -76,13 +46,8 @@ class RapidPurchaseRequest extends AbstractRequest
         return $this->response = new RapidResponse($this, $httpResponse->json());
     }
 
-    public function getEndpoint()
+    protected function getEndpoint()
     {
         return $this->getEndpointBase().'/CreateAccessCode.json';
-    }
-
-    public function getEndpointBase()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }

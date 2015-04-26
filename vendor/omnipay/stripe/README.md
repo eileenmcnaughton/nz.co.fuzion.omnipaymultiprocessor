@@ -31,10 +31,12 @@ And run composer to update your dependencies:
 
 The following gateways are provided by this package:
 
-* Stripe
+* [Stripe](https://stripe.com/)
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
+
+### Stripe.js
 
 The Stripe integration is fairly straight forward. Essentially you just pass
 a `token` field through to Stripe instead of the regular credit card data.
@@ -49,6 +51,29 @@ Simply pass this through to the gateway as `token`, instead of the usual `card` 
 $token = $_POST['stripeToken'];
 $response = $gateway->purchase(['amount' => '10.00', 'currency' => 'USD', 'token' => $token])->send();
 ```
+
+### Stripe Connect
+
+Stripe connect applications can charge an additional fee on top of Stripe's fees for charges they make on behalf of 
+their users. To do this you need to specify an additional `transactionFee` parameter as part of an authorize or purchase
+request.
+
+When a charge is refunded the transaction fee is refunded with an amount proportional to the amount of the charge
+refunded and by default this will come from your connected user's Stripe account effectively leaving them out of pocket.
+To refund from your (the applications) Stripe account instead you can pass a ``refundApplicationFee`` parameter with a
+boolean value of true as part of a refund request.
+
+Note: making requests with Stripe Connect specific parameters can only be made using the OAuth access token you received
+as part of the authorization process. Read more on Stripe Connect [here](https://stripe.com/docs/connect).
+
+## Test Mode
+
+Stripe accounts have test-mode API keys as well as live-mode API keys. These keys can be active
+at the same time. Data created with test-mode credentials will never hit the credit card networks
+and will never cost anyone money.
+
+Unlike some gateways, there is no test mode endpoint separate to the live mode endpoint, the
+Stripe API endpoint is the same for test and for live.
 
 ## Support
 

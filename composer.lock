@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "60b6bba9efbb4e910b7954015cf02a5a",
+    "hash": "eb964e512db77a7e53f9d50be2ba3db6",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -66,7 +66,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KarinG/paypalstandard.git",
-                "reference": "3559180382f8153a35a53d31f3252847683636cf"
+                "reference": "b9879af3da7a94f89dd941e846274cd58d3aa215"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -90,6 +90,7 @@
                 }
             ],
             "description": "PayPal Standard support for Omnipay payment processing library",
+            "homepage": "https://github.com/KarinG/omnipay-paypalstandard",
             "keywords": [
                 "gateway",
                 "merchant",
@@ -99,7 +100,7 @@
                 "purchase",
                 "shell"
             ],
-            "time": "2015-04-26 17:35:58"
+            "time": "2015-04-26 20:29:20"
         },
         {
             "name": "dioscouri/omnipay-cybersource",
@@ -2053,7 +2054,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-12-07 11:05:28"
+            "time": "2014-12-07 11:05:15"
         },
         {
             "name": "symfony/event-dispatcher",

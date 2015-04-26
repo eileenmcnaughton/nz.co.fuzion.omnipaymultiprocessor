@@ -205,6 +205,19 @@ class Mock implements MockInterface
     }
 
     /**
+     * Shortcut method for setting an expectation that a method should not be called.
+     *
+     * @param mixed
+     * @return \Mockery\Expectation
+     */
+    public function shouldNotReceive()
+    {
+        $expectation = call_user_func_array(array($this, 'shouldReceive'), func_get_args());
+        $expectation->never();
+        return $expectation;
+    }
+
+    /**
      * Allows additional methods to be mocked that do not explicitly exist on mocked class
      * @param String $method name of the method to be mocked
      * @return Mock
@@ -685,10 +698,12 @@ class Mock implements MockInterface
             // _mockery_ignoreMissing and break the API with an error.
             return sprintf("%s#%s", __CLASS__, spl_object_hash($this));
         } elseif ($this->_mockery_ignoreMissing) {
-            if ($this->_mockery_defaultReturnValue instanceof \Mockery\Undefined) {
-                return call_user_func_array(array($this->_mockery_defaultReturnValue, $method), $args);
-            } else {
-                return $this->_mockery_defaultReturnValue;
+            if (\Mockery::getConfiguration()->mockingNonExistentMethodsAllowed() || (method_exists($this->_mockery_partial, $method) || is_callable("parent::$method"))) {
+                if ($this->_mockery_defaultReturnValue instanceof \Mockery\Undefined) {
+                    return call_user_func_array(array($this->_mockery_defaultReturnValue, $method), $args);
+                } else {
+                    return $this->_mockery_defaultReturnValue;
+                }
             }
         }
         throw new \BadMethodCallException(

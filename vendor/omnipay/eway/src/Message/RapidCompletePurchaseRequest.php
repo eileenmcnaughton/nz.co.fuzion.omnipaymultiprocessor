@@ -1,9 +1,14 @@
 <?php
-
+/**
+ * eWAY Rapid Complete Purchase Request
+ */
+ 
 namespace Omnipay\Eway\Message;
 
 /**
- * eWAY Rapid 3.0 Complete Purchase Request
+ * eWAY Rapid Complete Purchase Request
+ *
+ * @link https://eway.io/api-v3/#step-3-request-the-results
  */
 class RapidCompletePurchaseRequest extends RapidPurchaseRequest
 {
@@ -12,7 +17,7 @@ class RapidCompletePurchaseRequest extends RapidPurchaseRequest
         return array('AccessCode' => $this->httpRequest->query->get('AccessCode'));
     }
 
-    public function getEndpoint()
+    protected function getEndpoint()
     {
         return $this->getEndpointBase().'/GetAccessCodeResult.json';
     }

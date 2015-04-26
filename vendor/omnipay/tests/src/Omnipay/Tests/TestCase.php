@@ -78,8 +78,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * This method assumes that mock response files are located under the
      * Mock/ subdirectory of the current class. A mock response is added to the next
      * request sent by the client.
+     * 
+     * An array of path can be provided and the next x number of client requests are 
+     * mocked in the order of the array where x = the array length.
      *
-     * @param string $paths Path to files within the Mock folder of the service
+     * @param array|string $paths Path to files within the Mock folder of the service
      *
      * @return MockPlugin returns the created mock plugin
      */

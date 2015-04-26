@@ -1,0 +1,31 @@
+{
+    "name": "civicrm/omnipay-paypalstandard",
+    "type": "library",
+    "description": "PayPal Standard support for Omnipay payment processing library",
+    "keywords": [
+        "shell",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "purchase"
+    ],
+    "homepage": "https://github.com/KarinG/omnipay-paypalstandard",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KarinG",
+            "email": "frontdesk@semper-it.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Paypalstandard\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    }
+}

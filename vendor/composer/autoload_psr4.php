@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
+    'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'Omnipay\\WorldPay\\' => array($vendorDir . '/omnipay/worldpay/src'),
     'Omnipay\\TwoCheckout\\' => array($vendorDir . '/omnipay/2checkout/src'),
     'Omnipay\\TargetPay\\' => array($vendorDir . '/omnipay/targetpay/src'),
@@ -13,6 +16,7 @@ return array(
     'Omnipay\\SecurePay\\' => array($vendorDir . '/omnipay/securepay/src'),
     'Omnipay\\SagePay\\' => array($vendorDir . '/omnipay/sagepay/src'),
     'Omnipay\\Pin\\' => array($vendorDir . '/omnipay/pin/src'),
+    'Omnipay\\Paypalstandard\\' => array($vendorDir . '/civicrm/omnipay-paypalstandard/src'),
     'Omnipay\\PaymentExpress\\' => array($vendorDir . '/omnipay/paymentexpress/src'),
     'Omnipay\\Payflow\\' => array($vendorDir . '/omnipay/payflow/src'),
     'Omnipay\\Paybox\\' => array($vendorDir . '/fuzion/omnipay-paybox/src'),

@@ -9,7 +9,8 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    public $endpoint = 'https://bitpay.com/api';
+    protected $liveEndpoint = 'https://bitpay.com/api';
+    protected $testEndpoint = 'https://test.bitpay.com/api';
 
     public function getApiKey()
     {
@@ -38,11 +39,16 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpRequest = $this->httpClient->post($this->endpoint.'/invoice', null, $data);
+        $httpRequest = $this->httpClient->post($this->getEndpoint().'/invoice', null, $data);
         $httpResponse = $httpRequest
             ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))
             ->send();
 
         return $this->response = new PurchaseResponse($this, $httpResponse->json());
+    }
+
+    public function getEndpoint()
+    {
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 }
