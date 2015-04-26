@@ -15,6 +15,10 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-mollie.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/KarinG/paypalstandard.git"
         }
     ],
     "require":
@@ -25,7 +29,8 @@
         "omnipay/bitpay": "dev-master",
         "fuzion/omnipay-paybox": "dev-master",
         "sergej-koscejev/omnipay-gopay": "dev-master",
-        "omnipay/mollie": "~3.0"
+        "omnipay/mollie": "~3.0",
+        "civicrm/omnipay-paypalstandard": "dev-master"
     },
     "require-dev":
     {

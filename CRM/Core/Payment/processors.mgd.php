@@ -160,6 +160,26 @@ return array(
           'payment_type' => 1,
         ),
     ),
+  6 =>
+    array(
+      'name' => 'PayPal Standard',
+      'entity' => 'payment_processor_type',
+      'params' =>
+        array(
+          'version' => 3,
+          'title' => 'Omnipay - PayPal Standard',
+          'name' => 'omnipay_Paypalstandard',
+          'description' => 'Omnipay PayPal Standard',
+          'user_name_label' => 'Merchant Account Email',
+          'password_label' => 'unused',
+          'signature_label' => 'unused',
+          'class_name' => 'Payment_OmnipayMultiProcessor',
+          'url_site_default' => 'https://www.paypal.com/',
+          'url_api_default' => '',
+          'billing_mode' => 4,
+          'payment_type' => 1,
+        ),
+    ),
   /*
   2 =>
     array(

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "44e1256aac8d075a34515ac54f482a94",
+    "hash": "60b6bba9efbb4e910b7954015cf02a5a",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -59,6 +59,47 @@
                 "skrill"
             ],
             "time": "2014-02-25 13:40:07"
+        },
+        {
+            "name": "civicrm/omnipay-paypalstandard",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KarinG/paypalstandard.git",
+                "reference": "3559180382f8153a35a53d31f3252847683636cf"
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Paypalstandard\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KarinG",
+                    "email": "frontdesk@semper-it.com"
+                }
+            ],
+            "description": "PayPal Standard support for Omnipay payment processing library",
+            "keywords": [
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "purchase",
+                "shell"
+            ],
+            "time": "2015-04-26 17:35:58"
         },
         {
             "name": "dioscouri/omnipay-cybersource",
@@ -145,82 +186,70 @@
             "time": "2015-02-17 03:53:15"
         },
         {
-            "name": "guzzle/common",
-            "version": "v3.9.2",
-            "target-dir": "Guzzle/Common",
+            "name": "guzzle/guzzle",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/common.git",
-                "reference": "2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc"
+                "url": "https://github.com/guzzle/guzzle3.git",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/common/zipball/2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc",
-                "reference": "2e36af7cf2ce3ea1f2d7c2831843b883a8e7b7dc",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
-                "symfony/event-dispatcher": ">=2.1"
+                "ext-curl": "*",
+                "php": ">=5.3.3",
+                "symfony/event-dispatcher": "~2.1"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Guzzle\\Common": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Common libraries used by Guzzle",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "collection",
-                "common",
-                "event",
-                "exception"
-            ],
-            "time": "2014-08-11 04:32:36"
-        },
-        {
-            "name": "guzzle/http",
-            "version": "v3.9.2",
-            "target-dir": "Guzzle/Http",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/http.git",
-                "reference": "1e8dd1e2ba9dc42332396f39fbfab950b2301dc5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/http/zipball/1e8dd1e2ba9dc42332396f39fbfab950b2301dc5",
-                "reference": "1e8dd1e2ba9dc42332396f39fbfab950b2301dc5",
-                "shasum": ""
-            },
-            "require": {
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
                 "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
                 "guzzle/parser": "self.version",
-                "guzzle/stream": "self.version",
-                "php": ">=5.3.2"
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.3",
+                "monolog/monolog": "~1.0",
+                "phpunit/phpunit": "3.7.*",
+                "psr/log": "~1.0",
+                "symfony/class-loader": "~2.1",
+                "zendframework/zend-cache": "2.*,<2.3",
+                "zendframework/zend-log": "2.*,<2.3"
             },
             "suggest": {
-                "ext-curl": "*"
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.7-dev"
+                    "dev-master": "3.9-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Guzzle\\Http": ""
+                    "Guzzle": "src/",
+                    "Guzzle\\Tests": "tests/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -232,115 +261,24 @@
                     "name": "Michael Dowling",
                     "email": "mtdowling@gmail.com",
                     "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
                 }
             ],
-            "description": "HTTP libraries used by Guzzle",
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
-                "Guzzle",
                 "client",
                 "curl",
+                "framework",
                 "http",
-                "http client"
+                "http client",
+                "rest",
+                "web service"
             ],
-            "time": "2014-08-11 04:32:36"
-        },
-        {
-            "name": "guzzle/parser",
-            "version": "v3.9.2",
-            "target-dir": "Guzzle/Parser",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/parser.git",
-                "reference": "6874d171318a8e93eb6d224cf85e4678490b625c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/parser/zipball/6874d171318a8e93eb6d224cf85e4678490b625c",
-                "reference": "6874d171318a8e93eb6d224cf85e4678490b625c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Guzzle\\Parser": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Interchangeable parsers used by Guzzle",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "URI Template",
-                "cookie",
-                "http",
-                "message",
-                "url"
-            ],
-            "time": "2014-02-05 18:29:46"
-        },
-        {
-            "name": "guzzle/stream",
-            "version": "v3.9.2",
-            "target-dir": "Guzzle/Stream",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/stream.git",
-                "reference": "60c7fed02e98d2c518dae8f97874c8f4622100f0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/stream/zipball/60c7fed02e98d2c518dae8f97874c8f4622100f0",
-                "reference": "60c7fed02e98d2c518dae8f97874c8f4622100f0",
-                "shasum": ""
-            },
-            "require": {
-                "guzzle/common": "self.version",
-                "php": ">=5.3.2"
-            },
-            "suggest": {
-                "guzzle/http": "To convert Guzzle request objects to PHP streams"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Guzzle\\Stream": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle stream wrapper component",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "Guzzle",
-                "component",
-                "stream"
-            ],
-            "time": "2014-05-01 21:36:02"
+            "time": "2015-03-18 18:23:50"
         },
         {
             "name": "omnipay/2checkout",
@@ -403,16 +341,16 @@
         },
         {
             "name": "omnipay/authorizenet",
-            "version": "v2.1.2",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
-                "reference": "233b9c6378e3c65833e972e67b8e699208c04803"
+                "reference": "7b5166975757bdf951ce39bf9e116b069d9acc5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/233b9c6378e3c65833e972e67b8e699208c04803",
-                "reference": "233b9c6378e3c65833e972e67b8e699208c04803",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/7b5166975757bdf951ce39bf9e116b069d9acc5f",
+                "reference": "7b5166975757bdf951ce39bf9e116b069d9acc5f",
                 "shasum": ""
             },
             "require": {
@@ -458,7 +396,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-10-24 17:32:06"
+            "time": "2015-01-19 19:06:04"
         },
         {
             "name": "omnipay/bitpay",
@@ -466,12 +404,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-bitpay.git",
-                "reference": "3ec07f5b7cf53ce58d8d22b30624971d1ab01d8b"
+                "reference": "e659f0e993c586cb36acafaf50835570b4a16eb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-bitpay/zipball/3ec07f5b7cf53ce58d8d22b30624971d1ab01d8b",
-                "reference": "3ec07f5b7cf53ce58d8d22b30624971d1ab01d8b",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-bitpay/zipball/e659f0e993c586cb36acafaf50835570b4a16eb2",
+                "reference": "e659f0e993c586cb36acafaf50835570b4a16eb2",
                 "shasum": ""
             },
             "require": {
@@ -516,7 +454,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-09-17 00:40:15"
+            "time": "2015-03-23 14:18:26"
         },
         {
             "name": "omnipay/buckaroo",
@@ -639,12 +577,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-coinbase.git",
-                "reference": "4cdea1a16104505e54960adbf70470ed2495e071"
+                "reference": "69c4f07d88ef3bdb2b42cd90234b358b641dfa29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-coinbase/zipball/4cdea1a16104505e54960adbf70470ed2495e071",
-                "reference": "4cdea1a16104505e54960adbf70470ed2495e071",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-coinbase/zipball/69c4f07d88ef3bdb2b42cd90234b358b641dfa29",
+                "reference": "69c4f07d88ef3bdb2b42cd90234b358b641dfa29",
                 "shasum": ""
             },
             "require": {
@@ -688,24 +626,24 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-09-17 00:41:54"
+            "time": "2015-03-06 05:35:39"
         },
         {
             "name": "omnipay/common",
-            "version": "v2.3.3",
+            "version": "v2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-common.git",
-                "reference": "e4c54a314a2529c1008ad3f77e9eef26ed1f311b"
+                "reference": "fcd5a606713d11536c89315a5ae02d965a737c21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/e4c54a314a2529c1008ad3f77e9eef26ed1f311b",
-                "reference": "e4c54a314a2529c1008ad3f77e9eef26ed1f311b",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-common/zipball/fcd5a606713d11536c89315a5ae02d965a737c21",
+                "reference": "fcd5a606713d11536c89315a5ae02d965a737c21",
                 "shasum": ""
             },
             "require": {
-                "guzzle/http": "~3.1",
+                "guzzle/guzzle": "~3.9",
                 "php": ">=5.3.2",
                 "symfony/http-foundation": "~2.1"
             },
@@ -804,7 +742,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-01-11 04:54:29"
+            "time": "2015-03-30 14:34:46"
         },
         {
             "name": "omnipay/dummy",
@@ -865,16 +803,16 @@
         },
         {
             "name": "omnipay/eway",
-            "version": "v2.1.1",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-eway.git",
-                "reference": "031236cf5653b5a021a5eb5565aceb923f64d964"
+                "reference": "0dcf28596f0382fbfc3ee229e98e60798675ed16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-eway/zipball/031236cf5653b5a021a5eb5565aceb923f64d964",
-                "reference": "031236cf5653b5a021a5eb5565aceb923f64d964",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-eway/zipball/0dcf28596f0382fbfc3ee229e98e60798675ed16",
+                "reference": "0dcf28596f0382fbfc3ee229e98e60798675ed16",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +856,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-09-17 00:39:29"
+            "time": "2015-03-30 00:28:33"
         },
         {
             "name": "omnipay/firstdata",
@@ -1153,16 +1091,16 @@
         },
         {
             "name": "omnipay/mollie",
-            "version": "3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-mollie.git",
-                "reference": "ea3830b0aaa845430387e5afc1f638be18a152ec"
+                "reference": "a89cb0d15447023b24c03f86873c1c1489cd021b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-mollie/zipball/ea3830b0aaa845430387e5afc1f638be18a152ec",
-                "reference": "ea3830b0aaa845430387e5afc1f638be18a152ec",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-mollie/zipball/a89cb0d15447023b24c03f86873c1c1489cd021b",
+                "reference": "a89cb0d15447023b24c03f86873c1c1489cd021b",
                 "shasum": ""
             },
             "require": {
@@ -1206,7 +1144,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-10-15 14:25:03"
+            "time": "2015-03-03 18:55:42"
         },
         {
             "name": "omnipay/multisafepay",
@@ -1608,16 +1546,16 @@
         },
         {
             "name": "omnipay/paymentexpress",
-            "version": "v2.1.1",
+            "version": "v2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paymentexpress.git",
-                "reference": "a6309569a4a4372fe1c9cb464ff2ef57101df46d"
+                "reference": "bd417f02bacb2128c168956739cd3a902d3ee48c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/a6309569a4a4372fe1c9cb464ff2ef57101df46d",
-                "reference": "a6309569a4a4372fe1c9cb464ff2ef57101df46d",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/bd417f02bacb2128c168956739cd3a902d3ee48c",
+                "reference": "bd417f02bacb2128c168956739cd3a902d3ee48c",
                 "shasum": ""
             },
             "require": {
@@ -1667,20 +1605,20 @@
                 "pxpay",
                 "pxpost"
             ],
-            "time": "2014-09-17 00:37:09"
+            "time": "2015-04-03 00:20:28"
         },
         {
             "name": "omnipay/paypal",
-            "version": "2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paypal.git",
-                "reference": "e97a944770fd88d023e495af58555650d9cc7e0c"
+                "reference": "feacf47b52f599c8271625c44abc869178840ce4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/e97a944770fd88d023e495af58555650d9cc7e0c",
-                "reference": "e97a944770fd88d023e495af58555650d9cc7e0c",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/feacf47b52f599c8271625c44abc869178840ce4",
+                "reference": "feacf47b52f599c8271625c44abc869178840ce4",
                 "shasum": ""
             },
             "require": {
@@ -1725,7 +1663,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2015-01-07 19:36:51"
+            "time": "2015-03-10 23:39:59"
         },
         {
             "name": "omnipay/pin",
@@ -1786,16 +1724,16 @@
         },
         {
             "name": "omnipay/sagepay",
-            "version": "v2.1.1",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-sagepay.git",
-                "reference": "2d24d15c7a78e2fe1ffb7af705948a60a6492dc6"
+                "reference": "899507095428fa54276ba5ca89f11fd7f8fd78ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-sagepay/zipball/2d24d15c7a78e2fe1ffb7af705948a60a6492dc6",
-                "reference": "2d24d15c7a78e2fe1ffb7af705948a60a6492dc6",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-sagepay/zipball/899507095428fa54276ba5ca89f11fd7f8fd78ab",
+                "reference": "899507095428fa54276ba5ca89f11fd7f8fd78ab",
                 "shasum": ""
             },
             "require": {
@@ -1841,7 +1779,7 @@
                 "sage pay",
                 "sagepay"
             ],
-            "time": "2014-09-17 00:40:02"
+            "time": "2015-04-02 17:46:20"
         },
         {
             "name": "omnipay/securepay",
@@ -1902,16 +1840,16 @@
         },
         {
             "name": "omnipay/stripe",
-            "version": "v2.1.2",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-stripe.git",
-                "reference": "23a5f77ed5345356c458355419395cbbf0106049"
+                "reference": "906377e50045dc2ba9c612aa1f6924157e1f750e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/23a5f77ed5345356c458355419395cbbf0106049",
-                "reference": "23a5f77ed5345356c458355419395cbbf0106049",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/906377e50045dc2ba9c612aa1f6924157e1f750e",
+                "reference": "906377e50045dc2ba9c612aa1f6924157e1f750e",
                 "shasum": ""
             },
             "require": {
@@ -1955,7 +1893,7 @@
                 "payment",
                 "stripe"
             ],
-            "time": "2015-01-27 17:58:03"
+            "time": "2015-04-14 18:55:56"
         },
         {
             "name": "omnipay/targetpay",
@@ -2119,28 +2057,28 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "dev-master",
-            "target-dir": "Symfony/Component/EventDispatcher",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "07708493abb5e2311b9257c1bf98de58e60fba3d"
+                "reference": "44bde9645703fe92da9f5dd2755298f7c2c6fa92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/07708493abb5e2311b9257c1bf98de58e60fba3d",
-                "reference": "07708493abb5e2311b9257c1bf98de58e60fba3d",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/44bde9645703fe92da9f5dd2755298f7c2c6fa92",
+                "reference": "44bde9645703fe92da9f5dd2755298f7c2c6fa92",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.9"
+                "php": ">=5.3.9"
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.7|~3.0",
-                "symfony/dependency-injection": "~2.7|~3.0",
-                "symfony/expression-language": "~2.7|~3.0",
-                "symfony/stopwatch": "~2.7|~3.0"
+                "symfony/config": "~2.0,>=2.0.5|~3.0.0",
+                "symfony/dependency-injection": "~2.6|~3.0.0",
+                "symfony/expression-language": "~2.6|~3.0.0",
+                "symfony/phpunit-bridge": "~2.7|~3.0.0",
+                "symfony/stopwatch": "~2.3|~3.0.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -2149,11 +2087,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\EventDispatcher\\": ""
                 }
             },
@@ -2173,41 +2111,41 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2015-02-12 08:47:54"
+            "time": "2015-04-24 07:03:44"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "2.7.x-dev",
-            "target-dir": "Symfony/Component/HttpFoundation",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "ce03dcbdbd74eff96616421f05eb9ba77da6afcf"
+                "reference": "6e4144be6747b89ff6375e2d237db4ee808c21c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/ce03dcbdbd74eff96616421f05eb9ba77da6afcf",
-                "reference": "ce03dcbdbd74eff96616421f05eb9ba77da6afcf",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/6e4144be6747b89ff6375e2d237db4ee808c21c4",
+                "reference": "6e4144be6747b89ff6375e2d237db4ee808c21c4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
             "require-dev": {
-                "symfony/expression-language": "~2.4|~3.0.0"
+                "symfony/expression-language": "~2.4|~3.0.0",
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\HttpFoundation\\": ""
                 },
                 "classmap": [
-                    "Symfony/Component/HttpFoundation/Resources/stubs"
+                    "Resources/stubs"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2226,59 +2164,54 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2015-02-11 07:17:51"
+            "time": "2015-04-24 07:03:44"
         }
     ],
     "packages-dev": [
         {
-            "name": "guzzle/plugin-mock",
-            "version": "v3.9.2",
-            "target-dir": "Guzzle/Plugin/Mock",
+            "name": "hamcrest/hamcrest-php",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/plugin-mock.git",
-                "reference": "36efdbf98fb3fbffb0942bc91fad749fbcffe0a6"
+                "url": "https://github.com/hamcrest/hamcrest-php.git",
+                "reference": "ac50c470531243944f977b8de75be0b684a9cb51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/plugin-mock/zipball/36efdbf98fb3fbffb0942bc91fad749fbcffe0a6",
-                "reference": "36efdbf98fb3fbffb0942bc91fad749fbcffe0a6",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/ac50c470531243944f977b8de75be0b684a9cb51",
+                "reference": "ac50c470531243944f977b8de75be0b684a9cb51",
                 "shasum": ""
             },
             "require": {
-                "guzzle/http": "self.version",
                 "php": ">=5.3.2"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.7-dev"
-                }
+            "replace": {
+                "cordoval/hamcrest-php": "*",
+                "davedevelopment/hamcrest-php": "*",
+                "kodova/hamcrest-php": "*"
             },
+            "require-dev": {
+                "phpunit/php-file-iterator": "1.3.3",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Guzzle\\Plugin\\Mock": ""
-                }
+                "classmap": [
+                    "hamcrest"
+                ],
+                "files": [
+                    "hamcrest/Hamcrest.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "BSD"
             ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle Mock plugin",
-            "homepage": "http://guzzlephp.org/",
+            "description": "This is the PHP port of Hamcrest Matchers",
             "keywords": [
-                "Guzzle",
-                "mock",
-                "plugin"
+                "test"
             ],
-            "time": "2014-02-25 04:11:22"
+            "time": "2015-01-20 19:34:09"
         },
         {
             "name": "mockery/mockery",
@@ -2286,22 +2219,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "f699a69af1f0a5a314107455e6150cfadce33e6b"
+                "reference": "dbe3cfe736bb1d3e319c4cd0c310c140737028a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/f699a69af1f0a5a314107455e6150cfadce33e6b",
-                "reference": "f699a69af1f0a5a314107455e6150cfadce33e6b",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/dbe3cfe736bb1d3e319c4cd0c310c140737028a0",
+                "reference": "dbe3cfe736bb1d3e319c4cd0c310c140737028a0",
                 "shasum": ""
             },
             "require": {
+                "hamcrest/hamcrest-php": "~1.1",
                 "lib-pcre": ">=7.0",
-                "php": ">=5.3.2"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "hamcrest/hamcrest-php": "~1.1",
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "~0.7@dev"
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -2344,7 +2276,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2015-02-15 16:05:06"
+            "time": "2015-04-02 20:16:47"
         },
         {
             "name": "omnipay/tests",
@@ -2352,12 +2284,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-tests.git",
-                "reference": "e4190ec64f6d0ff4c12c7d3be1ea3600f3b5ae88"
+                "reference": "770815cd19c4b29a7ab14b53237e68a8812b14fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-tests/zipball/e4190ec64f6d0ff4c12c7d3be1ea3600f3b5ae88",
-                "reference": "e4190ec64f6d0ff4c12c7d3be1ea3600f3b5ae88",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-tests/zipball/770815cd19c4b29a7ab14b53237e68a8812b14fb",
+                "reference": "770815cd19c4b29a7ab14b53237e68a8812b14fb",
                 "shasum": ""
             },
             "require": {
@@ -2401,7 +2333,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2014-12-19 15:53:07"
+            "time": "2015-03-11 17:43:18"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2466,31 +2398,33 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "1.3.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "acd690379117b042d1c8af1fafd61bde001bf6bb"
+                "reference": "a923bb15680d0089e2316f7a4af8f437046e96bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/acd690379117b042d1c8af1fafd61bde001bf6bb",
-                "reference": "acd690379117b042d1c8af1fafd61bde001bf6bb",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/a923bb15680d0089e2316f7a4af8f437046e96bb",
+                "reference": "a923bb15680d0089e2316f7a4af8f437046e96bb",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
-                    "File/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                ""
-            ],
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2507,7 +2441,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2013-10-10 15:34:57"
+            "time": "2015-04-02 05:19:05"
         },
         {
             "name": "phpunit/php-text-template",
@@ -2854,30 +2788,32 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "2.7.x-dev",
-            "target-dir": "Symfony/Component/Yaml",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "43aac3461a5679f486f7c96e4d7e780a59fec997"
+                "reference": "4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/43aac3461a5679f486f7c96e4d7e780a59fec997",
-                "reference": "43aac3461a5679f486f7c96e4d7e780a59fec997",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f",
+                "reference": "4ededb1d00dc2c65fcd16ae3dafc785f92b3f95f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7|~3.0.0"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Yaml\\": ""
                 }
             },
@@ -2897,7 +2833,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2015-02-11 07:17:51"
+            "time": "2015-04-24 07:03:44"
         }
     ],
     "aliases": [],
@@ -2906,7 +2842,8 @@
         "alfaproject/omnipay-skrill": 20,
         "omnipay/bitpay": 20,
         "fuzion/omnipay-paybox": 20,
-        "sergej-koscejev/omnipay-gopay": 20
+        "sergej-koscejev/omnipay-gopay": 20,
+        "civicrm/omnipay-paypalstandard": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
