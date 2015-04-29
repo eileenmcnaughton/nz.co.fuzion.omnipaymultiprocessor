@@ -737,7 +737,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * can also be called / tested outside the normal process
    */
   public function handlePaymentNotification() {
-    $params = $_REQUEST;
+    $params = array_merge($_GET, $_REQUEST);
+    if (empty($params['payment_processor_id'])) {
+      // CRM-16422 we need to be prepared for the payment processor id to be in the url instead.
+      $q = explode('/', CRM_Utils_Array::value('q', $params, ''));
+      $lastParam = array_pop($q);
+      if (is_numeric($lastParam)) {
+        $params['processor_id'] = $lastParam;
+      }
+    }
+
     $paymentProcessorID = $params['processor_id'];
     $this->_paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
     $this->_paymentProcessor['name'] = civicrm_api3('payment_processor_type', 'getvalue', array('id' => $this->_paymentProcessor['payment_processor_type_id'], 'return' => 'name'));
