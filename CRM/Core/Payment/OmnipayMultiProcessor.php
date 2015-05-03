@@ -762,11 +762,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws CiviCRM_API3_Exception
    */
   public function processPaymentNotification($params) {
+    $paymentProcessorTypeId = civicrm_api3('payment_processor', 'getvalue', array(
+      'id' => $params['processor_id'],
+      'return' => 'payment_processor_type_id',
+    ));
     $paymentProcessorTypeName = civicrm_api3('payment_processor_type', 'getvalue', array(
-      'id' => $this->_paymentProcessor['id'],
+      'id' => $paymentProcessorTypeId,
       'return' => 'name',
     ));
-
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $paymentProcessorTypeName));
     $this->setProcessorFields();
     $originalRequest = $_REQUEST;
