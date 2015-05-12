@@ -20,7 +20,7 @@
 
      {elseif $field_spec.htmlType == 'select'}
         <select name="{$display_field}" id="{$core_field_name}" class="crm-form-select">
-          {foreach from=$field_spec.attributes key=attribute item=attribute_value}
+          {foreach from=$field_spec.options key=attribute item=attribute_value}
             <option value="{$attribute}">{$attribute_value}</option>
           {/foreach}
         </select>
