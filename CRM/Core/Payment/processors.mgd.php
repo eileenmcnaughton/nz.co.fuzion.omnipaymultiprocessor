@@ -11,6 +11,13 @@
  * To get the processor name take a look at the Readme for the gateway you are adding - you will generally see
  * The following gateways are provided by this package: Mollie so the name should be ominpay_Mollie (note matching capitalisation)
  *
+ * A more complex example is omnipay_SecurePay_DirectPayment.
+ * This breaks down as
+ *  - omnipay_ - our label within CiviCRM to denote Omnipay
+ *  - SecurePay - the namespace as declared within the composer.json within the securepay gateway
+ *  - DirectPost - the prefix on the Gateway file. It is called DirectPostGateway.php - this portion is excluded when the file is simply
+ *     named 'Gateway.php'
+ *
  * - user_name_label, password_label, signature_label, subject_label - these are generally about telling the plugin what to call these when they pass them to
  * Omnipay. They are also shown to users so some reformatting is done to turn it into lower-first-letter camel case. Take a look at the gateway file for your gateway. This is directly under src.
  * Some provide more than one and the 'getName' function distinguishes them. The getDefaultParameters will tell you what to pass. eg if you see
