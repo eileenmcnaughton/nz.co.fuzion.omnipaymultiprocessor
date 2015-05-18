@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Shell\Message;
+namespace Omnipay\Paybox\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;

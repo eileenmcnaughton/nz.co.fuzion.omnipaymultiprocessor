@@ -594,7 +594,7 @@ class Request
     public static function setTrustedHosts(array $hostPatterns)
     {
         self::$trustedHostPatterns = array_map(function ($hostPattern) {
-            return sprintf('{%s}i', str_replace('}', '\\}', $hostPattern));
+            return sprintf('#%s#i', $hostPattern);
         }, $hostPatterns);
         // we need to reset trusted hosts on trusted host patterns change
         self::$trustedHosts = array();
@@ -1655,7 +1655,7 @@ class Request
                         $lang = $codes[1];
                     }
                 } else {
-                    for ($i = 0, $max = count($codes); $i < $max; $i++) {
+                    for ($i = 0, $max = count($codes); $i < $max; ++$i) {
                         if ($i === 0) {
                             $lang = strtolower($codes[0]);
                         } else {

@@ -30,7 +30,24 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
     }
 
-    public function getUsername()
+  /**
+   * Generate a signature using a secret key.
+   *
+   * @param array $data
+   * @return string
+   */
+  public function generateSignature($data)
+  {
+    $msg = array();
+    foreach ($data as $key => $value) {
+      $msg[] = "{$key}={$value}";
+    }
+    // If the key is in ASCII format, convert it to binary
+    $binKey = pack("H*", $this->getKey());
+    return strtoupper(hash_hmac('sha512', implode('&', $msg), $binKey));
+  }
+
+  public function getUsername()
     {
         return $this->getParameter('username');
     }
@@ -39,7 +56,18 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('username', $value);
     }
-    public function getPassword()
+
+  public function getSite()
+  {
+    return $this->getParameter('site');
+  }
+
+  public function setSite($value)
+  {
+    return $this->setParameter('site', $value);
+  }
+
+  public function getPassword()
     {
         return $this->getParameter('password');
     }
@@ -58,4 +86,20 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('transactionType', $value);
     }
+
+  public function getMerchantAccountEmail()
+  {
+    return $this->getParameter('MerchantAccountEmail');
+  }
+
+  public function setMerchantAccountEmail($value)
+  {
+    return $this->setParameter('MerchantAccountEmail', $value);
+  }
+
+  public function getRequiredFields()
+  {
+    return array_merge($this->getRequiredCardFields(), $this->getRequiredCardFields());
+  }
+
 }
