@@ -783,7 +783,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         //cope with CRM14950 not being implemented
         $contribution = civicrm_api3('contribution', 'getsingle', array('id' => $this->transaction_id, 'return' => 'contribution_status_id'));
         if ($contribution['contribution_status_id'] != CRM_Core_OptionGroup::getValue('contribution_status', 'Completed', 'name')) {
-          civicrm_api3('contribution', 'completetransaction', array('id' => $this->transaction_id, 'trxn_id' => $response->getTransactionRef()));
+          civicrm_api3('contribution', 'completetransaction', array('id' => $this->transaction_id, 'trxn_id' => $response->getTransactionReference()));
         }
       }
       catch (CiviCRM_API3_Exception $e) {

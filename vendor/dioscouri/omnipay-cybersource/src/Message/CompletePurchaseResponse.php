@@ -14,9 +14,14 @@ class CompletePurchaseResponse extends CompleteAuthorizeResponse
         return isset($this->data['decision']) && 'ACCEPT' === $this->data['decision'];
     }
 
-    public function getTransactionReference()
+    public function getTransactionId()
     {
         return isset($this->data['req_reference_number']) ? $this->data['req_reference_number'] : null;
+    }
+
+    public function getTransactionReference()
+    {
+      return isset($this->data['transaction_id']) ? $this->data['transaction_id'] : null;
     }
 
     public function getMessage()
