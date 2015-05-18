@@ -104,7 +104,7 @@ return array(
           'payment_type' => 1,
         ),
     ),
-  3 =>
+  /*3 =>
     array(
       'name' => 'OmniPay - Paybox Direct',
       'entity' => 'payment_processor_type',
@@ -124,6 +124,7 @@ return array(
           'payment_type' => 1,
         ),
     ),
+  */
   4 =>
     array(
       'name' => 'OmniPay - GoPay',
@@ -147,6 +148,7 @@ return array(
           'payment_type' => 1,
         ),
     ),
+  /*
   5 =>
     array(
       'name' => 'OmniPay - Mollie',
