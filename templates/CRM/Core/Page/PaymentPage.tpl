@@ -48,6 +48,16 @@
           {/foreach}
         </select>
         <input name="{$display_field}" id="{$display_field}" type='hidden' value=""/>
+        <script>
+
+          // remove spaces, dashes from credit card number
+          cj('#{$display_field}_Y, #{$display_field}_M').change(function(){literal}{{/literal}
+            cj('#{$display_field}').val(cj('#{$display_field}_M').val() + '-' + cj('#{$display_field}_Y').val())
+            {literal}
+          });
+          {/literal}
+          {include file='CRM/CreditCard.js.tpl'}
+        </script>
       {/if}
       </div>
       <div class="clear"></div>
@@ -57,13 +67,4 @@
   <input class='form-submit default crm-form-submit' type="submit" value="{ts}Submit{/ts}">
 
 </form>
-<script>
 
-  // remove spaces, dashes from credit card number
-  cj('#{$display_field}_Y, #{$display_field}_M').change(function(){literal}{{/literal}
-     cj('#{$display_field}').val(cj('#{$display_field}_M').val() + '-' + cj('#{$display_field}_Y').val())
-     {literal}
-  });
-  {/literal}
-  {include file='CRM/CreditCard.js.tpl'}
-</script>
