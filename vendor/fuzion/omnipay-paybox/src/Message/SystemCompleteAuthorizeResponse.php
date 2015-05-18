@@ -43,6 +43,11 @@ class SystemCompleteAuthorizeResponse extends AbstractResponse
 
     public function getTransactionReference()
     {
+        return isset($this->data['Ref']) ? $this->data['Ref'] : null;
+    }
+
+    public function getTransactionId()
+    {
         return isset($this->data['Id']) ? $this->data['Id'] : null;
     }
 
@@ -66,9 +71,9 @@ class SystemCompleteAuthorizeResponse extends AbstractResponse
      * Verifies the validity of the signature.
      *
      * Function adapted from LexikPayboxBundle.
-     *
      * @return bool
-     * @throws InvalidRequestException
+     * @throws \Omnipay\Common\Exception\InvalidResponseException
+     * @throws \Omnipay\Paybox\Message\InvalidRequestException
      */
     public function verifySignature()
     {
