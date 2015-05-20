@@ -109,7 +109,7 @@ abstract class AbstractResponse implements ResponseInterface
      */
     public function getTransactionReference()
     {
-        return $this->getParameter('transactionReference');
+        return null;
     }
 
     /**
@@ -119,7 +119,7 @@ abstract class AbstractResponse implements ResponseInterface
      */
     public function getTransactionId()
     {
-        $this->getParameter('transactionId');
+        return null;
     }
 
     /**
