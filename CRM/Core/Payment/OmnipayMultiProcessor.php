@@ -146,6 +146,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
+        CRM_Core_Session::storeSessionObjects();
         if ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect)) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
             'payment_processor_id' => $this->_paymentProcessor['id'],
