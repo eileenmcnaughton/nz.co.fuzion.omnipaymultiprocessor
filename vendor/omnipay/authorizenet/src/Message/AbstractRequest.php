@@ -5,10 +5,15 @@ namespace Omnipay\AuthorizeNet\Message;
 /**
  * Authorize.Net Abstract Request
  */
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
+
+use Omnipay\Common\Message\AbstractRequest as CommonAbstractRequest;
+
+abstract class AbstractRequest extends CommonAbstractRequest
 {
-    protected $liveEndpoint = 'https://secure.authorize.net/gateway/transact.dll';
-    protected $developerEndpoint = 'https://test.authorize.net/gateway/transact.dll';
+    /**
+     * Custom field name to send the transaction ID to the notify handler.
+     */
+    const TRANSACTION_ID_PARAM = 'omnipay_transaction_id';
 
     public function getApiLoginId()
     {
@@ -60,6 +65,29 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('hashSecret', $value);
     }
 
+    public function getLiveEndpoint()
+    {
+        return $this->getParameter('liveEndpoint');
+    }
+
+    public function setLiveEndpoint($value)
+    {
+        return $this->setParameter('liveEndpoint', $value);
+    }
+
+    public function setDeveloperEndpoint($value)
+    {
+        return $this->setParameter('developerEndpoint', $value);
+    }
+
+    public function getDeveloperEndpoint()
+    {
+        return $this->getParameter('developerEndpoint');
+    }
+
+    /**
+     * Base data used only for the AIM API.
+     */
     protected function getBaseData()
     {
         $data = array();
@@ -79,7 +107,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $data = array();
         $data['x_amount'] = $this->getAmount();
+
+        // This is deprecated. The invoice number field is reserved for the invoice number.
         $data['x_invoice_num'] = $this->getTransactionId();
+
+        // A custom field can be used to pass over the merchant site transaction ID.
+        $data[static::TRANSACTION_ID_PARAM] = $this->getTransactionId();
+
         $data['x_description'] = $this->getDescription();
 
         if ($card = $this->getCard()) {
@@ -124,6 +158,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->getDeveloperMode() ? $this->developerEndpoint : $this->liveEndpoint;
+        if ($this->getDeveloperMode()) {
+            return $this->getParameter('developerEndpoint');
+        } else {
+            return $this->getParameter('liveEndpoint');
+        }
     }
 }

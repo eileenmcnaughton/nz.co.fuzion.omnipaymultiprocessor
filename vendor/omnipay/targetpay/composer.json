@@ -10,7 +10,7 @@
         "payment",
         "targetpay"
     ],
-    "homepage": "https://github.com/omnipay/targetpay",
+    "homepage": "https://github.com/thephpleague/omnipay-targetpay",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/targetpay/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-targetpay/contributors"
         }
     ],
     "autoload": {

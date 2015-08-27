@@ -108,7 +108,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
-                "reference": "42f2bba187288ef8179b35782ee5833317b93109"
+                "reference": "cfef76407d59ae3f820a6bf946aa5ab062f7debb"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -142,7 +142,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-02-16 16:57:48"
+            "time": "2015-05-18 13:16:06"
         },
         {
             "name": "fuzion/omnipay-paybox",
@@ -150,7 +150,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-                "reference": "1fc5a5e158c960cc551a3d82aa28f87447165b51"
+                "reference": "47d25dae1e808a88071febd733ea7bb9d94bf511"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -184,7 +184,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-04-28 19:46:02"
+            "time": "2015-05-18 12:56:56"
         },
         {
             "name": "guzzle/guzzle",
@@ -342,16 +342,16 @@
         },
         {
             "name": "omnipay/authorizenet",
-            "version": "v2.2.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
-                "reference": "7b5166975757bdf951ce39bf9e116b069d9acc5f"
+                "reference": "142a95f550a5320db09e66019ecf5c8b8c3885b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/7b5166975757bdf951ce39bf9e116b069d9acc5f",
-                "reference": "7b5166975757bdf951ce39bf9e116b069d9acc5f",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/142a95f550a5320db09e66019ecf5c8b8c3885b9",
+                "reference": "142a95f550a5320db09e66019ecf5c8b8c3885b9",
                 "shasum": ""
             },
             "require": {
@@ -397,7 +397,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2015-01-19 19:06:04"
+            "time": "2015-07-15 18:11:17"
         },
         {
             "name": "omnipay/bitpay",
@@ -861,16 +861,16 @@
         },
         {
             "name": "omnipay/firstdata",
-            "version": "v2.1.1",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-firstdata.git",
-                "reference": "3c198a29ab36c0d2fa17495444e5ab6e1d79e212"
+                "reference": "0853bba0ee313f5557eb1c696d3ce5538dbd4aca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-firstdata/zipball/3c198a29ab36c0d2fa17495444e5ab6e1d79e212",
-                "reference": "3c198a29ab36c0d2fa17495444e5ab6e1d79e212",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-firstdata/zipball/0853bba0ee313f5557eb1c696d3ce5538dbd4aca",
+                "reference": "0853bba0ee313f5557eb1c696d3ce5538dbd4aca",
                 "shasum": ""
             },
             "require": {
@@ -915,7 +915,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-09-17 00:39:22"
+            "time": "2015-07-28 17:50:44"
         },
         {
             "name": "omnipay/gocardless",
@@ -1610,16 +1610,16 @@
         },
         {
             "name": "omnipay/paypal",
-            "version": "v2.4.1",
+            "version": "v2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paypal.git",
-                "reference": "feacf47b52f599c8271625c44abc869178840ce4"
+                "reference": "53511ea0bd7e3cf9cabf79c79290a162ceee1224"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/feacf47b52f599c8271625c44abc869178840ce4",
-                "reference": "feacf47b52f599c8271625c44abc869178840ce4",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/53511ea0bd7e3cf9cabf79c79290a162ceee1224",
+                "reference": "53511ea0bd7e3cf9cabf79c79290a162ceee1224",
                 "shasum": ""
             },
             "require": {
@@ -1664,7 +1664,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2015-03-10 23:39:59"
+            "time": "2015-07-08 17:27:39"
         },
         {
             "name": "omnipay/pin",
@@ -1898,16 +1898,16 @@
         },
         {
             "name": "omnipay/targetpay",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/omnipay/targetpay.git",
-                "reference": "7274721c97f6f8ad3d2a8b4dea474ac548c45bac"
+                "url": "https://github.com/thephpleague/omnipay-targetpay.git",
+                "reference": "fc74d5d0f7929ce86298faec9e195985d7d4afe0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/omnipay/targetpay/zipball/7274721c97f6f8ad3d2a8b4dea474ac548c45bac",
-                "reference": "7274721c97f6f8ad3d2a8b4dea474ac548c45bac",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-targetpay/zipball/fc74d5d0f7929ce86298faec9e195985d7d4afe0",
+                "reference": "fc74d5d0f7929ce86298faec9e195985d7d4afe0",
                 "shasum": ""
             },
             "require": {
@@ -1938,11 +1938,11 @@
                 },
                 {
                     "name": "Omnipay Contributors",
-                    "homepage": "https://github.com/omnipay/targetpay/contributors"
+                    "homepage": "https://github.com/thephpleague/omnipay-targetpay/contributors"
                 }
             ],
             "description": "TargetPay driver for the Omnipay payment processing library",
-            "homepage": "https://github.com/omnipay/targetpay",
+            "homepage": "https://github.com/thephpleague/omnipay-targetpay",
             "keywords": [
                 "gateway",
                 "merchant",
@@ -1951,7 +1951,7 @@
                 "payment",
                 "targetpay"
             ],
-            "time": "2014-04-14 12:23:56"
+            "time": "2014-09-17 00:38:39"
         },
         {
             "name": "omnipay/worldpay",
@@ -2016,7 +2016,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sergej-koscejev/omnipay-gopay.git",
-                "reference": "9df14432d0d43dde1222107ebce677db47452cb6"
+                "reference": "d2e63595a0d4139528278016d817fa5dd80da7e7"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -2054,7 +2054,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-12-07 11:05:28"
+            "time": "2015-06-06 22:14:26"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2062,12 +2062,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "8766cebf28beac9a45b511d7dba053da9d35eb9f"
+                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/8766cebf28beac9a45b511d7dba053da9d35eb9f",
-                "reference": "8766cebf28beac9a45b511d7dba053da9d35eb9f",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/d7246885b7fe4cb5a2786bda34362d2f0e40b730",
+                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730",
                 "shasum": ""
             },
             "require": {
@@ -2112,7 +2112,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-12 15:16:46"
+            "time": "2015-06-24 15:32:32"
         },
         {
             "name": "symfony/http-foundation",
@@ -2120,12 +2120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "06aa08b5d9157abc10bee99712124b8b994d4259"
+                "reference": "004010c618252aca172f49b421baaa17a29423c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/06aa08b5d9157abc10bee99712124b8b994d4259",
-                "reference": "06aa08b5d9157abc10bee99712124b8b994d4259",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/004010c618252aca172f49b421baaa17a29423c0",
+                "reference": "004010c618252aca172f49b421baaa17a29423c0",
                 "shasum": ""
             },
             "require": {
@@ -2165,7 +2165,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 14:11:12"
+            "time": "2015-08-24 07:18:02"
         }
     ],
     "packages-dev": [
@@ -2403,12 +2403,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "a923bb15680d0089e2316f7a4af8f437046e96bb"
+                "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/a923bb15680d0089e2316f7a4af8f437046e96bb",
-                "reference": "a923bb15680d0089e2316f7a4af8f437046e96bb",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
+                "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
                 "shasum": ""
             },
             "require": {
@@ -2442,20 +2442,20 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2015-04-02 05:19:05"
+            "time": "2015-06-21 13:08:43"
         },
         {
             "name": "phpunit/php-text-template",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-text-template.git",
-                "reference": "206dfefc0ffe9cebf65c413e3d0e809c82fbf00a"
+                "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/206dfefc0ffe9cebf65c413e3d0e809c82fbf00a",
-                "reference": "206dfefc0ffe9cebf65c413e3d0e809c82fbf00a",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
+                "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
                 "shasum": ""
             },
             "require": {
@@ -2464,20 +2464,17 @@
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "Text/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                ""
-            ],
             "license": [
                 "BSD-3-Clause"
             ],
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
+                    "email": "sebastian@phpunit.de",
                     "role": "lead"
                 }
             ],
@@ -2486,20 +2483,20 @@
             "keywords": [
                 "template"
             ],
-            "time": "2014-01-30 17:20:04"
+            "time": "2015-06-21 13:50:34"
         },
         {
             "name": "phpunit/php-timer",
-            "version": "1.0.5",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "19689d4354b295ee3d8c54b4f42c3efb69cbc17c"
+                "reference": "3e82f4e9fc92665fafd9157568e4dcb01d014e5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/19689d4354b295ee3d8c54b4f42c3efb69cbc17c",
-                "reference": "19689d4354b295ee3d8c54b4f42c3efb69cbc17c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3e82f4e9fc92665fafd9157568e4dcb01d014e5b",
+                "reference": "3e82f4e9fc92665fafd9157568e4dcb01d014e5b",
                 "shasum": ""
             },
             "require": {
@@ -2508,13 +2505,10 @@
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "PHP/"
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                ""
-            ],
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2530,7 +2524,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2013-08-02 07:42:54"
+            "time": "2015-06-21 08:01:12"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -2793,12 +2787,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "2396832f6f9ab2b8f62f00b5d3f2e722fc773d65"
+                "reference": "1a0bd40f71908db4c9d44d308e0008cc44fc5f2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/2396832f6f9ab2b8f62f00b5d3f2e722fc773d65",
-                "reference": "2396832f6f9ab2b8f62f00b5d3f2e722fc773d65",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/1a0bd40f71908db4c9d44d308e0008cc44fc5f2f",
+                "reference": "1a0bd40f71908db4c9d44d308e0008cc44fc5f2f",
                 "shasum": ""
             },
             "require": {
@@ -2834,7 +2828,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-12 15:16:46"
+            "time": "2015-08-24 07:18:02"
         }
     ],
     "aliases": [],

@@ -14,6 +14,8 @@ class SIMAuthorizeRequestTest extends TestCase
                 'clientIp' => '10.0.0.1',
                 'amount' => '12.00',
                 'returnUrl' => 'https://www.example.com/return',
+                'liveEndpoint'      => 'https://secure.authorize.net/gateway/transact.dll',
+                'developerEndpoint' => 'https://test.authorize.net/gateway/transact.dll',
             )
         );
     }
@@ -53,6 +55,23 @@ class SIMAuthorizeRequestTest extends TestCase
 
     public function testSend()
     {
+        $response = $this->request->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertNotEmpty($response->getRedirectUrl());
+        $this->assertSame('POST', $response->getRedirectMethod());
+
+        $redirectData = $response->getRedirectData();
+        $this->assertSame('https://www.example.com/return', $redirectData['x_relay_url']);
+    }
+
+    // Issue #16 Support notifyUrl.
+    public function testSendNoifyUrl()
+    {
+        $this->request->setReturnUrl(null);
+        $this->request->setNotifyUrl('https://www.example.com/return');
+
         $response = $this->request->send();
 
         $this->assertFalse($response->isSuccessful());
