@@ -117,10 +117,10 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Get url to return to after cancelled or failed transaction
+   * Get url to return to after cancelled or failed transaction.
    *
-   * @param $qfKey
-   * @param $participantID
+   * @param string $qfKey
+   * @param int $participantID
    *
    * @return string cancel url
    */
@@ -145,11 +145,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Get URl for when the back button is pressed
+   * Get URl for when the back button is pressed.
    *
-   * @param $qfKey
+   * @param string $qfKey
    *
-   * @return string url
+   * @return string
+   *   Url to return to the site (without having paid).
    */
   protected function getGoBackUrl($qfKey) {
     return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
@@ -189,14 +190,15 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
         TRUE
       );
     }
-    return (stristr($url, '.')) ? $url : '';
+    return $allowLocalHost ? $url : ((stristr($url, '.')) ? $url : '');
   }
 
   /**
-   * Store the URL for browser redirection in the session for use upon return
-   * @param $qfKey
-   * @param null $participantID
-   * @param null $eventID
+   * Store the URL for browser redirection in the session for use upon return.
+   *
+   * @param string $qfKey
+   * @param int $participantID
+   * @param int $eventID
    */
   protected function storeReturnUrls($qfKey, $participantID = NULL, $eventID = NULL) {
     CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($qfKey));
@@ -205,6 +207,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
 
   /**
    * Store the data required on the payment form.
+   *
    * @param string $key
    * @param array $data
    */
@@ -218,7 +221,8 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param string $type result type
    *  - success
    *
-   * @return string url to redirect to
+   * @return string
+   *   Url to redirect to
    */
   protected function getStoredUrl($type) {
     return CRM_Core_Session::singleton()->get("ipn_{$type}_url_{$this->transaction_id}");
@@ -259,8 +263,8 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * If we pass error handling through this function it will be easy to switch to throwing exceptions later.
    *
    * @param string $level
-   * @param $message
-   * @param $context
+   * @param string $message
+   * @param string $context
    *
    * @param int $errorCode
    * @param string $userMessage
@@ -280,7 +284,8 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * get array of fields that should be displayed on the payment form
+   * Get array of fields that should be displayed on the payment form.
+   *
    * @return array
    * @throws CiviCRM_API3_Exception
    */
