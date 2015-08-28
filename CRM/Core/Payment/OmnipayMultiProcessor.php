@@ -37,7 +37,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * This is redundant from 4.4.
    *
-   * @var CRM_Core_Payment_Omnipay
+   * @var CRM_Core_Payment_OmnipayMultiProcessor
    * @static
    */
   static private $_singleton = NULL;
@@ -56,7 +56,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     'user_name',
     'password',
     'signature',
-    'subject'
+    'subject',
   );
 
   /**
@@ -113,7 +113,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * Check PayPal documentation for more information
    *
-   * @param $params
+   * @param array $params
    */
   public function doExpressCheckout(&$params) {
   }

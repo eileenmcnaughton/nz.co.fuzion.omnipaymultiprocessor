@@ -50,14 +50,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected $transaction_id;
 
   /**
-   * Constructor
+   * Class Constructor.
    *
    * @param string $mode the mode of operation: live or test
    *
    * @param array $paymentProcessor
-   *
    */
-  function __construct($mode, &$paymentProcessor) {
+  public function __construct($mode, &$paymentProcessor) {
     $this->_mode = $mode;
     $this->_is_test = ($mode == 'live') ? FALSE : TRUE;
     $this->_paymentProcessor = $paymentProcessor;
@@ -65,7 +64,8 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Get base url dependent on component
+   * Get base url dependent on component.
+   *
    * @return string|void
    */
   protected function getBaseReturnUrl() {
@@ -79,16 +79,16 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Get URL to return the browser to on success
+   * Get URL to return the browser to on success.
    *
-   * @param $qfKey
+   * @param string $qfKey
    *
    * @return string
    */
   protected function getReturnSuccessUrl($qfKey) {
     return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
         '_qf_ThankYou_display' => 1,
-        'qfKey' => $qfKey
+        'qfKey' => $qfKey,
       ),
       TRUE, NULL, FALSE
     );
@@ -154,7 +154,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected function getGoBackUrl($qfKey) {
     return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
         '_qf_Confirm_display' => 'true',
-        'qfKey' => $qfKey
+        'qfKey' => $qfKey,
       ),
       TRUE, NULL, FALSE
     );
@@ -205,7 +205,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Get URL out of session
+   * Get URL out of session.
    *
    * @param string $type result type
    *  - success
@@ -217,7 +217,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Get description of payment to pass to processor. This is often what people see in the interface so we want to get
+   * Get description of payment to pass to processor.
+   *
+   * This is often what people see in the interface so we want to get
    * as much unique information in as possible within the field length (& presumably the early part of the field)
    *
    * People seeing these can be assumed to be advanced users so quantity of information probably trumps
