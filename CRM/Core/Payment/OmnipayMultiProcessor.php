@@ -138,7 +138,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->saveBillingAddressIfRequired($params);
 
     try {
-      $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))->send();
+      if ($params['is_recur']) {
+        $response = $this->gateway->createCard($this->getCreditCardOptions($params, $component))->send();
+      }
+      else {
+        $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))
+          ->send();
+      }
       if ($response->isSuccessful()) {
         // mark order as complete
         $params['trxn_id'] = $response->getTransactionReference();
