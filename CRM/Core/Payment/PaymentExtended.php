@@ -174,13 +174,21 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *   URL to notify outcome of transaction.
    */
   protected function getNotifyUrl() {
-    $url = CRM_Utils_System::url(
-      'civicrm/payment/ipn',
-       array(
-         'processor_id' => $this->_paymentProcessor['id'],
-       ),
-      TRUE
-    );
+    if (omnipaymultiprocessor__versionAtLeast(4.6)) {
+      $url = CRM_Utils_System::url(
+        'civicrm/payment/ipn/' . $this->_paymentProcessor['id'],
+        TRUE
+      );
+    }
+    else {
+      $url = CRM_Utils_System::url(
+        'civicrm/payment/ipn',
+        array(
+          'processor_id' => $this->_paymentProcessor['id'],
+        ),
+        TRUE
+      );
+    }
     return (stristr($url, '.')) ? $url : '';
   }
 
