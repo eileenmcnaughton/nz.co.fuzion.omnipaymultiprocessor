@@ -782,15 +782,23 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
     $response = $this->gateway->completePurchase($params)->send();
+
     if ($response->getTransactionId()) {
       $this->setTransactionID($response->getTransactionId());
     }
     if ($response->isSuccessful()) {
       try {
         //cope with CRM14950 not being implemented
-        $contribution = civicrm_api3('contribution', 'getsingle', array('id' => $this->transaction_id, 'return' => 'contribution_status_id'));
+        $contribution = civicrm_api3('contribution', 'getsingle', array(
+          'id' => $this->transaction_id,
+          //'return' => 'contribution_status_id, contribution_recur_id, contact_id, contribution_contact_id',
+        ));
+
         if ($contribution['contribution_status_id'] != CRM_Core_OptionGroup::getValue('contribution_status', 'Completed', 'name')) {
           civicrm_api3('contribution', 'completetransaction', array('id' => $this->transaction_id, 'trxn_id' => $response->getTransactionReference()));
+        }
+        if (!empty($contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != FALSE) {
+          $this->storePaymentToken($params, $contribution, $tokenReference);
         }
       }
       catch (CiviCRM_API3_Exception $e) {
@@ -850,6 +858,36 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       CRM_Utils_System::redirect($success_url);
     }
     CRM_Utils_System::civiExit();
+  }
+
+  /**
+   * Store a payment token.
+   *
+   * From 4.6 onwards the payment token table can store these tokens.
+   *
+   * We don't want fails here to trigger a rollback to we set is_transactional to false.
+   *
+   * @param array $params
+   * @param array $contribution
+   * @param string $tokenReference
+   *
+   * @throws \CiviCRM_API3_Exception
+   */
+  protected function storePaymentToken($params, $contribution, $tokenReference) {
+    if (!omnipaymultiprocessor__versionAtLeast(4.6)) {
+      return;
+    }
+    $token = civicrm_api3('payment_token', 'create', array(
+      'contact_id' => $contribution['contact_id'],
+      'payment_processor_id' => $params['processor_id'],
+      'token' => $tokenReference,
+      'is_transactional' => FALSE,
+    ));
+    civicrm_api3('contribution_recur', 'create', array(
+      'id' => $contribution['contribution_recur_id'],
+      'payment_token_id' => $token['id'],
+      'is_transactional' => FALSE,
+    ));
   }
 }
 
