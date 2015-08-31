@@ -120,10 +120,10 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
     }
   }
 
-  if (!method_exists('CRM_Core_Payment_Form', 'buildCreditCard')) {
-    //presumably we are on 4.6 & the following code is no longer required
+  if (omnipaymultiprocessor__versionAtLeast(4.6)) {
     return;
   }
+
   if (!omnipaymultiprocessor_is_credit_card_form($formName)
     || $form->_paymentProcessor['class_name'] != 'Payment_OmnipayMultiProcessor') {
     return;
@@ -142,9 +142,7 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
     $form->assign('paymentFields', NULL);
     $form->assign('paymentTypeLabel', NULL);
   }
-  if (omnipaymultiprocessor__versionAtLeast(4.6)) {
-    return;
-  }
+
   $billingDetailsFields = omnipaymultiprocessor_getBillingPersonalDetailsFields($form->_paymentProcessor);
 
   //we trick CiviCRM into adding the credit card form so we can remove the parts we don't want (the credit card fields)
