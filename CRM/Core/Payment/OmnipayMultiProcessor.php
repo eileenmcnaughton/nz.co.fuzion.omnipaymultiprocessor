@@ -259,7 +259,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   private function hasBillingAddressFields($params) {
-    $billingFields = array_intersect_key($params, array_flip($this->getBillingAddressFields()));
+    $billingFields = array_intersect_key($params, array_flip($this->getBillingAddressFieldsPre47()));
     return !empty($billingFields);
   }
 
@@ -433,7 +433,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if ($paymentType['name'] == 'credit_card_off_site_post') {
         // This name implies transactional redirect at this stage - the only
         // example currently being Cybersource.
-        return $this->getBillingAddressFields();
+        return $this->getBillingAddressFieldsPre47();
       }
       return array();
     }
@@ -539,7 +539,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           '002' => 'Mastercard',
           '003' => 'Amex',
           '004' => 'Discover',
-        )
+        ),
       ),
       'card_number' => array('core_field_name' => 'credit_card_number'),
       'card_expiry_date' => array('core_field_name' => 'credit_card_exp_date'),
@@ -594,7 +594,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'cc_field' => TRUE,
         'attributes' => $creditCardType,
         'is_required' => FALSE,
-      )
+      ),
     );
   }
 
@@ -603,7 +603,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array
    */
-  private function getBillingAddressFields() {
+  private function getBillingAddressFieldsPre47() {
     $billingFields = array();
     foreach (array(
       'street_address',
@@ -623,7 +623,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function getPaymentFormFieldsMetadata() {
-    return self::getBillingAddressFieldsMetadata();
+    return self::getBillingAddressFieldsMetadataPre47();
   }
 
   /**
@@ -635,7 +635,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    *   Array of metadata for address fields.
    */
-  private function getBillingAddressFieldsMetadata() {
+  private function getBillingAddressFieldsMetadataPre47() {
     $metadata = array();
     $billingID = CRM_Core_BAO_LocationType::getBilling();
     $metadata['billing_first_name'] = array(
