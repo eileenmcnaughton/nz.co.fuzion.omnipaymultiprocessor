@@ -26,6 +26,7 @@
 */
 
   use Omnipay\Omnipay;
+  use Omnipay\Common\Exception\InvalidRequestException;
 
 /**
  * Class CRM_Core_Payment_OmnipayMultiProcessor.
