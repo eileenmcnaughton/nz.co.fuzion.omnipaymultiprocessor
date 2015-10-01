@@ -623,6 +623,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function getPaymentFormFieldsMetadata() {
+    // @todo - handle redirect for 4.7
+    return parent::getPaymentFormFieldsMetadata();
     return self::getBillingAddressFieldsMetadataPre47();
   }
 
