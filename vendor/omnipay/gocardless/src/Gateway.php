@@ -79,6 +79,21 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\GoCardless\Message\CompletePurchaseRequest', $parameters);
     }
 
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GoCardless\Message\AuthorizeRequest', $parameters);
+    }
+
+    public function completeAuthorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GoCardless\Message\CompleteAuthorizeRequest', $parameters);
+    }
+
+    public function capture(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GoCardless\Message\CaptureRequest', $parameters);
+    }
+
     /**
      * Generate a query string for the data array (this is some kind of sick joke)
      *

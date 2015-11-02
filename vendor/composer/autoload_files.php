@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
+    $vendorDir . '/symfony/polyfill-php54/bootstrap.php',
 );

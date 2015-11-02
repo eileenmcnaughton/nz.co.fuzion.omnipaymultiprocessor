@@ -14,8 +14,9 @@ namespace Symfony\Component\HttpFoundation\Tests;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Cookie;
 
-require_once __DIR__.'/ClockMock.php';
-
+/**
+ * @group time-sensitive
+ */
 class ResponseHeaderBagTest extends \PHPUnit_Framework_TestCase
 {
     /**

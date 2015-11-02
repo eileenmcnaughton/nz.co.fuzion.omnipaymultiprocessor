@@ -9,7 +9,7 @@ class PurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('amount', 'returnUrl');
+        $this->validate('amount');
 
         $data = array();
         $data['client_id'] = $this->getAppId();
@@ -17,6 +17,7 @@ class PurchaseRequest extends AbstractRequest
         $data['timestamp'] = gmdate('Y-m-d\TH:i:s\Z');
         $data['redirect_uri'] = $this->getReturnUrl();
         $data['cancel_uri'] = $this->getCancelUrl();
+        $data['state'] = $this->getState();
         $data['bill'] = array();
         $data['bill']['merchant_id'] = $this->getMerchantId();
         $data['bill']['amount'] = $this->getAmount();
@@ -42,19 +43,5 @@ class PurchaseRequest extends AbstractRequest
     public function sendData($data)
     {
         return $this->response = new PurchaseResponse($this, $data);
-    }
-
-    /**
-     * Generate a nonce for each request
-     */
-    protected function generateNonce()
-    {
-        $nonce = '';
-        for ($i = 0; $i < 64; $i++) {
-            // append random ASCII character
-            $nonce .= chr(mt_rand(33, 126));
-        }
-
-        return base64_encode($nonce);
     }
 }

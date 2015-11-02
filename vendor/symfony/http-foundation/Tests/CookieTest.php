@@ -13,13 +13,13 @@ namespace Symfony\Component\HttpFoundation\Tests;
 
 use Symfony\Component\HttpFoundation\Cookie;
 
-require_once __DIR__.'/ClockMock.php';
-
 /**
  * CookieTest.
  *
  * @author John Kary <john@johnkary.net>
  * @author Hugo Hamon <hugo.hamon@sensio.com>
+ *
+ * @group time-sensitive
  */
 class CookieTest extends \PHPUnit_Framework_TestCase
 {
@@ -95,7 +95,7 @@ class CookieTest extends \PHPUnit_Framework_TestCase
         $cookie = new Cookie('foo', 'bar', $value);
         $expire = strtotime($value);
 
-        $this->assertEquals($expire, $cookie->getExpiresTime(), '->getExpiresTime() returns the expire date');
+        $this->assertEquals($expire, $cookie->getExpiresTime(), '->getExpiresTime() returns the expire date', 1);
     }
 
     public function testGetDomain()

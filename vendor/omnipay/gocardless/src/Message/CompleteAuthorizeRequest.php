@@ -1,14 +1,22 @@
 <?php
-
+/**
+ *  GoCardless Complete Authorize Request
+ */
 namespace Omnipay\GoCardless\Message;
 
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\GoCardless\Gateway;
 
 /**
- * GoCardless Complete Purchase Request
+ * This completes and confirms that the auth is  going to be used. It has a 3 hour
+ * life from the moment we create the pre-auth request.
+ *
+ *
+ * @package Omnipay\GoCardless\Message
+ * @link https://developer.gocardless.com/#confirm-a-new-pre-auth
  */
-class CompletePurchaseRequest extends AbstractRequest
+
+class CompleteAuthorizeRequest extends AbstractRequest
 {
     public function getData()
     {
@@ -31,16 +39,6 @@ class CompletePurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
         $httpRequest = $this->httpClient->post(
             $this->getEndpoint().'/api/v1/confirm',
             array('Accept' => 'application/json'),
@@ -48,7 +46,7 @@ class CompletePurchaseRequest extends AbstractRequest
         );
         $httpResponse = $httpRequest->setAuth($this->getAppId(), $this->getAppSecret())->send();
 
-        return $this->response = new CompletePurchaseResponse(
+        return $this->response = new CompleteAuthorizeResponse(
             $this,
             $httpResponse->json(),
             $this->httpRequest->get('resource_id')
