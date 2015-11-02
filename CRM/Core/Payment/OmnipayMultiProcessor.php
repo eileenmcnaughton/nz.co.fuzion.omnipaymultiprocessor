@@ -797,7 +797,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         ));
 
         if ($contribution['contribution_status_id'] != CRM_Core_OptionGroup::getValue('contribution_status', 'Completed', 'name')) {
-          civicrm_api3('contribution', 'completetransaction', array('id' => $this->transaction_id, 'trxn_id' => $response->getTransactionReference()));
+          civicrm_api3('contribution', 'completetransaction', array(
+            'id' => $this->transaction_id,
+            'trxn_id' => $response->getTransactionReference(),
+            'payment_processor_id' => $params['processor_id'],
+          ));
         }
         if (!empty($contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != FALSE) {
           $this->storePaymentToken($params, $contribution, $tokenReference);
