@@ -1,4 +1,10 @@
-This extension provides a wrapper extension for payment processors
+This extension provides a wrapper extension for payment processors.
+
+Note that the IPN/ Silent post url that should be configured within the payment processor is
+
+http(s)://yousite/civicrm/payment/ipn/xx where xx is the payment processor ID.
+
+(I'm not quite sure the joomla & WP variants but will update when I do)
 
 How to add new payment gateways to Omnipay
 
