@@ -2127,7 +2127,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/ee5c1039eac455ce1c8bd52ec1cc401b3a5e38ca",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/80d3a082194387382ec8f70cf9c5cbc89b7918d2",
                 "reference": "ee5c1039eac455ce1c8bd52ec1cc401b3a5e38ca",
                 "shasum": ""
             },
@@ -2180,7 +2180,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php54/zipball/f54805a34632406c4109aa74ac239f583aaedec2",
+                "url": "https://api.github.com/repos/symfony/polyfill-php54/zipball/2c9f6d98eb30dc04fe0b06f9cc92a55acea5bdcc",
                 "reference": "f54805a34632406c4109aa74ac239f583aaedec2",
                 "shasum": ""
             },
@@ -2350,7 +2350,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-tests/zipball/770815cd19c4b29a7ab14b53237e68a8812b14fb",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-tests/zipball/c3c1f36c0d02c392e1f45273eaf7758b7b8a190a",
                 "reference": "770815cd19c4b29a7ab14b53237e68a8812b14fb",
                 "shasum": ""
             },
@@ -2852,7 +2852,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/3c13963da08746f478decf4c94c7664b4f84dbdf",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/f65177d7093bc29aefebfbdbe496b9e3a6292653",
                 "reference": "3c13963da08746f478decf4c94c7664b4f84dbdf",
                 "shasum": ""
             },
