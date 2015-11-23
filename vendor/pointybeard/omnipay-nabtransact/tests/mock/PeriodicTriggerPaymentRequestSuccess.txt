@@ -1,0 +1,48 @@
+HTTP/1.1 200 OK
+Date: Fri, 14 Aug 2015 01:30:27 GMT
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 741
+Connection: close
+
+<?xml version="1.0" encoding="UTF-8"?>
+<NABTransactMessage>
+    <MessageInfo>
+        <messageID>8af793f9af34bea0cf40f5fb5c630c</messageID>
+        <messageTimestamp>20100101161306527000+660</messageTimestamp>
+        <apiVersion>spxml-4.2</apiVersion>
+    </MessageInfo>
+    <MerchantInfo>
+        <merchantID>XYZ0010</merchantID>
+    </MerchantInfo>
+    <Status>
+        <statusCode>0</statusCode>
+        <statusDescription>Normal</statusDescription>
+    </Status>
+    <RequestType>Periodic</RequestType>
+    <Periodic>
+        <PeriodicList count="1">
+            <PeriodicItem ID="1">
+                <actionType>trigger</actionType>
+                <periodicType>8</periodicType>
+                <crn>test</crn>
+                <transactionReference>Test Trigger CC Payment</transactionReference>
+                <amount>2995</amount>
+                <currency>AUD</currency>
+                <responseCode>00</responseCode>
+                <responseText>Approved</responseText>
+                <successful>yes</successful>
+                <CreditCardInfo>
+                    <pan>444422...111</pan>
+                    <expiryDate>09/13</expiryDate>
+                    <recurringFlag>no</recurringFlag>
+                    <cardType>5</cardType>
+                    <cardDescription>Visa</cardDescription>
+                </CreditCardInfo>
+                <txnID>132887</txnID>
+                <ponum>Test Trigger CC Payment</ponum>
+                <settlementDate>20101229</settlementDate>
+            </PeriodicItem>
+        </PeriodicList>
+    </Periodic>
+</NABTransactMessage>

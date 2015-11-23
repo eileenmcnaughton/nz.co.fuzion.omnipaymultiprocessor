@@ -1,0 +1,35 @@
+HTTP/1.1 200 OK
+Date: Fri, 14 Aug 2015 01:30:27 GMT
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 741
+Connection: close
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NABTransactMessage>
+  <MessageInfo>
+    <messageID>5732e000303be0e78d7bf31ea0266f</messageID>
+    <messageTimestamp>20151408113027638000+600</messageTimestamp>
+    <apiVersion>spxml-4.2</apiVersion>
+  </MessageInfo>
+  <MerchantInfo>
+    <merchantID>XYZ0010</merchantID>
+  </MerchantInfo>
+  <Status>
+    <statusCode>0</statusCode>
+    <statusDescription>Normal</statusDescription>
+  </Status>
+  <RequestType>Periodic</RequestType>
+  <Periodic>
+    <PeriodicList count="1">
+      <PeriodicItem ID="1">
+        <actionType>editcrn</actionType>
+        <crn>7e02b8b04a356b12f708</crn>
+        <responseCode>00</responseCode>
+        <responseText>Successful</responseText>
+        <successful>yes</successful>
+        <periodicType>5</periodicType>
+      </PeriodicItem>
+    </PeriodicList>
+  </Periodic>
+</NABTransactMessage>

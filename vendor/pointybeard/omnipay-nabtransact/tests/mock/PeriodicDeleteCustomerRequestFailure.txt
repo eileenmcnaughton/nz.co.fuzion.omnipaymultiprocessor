@@ -1,0 +1,35 @@
+HTTP/1.1 200 OK
+Date: Fri, 14 Aug 2015 04:09:51 GMT
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 751
+Connection: close
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<NABTransactMessage>
+  <MessageInfo>
+    <messageID>a16a1d868276a3361c4bfb52372f65</messageID>
+    <messageTimestamp>20151408140951774000+600</messageTimestamp>
+    <apiVersion>spxml-4.2</apiVersion>
+  </MessageInfo>
+  <MerchantInfo>
+    <merchantID>XYZ0010</merchantID>
+  </MerchantInfo>
+  <Status>
+    <statusCode>0</statusCode>
+    <statusDescription>Normal</statusDescription>
+  </Status>
+  <RequestType>Periodic</RequestType>
+  <Periodic>
+    <PeriodicList count="1">
+      <PeriodicItem ID="1">
+        <actionType>deletecrn</actionType>
+        <crn>blahblahmonkey</crn>
+        <responseCode>335</responseCode>
+        <responseText>CRN does not exist</responseText>
+        <successful>no</successful>
+        <periodicType>5</periodicType>
+      </PeriodicItem>
+    </PeriodicList>
+  </Periodic>
+</NABTransactMessage>

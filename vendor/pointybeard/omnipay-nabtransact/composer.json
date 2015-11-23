@@ -1,0 +1,36 @@
+{
+    "name": "pointybeard/omnipay-nabtransact",
+    "description": "NAB Transact XML API gateway for the Omnipay payment processing library",
+    "authors": [
+        {
+            "email": "hi@alistairkearney.com",
+            "name": "pointybeard"
+        }
+    ],
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "nab",
+        "nabtransact"
+    ],
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=5.4",
+        "omnipay/common": "~2.3"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0",
+        "fzaninotto/faker": "^1.6@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\NABTransact\\": "src",
+			"Omnipay\\NABTransact\\Tests\\Lib\\": "tests\\lib"
+        }
+    }
+}

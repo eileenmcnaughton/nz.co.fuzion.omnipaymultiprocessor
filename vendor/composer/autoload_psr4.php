@@ -25,6 +25,8 @@ return array(
     'Omnipay\\PayFast\\' => array($vendorDir . '/omnipay/payfast/src'),
     'Omnipay\\Netaxept\\' => array($vendorDir . '/omnipay/netaxept/src'),
     'Omnipay\\NetBanx\\' => array($vendorDir . '/omnipay/netbanx/src'),
+    'Omnipay\\NABTransact\\Tests\\Lib\\' => array($vendorDir . '/pointybeard/omnipay-nabtransact/tests/lib'),
+    'Omnipay\\NABTransact\\' => array($vendorDir . '/pointybeard/omnipay-nabtransact/src'),
     'Omnipay\\MultiSafepay\\' => array($vendorDir . '/omnipay/multisafepay/src'),
     'Omnipay\\Mollie\\' => array($vendorDir . '/omnipay/mollie/src'),
     'Omnipay\\Migs\\' => array($vendorDir . '/omnipay/migs/src'),
@@ -40,4 +42,5 @@ return array(
     'Omnipay\\Buckaroo\\' => array($vendorDir . '/omnipay/buckaroo/src'),
     'Omnipay\\BitPay\\' => array($vendorDir . '/omnipay/bitpay/src'),
     'Omnipay\\AuthorizeNet\\' => array($vendorDir . '/omnipay/authorizenet/src'),
+    'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
 );

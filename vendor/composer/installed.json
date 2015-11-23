@@ -2977,5 +2977,103 @@
         ],
         "description": "Symfony Yaml Component",
         "homepage": "https://symfony.com"
+    },
+    {
+        "name": "pointybeard/omnipay-nabtransact",
+        "version": "dev-transact",
+        "version_normalized": "dev-transact",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-nabtransact.git",
+            "reference": "f18625800f9715378a91c761b5e7ee6782892005"
+        },
+        "require": {
+            "omnipay/common": "~2.3",
+            "php": ">=5.4"
+        },
+        "require-dev": {
+            "fzaninotto/faker": "^1.6@dev",
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-11-23 06:37:08",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\NABTransact\\": "src",
+                "Omnipay\\NABTransact\\Tests\\Lib\\": "tests\\lib"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "email": "hi@alistairkearney.com",
+                "name": "pointybeard"
+            }
+        ],
+        "description": "NAB Transact XML API gateway for the Omnipay payment processing library",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "nab",
+            "nabtransact",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "fzaninotto/faker",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/fzaninotto/Faker.git",
+            "reference": "008e69f17a1286c29b8a60082119b7d6eee69082"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/008e69f17a1286c29b8a60082119b7d6eee69082",
+            "reference": "008e69f17a1286c29b8a60082119b7d6eee69082",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "ext-intl": "*",
+            "phpunit/phpunit": "~4.0",
+            "squizlabs/php_codesniffer": "~1.5"
+        },
+        "time": "2015-11-16 08:55:57",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.6.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Faker\\": "src/Faker/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "François Zaninotto"
+            }
+        ],
+        "description": "Faker is a PHP library that generates fake data for you.",
+        "keywords": [
+            "data",
+            "faker",
+            "fixtures"
+        ]
     }
 ]
