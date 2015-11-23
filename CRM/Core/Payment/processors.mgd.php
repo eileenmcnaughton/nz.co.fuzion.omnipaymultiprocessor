@@ -260,4 +260,29 @@ return array(
       ),
   ),
   */
+  7 => array(
+    'name' => 'OmniPay - NABTransact_Transact',
+    'entity' => 'payment_processor_type',
+    'params' => array(
+      'version' => 3,
+      'title' => 'OmniPay - NAB Transact',
+      'name' => 'omnipay_NABTransact_Transact',
+      'description' => 'Omnipay NAB Transact',
+      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
+      'user_name_label' => 'Merchant Id',
+      'password_label' => 'Password',
+      'signature_label' => '',
+      'class_name' => 'Payment_OmnipayMultiProcessor',
+      'url_site_default' => 'http://unused.com',
+      'url_api_default' => 'http://unused.com',
+      'url_recur_default' => 'http://unused.com',
+      'url_site_test_default' => 'http://unused.com',
+      'url_recur_test_default' => 'http://unused.com',
+      'url_api_test_default' => 'http://unused.com',
+      'billing_mode' => 1,
+      'payment_type' => 1,
+      'is_recur' => 0,
+    ),
+  ),
+
 );
