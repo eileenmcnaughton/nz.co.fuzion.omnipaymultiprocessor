@@ -25,6 +25,23 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     private $httpRequest;
 
     /**
+     * Converts a string to camel case
+     *
+     * @param string $str
+     * @return string
+     */
+    public function camelCase($str)
+    {
+        return preg_replace_callback(
+            '/_([a-z])/',
+            function ($match) {
+                return strtoupper($match[1]);
+            },
+            $str
+        );
+    }
+
+    /**
      * Mark a request as being mocked
      *
      * @param GuzzleRequestInterface $request

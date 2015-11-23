@@ -33,8 +33,8 @@ abstract class GatewayTestCase extends TestCase
     {
         $settings = $this->gateway->getDefaultParameters();
         foreach ($settings as $key => $default) {
-            $getter = 'get'.ucfirst($key);
-            $setter = 'set'.ucfirst($key);
+            $getter = 'get'.ucfirst($this->camelCase($key));
+            $setter = 'set'.ucfirst($this->camelCase($key));
             $value = uniqid();
 
             $this->assertTrue(method_exists($this->gateway, $getter), "Gateway must implement $getter()");
@@ -187,8 +187,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsAuthorize()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -204,8 +204,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsCompleteAuthorize()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -221,8 +221,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsCapture()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -238,8 +238,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsPurchase()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -255,8 +255,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsCompletePurchase()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -272,8 +272,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsRefund()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -289,8 +289,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsVoid()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -306,8 +306,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsCreateCard()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -323,8 +323,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsDeleteCard()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 
@@ -340,8 +340,8 @@ abstract class GatewayTestCase extends TestCase
         if ($this->gateway->supportsUpdateCard()) {
             foreach ($this->gateway->getDefaultParameters() as $key => $default) {
                 // set property on gateway
-                $getter = 'get'.ucfirst($key);
-                $setter = 'set'.ucfirst($key);
+                $getter = 'get'.ucfirst($this->camelCase($key));
+                $setter = 'set'.ucfirst($this->camelCase($key));
                 $value = uniqid();
                 $this->gateway->$setter($value);
 

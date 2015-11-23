@@ -233,65 +233,6 @@
         ]
     },
     {
-        "name": "omnipay/payflow",
-        "version": "v2.1.1",
-        "version_normalized": "2.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-payflow.git",
-            "reference": "9d86e3478dd42cbe40ab9466a7505c4f99c70ee7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-payflow/zipball/9d86e3478dd42cbe40ab9466a7505c4f99c70ee7",
-            "reference": "9d86e3478dd42cbe40ab9466a7505c4f99c70ee7",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2014-09-17 00:38:58",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Payflow\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-payflow/contributors"
-            }
-        ],
-        "description": "Payflow driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-payflow",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payflow",
-            "payment"
-        ]
-    },
-    {
         "name": "omnipay/payfast",
         "version": "v2.1.1",
         "version_normalized": "2.1.1.0",
@@ -1089,12 +1030,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/thephpleague/omnipay-tests.git",
-            "reference": "770815cd19c4b29a7ab14b53237e68a8812b14fb"
+            "reference": "c3c1f36c0d02c392e1f45273eaf7758b7b8a190a"
         },
         "dist": {
             "type": "zip",
             "url": "https://api.github.com/repos/thephpleague/omnipay-tests/zipball/c3c1f36c0d02c392e1f45273eaf7758b7b8a190a",
-            "reference": "770815cd19c4b29a7ab14b53237e68a8812b14fb",
+            "reference": "c3c1f36c0d02c392e1f45273eaf7758b7b8a190a",
             "shasum": ""
         },
         "require": {
@@ -1103,7 +1044,7 @@
             "phpunit/phpunit": "~3.7.0",
             "squizlabs/php_codesniffer": "~1.4"
         },
-        "time": "2015-03-11 17:43:18",
+        "time": "2015-11-03 19:59:14",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2813,130 +2754,24 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "symfony/http-foundation",
-        "version": "2.8.x-dev",
-        "version_normalized": "2.8.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/http-foundation.git",
-            "reference": "ee5c1039eac455ce1c8bd52ec1cc401b3a5e38ca"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/http-foundation/zipball/80d3a082194387382ec8f70cf9c5cbc89b7918d2",
-            "reference": "ee5c1039eac455ce1c8bd52ec1cc401b3a5e38ca",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.9",
-            "symfony/polyfill-php54": "~1.0"
-        },
-        "require-dev": {
-            "symfony/expression-language": "~2.4|~3.0.0"
-        },
-        "time": "2015-10-30 20:15:42",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.8-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\HttpFoundation\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony HttpFoundation Component",
-        "homepage": "https://symfony.com"
-    },
-    {
-        "name": "symfony/yaml",
-        "version": "2.8.x-dev",
-        "version_normalized": "2.8.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/yaml.git",
-            "reference": "3c13963da08746f478decf4c94c7664b4f84dbdf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/f65177d7093bc29aefebfbdbe496b9e3a6292653",
-            "reference": "3c13963da08746f478decf4c94c7664b4f84dbdf",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.9"
-        },
-        "time": "2015-10-30 20:15:42",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.8-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Yaml\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Yaml Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "symfony/polyfill-php54",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-php54.git",
-            "reference": "f54805a34632406c4109aa74ac239f583aaedec2"
+            "reference": "2c9f6d98eb30dc04fe0b06f9cc92a55acea5bdcc"
         },
         "dist": {
             "type": "zip",
             "url": "https://api.github.com/repos/symfony/polyfill-php54/zipball/2c9f6d98eb30dc04fe0b06f9cc92a55acea5bdcc",
-            "reference": "f54805a34632406c4109aa74ac239f583aaedec2",
+            "reference": "2c9f6d98eb30dc04fe0b06f9cc92a55acea5bdcc",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2015-10-26 06:55:25",
+        "time": "2015-11-04 20:28:58",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2977,5 +2812,170 @@
             "portable",
             "shim"
         ]
+    },
+    {
+        "name": "omnipay/payflow",
+        "version": "2.2.0",
+        "version_normalized": "2.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-payflow.git",
+            "reference": "1d5963fd57bf16cfb8134900d3c34d9e30ca59a9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-payflow/zipball/1d5963fd57bf16cfb8134900d3c34d9e30ca59a9",
+            "reference": "1d5963fd57bf16cfb8134900d3c34d9e30ca59a9",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-11-03 20:55:42",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Payflow\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-payflow/contributors"
+            }
+        ],
+        "description": "Payflow driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-payflow",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payflow",
+            "payment"
+        ]
+    },
+    {
+        "name": "symfony/http-foundation",
+        "version": "2.8.x-dev",
+        "version_normalized": "2.8.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/http-foundation.git",
+            "reference": "0d7031746341f4fa9233aaab616bd9361dac98ce"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/http-foundation/zipball/0d7031746341f4fa9233aaab616bd9361dac98ce",
+            "reference": "0d7031746341f4fa9233aaab616bd9361dac98ce",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9",
+            "symfony/polyfill-php54": "~1.0"
+        },
+        "require-dev": {
+            "symfony/expression-language": "~2.4|~3.0.0"
+        },
+        "time": "2015-11-20 17:41:52",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\HttpFoundation\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony HttpFoundation Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "2.8.x-dev",
+        "version_normalized": "2.8.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "f65177d7093bc29aefebfbdbe496b9e3a6292653"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/f65177d7093bc29aefebfbdbe496b9e3a6292653",
+            "reference": "f65177d7093bc29aefebfbdbe496b9e3a6292653",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2015-11-18 13:45:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
     }
 ]
