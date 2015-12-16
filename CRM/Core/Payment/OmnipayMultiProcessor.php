@@ -152,6 +152,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
+        require_once 'CRM/Core/Session.php';
         CRM_Core_Session::storeSessionObjects();
         if ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect)) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
@@ -382,7 +383,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'description' => $this->getPaymentDescription($params),
       'transactionId' => $this->transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
-      'returnUrl' => $this->getNotifyUrl(TRUE),
+      'returnUrl' => $this->getReturnSuccessUrl($params['qfKey']),
       'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
       'notifyUrl' => $this->getNotifyUrl(),
       'card' => $this->getCreditCardObjectParams($params),
