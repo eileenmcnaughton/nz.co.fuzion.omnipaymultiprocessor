@@ -7,6 +7,15 @@ use Omnipay\Common\CreditCard;
 
 class RestGatewayTest extends GatewayTestCase
 {
+    /** @var RestGateway */
+    public $gateway;
+
+    /** @var array */
+    public $options;
+
+    /** @var array */
+    public $subscription_options;
+
     public function setUp()
     {
         parent::setUp();
@@ -25,6 +34,11 @@ class RestGatewayTest extends GatewayTestCase
                 'expiryYear' => '2016',
                 'cvv' => '123',
             )),
+        );
+
+        $this->subscription_options = array(
+            'transactionReference'  => 'ABC-1234',
+            'description'           => 'Description goes here',
         );
     }
 
@@ -81,12 +95,92 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
+    public function testCapture()
+    {
+        $request = $this->gateway->capture(array(
+            'transactionReference' => 'abc123',
+            'amount' => 10.00,
+            'currency' => 'AUD',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestCaptureRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/authorization/abc123/capture', $endPoint);
+        $data = $request->getData();
+        $this->assertNotEmpty($data);
+    }
+
+    public function testRefund()
+    {
+        $request = $this->gateway->refund(array(
+            'transactionReference' => 'abc123',
+            'amount' => 10.00,
+            'currency' => 'AUD',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestRefundRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/sale/abc123/refund', $endPoint);
+        $data = $request->getData();
+        $this->assertNotEmpty($data);
+    }
+
+    public function testFullRefund()
+    {
+        $request = $this->gateway->refund(array(
+            'transactionReference' => 'abc123',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestRefundRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/sale/abc123/refund', $endPoint);
+        $data = $request->getData();
+        $this->assertEmpty($data);
+    }
+
     public function testFetchTransaction()
     {
         $request = $this->gateway->fetchTransaction(array('transactionReference' => 'abc123'));
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\RestFetchTransactionRequest', $request);
         $this->assertSame('abc123', $request->getTransactionReference());
+        $data = $request->getData();
+        $this->assertEmpty($data);
+    }
+
+    public function testFetchPurchase()
+    {
+        $request = $this->gateway->fetchPurchase(array('transactionReference' => 'abc123'));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestFetchPurchaseRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $data = $request->getData();
+        $this->assertEmpty($data);
+    }
+
+    public function testListPurchase()
+    {
+        $request = $this->gateway->listPurchase(array(
+            'count'         => 15,
+            'startId'       => 'PAY123',
+            'startIndex'    => 1,
+            'startTime'     => '2015-09-07T00:00:00Z',
+            'endTime'       => '2015-09-08T00:00:00Z',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestListPurchaseRequest', $request);
+        $this->assertSame(15, $request->getCount());
+        $this->assertSame('PAY123', $request->getStartId());
+        $this->assertSame(1, $request->getStartIndex());
+        $this->assertSame('2015-09-07T00:00:00Z', $request->getStartTime());
+        $this->assertSame('2015-09-08T00:00:00Z', $request->getEndTime());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/payment', $endPoint);
+        $data = $request->getData();
+        $this->assertNotEmpty($data);
     }
 
     public function testCreateCard()
@@ -113,4 +207,39 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
+    // Incomplete generic tests for subscription payments
+
+    public function testCompleteSubscription()
+    {
+        $this->setMockHttpResponse('RestExecuteSubscriptionSuccess.txt');
+        $response = $this->gateway->completeSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+
+        $this->assertEquals('I-0LN988D3JACS', $response->getTransactionReference());
+    }
+
+    public function testCancelSubscription()
+    {
+        $this->setMockHttpResponse('RestGenericSubscriptionSuccess.txt');
+        $response = $this->gateway->cancelSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testSuspendSubscription()
+    {
+        $this->setMockHttpResponse('RestGenericSubscriptionSuccess.txt');
+        $response = $this->gateway->suspendSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testReactivateSubscription()
+    {
+        $this->setMockHttpResponse('RestGenericSubscriptionSuccess.txt');
+        $response = $this->gateway->reactivateSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+    }
 }

@@ -193,12 +193,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "008e69f17a1286c29b8a60082119b7d6eee69082"
+                "reference": "3037df47eca2e534f62f061415a071f9b5d1a1a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/008e69f17a1286c29b8a60082119b7d6eee69082",
-                "reference": "008e69f17a1286c29b8a60082119b7d6eee69082",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/3037df47eca2e534f62f061415a071f9b5d1a1a4",
+                "reference": "3037df47eca2e534f62f061415a071f9b5d1a1a4",
                 "shasum": ""
             },
             "require": {
@@ -235,7 +235,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2015-11-16 08:55:57"
+            "time": "2015-11-30 17:35:42"
         },
         {
             "name": "guzzle/guzzle",
@@ -1661,16 +1661,16 @@
         },
         {
             "name": "omnipay/paypal",
-            "version": "v2.4.3",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paypal.git",
-                "reference": "53511ea0bd7e3cf9cabf79c79290a162ceee1224"
+                "reference": "67efe5a927dec13fc7520e29bc44f15fd3a728e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/53511ea0bd7e3cf9cabf79c79290a162ceee1224",
-                "reference": "53511ea0bd7e3cf9cabf79c79290a162ceee1224",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/67efe5a927dec13fc7520e29bc44f15fd3a728e9",
+                "reference": "67efe5a927dec13fc7520e29bc44f15fd3a728e9",
                 "shasum": ""
             },
             "require": {
@@ -1715,7 +1715,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2015-07-08 17:27:39"
+            "time": "2015-11-11 21:48:00"
         },
         {
             "name": "omnipay/pin",
@@ -1892,16 +1892,16 @@
         },
         {
             "name": "omnipay/stripe",
-            "version": "v2.2.1",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-stripe.git",
-                "reference": "906377e50045dc2ba9c612aa1f6924157e1f750e"
+                "reference": "54b816a5e95e34c988d71fb805b0232cfd7c1ce5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/906377e50045dc2ba9c612aa1f6924157e1f750e",
-                "reference": "906377e50045dc2ba9c612aa1f6924157e1f750e",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/54b816a5e95e34c988d71fb805b0232cfd7c1ce5",
+                "reference": "54b816a5e95e34c988d71fb805b0232cfd7c1ce5",
                 "shasum": ""
             },
             "require": {
@@ -1945,7 +1945,7 @@
                 "payment",
                 "stripe"
             ],
-            "time": "2015-04-14 18:55:56"
+            "time": "2015-11-10 16:17:35"
         },
         {
             "name": "omnipay/targetpay",
@@ -2217,12 +2217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "0d7031746341f4fa9233aaab616bd9361dac98ce"
+                "reference": "4d333a9c5c258a63130f17edbcba29ff0b2b0577"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/0d7031746341f4fa9233aaab616bd9361dac98ce",
-                "reference": "0d7031746341f4fa9233aaab616bd9361dac98ce",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/4d333a9c5c258a63130f17edbcba29ff0b2b0577",
+                "reference": "4d333a9c5c258a63130f17edbcba29ff0b2b0577",
                 "shasum": ""
             },
             "require": {
@@ -2262,7 +2262,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-20 17:41:52"
+            "time": "2015-12-17 21:45:56"
         },
         {
             "name": "symfony/polyfill-php54",
@@ -2942,12 +2942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f65177d7093bc29aefebfbdbe496b9e3a6292653"
+                "reference": "aceecdb89565ebdedd908aaf327f5c34305be981"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f65177d7093bc29aefebfbdbe496b9e3a6292653",
-                "reference": "f65177d7093bc29aefebfbdbe496b9e3a6292653",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/aceecdb89565ebdedd908aaf327f5c34305be981",
+                "reference": "aceecdb89565ebdedd908aaf327f5c34305be981",
                 "shasum": ""
             },
             "require": {
@@ -2983,7 +2983,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-18 13:45:00"
+            "time": "2015-12-05 13:47:06"
         }
     ],
     "aliases": [],

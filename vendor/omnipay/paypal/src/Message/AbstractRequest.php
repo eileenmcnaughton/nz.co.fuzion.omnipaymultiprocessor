@@ -30,7 +30,7 @@ namespace Omnipay\PayPal\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    const API_VERSION = '85.0';
+    const API_VERSION = '119.0';
 
     protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
     protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
@@ -305,6 +305,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
                 $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
             }
+            $data["PAYMENTREQUEST_0_ITEMAMT"] = $this->formatCurrency($data["PAYMENTREQUEST_0_ITEMAMT"]);
         }
 
         return $data;

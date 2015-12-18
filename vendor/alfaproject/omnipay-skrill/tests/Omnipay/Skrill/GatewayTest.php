@@ -79,7 +79,6 @@ class GatewayTest extends GatewayTestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertSame($expectedSessionId, $response->getSessionId());
         $this->assertTrue($response->isRedirect());
-
         $this->assertSame($request->getEndpoint() . '?sid=' . $expectedSessionId, $response->getRedirectUrl());
         $this->assertSame('GET', $response->getRedirectMethod());
         $this->assertNull($response->getRedirectData());

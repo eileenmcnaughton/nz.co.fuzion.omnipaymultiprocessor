@@ -329,15 +329,15 @@ class Response
             $this->setDate(\DateTime::createFromFormat('U', time()));
         }
 
-        // status
-        header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusText), true, $this->statusCode);
-
         // headers
         foreach ($this->headers->allPreserveCase() as $name => $values) {
             foreach ($values as $value) {
                 header($name.': '.$value, false, $this->statusCode);
             }
         }
+
+        // status
+        header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusText), true, $this->statusCode);
 
         // cookies
         foreach ($this->headers->getCookies() as $cookie) {
@@ -976,7 +976,7 @@ class Response
      * Sets the Vary header.
      *
      * @param string|array $headers
-     * @param bool         $replace Whether to replace the actual value of not (true by default)
+     * @param bool         $replace Whether to replace the actual value or not (true by default)
      *
      * @return Response
      */

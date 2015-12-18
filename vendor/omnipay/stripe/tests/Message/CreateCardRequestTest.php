@@ -14,12 +14,15 @@ class CreateCardRequestTest extends TestCase
 
     public function testEndpoint()
     {
+        $this->request->setCustomerReference('');
         $this->assertSame('https://api.stripe.com/v1/customers', $this->request->getEndpoint());
+        $this->request->setCustomerReference('cus_1MZSEtqSghKx99');
+        $this->assertSame('https://api.stripe.com/v1/customers/cus_1MZSEtqSghKx99/cards', $this->request->getEndpoint());
     }
 
     /**
      * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     * @expectedExceptionMessage The card parameter is required
+     * @expectedExceptionMessage The source parameter is required
      */
     public function testCard()
     {
@@ -32,7 +35,7 @@ class CreateCardRequestTest extends TestCase
         $this->request->setToken('xyz');
         $data = $this->request->getData();
 
-        $this->assertSame('xyz', $data['card']);
+        $this->assertSame('xyz', $data['source']);
     }
 
     public function testDataWithCard()
@@ -41,7 +44,7 @@ class CreateCardRequestTest extends TestCase
         $this->request->setCard($card);
         $data = $this->request->getData();
 
-        $this->assertSame($card['number'], $data['card']['number']);
+        $this->assertSame($card['number'], $data['source']['number']);
     }
 
     public function testSendSuccess()
@@ -52,7 +55,8 @@ class CreateCardRequestTest extends TestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
-        $this->assertSame('cus_1MZSEtqSghKx99', $response->getCardReference());
+        $this->assertSame('cus_5i75ZdvSgIgLdW', $response->getCustomerReference());
+        $this->assertSame('card_15WgqxIobxWFFmzdk5V9z3g9', $response->getCardReference());
         $this->assertNull($response->getMessage());
     }
 
