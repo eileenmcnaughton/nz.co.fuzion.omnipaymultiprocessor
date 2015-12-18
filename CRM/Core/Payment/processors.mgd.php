@@ -260,6 +260,30 @@ return array(
       ),
   ),
   */
+  6 => array(
+    'name' => 'OmniPay - Payment Express PxPay',
+    'entity' => 'payment_processor_type',
+    'params' => array(
+      'version' => 3,
+      'title' => 'OmniPay - Payment Express PxPay',
+      'name' => 'omnipay_PaymentExpress_PxPay',
+      'description' => 'Omnipay Payment Express PxPay Payment Processor',
+      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
+      'user_name_label' => 'Username',
+      'password_label' => 'Password',
+      'signature_label' => '',
+      'class_name' => 'Payment_OmnipayMultiProcessor',
+      'url_site_default' => 'http://unused.com',
+      'url_api_default' => 'http://unused.com',
+      'url_recur_default' => 'http://unused.com',
+      'url_site_test_default' => 'http://unused.com',
+      'url_recur_test_default' => 'http://unused.com',
+      'url_api_test_default' => 'http://unused.com',
+      'billing_mode' => 4,
+      'payment_type' => 1,
+      'is_recur' => 0,
+    ),
+  ),
   7 => array(
     'name' => 'OmniPay - NABTransact_Transact',
     'entity' => 'payment_processor_type',
