@@ -36,7 +36,8 @@
         "omnipay/mollie": "~3.0",
         "civicrm/omnipay-paypalstandard": "dev-master",
         "pointybeard/omnipay-nabtransact": "dev-transact",
-        "fzaninotto/faker": "^1.6@dev"
+        "fzaninotto/faker": "^1.6@dev",
+        "omnipay/paymentexpress": "dev-master"
     },
     "require-dev":
     {

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "18b155324f0ba8eed9eb742c2e100354",
-    "content-hash": "536c7062a8558061c9abdb819d9a8313",
+    "hash": "2e836bd54b54fff7f9814319dfe46205",
+    "content-hash": "5a7341dd664b6cd8560d44d0b729c517",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -1598,16 +1598,16 @@
         },
         {
             "name": "omnipay/paymentexpress",
-            "version": "v2.1.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paymentexpress.git",
-                "reference": "bd417f02bacb2128c168956739cd3a902d3ee48c"
+                "reference": "8dc92bc7be313c7e412a6b79801ad42551898256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/bd417f02bacb2128c168956739cd3a902d3ee48c",
-                "reference": "bd417f02bacb2128c168956739cd3a902d3ee48c",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/8dc92bc7be313c7e412a6b79801ad42551898256",
+                "reference": "8dc92bc7be313c7e412a6b79801ad42551898256",
                 "shasum": ""
             },
             "require": {
@@ -1657,7 +1657,7 @@
                 "pxpay",
                 "pxpost"
             ],
-            "time": "2015-04-03 00:20:28"
+            "time": "2015-09-14 23:28:20"
         },
         {
             "name": "omnipay/paypal",
@@ -2995,7 +2995,8 @@
         "sergej-koscejev/omnipay-gopay": 20,
         "civicrm/omnipay-paypalstandard": 20,
         "pointybeard/omnipay-nabtransact": 20,
-        "fzaninotto/faker": 20
+        "fzaninotto/faker": 20,
+        "omnipay/paymentexpress": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
