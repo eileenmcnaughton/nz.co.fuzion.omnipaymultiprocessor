@@ -118,18 +118,17 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
         );
       }
     }
-  }
-
-  if (omnipaymultiprocessor__versionAtLeast(4.6)) {
-    if (omnipaymultiprocessor__versionAtLeast(4.7)) {
-      return;
-    }
-    omnipaymultiprocessor_addBillingFieldsTo46Form($form);
     return;
   }
 
   if (!omnipaymultiprocessor_is_credit_card_form($formName)
-    || $form->_paymentProcessor['class_name'] != 'Payment_OmnipayMultiProcessor') {
+    || $form->_paymentProcessor['class_name'] != 'Payment_OmnipayMultiProcessor'
+    || omnipaymultiprocessor__versionAtLeast(4.7)) {
+    return;
+  }
+
+  if (omnipaymultiprocessor__versionAtLeast(4.6)) {
+    omnipaymultiprocessor_addBillingFieldsTo46Form($form);
     return;
   }
 
