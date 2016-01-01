@@ -121,6 +121,10 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
   }
 
   if (omnipaymultiprocessor__versionAtLeast(4.6)) {
+    if (omnipaymultiprocessor__versionAtLeast(4.7)) {
+      return;
+    }
+    omnipaymultiprocessor_addBillingFieldsTo46Form($form);
     return;
   }
 
@@ -170,6 +174,44 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
 }
 
 /**
+ * Add the billing field to the payment form if required.
+ *
+ * This requires 4.6.10 or greater due to an earlier bug. 4.7 should not require this.
+ *
+ * @param CRM_Core_Form $form
+ */
+function omnipaymultiprocessor_addBillingFieldsTo46Form(&$form) {
+  $billingDetailsFields = omnipaymultiprocessor_getBillingPersonalDetailsFields($form->_paymentProcessor);
+  if (!empty($billingDetailsFields)) {
+    if (empty($form->_paymentFields)) {
+      $form->_paymentFields = $billingDetailsFields;
+    }
+    $metadata = omnipaymultiprocessor_getBillingPersonalDetailsMetadata($form->_paymentProcessor);
+    foreach ($metadata as $name => $field) {
+      if (!empty($field['cc_field'])) {
+        if (!empty($field['cc_field'])) {
+          if ($field['htmlType'] == 'chainSelect') {
+            $form->addChainSelect($field['name'], array('required' => FALSE));
+          }
+          else {
+            $form->add($field['htmlType'],
+              $field['name'],
+              $field['title'],
+              $field['attributes'],
+              FALSE
+            );
+          }
+        }
+      }
+      $requiredPaymentFields[$field['name']] = $field['is_required'];
+    }
+    $form->assign('requiredPaymentFields', $requiredPaymentFields);
+    $form->assign('billingDetailsFields', $billingDetailsFields);
+  }
+  $form->billingFieldSets['billing_name_address-group']['fields'] = array();
+}
+
+/**
  * Get the billing fields we have suppressed
  * @param array $profileFields
  * @param integer $billingLocationID
@@ -190,6 +232,18 @@ function omnipaymultiprocessor_get_suppressed_billing_fields($billingDetailField
 function omnipaymultiprocessor_getBillingPersonalDetailsFields($paymentProcessor) {
   $processor = omnipaymultiprocessor_get_payment_processor_object('contribute', $paymentProcessor);
   return $processor->getBillingBlockFields();
+}
+
+/**
+ * get billing fields
+ * note we should consider calling the payment processor for this information like we do for payment fields
+ * @param array $paymentProcessor
+ *
+ * @return array
+ */
+function omnipaymultiprocessor_getBillingPersonalDetailsMetadata($paymentProcessor) {
+  $processor = omnipaymultiprocessor_get_payment_processor_object('contribute', $paymentProcessor);
+  return $processor->getBillingAddressFieldsMetadataPre47();
 }
 
 /**

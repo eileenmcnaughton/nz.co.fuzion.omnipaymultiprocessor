@@ -433,7 +433,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if ($paymentType['name'] == 'credit_card_off_site_post') {
         // This name implies transactional redirect at this stage - the only
         // example currently being Cybersource.
-        return $this->getBillingAddressFieldsPre47();
+        // return $this->getBillingAddressFieldsPre47();
       }
       return array();
     }
@@ -637,7 +637,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    *   Array of metadata for address fields.
    */
-  private function getBillingAddressFieldsMetadataPre47() {
+  public function getBillingAddressFieldsMetadataPre47() {
     $metadata = array();
     $billingID = CRM_Core_BAO_LocationType::getBilling();
     $metadata['billing_first_name'] = array(
