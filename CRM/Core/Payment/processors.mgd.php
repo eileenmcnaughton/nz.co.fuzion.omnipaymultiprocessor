@@ -142,8 +142,7 @@ return array(
       'payment_type' => 1,
     ),
   ),
-  /*
-  5 =>
+    5 =>
     array(
       'name' => 'OmniPay - Mollie',
       'entity' => 'payment_processor_type',
@@ -163,6 +162,7 @@ return array(
           'payment_type' => 1,
         ),
     ),
+    /*
   6 =>
     array(
       'name' => 'OmniPay - PayPal Standard',
