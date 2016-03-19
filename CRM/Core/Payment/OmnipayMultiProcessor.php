@@ -873,6 +873,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * We don't want fails here to trigger a rollback to we set is_transactional to false.
    *
+   * Note that we are 'always' setting the next sched contribution date here - but that
+   * might be more conditional if we support Authorize.net style delay in future.
+   *
    * @param array $params
    * @param array $contribution
    * @param string $tokenReference
@@ -883,16 +886,21 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (!omnipaymultiprocessor__versionAtLeast(4.6)) {
       return;
     }
+    $contributionRecurID = $contribution['contribution_recur_id'];
     $token = civicrm_api3('payment_token', 'create', array(
       'contact_id' => $contribution['contact_id'],
       'payment_processor_id' => $params['processor_id'],
       'token' => $tokenReference,
       'is_transactional' => FALSE,
     ));
+    $contributionRecur = civicrm_api3('ContributionRecur', 'getsingle', array('id' => $contributionRecurID));
     civicrm_api3('contribution_recur', 'create', array(
-      'id' => $contribution['contribution_recur_id'],
+      'id' => $contributionRecurID,
       'payment_token_id' => $token['id'],
       'is_transactional' => FALSE,
+      'next_sched_contribution_date' => CRM_Utils_Date::isoToMysql(
+        date('Y-m-d 00:00:00', strtotime('+' . $contributionRecur['frequency_interval'] . ' ' . $contributionRecur['frequency_unit']))
+      ),
     ));
   }
 
