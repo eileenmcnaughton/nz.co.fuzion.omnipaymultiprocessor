@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2e836bd54b54fff7f9814319dfe46205",
-    "content-hash": "5a7341dd664b6cd8560d44d0b729c517",
+    "hash": "5eafc687655cd92c6927fcdfae140a3b",
+    "content-hash": "e0ae354288699095aa6e421a7defb871",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -1185,16 +1185,16 @@
         },
         {
             "name": "omnipay/mollie",
-            "version": "v3.0.4",
+            "version": "3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-mollie.git",
-                "reference": "a89cb0d15447023b24c03f86873c1c1489cd021b"
+                "reference": "efd491fdac7d1243e2dd1da5a964514e3aab2a5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-mollie/zipball/a89cb0d15447023b24c03f86873c1c1489cd021b",
-                "reference": "a89cb0d15447023b24c03f86873c1c1489cd021b",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-mollie/zipball/efd491fdac7d1243e2dd1da5a964514e3aab2a5a",
+                "reference": "efd491fdac7d1243e2dd1da5a964514e3aab2a5a",
                 "shasum": ""
             },
             "require": {
@@ -1238,7 +1238,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2015-03-03 18:55:42"
+            "time": "2016-02-21 22:00:30"
         },
         {
             "name": "omnipay/multisafepay",
