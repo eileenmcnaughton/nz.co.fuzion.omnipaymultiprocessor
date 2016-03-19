@@ -27,7 +27,7 @@ class PurchaseResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('One or more fields is invalid (invalid currency code)', $response->getMessage());
+        $this->assertSame('limitExceeded: Invoice not created due to account limits, please check your approval levels', $response->getMessage());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());

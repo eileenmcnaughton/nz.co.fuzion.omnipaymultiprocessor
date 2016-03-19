@@ -11,19 +11,29 @@ class PurchaseRequestTest extends TestCase
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount' => '10.00',
-                'currency' => 'AUD',
-                'card' => $this->getValidCard(),
+                'amount'      => '10.00',
+                'currency'    => 'AUD',
+                'card'        => $this->getValidCard(),
+                'email'       => 'roland@pin.net.au',
+                'description' => 'test charge'
             )
         );
     }
 
-    public function testDataWithToken()
+    public function testDataWithCardToken()
     {
-        $this->request->setToken('abc');
+        $this->request->setToken('card_abc');
         $data = $this->request->getData();
 
-        $this->assertSame('abc', $data['card_token']);
+        $this->assertSame('card_abc', $data['card_token']);
+    }
+
+    public function testDataWithCustomerToken()
+    {
+        $this->request->setToken('cus_abc');
+        $data = $this->request->getData();
+
+        $this->assertSame('cus_abc', $data['customer_token']);
     }
 
     public function testDataWithCard()

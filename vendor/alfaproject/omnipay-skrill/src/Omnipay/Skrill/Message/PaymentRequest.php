@@ -840,8 +840,8 @@ class PaymentRequest extends AbstractRequest
         $details = $this->getDetails();
         $counter = 1;
         foreach ($details as $description => $text) {
-            $data['details' . $counter . '_description'] = $description;
-            $data['details' . $counter . '_text'] = $text;
+            $data['detail' . $counter . '_description'] = $description;
+            $data['detail' . $counter . '_text'] = $text;
             $counter++;
         }
 

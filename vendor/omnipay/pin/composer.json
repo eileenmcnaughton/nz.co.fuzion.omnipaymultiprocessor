@@ -10,7 +10,7 @@
         "payment",
         "pin"
     ],
-    "homepage": "https://github.com/omnipay/pin",
+    "homepage": "https://github.com/thephpleague/omnipay-pin",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/pin/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-pin/contributors"
         }
     ],
     "autoload": {
