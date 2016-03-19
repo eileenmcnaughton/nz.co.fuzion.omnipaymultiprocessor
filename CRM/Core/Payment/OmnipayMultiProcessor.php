@@ -131,6 +131,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function doDirectPayment(&$params, $component = 'contribute') {
     $this->_component = strtolower($component);
+    $this->ensurePaymentProcessorTypeIsSet();
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
     $this->setProcessorFields();
     $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
@@ -359,9 +360,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * Get options for credit card.
    *
-   * Not yet implemented
-   * - token
-   *
    * @param array $params
    * @param string $component
    *
@@ -386,6 +384,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
       'notifyUrl' => $this->getNotifyUrl(),
       'card' => $this->getCreditCardObjectParams($params),
+      'cardReference' => CRM_Utils_Array::value('token', $params),
     );
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
@@ -894,6 +893,23 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'payment_token_id' => $token['id'],
       'is_transactional' => FALSE,
     ));
+  }
+
+  /**
+   * Ensure payment processor type is set.
+   *
+   * It's kind of 'hacked on' to the payment_processor params normally but not when called form
+   * the pay api.
+   *
+   * @throws \CiviCRM_API3_Exception
+   */
+  protected function ensurePaymentProcessorTypeIsSet() {
+    if (!isset($this->_paymentProcessor['payment_processor_type'])) {
+      $this->_paymentProcessor['payment_processor_type'] = civicrm_api3('PaymentProcessorType', 'getvalue', array(
+        'id' => $this->_paymentProcessor['payment_processor_type_id'],
+        'return' => 'name',
+      ));
+    }
   }
 }
 

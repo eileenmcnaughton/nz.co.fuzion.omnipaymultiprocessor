@@ -10,10 +10,10 @@
  */
 function civicrm_api3_payment_processor_pay($params) {
   $processor = Civi\Payment\System::singleton()->getById($params['payment_processor_id']);
-  $processor->setPaymentProcessor(civicrm_api3('PaymentProcessor', 'getsingle', array('id' =>$params['payment_processor_id'])));
-  $result = $processor->doDirectPayment($params);
+  $processor->setPaymentProcessor(civicrm_api3('PaymentProcessor', 'getsingle', array('id' => $params['payment_processor_id'])));
+  $result = $processor->doPayment($params);
   if (is_a($result, 'CRM_Core_Error')) {
-    throw API_Exception('failed');
+    throw API_Exception('Payment failed');
   }
   return civicrm_api3_create_success($result, $params);
 }
@@ -27,7 +27,5 @@ function civicrm_api3_payment_processor_pay($params) {
  */
 function _civicrm_api3_payment_processor_pay_spec(&$params) {
   $params['payment_processor_id']['api.required'] = 1;
-  // @todo - we can actually be more selective about this...
-  $params['credit_card_number']['api.required'] = 1;
   $params['amount']['api.required'] = 1;
 }
