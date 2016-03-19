@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Process incoming payment notification (we have called it 'create' so that it will be forced to be transactional
+ * Process incoming payment notification (we have called it 'create' so that it will be forced to be transactional.
  *
- * @param $params
+ * @param array $params
  *
  * @return array
  */
