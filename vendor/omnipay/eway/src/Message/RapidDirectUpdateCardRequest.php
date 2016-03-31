@@ -8,8 +8,8 @@ namespace Omnipay\Eway\Message;
 /**
  * eWAY Rapid Direct Update Card Request
  *
- * Update card data stored as a token with eWAY using eWAY's Rapid 
- * Direct Connection API. 
+ * Update card data stored as a token with eWAY using eWAY's Rapid
+ * Direct Connection API.
  *
  * This requires the TokenCustomerID of the token being updated, handled
  * in OmniPay as the cardReference.
@@ -63,16 +63,16 @@ class RapidDirectUpdateCardRequest extends RapidDirectAbstractRequest
     public function getData()
     {
         $data = $this->getBaseData();
-        
+
         $this->validate('cardReference');
-        
+
         $data['Payment'] = array();
         $data['Payment']['TotalAmount'] = 0;
-        
+
         $data['Customer']['TokenCustomerID'] = $this->getCardReference();
-        
+
         $data['Method'] = 'UpdateTokenCustomer';
-        
+
         return $data;
     }
 

@@ -9,5 +9,4 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  */
 class RefundResponse extends AbstractResponse
 {
-
 }

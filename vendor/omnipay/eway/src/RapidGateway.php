@@ -13,9 +13,9 @@ use Omnipay\Common\AbstractGateway;
  * This class forms the gateway class for eWAY Rapid Transparent Redirect requests.
  * The gateway is just called Eway_Rapid as it was the first implemented.
  *
- * The eWAY Rapid gateways use an API Key and Password for authentication. 
+ * The eWAY Rapid gateways use an API Key and Password for authentication.
  *
- * There is also a test sandbox environment, which uses a separate endpoint and 
+ * There is also a test sandbox environment, which uses a separate endpoint and
  * API key and password. To access the eWAY Sandbox requires an eWAY Partner account.
  * https://myeway.force.com/success/partner-registration
  *
@@ -36,7 +36,7 @@ class RapidGateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'apiKey' => '',
+            'apiKey'   => '',
             'password' => '',
             'testMode' => false,
         );

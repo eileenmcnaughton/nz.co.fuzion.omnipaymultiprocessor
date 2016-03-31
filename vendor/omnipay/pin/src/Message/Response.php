@@ -86,4 +86,11 @@ class Response extends AbstractResponse
             return $this->data['error_description'];
         }
     }
+
+    public function getCode()
+    {
+        if (isset($this->data['error'])) {
+            return $this->data['error'];
+        }
+    }
 }

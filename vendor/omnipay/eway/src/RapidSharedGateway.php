@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Responsive Shared Page Gateway
  */
- 
+
 namespace Omnipay\Eway;
 
 use Omnipay\Common\AbstractGateway;
@@ -12,9 +12,9 @@ use Omnipay\Common\AbstractGateway;
  *
  * This class forms the gateway class for eWAY Rapid Responsive Sharesd Page requests.
  *
- * The eWAY Rapid gateways use an API Key and Password for authentication. 
+ * The eWAY Rapid gateways use an API Key and Password for authentication.
  *
- * There is also a test sandbox environment, which uses a separate endpoint and 
+ * There is also a test sandbox environment, which uses a separate endpoint and
  * API key and password. To access the eWAY Sandbox requires an eWAY Partner account.
  * https://myeway.force.com/success/partner-registration
  *
@@ -33,7 +33,7 @@ class RapidSharedGateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'apiKey' => '',
+            'apiKey'   => '',
             'password' => '',
             'testMode' => false,
         );

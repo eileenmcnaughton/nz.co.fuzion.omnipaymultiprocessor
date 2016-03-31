@@ -2,16 +2,16 @@
 /**
  * eWAY Rapid Direct Authorise Request
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 /**
  * eWAY Rapid Direct Authorise Request
  *
- * Completes an authorise transaction (pre-auth) using eWAY's Rapid Direct 
+ * Completes an authorise transaction (pre-auth) using eWAY's Rapid Direct
  * Connection API. This looks exactly like a RapidDirectPurchaseRequest,
  * except the Method is set to "Authorise" (note British English spelling).
- * 
+ *
  * The returned transaction ID (use getTransactionReference()) can be used to
  * capture the payment.
  *
@@ -70,7 +70,7 @@ class RapidDirectAuthorizeRequest extends RapidDirectAbstractRequest
     public function getData()
     {
         $data = $this->getBaseData();
-        
+
         $this->validate('amount');
 
         $data['Payment'] = array();
@@ -79,9 +79,9 @@ class RapidDirectAuthorizeRequest extends RapidDirectAbstractRequest
         $data['Payment']['InvoiceDescription'] = $this->getDescription();
         $data['Payment']['CurrencyCode'] = $this->getCurrency();
         $data['Payment']['InvoiceReference'] = $this->getInvoiceReference();
-        
+
         $data['Method'] = 'Authorise';
-        
+
         return $data;
     }
 

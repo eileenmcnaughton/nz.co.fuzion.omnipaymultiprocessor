@@ -26,7 +26,7 @@ class DirectResponse extends AbstractResponse
         if (empty($this->data->ewayTrxnNumber)) {
             return null;
         }
-        
+
         return (int) $this->data->ewayTrxnNumber;
     }
 

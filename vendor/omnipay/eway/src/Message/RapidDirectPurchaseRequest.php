@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Direct Purchase Request
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 /**
@@ -13,8 +13,8 @@ namespace Omnipay\Eway\Message;
  * eWAY Token (passed as the cardReference).
  *
  * Using Direct Connection to pass card details in the clear requires
- * proof of PCI compliance to eWAY. Alternatively they can be 
- * encrypted using Client Side Encryption - in which case the card 
+ * proof of PCI compliance to eWAY. Alternatively they can be
+ * encrypted using Client Side Encryption - in which case the card
  * number and CVN should be passed using the encryptedCardNumber and
  * encryptedCardCvv respectively (these are not in the CreditCard
  * object).
@@ -72,8 +72,8 @@ class RapidDirectPurchaseRequest extends RapidDirectAbstractRequest
     public function getData()
     {
         $data = $this->getBaseData();
-        
-        $this->validate('amount', 'transactionType');
+
+        $this->validate('amount');
 
         $data['Payment'] = array();
         $data['Payment']['TotalAmount'] = $this->getAmountInteger();
@@ -81,16 +81,16 @@ class RapidDirectPurchaseRequest extends RapidDirectAbstractRequest
         $data['Payment']['InvoiceDescription'] = $this->getDescription();
         $data['Payment']['CurrencyCode'] = $this->getCurrency();
         $data['Payment']['InvoiceReference'] = $this->getInvoiceReference();
-        
+
         if ($this->getCardReference()) {
             $data['Method'] = 'TokenPayment';
         } else {
             $data['Method'] = 'ProcessPayment';
         }
-        
+
         return $data;
     }
-    
+
     /**
      * Get transaction endpoint.
      *

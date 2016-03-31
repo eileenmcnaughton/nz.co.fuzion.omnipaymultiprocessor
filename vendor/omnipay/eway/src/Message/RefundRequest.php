@@ -7,8 +7,8 @@ namespace Omnipay\Eway\Message;
 
 /**
  * eWAY Rapid Refund Request
- * 
- * Refund a transaction processed through eWAY. 
+ *
+ * Refund a transaction processed through eWAY.
  * Requires the amount to refund and the eWAY Transaction ID of
  * the transaction to refund (passed as transactionReference).
  *

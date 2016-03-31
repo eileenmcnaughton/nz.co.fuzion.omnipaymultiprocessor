@@ -25,7 +25,7 @@ class DirectRefundRequest extends DirectAbstractRequest
     public function getData()
     {
         $this->validate('refundPassword', 'transactionId');
-        
+
         $xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
         $sxml = new \SimpleXMLElement($xml);
 

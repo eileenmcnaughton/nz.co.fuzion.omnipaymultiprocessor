@@ -40,7 +40,7 @@ class Response extends AbstractResponse
             return $this->data['error']['charge'];
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -79,7 +79,7 @@ class Response extends AbstractResponse
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -110,7 +110,7 @@ class Response extends AbstractResponse
             }
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -124,7 +124,7 @@ class Response extends AbstractResponse
             return $this->data['id'];
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -138,7 +138,7 @@ class Response extends AbstractResponse
             return $this->data['card'];
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -150,9 +150,110 @@ class Response extends AbstractResponse
     {
         if (isset($this->data['source']) && $this->data['source']['object'] == 'card') {
             return $this->data['source'];
-        } else {
-            return;
         }
+
+        return null;
+    }
+
+    /**
+     * Get the subscription reference from the response of CreateSubscriptionRequest.
+     *
+     * @return array|null
+     */
+    public function getSubscriptionReference()
+    {
+        if (isset($this->data['object']) && $this->data['object'] == 'subscription') {
+            return $this->data['id'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the event reference from the response of FetchEventRequest.
+     *
+     * @return array|null
+     */
+    public function getEventReference()
+    {
+        if (isset($this->data['object']) && $this->data['object'] == 'event') {
+            return $this->data['id'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the invoice reference from the response of FetchInvoiceRequest.
+     *
+     * @return array|null
+     */
+    public function getInvoiceReference()
+    {
+        if (isset($this->data['object']) && $this->data['object'] == 'invoice') {
+            return $this->data['id'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the list object from a result
+     *
+     * @return array|null
+     */
+    public function getList()
+    {
+        if (isset($this->data['object']) && $this->data['object'] == 'list') {
+            return $this->data['data'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the subscription plan from the response of CreateSubscriptionRequest.
+     *
+     * @return array|null
+     */
+    public function getPlan()
+    {
+        if (isset($this->data['plan'])) {
+            return $this->data['plan'];
+        } elseif (array_key_exists('object', $this->data) && $this->data['object'] == 'plan') {
+            return $this->data;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get plan id
+     *
+     * @return string|null
+     */
+    public function getPlanId()
+    {
+        $plan = $this->getPlan();
+        if ($plan && array_key_exists('id', $plan)) {
+            return $plan['id'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get invoice-item reference
+     *
+     * @return string|null
+     */
+    public function getInvoiceItemReference()
+    {
+        if (isset($this->data['object']) && $this->data['object'] == 'invoiceitem') {
+            return $this->data['id'];
+        }
+
+        return null;
     }
 
     /**
@@ -168,6 +269,22 @@ class Response extends AbstractResponse
             return $this->data['error']['message'];
         }
 
-        return;
+        return null;
+    }
+
+    /**
+     * Get the error message from the response.
+     *
+     * Returns null if the request was successful.
+     *
+     * @return string|null
+     */
+    public function getCode()
+    {
+        if (!$this->isSuccessful()) {
+            return $this->data['error']['code'];
+        }
+
+        return null;
     }
 }

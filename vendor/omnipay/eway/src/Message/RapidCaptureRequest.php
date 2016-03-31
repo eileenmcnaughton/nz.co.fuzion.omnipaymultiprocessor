@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Capture Request
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 /**
@@ -51,7 +51,7 @@ class RapidCaptureRequest extends AbstractRequest
     {
         return $this->getEndpointBase().'/CapturePayment';
     }
-    
+
     public function sendData($data)
     {
         // This request uses the REST endpoint and requires the JSON content type header

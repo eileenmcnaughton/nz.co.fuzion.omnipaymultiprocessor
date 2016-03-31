@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Direct Create Card Request
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 /**
@@ -60,12 +60,12 @@ class RapidDirectCreateCardRequest extends RapidDirectAbstractRequest
     public function getData()
     {
         $data = $this->getBaseData();
-        
+
         $data['Payment'] = array();
         $data['Payment']['TotalAmount'] = 0;
-        
+
         $data['Method'] = 'CreateTokenCustomer';
-        
+
         return $data;
     }
 

@@ -15,7 +15,7 @@ class DirectCaptureRequest extends DirectAbstractRequest
     public function getData()
     {
         $this->validate('transactionId');
-        
+
         $xml = '<?xml version="1.0"?><ewaygateway></ewaygateway>';
         $sxml = new \SimpleXMLElement($xml);
 

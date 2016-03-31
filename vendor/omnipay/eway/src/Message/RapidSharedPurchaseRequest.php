@@ -22,7 +22,7 @@ class RapidSharedPurchaseRequest extends AbstractRequest
         $data['Method'] = 'ProcessPayment';
         $data['RedirectUrl'] = $this->getReturnUrl();
         $data['TransactionType'] = $this->getTransactionType();
-        
+
         // Shared page parameters (optional)
         $data['CancelUrl'] = $this->getCancelUrl();
         $data['LogoUrl'] = $this->getLogoUrl();
@@ -65,7 +65,7 @@ class RapidSharedPurchaseRequest extends AbstractRequest
     {
         return $this->getParameter('cancelUrl');
     }
-    
+
     public function setCancelUrl($value)
     {
         return $this->setParameter('cancelUrl', $value);

@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Abstract Response
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 /**

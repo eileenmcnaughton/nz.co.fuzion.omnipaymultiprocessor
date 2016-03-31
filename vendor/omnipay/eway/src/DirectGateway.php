@@ -2,7 +2,7 @@
 /**
  * eWAY Legacy Direct XML Payments Gateway
  */
- 
+
 namespace Omnipay\Eway;
 
 use Omnipay\Common\AbstractGateway;
@@ -14,7 +14,6 @@ use Omnipay\Common\AbstractGateway;
  *
  * NOTE: The APIs called by this gateway are older legacy APIs, new integrations should instead
  * use eWAY Rapid.
- *
  */
 class DirectGateway extends AbstractGateway
 {
@@ -27,7 +26,7 @@ class DirectGateway extends AbstractGateway
     {
         return array(
             'customerId' => '',
-            'testMode' => false,
+            'testMode'   => false,
         );
     }
 

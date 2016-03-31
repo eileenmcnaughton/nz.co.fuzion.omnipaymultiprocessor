@@ -104,8 +104,14 @@ class PurchaseRequest extends AbstractRequest
         $data['ip_address'] = $this->getClientIp();
         $data['capture'] = $this->getCapture();
 
-        // Token payments
-        if ($token = $this->getToken()) {
+        // Token payments.  Really should use cardReference as the token
+        // parameter but historically this has used token instead, so allow
+        // both.
+        $token = $this->getCardReference();
+        if (empty($token)) {
+            $token = $this->getToken();
+        }
+        if (! empty($token)) {
             if (strpos($token, 'card_') !== false) {
                 $data['card_token'] = $token;
             } else {

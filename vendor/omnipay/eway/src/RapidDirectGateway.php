@@ -12,54 +12,72 @@ use Omnipay\Common\AbstractGateway;
  *
  * This class forms the gateway class for eWAY Rapid Direct Connection requests.
  *
- * The eWAY Rapid gateways use an API Key and Password for authentication. 
+ * The eWAY Rapid gateways use an API Key and Password for authentication.
  *
- * There is also a test sandbox environment, which uses a separate endpoint and 
+ * Before gaining access to this connection type eWAY must be provided with proof
+ * of a PCI-DSS compliant environment with a current and valid PCI-DSS certificate.
+ * Note that transactions not involving credit card data (such as a recurring token
+ * payment) may be processed without proof of compliance.
+ *
+ * There is also a test sandbox environment, which uses a separate endpoint and
  * API key and password. To access the eWAY Sandbox requires an eWAY Partner account.
  * https://myeway.force.com/success/partner-registration
  *
- * Simple Purchase Example:
+ * If you're getting the response "Unauthorised API Access, Account Not PCI Certified"
+ * when testing with the sandbox, this means you're integrating Rapid Direct. If you're
+ * not using client side encryption then you will need to provide proof of PCI compliance
+ * when moving to the live endpoint.
+ *
+ * For testing in sandbox, it's a simple process to enable direct payments.
+ *
+ * * Log into your Sandbox Account
+ * * Hover the mouse over the Settings tab, then click on Sandbox.
+ * * Tick the box under Direct Payment Method (Next to PCI) and click on Save Sandbox Settings.
+ *
+ * You're now set up to test direct payments.
+ *
+ * ### Example
  *
  * <code>
- *   // Create a gateway for the eWAY Direct Gateway
- *   $gateway = Omnipay::create('Eway_RapidDirect');
+ * // Create a gateway for the eWAY Direct Gateway
+ * $gateway = Omnipay::create('Eway_RapidDirect');
  *
- *   // Initialise the gateway
- *   $gateway->initialize(array(
- *      'apiKey' => 'Rapid API Key',
- *      'password' => 'Rapid API Password',
- *      'testMode' => true, // Or false when you are ready for live transactions
- *   ));
+ * // Initialise the gateway
+ * $gateway->initialize(array(
+ *    'apiKey' => 'Rapid API Key',
+ *    'password' => 'Rapid API Password',
+ *    'testMode' => true, // Or false when you are ready for live transactions
+ * ));
  *
- *   // Create a credit card object
- *   $card = new CreditCard(array(
- *             'firstName'          => 'Example',
- *             'lastName'           => 'User',
- *             'number'             => '4444333322221111',
- *             'expiryMonth'        => '01',
- *             'expiryYear'         => '2020',
- *             'cvv'                => '321',
- *             'billingAddress1'    => '1 Scrubby Creek Road',
- *             'billingCountry'     => 'AU',
- *             'billingCity'        => 'Scrubby Creek',
- *             'billingPostcode'    => '4999',
- *             'billingState'       => 'QLD',
- *   ));
+ * // Create a credit card object
+ * $card = new CreditCard(array(
+ *           'firstName'          => 'Example',
+ *           'lastName'           => 'User',
+ *           'number'             => '4444333322221111',
+ *           'expiryMonth'        => '01',
+ *           'expiryYear'         => '2020',
+ *           'cvv'                => '321',
+ *           'billingAddress1'    => '1 Scrubby Creek Road',
+ *           'billingCountry'     => 'AU',
+ *           'billingCity'        => 'Scrubby Creek',
+ *           'billingPostcode'    => '4999',
+ *           'billingState'       => 'QLD',
+ * ));
  *
- *   // Do a purchase transaction on the gateway
- *   $request = $gateway->purchase(array(
- *      'amount'            => '10.00',
- *      'currency'          => 'AUD',
- *      'transactionType'   => 'Purchase',
- *      'card'              => $card,
- *   ));
+ * // Do a purchase transaction on the gateway
+ * $request = $gateway->purchase(array(
+ *    'amount'            => '10.00',
+ *    'currency'          => 'AUD',
+ *    'transactionType'   => 'Purchase',
+ *    'card'              => $card,
+ * ));
  *
- *   $response = $request->send();
- *   if ($response->isSuccessful()) {
- *       echo "Purchase transaction was successful!\n";
- *       $txn_id = $response->getTransactionReference();
- *       echo "Transaction ID = " . $txn_id . "\n";
- *   }
+ * $response = $request->send();
+ * if ($response->isSuccessful()) {
+ *     echo "Purchase transaction was successful!\n";
+ *     $txn_id = $response->getTransactionReference();
+ *     echo "Transaction ID = " . $txn_id . "\n";
+ * }
  * </code>
  *
  * @link https://eway.io/api-v3/#direct-connection
@@ -78,7 +96,7 @@ class RapidDirectGateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'apiKey' => '',
+            'apiKey'   => '',
             'password' => '',
             'testMode' => false,
         );
@@ -103,7 +121,7 @@ class RapidDirectGateway extends AbstractGateway
     {
         return $this->setParameter('password', $value);
     }
-    
+
     /**
      * Create a purchase request.
      *
@@ -155,7 +173,7 @@ class RapidDirectGateway extends AbstractGateway
     /**
      * Refund a Transaction
      *
-     * Use this resource to refund a complete payment. To use this resource requires the transaction 
+     * Use this resource to refund a complete payment. To use this resource requires the transaction
      * reference from the purchase or capture.
      *
      * @link https://eway.io/api-v3/#refunds
@@ -174,7 +192,7 @@ class RapidDirectGateway extends AbstractGateway
      * charging using eWAY's Tokens.
      * After storing the card, pass the cardReference instead of the card
      * details to complete a payment.
-     * 
+     *
      * @link https://eway.io/api-v3/#create-token-customer
      * @param array $parameters
      * @return \Omnipay\Eway\Message\RapidDirectCreateCardRequest
@@ -190,7 +208,7 @@ class RapidDirectGateway extends AbstractGateway
      * You can currently securely store card details with eWAY for future
      * charging using eWAY's Tokens.
      * This resource requires the cardReference for the card to be updated.
-     * 
+     *
      * @link https://eway.io/api-v3/#update-token-customer
      * @param array $parameters
      * @return \Omnipay\Eway\Message\RapidDirectUpdateCardRequest

@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Abstract Request
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 /**
@@ -83,7 +83,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('invoiceReference', $value);
     }
-    
+
     protected function getBaseData()
     {
         $data = array();

@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Complete Purchase Request
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 /**

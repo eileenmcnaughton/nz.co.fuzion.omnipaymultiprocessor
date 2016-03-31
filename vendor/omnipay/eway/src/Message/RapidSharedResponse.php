@@ -33,7 +33,7 @@ class RapidSharedResponse extends AbstractResponse implements RedirectResponseIn
     {
         return null;
     }
-    
+
     /**
      * Get a card reference (eWAY Token), for createCard requests.
      *
