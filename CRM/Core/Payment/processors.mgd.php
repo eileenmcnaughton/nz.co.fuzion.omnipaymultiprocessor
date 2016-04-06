@@ -271,7 +271,8 @@ return array(
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
       'user_name_label' => 'Username',
       'password_label' => 'Password',
-      'signature_label' => '',
+      'signature_label' => 'Px Post Username',
+      'subject_label' => 'PxPostPassword',
       'class_name' => 'Payment_OmnipayMultiProcessor',
       'url_site_default' => 'http://unused.com',
       'url_api_default' => 'http://unused.com',
