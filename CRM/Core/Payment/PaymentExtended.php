@@ -272,6 +272,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param string $userMessage
    *
    * @return mixed
+   * @throws \Civi\Payment\Exception\PaymentProcessorException
    */
   protected function handleError($level, $message, $context, $errorCode = 9001, $userMessage = NULL) {
     if (omnipaymultiprocessor__versionAtLeast(4.5)) {
@@ -281,7 +282,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     else {
       CRM_Core_Error::debug($errorCode . ': ' . $message . print_r($context, TRUE));
     }
-    CRM_Core_Session::setStatus(empty($userMessage) ? $message : $userMessage);
+    $userMessage = $userMessage ? $userMessage : $message;
+    CRM_Core_Session::setStatus($userMessage);
+    if (omnipaymultiprocessor__versionAtLeast(4.7)) {
+      throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
+    }
+
     return new CRM_Core_Error();
   }
 

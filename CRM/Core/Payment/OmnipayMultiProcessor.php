@@ -415,6 +415,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function doTransferCheckout(&$params, $component = 'contribute') {
     $this->doDirectPayment($params, $component);
+    if (!empty($params['token'])) {
+      // It is possible no redirect was required here.
+      return;
+    }
     throw new CRM_Core_Exception('Payment redirect failed');
   }
 
@@ -809,7 +813,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       catch (CiviCRM_API3_Exception $e) {
         if (!stristr($e->getMessage(), 'Contribution already completed')) {
-          $this->handleError('error', $this->transaction_id  . $e->getMessage(), 'ipn_completion', 9000, 'An error may have occurred. Please check your receipt is correct');
+          $this->handleError('error', 'ipn_completion failed', $this->transaction_id  . $e->getMessage(), 9000, 'An error may have occurred. Please check your receipt is correct');
         }
       }
       $_REQUEST = $originalRequest;

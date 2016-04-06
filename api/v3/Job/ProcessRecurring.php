@@ -23,6 +23,7 @@ function civicrm_api3_job_process_recurring($params) {
         'contribution_recur_id' => $recurringPayment['id'],
         'options' => array('limit' => 1),
         'is_test' => CRM_Utils_Array::value('is_test', $recurringPayment['is_test']),
+        'contribution_test' => CRM_Utils_Array::value('is_test', $recurringPayment['is_test']),
       ));
       $result[$recurringPayment['id']]['original_contribution'] = $originalContribution;
       $pending = civicrm_api3('Contribution', 'repeattransaction', array(
@@ -36,11 +37,14 @@ function civicrm_api3_job_process_recurring($params) {
         'currency' => $originalContribution['currency'],
         'payment_processor_id' => $paymentProcessorID,
         'contributionID' => $pending['id'],
+        'contactID' => $originalContribution['contact_id'],
+        'description' => ts('Repeat payment, original was ' . $originalContribution['id']),
         'token' => civicrm_api3('PaymentToken', 'getvalue', array(
           'id' => $recurringPayment['payment_token_id'],
           'return' => 'token',
         )),
       ));
+
       civicrm_api3('Contribution', 'completetransaction', array(
         'id' => $pending['id'],
         'trxn_id' => $payment['trxn_id'],
@@ -54,11 +58,13 @@ function civicrm_api3_job_process_recurring($params) {
         'id' => $recurringPayment['id'],
         'failure_count' => $recurringPayment['failure_count'] + 1,
       ));
+      civicrm_api3('Contribution', 'create', array(
+        'id' => $pending['id'], 'contribution_status_id' => 'Failed', 'debug' => $params['debug'])
+      );
       $result[$recurringPayment['id']]['error'] = $e->getMessage();
       $result['failed']['ids'] = $recurringPayment['id'];
     }
   }
-
   return civicrm_api3_create_success($result, $params);
 }
 
