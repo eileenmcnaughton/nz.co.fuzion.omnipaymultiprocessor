@@ -122,6 +122,7 @@ function omnipaymultiprocessor_civicrm_buildForm($formName, &$form) {
   }
 
   if (!omnipaymultiprocessor_is_credit_card_form($formName)
+    || empty($form->_paymentProcessor['class_name'])
     || $form->_paymentProcessor['class_name'] != 'Payment_OmnipayMultiProcessor'
     || omnipaymultiprocessor__versionAtLeast(4.7)) {
     return;
