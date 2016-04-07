@@ -282,7 +282,7 @@ return array(
       'url_api_test_default' => 'http://unused.com',
       'billing_mode' => 4,
       'payment_type' => 1,
-      'is_recur' => 0,
+      'is_recur' => 1,
     ),
   ),
   7 => array(
