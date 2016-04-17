@@ -154,7 +154,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
-        CRM_Core_Session::storeSessionObjects();
+        CRM_Core_Session::storeSessionObjects(FALSE);
         if ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect)) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
             'payment_processor_id' => $this->_paymentProcessor['id'],
@@ -822,12 +822,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     elseif ($this->transaction_id) {
       civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
     }
-    $userMessage = $response->getMessage();
+    $userMessage = ts('The transaction was not processed. The message from the bank was : %1. Please try again', array(1 => $response->getMessage()));
     if (method_exists($response, 'getInvalidFields') && ($invalidFields = $response->getInvalidFields()) != array()) {
       $userMessage = ts('Invalid data entered in fields ' . implode(', ', $invalidFields));
     }
 
-    $this->handleError('error', $this->transaction_id  . ' ' . $response->getMessage(), 'processor_error', 9002, $userMessage);
+    try {
+      $this->handleError('error', $this->transaction_id . ' ' . $response->getMessage(), 'processor_error', 9002, $userMessage);
+    }
+    catch (\Civi\Payment\Exception\PaymentProcessorException $e) {
+
+    }
 
     $_REQUEST = $originalRequest;
     $this->redirectOrExit('fail');
