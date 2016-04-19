@@ -901,6 +901,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'payment_processor_id' => $params['processor_id'],
       'token' => $tokenReference,
       'is_transactional' => FALSE,
+      'created_id' => (CRM_Core_Session::singleton()->getLoggedInContactID() ? : $contribution['contact_id']),
     ));
     $contributionRecur = civicrm_api3('ContributionRecur', 'getsingle', array('id' => $contributionRecurID));
     civicrm_api3('contribution_recur', 'create', array(
