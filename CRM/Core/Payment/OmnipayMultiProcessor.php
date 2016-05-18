@@ -141,7 +141,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
     try {
       if (!empty($params['is_recur'])) {
-        $response = $this->gateway->createCard($this->getCreditCardOptions($params, $component))->send();
+        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
       }
       else {
         $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))
@@ -387,6 +387,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'card' => $this->getCreditCardObjectParams($params),
       'cardReference' => CRM_Utils_Array::value('token', $params),
     );
+    if (!empty($params['action'])) {
+      $creditCardOptions['action'] = 'Purchase';
+    }
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
     return $creditCardOptions;
