@@ -272,7 +272,7 @@ return array(
       'user_name_label' => 'Username',
       'password_label' => 'Password',
       'signature_label' => 'Px Post Username',
-      'subject_label' => 'PxPostPassword',
+      'subject_label' => 'Px Post Password',
       'class_name' => 'Payment_OmnipayMultiProcessor',
       'url_site_default' => 'http://unused.com',
       'url_api_default' => 'http://unused.com',
