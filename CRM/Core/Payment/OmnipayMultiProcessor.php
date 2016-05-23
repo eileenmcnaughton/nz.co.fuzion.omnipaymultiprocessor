@@ -436,12 +436,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function getPaymentFormFields() {
     if ($this->_paymentProcessor['billing_mode'] == 4) {
-      $paymentType = civicrm_api3('option_value', 'getsingle', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type'));
-      if ($paymentType['name'] == 'credit_card_off_site_post') {
-        // This name implies transactional redirect at this stage - the only
-        // example currently being Cybersource.
-        // return $this->getBillingAddressFieldsPre47();
-      }
+      $this->isTransparentRedirect();
       return array();
     }
     return $this->_paymentProcessor['payment_type'] == 1 ? $this->getCreditCardFormFields() : $this->getDirectDebitFormFields();
@@ -603,6 +598,30 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'is_required' => FALSE,
       ),
     );
+  }
+
+  /**
+   * Get core CiviCRM address fields.
+   *
+   * @param int $billingLocationID
+   *
+   * @return array
+   */
+  public function getBillingAddressFields($billingLocationID = NULL) {
+    if (!$this->isTransparentRedirect()) {
+      return parent::getBillingAddressFields($billingLocationID);
+    }
+    $billingFields = array();
+    foreach (array(
+               'street_address',
+               'city',
+               'state_province_id',
+               'postal_code',
+               'country_id',
+             ) as $addressField) {
+      $billingFields[$addressField]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
+    }
+    return $billingFields;
   }
 
   /**
@@ -931,6 +950,26 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'id' => $this->_paymentProcessor['payment_processor_type_id'],
         'return' => 'name',
       ));
+    }
+  }
+
+  /**
+   * Is this a transparent redirect processor.
+   *
+   * Transparent redirect refers to a processor which presents a form to be POSTed off-site.
+   *
+   * Generally (and in the case of Cybersource specifically) they collect billing details first.
+   *
+   * @return bool
+   * @throws \CiviCRM_API3_Exception
+   */
+  private function isTransparentRedirect() {
+    $paymentType = civicrm_api3('option_value', 'getsingle', array(
+      'value' => $this->_paymentProcessor['payment_type'],
+      'option_group_id' => 'payment_type'
+    ));
+    if ($paymentType['name'] == 'credit_card_off_site_post') {
+      return TRUE;
     }
   }
 }
