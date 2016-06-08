@@ -611,7 +611,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (!$this->isTransparentRedirect()) {
       return parent::getBillingAddressFields($billingLocationID);
     }
-    $billingFields = array();
+    $billingFields = array(
+      'first_name' => 'billing_first_name',
+      'middle_name' => 'billing_middle_name',
+      'last_name' => 'billing_last_name',
+    );
     foreach (array(
                'street_address',
                'city',
