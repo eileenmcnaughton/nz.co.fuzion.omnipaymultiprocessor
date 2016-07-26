@@ -976,5 +976,54 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       return TRUE;
     }
   }
+
+  /**
+   * Should the first payment date be configurable when setting up back office recurring payments.
+   * In the case of Authorize.net this is an option
+   * @return bool
+   */
+  protected function supportsFutureRecurStartDate() {
+    return $this->_paymentProcessor['is_recur'];
+  }
+
+  /**
+   * Get an array of the fields that can be edited on the recurring contribution.
+   *
+   * Some payment processors support editing the amount and other scheduling details of recurring payments, especially
+   * those which use tokens. Others are fixed. This function allows the processor to return an array of the fields that
+   * can be updated from the contribution recur edit screen.
+   *
+   * The fields are likely to be a subset of these
+   *  - 'amount',
+   *  - 'installments',
+   *  - 'frequency_interval',
+   *  - 'frequency_unit',
+   *  - 'cycle_day',
+   *  - 'next_sched_contribution_date',
+   *  - 'end_date',
+   * - 'failure_retry_date',
+   *
+   * The form does not restrict which fields from the contribution_recur table can be added (although if the html_type
+   * metadata is not defined in the xml for the field it will cause an error.
+   *
+   * Open question - would it make sense to return membership_id in this - which is sometimes editable and is on that
+   * form (UpdateSubscription).
+   *
+   * @return array
+   */
+  public function getEditableRecurringScheduleFields() {
+    $possibles = array('amount');
+    $fields = civicrm_api3('ContributionRecur', 'getfields', array('action' => 'create'));
+    // The html is only set in 4.7.11 +
+    // The date fields look a bit funky at the moment so not adding all possible fields.
+    if (!empty($fields['values']['next_sched_contribution_date']['html'])) {
+      $possibles[] =  'next_sched_contribution_date';
+      $possibles[] = 'installments';
+      $possibles[] = 'frequency_interval';
+      $possibles[] = 'frequency_unit';
+    }
+    return $possibles;
+  }
+
 }
 
