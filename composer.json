@@ -19,6 +19,10 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-nabtransact.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/zburke/omnipay-bluepay.git"
         }
     ],
     "require":
@@ -32,7 +36,8 @@
         "civicrm/omnipay-paypalstandard": "dev-master",
         "pointybeard/omnipay-nabtransact": "dev-transact",
         "fzaninotto/faker": "^1.6@dev",
-        "omnipay/paymentexpress": "dev-master"
+        "omnipay/paymentexpress": "dev-master",
+        "zburke/omnipay-bluepay": "~1.0"
     },
     "require-dev":
     {
