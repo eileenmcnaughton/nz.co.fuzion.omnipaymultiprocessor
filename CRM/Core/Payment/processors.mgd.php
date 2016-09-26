@@ -434,8 +434,8 @@ return array(
       'name' => 'omnipay_BluePay',
       'description' => 'Omnipay BluePay',
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
-      'user_name_label' => 'Api Key',
-      'password_label' => 'Password',
+      'user_name_label' => 'Account Id',
+      'password_label' => 'Secret Key',
       'class_name' => 'Payment_OmnipayMultiProcessor',
       'url_site_default' => 'http://unused.com',
       'url_api_default' => 'http://unused.com',
