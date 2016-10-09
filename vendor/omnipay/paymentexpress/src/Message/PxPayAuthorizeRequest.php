@@ -13,11 +13,18 @@ use Omnipay\Common\Message\AbstractRequest;
 class PxPayAuthorizeRequest extends AbstractRequest
 {
     /**
-     * PxPay Endpoint URL
+     * PxPay Live Endpoint URL
      *
      * @var string URL
      */
-    protected $endpoint = 'https://sec.paymentexpress.com/pxaccess/pxpay.aspx';
+    protected $liveEndpoint = 'https://sec.paymentexpress.com/pxaccess/pxpay.aspx';
+
+    /**
+     * PxPay test Endpoint URL
+     *
+     * @var string URL
+     */
+    protected $testEndpoint = 'https://uat.paymentexpress.com/pxaccess/pxpay.aspx';
 
     /**
      * PxPay TxnType
@@ -80,7 +87,6 @@ class PxPayAuthorizeRequest extends AbstractRequest
         return $this->setParameter('pxPostUsername', $value);
     }
 
-
     public function getPxPostPassword()
     {
         return $this->getParameter('pxPostPassword');
@@ -89,6 +95,11 @@ class PxPayAuthorizeRequest extends AbstractRequest
     public function setPxPostPassword($value)
     {
         return $this->setParameter('pxPostPassword', $value);
+    }
+
+    public function getEndpoint()
+    {
+        return $this->getTestMode() === true ? $this->testEndpoint : $this->liveEndpoint;
     }
 
     /**
@@ -179,15 +190,30 @@ class PxPayAuthorizeRequest extends AbstractRequest
         $data->PxPayUserId = $this->getUsername();
         $data->PxPayKey = $this->getPassword();
         $data->TxnType = $this->action;
-        $data->TxnId = $this->getTransactionId();
         $data->AmountInput = $this->getAmount();
         $data->CurrencyInput = $this->getCurrency();
-        $data->MerchantReference = $this->getDescription();
-        $data->TxnData1 = $this->getTransactionData1();
-        $data->TxnData2 = $this->getTransactionData2();
-        $data->TxnData3 = $this->getTransactionData3();
         $data->UrlSuccess = $this->getReturnUrl();
         $data->UrlFail = $this->getReturnUrl();
+
+        if ($this->getDescription()) {
+            $data->MerchantReference = $this->getDescription();
+        }
+
+        if ($this->getTransactionId()) {
+            $data->TxnId = $this->getTransactionId();
+        }
+
+        if ($this->getTransactionData1()) {
+            $data->TxnData1 = $this->getTransactionData1();
+        }
+
+        if ($this->getTransactionData2()) {
+            $data->TxnData2 = $this->getTransactionData2();
+        }
+
+        if ($this->getTransactionData3()) {
+            $data->TxnData3 = $this->getTransactionData3();
+        }
 
         if ($this->getCardReference()) {
             $data->DpsBillingId = $this->getCardReference();
@@ -204,7 +230,7 @@ class PxPayAuthorizeRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->endpoint, null, $data->asXML())->send();
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data->asXML())->send();
 
         return $this->createResponse($httpResponse->xml());
     }

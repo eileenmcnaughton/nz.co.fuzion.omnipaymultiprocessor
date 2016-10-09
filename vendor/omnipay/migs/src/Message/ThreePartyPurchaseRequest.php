@@ -15,6 +15,7 @@ class ThreePartyPurchaseRequest extends AbstractRequest
 
         $data = $this->getBaseData();
         $data['vpc_SecureHash']  = $this->calculateHash($data);
+        $data['vpc_SecureHashType']  = 'SHA256';
 
         return $data;
     }
@@ -28,6 +29,10 @@ class ThreePartyPurchaseRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->endpoint.'vpcpay';
+        if ($this->getParameter('testMode')) {
+            return $this->endpointTEST.'vpcpay';
+        } else {
+            return $this->endpoint.'vpcpay';
+        }
     }
 }

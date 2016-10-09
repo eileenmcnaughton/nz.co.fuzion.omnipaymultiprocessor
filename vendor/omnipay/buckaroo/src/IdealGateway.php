@@ -5,7 +5,7 @@ namespace Omnipay\Buckaroo;
 /**
  * Buckaroo iDeal Gateway
  */
-class IdealGateway extends CreditCardGateway
+class IdealGateway extends BuckarooGateway
 {
     public function getName()
     {

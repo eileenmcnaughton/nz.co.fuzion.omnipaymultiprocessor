@@ -30,6 +30,61 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('secretKey', $value);
     }
 
+    public function getCulture()
+    {
+        return $this->getParameter('culture');
+    }
+
+    public function setCulture($value)
+    {
+        return $this->setParameter('culture', $value);
+    }
+
+    /**
+     * @return string url rejectUrl
+     */
+    public function getRejectUrl()
+    {
+        return $this->getParameter('rejectUrl');
+    }
+
+    /**
+     * sets the Reject URL which is used by buckaroo when
+     * the payment is rejected.
+     *
+     * @param $value
+     *
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setRejectUrl($value)
+    {
+        return $this->setParameter('rejectUrl', $value);
+    }
+
+    /**
+     * returns the error URL
+     *
+     * @return string errorUrl
+     */
+    public function getErrorUrl()
+    {
+        return $this->getParameter('errorUrl');
+    }
+
+    /**
+     * sets the error URL which is used by buckaroo when
+     * the payment results in an error
+     *
+     * @param $value
+     *
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setErrorUrl($value)
+    {
+        return $this->setParameter('errorUrl', $value);
+    }
+
+
     public function getData()
     {
         $this->validate('websiteKey', 'secretKey', 'amount', 'returnUrl');
@@ -42,6 +97,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['Brq_description'] = $this->getDescription();
         $data['Brq_return'] = $this->getReturnUrl();
         $data['Brq_returncancel'] = $this->getCancelUrl();
+        $data['Brq_returnreject'] = $this->getRejectUrl();
+        $data['Brq_returnerror'] = $this->getErrorUrl();
+        $data['Brq_culture'] = $this->getCulture();
 
         return $data;
     }

@@ -8,6 +8,7 @@ namespace Omnipay\Migs\Message;
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $endpoint = 'https://migs.mastercard.com.au/';
+    protected $endpointTEST = 'https://migs-mtf.mastercard.com.au/';
 
     public function getMerchantId()
     {
@@ -64,13 +65,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         ksort($data);
 
-        $hash = $this->getSecureHash();
+        $hash = null;
         foreach ($data as $k => $v) {
-            if (substr($k, 0, 4) === 'vpc_' && $k !== 'vpc_SecureHash') {
-                $hash .= $v;
+            if ((strlen($v) > 0) && ((substr($k, 0, 4)=="vpc_") || (substr($k, 0, 5) =="user_"))) {
+                $hash .= $k . "=" . $v . "&";
             }
         }
+        $hash = rtrim($hash, "&");
 
-        return strtoupper(md5($hash));
+        return strtoupper(hash_hmac('SHA256', $hash, pack('H*', $this->getSecureHash())));
     }
 }

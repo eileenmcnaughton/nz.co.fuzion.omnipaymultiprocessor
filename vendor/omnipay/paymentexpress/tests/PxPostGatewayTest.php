@@ -42,6 +42,40 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->assertSame('The transaction was Declined (U5)', $response->getMessage());
     }
 
+    public function testAuthorizeWithTransactionDataSuccess()
+    {
+        $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
+
+        $options = array_merge($this->options, array(
+            'description'      => 'TestReference',
+            'transactionId'    => 'inv1278',
+            'transactionData1' => 'Business Name',
+            'transactionData2' => 'Business Phone',
+            'transactionData3' => 'Business ID',
+            'cardReference'    => '000000030884cdc6'
+        ));
+
+        $request = $this->gateway->authorize($options);
+
+        $this->assertSame($options['description'], $request->getDescription());
+        $this->assertSame($options['transactionId'], $request->getTransactionId());
+        $this->assertSame($options['transactionData1'], $request->getTransactionData1());
+        $this->assertSame($options['transactionData2'], $request->getTransactionData2());
+        $this->assertSame($options['transactionData3'], $request->getTransactionData3());
+
+        $response = $request->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('000000030884cdc6', $response->getTransactionReference());
+        $this->assertSame('TestReference', $response->getData()->MerchantReference->__toString());
+        $this->assertSame('inv1278', $response->getData()->TxnRef->__toString());
+        $this->assertSame('Business Name', $response->getData()->TxnData1->__toString());
+        $this->assertSame('Business Phone', $response->getData()->TxnData2->__toString());
+        $this->assertSame('Business ID', $response->getData()->TxnData3->__toString());
+        $this->assertSame('Transaction Approved', $response->getMessage());
+    }
+
     public function testCaptureSuccess()
     {
         $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
@@ -66,6 +100,31 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
         $this->assertSame('000000030884cdc6', $response->getTransactionReference());
+        $this->assertSame('Transaction Approved', $response->getMessage());
+    }
+
+    public function testPurchaseWithTransactionDataSuccess()
+    {
+        $this->setMockHttpResponse('PxPostPurchaseSuccess.txt');
+
+        $options = array_merge($this->options, array(
+            'description'      => 'TestReference',
+            'transactionId'    => 'inv1278',
+            'transactionData1' => 'Business Name',
+            'transactionData2' => 'Business Phone',
+            'transactionData3' => 'Business ID',
+        ));
+
+        $response = $this->gateway->purchase($options)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('000000030884cdc6', $response->getTransactionReference());
+        $this->assertSame('TestReference', $response->getData()->MerchantReference->__toString());
+        $this->assertSame('inv1278', $response->getData()->TxnRef->__toString());
+        $this->assertSame('Business Name', $response->getData()->TxnData1->__toString());
+        $this->assertSame('Business Phone', $response->getData()->TxnData2->__toString());
+        $this->assertSame('Business ID', $response->getData()->TxnData3->__toString());
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
 
@@ -118,5 +177,29 @@ class PxPostGatewayTest extends GatewayTestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getCardReference());
         $this->assertSame('An Invalid Card Number was entered. Check the card number', $response->getMessage());
+    }
+
+    public function testTestModeDisabled()
+    {
+        $options = array(
+            'testMode' => false
+        );
+
+        $request = $this->gateway->authorize($options);
+
+        $this->assertFalse($request->getTestMode());
+        $this->assertContains('sec.paymentexpress.com', $request->getEndpoint());
+    }
+
+    public function testTestModeEnabled()
+    {
+        $options = array(
+            'testMode' => true
+        );
+
+        $request = $this->gateway->authorize($options);
+
+        $this->assertTrue($request->getTestMode());
+        $this->assertContains('uat.paymentexpress.com', $request->getEndpoint());
     }
 }

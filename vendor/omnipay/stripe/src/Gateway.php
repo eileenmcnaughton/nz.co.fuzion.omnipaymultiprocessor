@@ -248,6 +248,17 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * @deprecated 2.3.3:3.0.0 duplicate of \Omnipay\Stripe\Gateway::fetchTransaction()
+     * @see \Omnipay\Stripe\Gateway::fetchTransaction()
+     * @param array $parameters
+     * @return \Omnipay\Stripe\Message\FetchChargeRequest
+     */
+    public function fetchCharge(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Stripe\Message\FetchChargeRequest', $parameters);
+    }
+
+    /**
      * @param array $parameters
      *
      * @return \Omnipay\Stripe\Message\FetchTransactionRequest
@@ -368,6 +379,20 @@ class Gateway extends AbstractGateway
     public function createCustomer(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Stripe\Message\CreateCustomerRequest', $parameters);
+    }
+
+    /**
+     * Fetch Customer.
+     *
+     * Fetches customer by customer reference.
+     *
+     * @param array $parameters
+     *
+     * @return \Omnipay\Stripe\Message\CreateCustomerRequest
+     */
+    public function fetchCustomer(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Stripe\Message\FetchCustomerRequest', $parameters);
     }
 
     /**

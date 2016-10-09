@@ -45,8 +45,8 @@ class PurchaseRequestTest extends TestCase
     public function testGetEndpoint()
     {
         $this->request->setTestMode(false);
-        $this->assertSame('https://bitpay.com/api', $this->request->getEndpoint());
+        $this->assertSame('https://bitpay.com/api/invoice', $this->request->getEndpoint());
         $this->request->setTestMode(true);
-        $this->assertSame('https://test.bitpay.com/api', $this->request->getEndpoint());
+        $this->assertSame('https://test.bitpay.com/api/invoice', $this->request->getEndpoint());
     }
 }

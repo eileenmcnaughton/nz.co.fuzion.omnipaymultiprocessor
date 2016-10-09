@@ -31,6 +31,7 @@ Faker requires PHP >= 5.3.3.
 	- [Barcode](#fakerproviderbarcode)
 	- [Miscellaneous](#fakerprovidermiscellaneous)
 	- [Biased](#fakerproviderbiased)
+	- [Html Lorem](#fakerproviderhtmllorem)
 - [Modifiers](#modifiers)
 - [Localization](#localization)
 - [Populating Entities Using an ORM or an ODM](#populating-entities-using-an-orm-or-an-odm)
@@ -179,13 +180,13 @@ Each of the generator properties (like `name`, `address`, and `lorem`) are calle
 ### `Faker\Provider\DateTime`
 
     unixTime($max = 'now')                // 58781813
-    dateTime($max = 'now')                // DateTime('2008-04-25 08:37:17')
-    dateTimeAD($max = 'now')              // DateTime('1800-04-29 20:38:49')
+    dateTime($max = 'now', $timezone = date_default_timezone_get()) // DateTime('2008-04-25 08:37:17', 'UTC')
+    dateTimeAD($max = 'now', $timezone = date_default_timezone_get()) // DateTime('1800-04-29 20:38:49', 'Europe/Paris')
     iso8601($max = 'now')                 // '1978-12-09T10:10:29+0000'
     date($format = 'Y-m-d', $max = 'now') // '1979-06-09'
     time($format = 'H:i:s', $max = 'now') // '20:49:42'
-    dateTimeBetween($startDate = '-30 years', $endDate = 'now') // DateTime('2003-03-15 02:00:49')
-    dateTimeInInterval($startDate = '-30 years', $interval = '+ 5 days') // DateTime('2003-03-15 02:00:49')
+    dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = date_default_timezone_get()) // DateTime('2003-03-15 02:00:49', 'Africa/Lagos')
+    dateTimeInInterval($startDate = '-30 years', $interval = '+ 5 days', $timezone = date_default_timezone_get()) // DateTime('2003-03-15 02:00:49', 'Antartica/Vostok')
     dateTimeThisCentury($max = 'now')     // DateTime('1915-05-30 19:28:21')
     dateTimeThisDecade($max = 'now')      // DateTime('2007-05-29 22:30:48')
     dateTimeThisYear($max = 'now')        // DateTime('2011-02-27 20:52:14')
@@ -262,9 +263,12 @@ Each of the generator properties (like `name`, `address`, and `lorem`) are calle
     imageUrl($width = 640, $height = 480) // 'http://lorempixel.com/640/480/'
     imageUrl($width, $height, 'cats')     // 'http://lorempixel.com/800/600/cats/'
     imageUrl($width, $height, 'cats', true, 'Faker') // 'http://lorempixel.com/800/400/cats/Faker'
+    imageUrl($width, $height, 'cats', true, 'Faker', true) // 'http://lorempixel.com/grey/800/400/cats/Faker/' Monochrome image
     image($dir = '/tmp', $width = 640, $height = 480) // '/tmp/13b73edae8443990be1aa8f1a483bc27.jpg'
     image($dir, $width, $height, 'cats')  // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat!
-    image($dir, $width, $height, 'cats', true, 'Faker') // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat with Faker text
+    image($dir, $width, $height, 'cats', false) // '13b73edae8443990be1aa8f1a483bc27.jpg' it's a filename without path
+    image($dir, $width, $height, 'cats', true, false) // it's a no randomize images (default: `true`)
+    image($dir, $width, $height, 'cats', true, true, 'Faker') // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat with 'Faker' text. Default, `null`.
 
 ### `Faker\Provider\Uuid`
 
@@ -294,6 +298,11 @@ Each of the generator properties (like `name`, `address`, and `lorem`) are calle
     // get a random number between 10 and 20,
     // with more chances to be close to 20
     biasedNumberBetween($min = 10, $max = 20, $function = 'sqrt')
+
+### `Faker\Provider\HtmlLorem`
+
+    //Generate HTML document which is no more than 2 levels deep, and no more than 3 elements wide at any level.
+    randomHtml(2,3)   // <html><head><title>Aut illo dolorem et accusantium eum.</title></head><body><form action="example.com" method="POST"><label for="username">sequi</label><input type="text" id="username"><label for="password">et</label><input type="password" id="password"></form><b>Id aut saepe non mollitia voluptas voluptas.</b><table><thead><tr><tr>Non consequatur.</tr><tr>Incidunt est.</tr><tr>Aut voluptatem.</tr><tr>Officia voluptas rerum quo.</tr><tr>Asperiores similique.</tr></tr></thead><tbody><tr><td>Sapiente dolorum dolorem sint laboriosam commodi qui.</td><td>Commodi nihil nesciunt eveniet quo repudiandae.</td><td>Voluptates explicabo numquam distinctio necessitatibus repellat.</td><td>Provident ut doloremque nam eum modi aspernatur.</td><td>Iusto inventore.</td></tr><tr><td>Animi nihil ratione id mollitia libero ipsa quia tempore.</td><td>Velit est officia et aut tenetur dolorem sed mollitia expedita.</td><td>Modi modi repudiandae pariatur voluptas rerum ea incidunt non molestiae eligendi eos deleniti.</td><td>Exercitationem voluptatibus dolor est iste quod molestiae.</td><td>Quia reiciendis.</td></tr><tr><td>Inventore impedit exercitationem voluptatibus rerum cupiditate.</td><td>Qui.</td><td>Aliquam.</td><td>Autem nihil aut et.</td><td>Dolor ut quia error.</td></tr><tr><td>Enim facilis iusto earum et minus rerum assumenda quis quia.</td><td>Reprehenderit ut sapiente occaecati voluptatum dolor voluptatem vitae qui velit.</td><td>Quod fugiat non.</td><td>Sunt nobis totam mollitia sed nesciunt est deleniti cumque.</td><td>Repudiandae quo.</td></tr><tr><td>Modi dicta libero quisquam doloremque qui autem.</td><td>Voluptatem aliquid saepe laudantium facere eos sunt dolor.</td><td>Est eos quis laboriosam officia expedita repellendus quia natus.</td><td>Et neque delectus quod fugit enim repudiandae qui.</td><td>Fugit soluta sit facilis facere repellat culpa magni voluptatem maiores tempora.</td></tr><tr><td>Enim dolores doloremque.</td><td>Assumenda voluptatem eum perferendis exercitationem.</td><td>Quasi in fugit deserunt ea perferendis sunt nemo consequatur dolorum soluta.</td><td>Maxime repellat qui numquam voluptatem est modi.</td><td>Alias rerum rerum hic hic eveniet.</td></tr><tr><td>Tempore voluptatem.</td><td>Eaque.</td><td>Et sit quas fugit iusto.</td><td>Nemo nihil rerum dignissimos et esse.</td><td>Repudiandae ipsum numquam.</td></tr><tr><td>Nemo sunt quia.</td><td>Sint tempore est neque ducimus harum sed.</td><td>Dicta placeat atque libero nihil.</td><td>Et qui aperiam temporibus facilis eum.</td><td>Ut dolores qui enim et maiores nesciunt.</td></tr><tr><td>Dolorum totam sint debitis saepe laborum.</td><td>Quidem corrupti ea.</td><td>Cum voluptas quod.</td><td>Possimus consequatur quasi dolorem ut et.</td><td>Et velit non hic labore repudiandae quis.</td></tr></tbody></table></body></html>
 
 ## Modifiers
 
@@ -745,6 +754,15 @@ Fugiat non in itaque sunt nobis totam. Sed nesciunt est deleniti cumque alias. R
 echo $faker->idNumber;      // ID number
 echo $faker->nationalIdNumber // Citizen ID number
 echo $faker->foreignerIdNumber // Foreigner ID number
+echo $faker->companyIdNumber // Company ID number
+```
+
+### `Faker\Provider\ar_SA\Payment`
+
+```php
+<?php
+
+echo $faker->bankAccountNumber // "SA0218IBYZVZJSEC8536V4XC"
 ```
 
 ### `Faker\Provider\at_AT\Payment`
@@ -754,15 +772,6 @@ echo $faker->foreignerIdNumber // Foreigner ID number
 
 echo $faker->vat;           // "AT U12345678" - Austrian Value Added Tax number
 echo $faker->vat(false);    // "ATU12345678" - unspaced Austrian Value Added Tax number
-```
-
-### `Faker\Provider\be_BE\Payment`
-
-```php
-<?php
-
-echo $faker->vat;           // "BE 0123456789" - Belgian Value Added Tax number
-echo $faker->vat(false);    // "BE0123456789" - unspaced Belgian Value Added Tax number
 ```
 
 ### `Faker\Provider\bg_BG\Payment`
@@ -841,6 +850,16 @@ echo $faker->cvr; // "32458723"
 echo $faker->p; // "5398237590"
 ```
 
+### `Faker\Provider\de_DE\Payment`
+
+```php
+<?php
+
+echo $faker->bankAccountNumber; // "DE41849025553661169313"
+echo $faker->bank; // "Volksbank Stuttgart"
+
+```
+
 ### `Faker\Provider\en_NZ\Phone`
 
 ```php
@@ -895,6 +914,15 @@ echo $faker->mobileNumber; // 082 123 5555
 echo $faker->dni; // '77446565E'
 ```
 
+### `Faker\Provider\fr_BE\Payment`
+
+```php
+<?php
+
+echo $faker->vat;           // "BE 0123456789" - Belgian Value Added Tax number
+echo $faker->vat(false);    // "BE0123456789" - unspaced Belgian Value Added Tax number
+```
+
 ### `Faker\Provider\fr_FR\Address`
 
 ```php
@@ -925,6 +953,22 @@ echo $faker->siren; // 082 250 104
 echo $faker->siret; // 347 355 708 00224
 ```
 
+### `Faker\Provider\he_IL\Payment`
+
+```php
+<?php
+
+echo $faker->bankAccountNumber // "IL392237392219429527697"
+```
+
+### `Faker\Provider\hr_HR\Payment`
+
+```php
+<?php
+
+echo $faker->bankAccountNumber // "HR3789114847226078672"
+```
+
 ### `Faker\Provider\hu_HU\Payment`
 
 ```php
@@ -932,6 +976,18 @@ echo $faker->siret; // 347 355 708 00224
 
 // Generates a random bank account number
 echo $faker->bankAccountNumber; // "HU09904437680048220079300783"
+```
+
+### `Faker\Provider\id_ID\Person`
+
+```php
+<?php
+
+// Generates a random Nomor Induk Kependudukan (NIK)
+
+// first argument is gender, either Person::GENDER_MALE or Person::GENDER_FEMALE, if none specified random gender is used
+// second argument is birth date (DateTime object), if none specified, random birth date is used
+echo $faker->nik(); // "8522246001570940"
 ```
 
 ### `Faker\Provider\it_IT\Company`
@@ -1018,6 +1074,14 @@ echo $faker->metropolitanCity; // "서울특별시"
 echo $faker->borough; // "강남구"
 ```
 
+### `Faker\Provider\lt_LT\Payment`
+
+```php
+<?php
+
+echo $faker->bankAccountNumber // "LT300848876740317118"
+```
+
 ### `Faker\Provider\lv_LV\Person`
 
 ```php
@@ -1039,10 +1103,20 @@ echo $faker->district;
 echo $faker->cityName;
 ```
 
+### `Faker\Provider\nl_BE\Payment`
+
+```php
+<?php
+
+echo $faker->vat;           // "BE 0123456789" - Belgian Value Added Tax number
+echo $faker->vat(false);    // "BE0123456789" - unspaced Belgian Value Added Tax number
+```
+
 ### `Faker\Provider\nl_NL\Company`
 
 ```php
 <?php
+
 echo $faker->vat; // "NL123456789B01" - Dutch Value Added Tax number
 echo $faker->btw; // "NL123456789B01" - Dutch Value Added Tax number (alias)
 ```
@@ -1147,7 +1221,16 @@ echo $faker->name; // 'Sr. Luis Adriano Sepúlveda Filho'
 echo $faker->cpf;        // '145.343.345-76'
 echo $faker->cpf(false); // '45623467866'
 echo $faker->rg;         // '84.405.736-3'
-echo $faker->cnpj;       // '23.663.478/0001-24'
+```
+
+### `Faker\Provider\pt_BR\Company`
+
+```php
+<?php
+
+// Generates a Brazilian formated and valid CNPJ
+echo $faker->cnpj;        // '23.663.478/0001-24'
+echo $faker->cnpj(false); // '23663478000124'
 ```
 
 ### `Faker\Provider\ro_MD\Payment`
@@ -1181,15 +1264,6 @@ echo $faker->prefixFemale; // "d-na."
 echo $faker->firstNameMale; // "Adrian"
 // Generates a random female fist name
 echo $faker->firstNameFemale; // "Miruna"
-
-// Generates a random Personal Numerical Code (CNP)
-echo $faker->cnp; // "2800523081231"
-echo $faker->cnp($gender = NULL, $century = NULL, $county = NULL);
-
-// Valid option values:
-//  $gender: m, f, 1, 2
-//  $century: 1800, 1900, 2000, 1, 2, 3, 4, 5, 6
-//  $county: 2 letter ISO 3166-2:RO county codes and B1-B6 for Bucharest's 6 sectors
 ```
 
 ### `Faker\Provider\ro_RO\PhoneNumber`
@@ -1262,6 +1336,7 @@ echo $faker->bank; // '中国建设银行'
 * [nelmio/alice](https://packagist.org/packages/nelmio/alice): Fixtures/object generator with a yaml DSL that can use Faker as data generator.
 * [CakePHP 2.x Fake Seeder Plugin](https://github.com/ravage84/cakephp-fake-seeder) A CakePHP 2.x shell to seed your database with fake and/or fixed data.
 * [images-generator](https://github.com/bruceheller/images-generator): An image generator provider using GD for placeholder type pictures
+* [pattern-lab/plugin-php-faker](https://github.com/pattern-lab/plugin-php-faker): Pattern Lab is a Styleguide, Component Library, and Prototyping tool. This creates unique content each time Pattern Lab is generated.
 
 ## License
 

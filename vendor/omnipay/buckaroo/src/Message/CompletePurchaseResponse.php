@@ -37,4 +37,11 @@ class CompletePurchaseResponse extends AbstractResponse
             return $this->data['BRQ_PAYMENT'];
         }
     }
+
+    public function getTransactionId()
+    {
+        if (isset($this->data['BRQ_INVOICENUMBER'])) {
+            return $this->data['BRQ_INVOICENUMBER'];
+        }
+    }
 }

@@ -16,7 +16,6 @@ class CreditCardGatewayTest extends GatewayTestCase
     public function testPurchase()
     {
         $request = $this->gateway->purchase(array('amount' => '10.00'));
-
         $this->assertInstanceOf('Omnipay\Buckaroo\Message\CreditCardPurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }

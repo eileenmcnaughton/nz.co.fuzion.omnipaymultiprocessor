@@ -5,7 +5,7 @@ namespace Omnipay\Buckaroo\Message;
 use Mockery as m;
 use Omnipay\Tests\TestCase;
 
-class PurchaseRequestTest extends TestCase
+class AbstractRequestTest extends TestCase
 {
     public function setUp()
     {
@@ -31,6 +31,9 @@ class PurchaseRequestTest extends TestCase
             'transactionId' => 13,
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
+            'errorUrl' => 'https://www.example.com/error',
+            'rejectUrl' => 'https://www.example.com/reject',
+            'culture' => 'nl-NL',
         ));
 
         $data = $this->request->getData();
@@ -41,6 +44,9 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame(13, $data['Brq_invoicenumber']);
         $this->assertSame('https://www.example.com/return', $data['Brq_return']);
         $this->assertSame('https://www.example.com/cancel', $data['Brq_returncancel']);
+        $this->assertSame('https://www.example.com/error', $data['Brq_returnerror']);
+        $this->assertSame('https://www.example.com/reject', $data['Brq_returnreject']);
+        $this->assertSame('nl-NL', $data['Brq_culture']);
     }
 
     public function testGenerateSignature()

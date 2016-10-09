@@ -5,7 +5,7 @@ namespace Omnipay\Buckaroo;
 /**
  * Buckaroo PayPal Gateway
  */
-class PayPalGateway extends CreditCardGateway
+class PayPalGateway extends BuckarooGateway
 {
     public function getName()
     {

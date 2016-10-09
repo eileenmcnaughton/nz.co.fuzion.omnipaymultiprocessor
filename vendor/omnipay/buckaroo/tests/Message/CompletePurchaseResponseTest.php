@@ -12,6 +12,7 @@ class CompletePurchaseResponseTest extends TestCase
             'BRQ_STATUSCODE' => '190',
             'BRQ_STATUSMESSAGE' => 'hi!',
             'BRQ_PAYMENT' => '5',
+            'BRQ_INVOICENUMBER' => 'website-reference',
         );
 
         $response = new CompletePurchaseResponse($this->getMockRequest(), $data);
@@ -20,6 +21,7 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertSame('190', $response->getCode());
         $this->assertSame('hi!', $response->getMessage());
         $this->assertSame('5', $response->getTransactionReference());
+        $this->assertSame('website-reference', $response->getTransactionId());
     }
 
     public function testEmpty()

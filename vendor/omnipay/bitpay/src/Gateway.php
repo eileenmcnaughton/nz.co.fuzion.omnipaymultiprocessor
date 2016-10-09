@@ -38,4 +38,9 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\BitPay\Message\PurchaseRequest', $parameters);
     }
+
+    public function getPurchaseStatus(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\BitPay\Message\PurchaseStatusRequest', $parameters);
+    }
 }
