@@ -11,40 +11,37 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  */
 class Response extends AbstractResponse implements RedirectResponseInterface
 {
-  /**
-   * endpoint is the remote url - should be provided by the processor.
-   * we are using github as a filler
-   *
-   * @var string
-   */
+    /**
+     * endpoint is the remote url - should be provided by the processor.
+     *
+     * @var string
+     */
+    protected $testEndpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+    protected $liveEndpoint = 'https://www.paypal.com/cgi-bin/webscr';
 
-    // LIVE
-    //public $endpoint = 'https://www.paypal.com/cgi-bin/webscr';
-    public $endpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-    // protected $endpoint;
+    /**
+     * Get end point.
+     *
+     * @return string
+     */
+    public function getEndpoint()
+    {
+        return $this->getRequest()
+            ->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+    }
 
-  /**
-   * Get end point.
-   *
-   * @return string
-   */
-  //public function getEndpoint()
- // {
-   // return $this->endpoint;
- // }
+    /**
+     * Set end point.
+     *
+     * @param string $endpoint
+     *   Set URL to redirect to.
+     */
+    public function setEndpoint($endpoint)
+    {
+        $this->endpoint = $endpoint;
+    }
 
-  /**
-   * Set end point.
-   *
-   * @param string $endpoint
-   *   Set URL to redirect to.
-   */
-  //public function setEndpoint($endpoint)
-  //{
-  //  $this->endpoint = $endpoint;
-  //}
-
-  public function __construct(RequestInterface $request, $data)
+    public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
         $this->data = $data;
@@ -84,8 +81,7 @@ class Response extends AbstractResponse implements RedirectResponseInterface
 
     public function getRedirectUrl()
     {
-      $testURL = $this->endpoint .'?' . http_build_query($this->data) . '&bn=CiviCRM_SP'. '&cmd=_xclick';
-      return $this->endpoint .'?' . http_build_query($this->data) . '&bn=CiviCRM_SP'. '&cmd=_xclick';
+        return $this->getEndpoint() . '?' . http_build_query($this->data) . '&bn=CiviCRM_SP' . '&cmd=_xclick';
     }
 
     /**
@@ -94,8 +90,6 @@ class Response extends AbstractResponse implements RedirectResponseInterface
      */
     public function getRedirectMethod()
     {
-        // KG
-        // could set to POST
         return 'GET';
     }
 

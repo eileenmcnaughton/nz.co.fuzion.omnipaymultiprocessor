@@ -161,26 +161,7 @@ return array(
     ),
   ),
   /*
-  6 =>
-    array(
-      'name' => 'OmniPay - PayPal Standard',
-      'entity' => 'payment_processor_type',
-      'params' =>
-        array(
-          'version' => 3,
-          'title' => 'Omnipay - PayPal Standard',
-          'name' => 'omnipay_Paypalstandard',
-          'description' => 'Omnipay PayPal Standard',
-          'user_name_label' => 'Merchant Account Email',
-          'password_label' => 'unused',
-          'signature_label' => 'unused',
-          'class_name' => 'Payment_OmnipayMultiProcessor',
-          'url_site_default' => 'https://www.paypal.com/',
-          'url_api_default' => '',
-          'billing_mode' => 4,
-          'payment_type' => 1,
-        ),
-    ),
+
   /*
   2 =>
     array(
@@ -200,25 +181,6 @@ return array(
           'payment_type' => 1,
         ),
     ),
-  3 => array(
-    'name' => 'OmniPay - Paypal',
-    'entity' => 'payment_processor_type',
-    'params' =>
-      array(
-        'version' => 3,
-        'title' => 'OmniPay - Paypal',
-        'name' => 'omnipay_PayPal',
-        'description' => 'Omnipay PayPal Payment Processor',
-        'user_name_label' => 'Username',
-        'password_label' => 'Password',
-        'signature_label' => 'Signature',
-        'class_name' => 'Payment_OmnipayMultiProcessor',
-        'url_site_default' => 'https://testsecureacceptance.cybersource.com/silent/pay',
-        'url_api_default' => 'https://testsecureacceptance.cybersource.com/silent/pay',
-        'billing_mode' => 4,
-        'payment_type' => 1,
-      ),
-  ),
   4 => array(
     'name' => 'OmniPay - Authorize AIM',
     'entity' => 'payment_processor_type',
@@ -377,5 +339,24 @@ return array(
       'is_recur' => 1,
     ),
   ),
-
+  12 =>
+    array(
+      'name' => 'OmniPay - PayPal_Standard',
+      'entity' => 'payment_processor_type',
+      'params' =>
+        array(
+          'version' => 3,
+          'title' => 'Omnipay - PayPal Standard',
+          'name' => 'omnipay_Paypalstandard',
+          'description' => 'Omnipay PayPal Standard',
+          'user_name_label' => 'Merchant Account Email',
+          'password_label' => 'unused',
+          'signature_label' => 'unused',
+          'class_name' => 'Payment_OmnipayMultiProcessor',
+          'url_site_default' => 'https://www.paypal.com/',
+          'url_api_default' => '',
+          'billing_mode' => 4,
+          'payment_type' => 1,
+        ),
+    ),
 );
