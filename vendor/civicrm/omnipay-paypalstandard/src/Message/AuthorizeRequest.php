@@ -91,8 +91,8 @@ class AuthorizeRequest extends AbstractRequest
     public function getURLData()
     {
         $data = array();
-        $data['ipn_notification_url'] = urlencode($this->getNotifyUrl());
-        $data['return_url'] = $this->getReturnUrl();
+        $data['notify_url'] = urlencode($this->getNotifyUrl());
+        $data['return'] = $this->getReturnUrl();
         $data['cancel_return'] = $this->getCancelUrl();
         return $data;
     }
