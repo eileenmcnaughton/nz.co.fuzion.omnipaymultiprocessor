@@ -2,11 +2,9 @@
 
 namespace Omnipay\Paypalstandard\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
-
 /**
- * Authorize.Net SIM Complete Authorize Response
+ * Paypal Standard Complete Authorize Response
  */
-class CompletePurchaseResponse extends CompleteAuthorizeRequest
+class CompletePurchaseResponse extends CompleteAuthorizeResponse
 {
 }
