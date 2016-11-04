@@ -4,6 +4,7 @@ namespace Omnipay\AuthorizeNet;
 
 use Omnipay\AuthorizeNet\Message\AIMAuthorizeRequest;
 use Omnipay\AuthorizeNet\Message\AIMCaptureRequest;
+use Omnipay\AuthorizeNet\Message\AIMPaymentPlanQueryResponse;
 use Omnipay\AuthorizeNet\Message\AIMPurchaseRequest;
 use Omnipay\AuthorizeNet\Message\AIMRefundRequest;
 use Omnipay\AuthorizeNet\Message\AIMVoidRequest;
@@ -59,6 +60,16 @@ class AIMGateway extends AbstractGateway
     public function setDeveloperMode($value)
     {
         return $this->setParameter('developerMode', $value);
+    }
+
+    public function setHashSecret($value)
+    {
+        return $this->setParameter('hashSecret', $value);
+    }
+
+    public function getHashSecret()
+    {
+        return $this->getParameter('hashSecret');
     }
 
     public function setEndpoints($endpoints)
@@ -140,5 +151,24 @@ class AIMGateway extends AbstractGateway
     public function refund(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\AuthorizeNet\Message\AIMRefundRequest', $parameters);
+    }
+
+
+    /**
+     * @param array $parameters
+     * @return AIMPaymentPlanQueryResponse
+     */
+    public function paymentPlanQuery(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\AIMPaymentPlanQueryRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AIMRefundRequest
+     */
+    public function query(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\QueryRequest', $parameters);
     }
 }
