@@ -801,16 +801,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws CiviCRM_API3_Exception
    */
   public function processPaymentNotification($params) {
-    $paymentProcessorTypeId = civicrm_api3('payment_processor', 'getvalue', array(
-      'id' => $params['processor_id'],
-      'return' => 'payment_processor_type_id',
-    ));
-    $paymentProcessorTypeName = civicrm_api3('payment_processor_type', 'getvalue', array(
-      'id' => $paymentProcessorTypeId,
-      'return' => 'name',
-    ));
-    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $paymentProcessorTypeName));
-    $this->setProcessorFields();
+    $this->createGateway($params['processor_id']);
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
     $response = $this->gateway->completePurchase($params)->send();
@@ -862,6 +853,18 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
     $_REQUEST = $originalRequest;
     $this->redirectOrExit('fail');
+  }
+
+  public function queryPaymentPlans($params) {
+    $this->createGateway($this->_paymentProcessor['id']);
+    $response = $this->gateway->paymentPlanQuery($params)->send();
+    return $response->getPlanData();
+  }
+
+  public function query($params) {
+    $this->createGateway($this->_paymentProcessor['id']);
+    $response = $this->gateway->query($params)->send();
+    return $response->getData();
   }
 
   /**
@@ -1023,6 +1026,25 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $possibles[] = 'frequency_unit';
     }
     return $possibles;
+  }
+
+  /**
+   * @param int $id
+   *
+   * @throws \CRM_Core_Exception
+   * @throws \CiviCRM_API3_Exception
+   */
+  private function createGateway($id) {
+    $paymentProcessorTypeId = civicrm_api3('payment_processor', 'getvalue', array(
+      'id' => $id,
+      'return' => 'payment_processor_type_id',
+    ));
+    $paymentProcessorTypeName = civicrm_api3('payment_processor_type', 'getvalue', array(
+      'id' => $paymentProcessorTypeId,
+      'return' => 'name',
+    ));
+    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $paymentProcessorTypeName));
+    $this->setProcessorFields();
   }
 
 }
