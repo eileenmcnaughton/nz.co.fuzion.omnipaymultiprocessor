@@ -3250,5 +3250,66 @@
         ],
         "description": "Symfony HttpFoundation Component",
         "homepage": "https://symfony.com"
+    },
+    {
+        "name": "zburke/omnipay-bluepay",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/adixon/omnipay-bluepay.git",
+            "reference": "d7802555e735b81d8d9a7ff8dd56cc4d35da582e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/adixon/omnipay-bluepay/zipball/d7802555e735b81d8d9a7ff8dd56cc4d35da582e",
+            "reference": "d7802555e735b81d8d9a7ff8dd56cc4d35da582e",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-09-27 14:53:55",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\BluePay\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Zak Burke",
+                "email": "zak.burke@gmail.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/zburke/omnipay-bluepay/contributors"
+            }
+        ],
+        "description": "BluePay gateway for the Omnipay payment processing library",
+        "homepage": "https://github.com/zburke/omnipay-bluepay",
+        "keywords": [
+            "bluepay",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment"
+        ],
+        "support": {
+            "source": "https://github.com/zburke/omnipay-bluepay/tree/master"
+        }
     }
 ]

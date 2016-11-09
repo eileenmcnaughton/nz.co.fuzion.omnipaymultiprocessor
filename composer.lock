@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5eafc687655cd92c6927fcdfae140a3b",
-    "content-hash": "e0ae354288699095aa6e421a7defb871",
+    "hash": "8eae069179279c3837a269c047d2df5a",
+    "content-hash": "adc463431c3a7c0a45879c2bfeb7467e",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -2481,9 +2481,118 @@
                 "shim"
             ],
             "time": "2016-05-18 14:26:46"
+        },
+        {
+            "name": "zburke/omnipay-bluepay",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adixon/omnipay-bluepay.git",
+                "reference": "d7802555e735b81d8d9a7ff8dd56cc4d35da582e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adixon/omnipay-bluepay/zipball/d7802555e735b81d8d9a7ff8dd56cc4d35da582e",
+                "reference": "d7802555e735b81d8d9a7ff8dd56cc4d35da582e",
+                "shasum": ""
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\BluePay\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zak Burke",
+                    "email": "zak.burke@gmail.com"
+                },
+                {
+                    "name": "Omnipay Contributors",
+                    "homepage": "https://github.com/zburke/omnipay-bluepay/contributors"
+                }
+            ],
+            "description": "BluePay gateway for the Omnipay payment processing library",
+            "homepage": "https://github.com/zburke/omnipay-bluepay",
+            "keywords": [
+                "bluepay",
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment"
+            ],
+            "support": {
+                "source": "https://github.com/adixon/omnipay-bluepay/tree/master"
+            },
+            "time": "2016-09-27 14:53:55"
         }
     ],
     "packages-dev": [
+        {
+            "name": "adixon/omnipay-bluepay",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adixon/omnipay-bluepay.git",
+                "reference": "8a73ff49e6ea29b8e941cbe0f5a03aeec679ecd5"
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\BluePay\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zak Burke",
+                    "email": "zak.burke@gmail.com"
+                },
+                {
+                    "name": "Omnipay Contributors",
+                    "homepage": "https://github.com/zburke/omnipay-bluepay/contributors"
+                }
+            ],
+            "description": "BluePay gateway for the Omnipay payment processing library",
+            "homepage": "https://github.com/zburke/omnipay-bluepay",
+            "keywords": [
+                "bluepay",
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment"
+            ],
+            "time": "2016-07-28 11:42:07"
+        },
         {
             "name": "hamcrest/hamcrest-php",
             "version": "1.2.x-dev",
@@ -3165,7 +3274,8 @@
         "civicrm/omnipay-paypalstandard": 20,
         "pointybeard/omnipay-nabtransact": 20,
         "fzaninotto/faker": 20,
-        "omnipay/paymentexpress": 20
+        "omnipay/paymentexpress": 20,
+        "zburke/omnipay-bluepay": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
