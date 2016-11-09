@@ -140,17 +140,28 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->saveBillingAddressIfRequired($params);
 
     try {
+      $cardOptions = $this->getCreditCardOptions($params, $component);
       if (!empty($params['is_recur'])) {
-        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
+        // set the action to 'Purchase' so that we run the transaction as well.
+        $cardOptions['action'] = 'Purchase';
+        $response = $this->gateway->createCard($cardOptions)->send();
       }
       else {
-        $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))
-          ->send();
+        $response = $this->gateway->purchase($cardOptions)->send();
       }
       if ($response->isSuccessful()) {
         // mark order as complete
         $params['trxn_id'] = $response->getTransactionReference();
         //gross_amount ? fee_amount?
+        // for recurring requests, store my token and set my status to 1
+        if (!empty($params['is_recur'])) {
+          $params['token'] = $response->getCardReference();
+          if (method_exists($response,'getNumberMasked')) { 
+            $params['masked_account_number'] = $response->getNumberMasked();
+          }
+          $this->createPaymentToken($params);
+          $params['payment_status_id'] = 1; // required for recurring to mark as completed
+        }
         return $params;
       }
       elseif ($response->isRedirect()) {
@@ -359,7 +370,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
-   * Get options for credit card.
+   * Get options for credit card, i.e. convert the incoming params into an omnipay gateway argument.
    *
    * @param array $params
    * @param string $component
@@ -387,9 +398,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'card' => $this->getCreditCardObjectParams($params),
       'cardReference' => CRM_Utils_Array::value('token', $params),
     );
-    if (!empty($params['action'])) {
-      $creditCardOptions['action'] = 'Purchase';
-    }
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
     return $creditCardOptions;
@@ -938,6 +946,44 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         date('Y-m-d 00:00:00', strtotime('+' . $contributionRecur['frequency_interval'] . ' ' . $contributionRecur['frequency_unit']))
       ),
     ));
+  }
+
+  /**
+   * Create a new payment token directly after a successful new recurring contribution schedule is created.
+   *
+   * Similar to storePaymentToken.
+   * Takes a standard kind of $params like that passed to the doDirectPayment method
+   *
+   * @param array $params
+   *
+   * @throws \CiviCRM_API3_Exception
+   */
+  protected function createPaymentToken($params, $createCardResponse) {
+    if (!omnipaymultiprocessor__versionAtLeast(4.6)) {
+      return;
+    }
+    $contributionRecurID = $params['contributionRecurID'];
+    if (!empty($params['credit_card_exp_date'])) {
+      $expiry = $params['credit_card_exp_date'];
+      $params['expiry_date'] = $expiry['Y'].'-'.$expiry['M'].'-01';
+    }
+    $params['email'] = $params['email-5'];
+    // $params['ip_address']
+    $params['is_transactional'] = FALSE;
+    $params['contact_id'] = $params['contactID'];
+    $params['created_id'] = (CRM_Core_Session::singleton()->getLoggedInContactID() ? : $params['contact_id']);
+    $token = civicrm_api3('payment_token', 'create', $params);
+    // now update the recurring record with the token id and set it's next scheduled contribution date
+    $contributionRecur = civicrm_api3('ContributionRecur', 'getsingle', array('id' => $contributionRecurID));
+    $result = civicrm_api3('contribution_recur', 'create', array(
+      'id' => $contributionRecurID,
+      'payment_token_id' => $token['id'],
+      'is_transactional' => FALSE,
+      'next_sched_contribution_date' => CRM_Utils_Date::isoToMysql(
+        date('Y-m-d 00:00:00', strtotime('+' . $contributionRecur['frequency_interval'] . ' ' . $contributionRecur['frequency_unit']))
+      ),
+    ));
+    return $result;
   }
 
   /**
