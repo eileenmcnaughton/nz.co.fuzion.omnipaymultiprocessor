@@ -56,6 +56,7 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
             'Omnipay\\Coinbase\\' => 17,
             'Omnipay\\CardSave\\' => 17,
             'Omnipay\\Buckaroo\\' => 17,
+            'Omnipay\\BluePay\\' => 16,
             'Omnipay\\BitPay\\' => 15,
             'Omnipay\\AuthorizeNet\\' => 21,
         ),
@@ -209,6 +210,11 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
         'Omnipay\\Buckaroo\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/buckaroo/src',
+        ),
+        'Omnipay\\BluePay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adixon/omnipay-bluepay/src',
+            1 => __DIR__ . '/..' . '/zburke/omnipay-bluepay/src',
         ),
         'Omnipay\\BitPay\\' => 
         array (

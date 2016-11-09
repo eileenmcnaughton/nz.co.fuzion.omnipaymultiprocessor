@@ -2488,12 +2488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/adixon/omnipay-bluepay.git",
-                "reference": "d7802555e735b81d8d9a7ff8dd56cc4d35da582e"
+                "reference": "504e8308fa19d68768ceb163dbd5b5be8fea34af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adixon/omnipay-bluepay/zipball/d7802555e735b81d8d9a7ff8dd56cc4d35da582e",
-                "reference": "d7802555e735b81d8d9a7ff8dd56cc4d35da582e",
+                "url": "https://api.github.com/repos/adixon/omnipay-bluepay/zipball/504e8308fa19d68768ceb163dbd5b5be8fea34af",
+                "reference": "504e8308fa19d68768ceb163dbd5b5be8fea34af",
                 "shasum": ""
             },
             "require": {
@@ -2539,7 +2539,7 @@
             "support": {
                 "source": "https://github.com/adixon/omnipay-bluepay/tree/master"
             },
-            "time": "2016-09-27 14:53:55"
+            "time": "2016-11-09 20:54:36"
         }
     ],
     "packages-dev": [
