@@ -180,7 +180,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       $url = CRM_Utils_System::url(
         'civicrm/payment/ipn/' . $this->_paymentProcessor['id'],
         array(),
-        TRUE
+        TRUE,
+        NULL,
+        FALSE
       );
     }
     else {
@@ -189,7 +191,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
         array(
           'processor_id' => $this->_paymentProcessor['id'],
         ),
-        TRUE
+        TRUE,
+        NULL,
+        FALSE
       );
     }
     return $allowLocalHost ? $url : ((stristr($url, '.')) ? $url : '');
