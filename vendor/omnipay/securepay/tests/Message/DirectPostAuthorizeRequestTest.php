@@ -16,6 +16,12 @@ class DirectPostAuthorizeRequestTest extends TestCase
                 'transactionPassword' => 'bar',
                 'amount' => '12.00',
                 'returnUrl' => 'https://www.example.com/return',
+                'card' => array(
+                    'number' => '4444333322221111',
+                    'expiryMonth' => '6',
+                    'expiryYear' => '2020',
+                    'cvv' => '123',
+                ),
             )
         );
     }

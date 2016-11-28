@@ -11,9 +11,9 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
 {
     public function getData()
     {
-        $data = $this->httpRequest->request->all();
+        $data = $this->httpRequest->query->all();
 
-        if ($this->generateResponseFingerprint($data) !== $this->httpRequest->request->get('fingerprint')) {
+        if ($this->generateResponseFingerprint($data) !== $this->httpRequest->query->get('fingerprint')) {
             throw new InvalidRequestException('Invalid fingerprint');
         }
 
