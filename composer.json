@@ -14,7 +14,7 @@
         },
         {
             "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/paypalstandard.git"
+            "url":  "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git"
         },
         {
             "type": "git",
