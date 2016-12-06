@@ -23,6 +23,10 @@
         {
             "type": "vcs",
             "url":  "https://github.com/adixon/omnipay-bluepay.git"
+        },
+        {
+            "type": "vcs",
+            "url":  "https://github.com/adixon/omnipay-beanstream.git"
         }
     ],
     "require":
@@ -37,7 +41,8 @@
         "pointybeard/omnipay-nabtransact": "dev-transact",
         "fzaninotto/faker": "^1.6@dev",
         "omnipay/paymentexpress": "dev-master",
-        "zburke/omnipay-bluepay": "dev-master"
+        "zburke/omnipay-bluepay": "dev-master",
+        "lemonstand/omnipay-beanstream": "dev-master"
     },
     "require-dev":
     {
