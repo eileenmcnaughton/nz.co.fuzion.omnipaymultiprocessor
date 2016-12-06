@@ -10,7 +10,7 @@
         "payment",
         "securepay"
     ],
-    "homepage": "https://github.com/omnipay/securepay",
+    "homepage": "https://github.com/thephpleague/omnipay-securepay",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +19,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/securepay/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-securepay/contributors"
         }
     ],
     "autoload": {

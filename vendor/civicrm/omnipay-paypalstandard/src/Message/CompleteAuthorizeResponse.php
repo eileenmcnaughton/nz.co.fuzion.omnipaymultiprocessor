@@ -31,16 +31,6 @@ class CompleteAuthorizeResponse extends AbstractResponse
     }
 
     /**
-     * Check response for a transaction ID.
-     *
-     * @return string|null
-     */
-    public function getTransactionId()
-    {
-        return isset($this->data['reference_id']) ? $this->data['reference_id'] : null;
-    }
-
-    /**
      * check response for a message. Usually these are provide in the event of a failure - e.g a decline
      * @return string|null
      */

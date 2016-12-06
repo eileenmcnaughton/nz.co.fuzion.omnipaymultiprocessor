@@ -35,7 +35,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
             'transactionPassword' => 'abc123',
         ));
 
-        $this->getHttpRequest()->request->replace(array(
+        $this->getHttpRequest()->query->replace(array(
             'timestamp' => '20130602112954',
             'callback_status_code' => '',
             'fingerprint' => 'd9b40fc6f841f41ef3475220fe6316406a5256ce',
@@ -68,7 +68,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
             'transactionPassword' => 'abc123',
         ));
 
-        $this->getHttpRequest()->request->replace(array(
+        $this->getHttpRequest()->query->replace(array(
             'timestamp' => '20130602102927',
             'callback_status_code' => '',
             'fingerprint' => '0516a31bf96ad89c354266afb9bd4be43aaf853f',
