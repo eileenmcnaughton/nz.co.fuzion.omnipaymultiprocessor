@@ -86,6 +86,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return string
    */
   protected function getReturnSuccessUrl($qfKey) {
+    if (isset($this->successUrl)) {
+      return $this->successUrl;
+    }
     return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
         '_qf_ThankYou_display' => 1,
         'qfKey' => $qfKey,
@@ -101,6 +104,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return string
    */
   protected function getReturnFailUrl($key, $participantID = NULL, $eventID = NULL) {
+    if (isset($this->cancelUrl)) {
+      return $this->cancelUrl;
+    }
     $test =  $this->_is_test ? '&action=preview' : '';
     if ($this->_component == "event") {
       return CRM_Utils_System::url('civicrm/event/register',
