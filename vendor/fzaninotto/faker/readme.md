@@ -923,6 +923,14 @@ echo $faker->mobileNumber; // 082 123 5555
 echo $faker->dni; // '77446565E'
 ```
 
+### `Faker\Provider\es_ES\Payment`
+
+```php
+<?php
+// Generates a Código de identificación Fiscal (CIF) number
+echo $faker->vat;           // "A35864370"
+```
+
 ### `Faker\Provider\fr_BE\Payment`
 
 ```php
@@ -1275,10 +1283,22 @@ echo $faker->bankAccountNumber; // "RO55WRJE3OE8X3YQI7J26U1E"
 echo $faker->prefixMale; // "ing."
 // Generates a random female name prefix/title
 echo $faker->prefixFemale; // "d-na."
-// Generates a random male fist name
+// Generates a random male first name
 echo $faker->firstNameMale; // "Adrian"
-// Generates a random female fist name
+// Generates a random female first name
 echo $faker->firstNameFemale; // "Miruna"
+
+
+// Generates a random Personal Numerical Code (CNP)
+echo $faker->cnp; // "2800523081231"
+// Valid option values:
+//    $gender: null (random), male, female
+//    $dateOfBirth (1800+): null (random), Y-m-d, Y-m (random day), Y (random month and day)
+//          i.e. '1981-06-16', '2015-03', '1900'
+//    $county: 2 letter ISO 3166-2:RO county codes and B1, B2, B3, B4, B5, B6 for Bucharest's 6 sectors
+//    $isResident true/false flag if the person resides in Romania
+echo $faker->cnp($gender = null, $dateOfBirth = null, $county = null, $isResident = true);
+
 ```
 
 ### `Faker\Provider\ro_RO\PhoneNumber`

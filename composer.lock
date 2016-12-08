@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5eafc687655cd92c6927fcdfae140a3b",
-    "content-hash": "e0ae354288699095aa6e421a7defb871",
+    "hash": "302b5a1924543f79c924b4060a1a7557",
+    "content-hash": "7abeb0c676f6ff557652649d594de95b",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -66,7 +66,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/KarinG/paypalstandard.git",
+                "url": "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git",
                 "reference": "ecf18da4474697916d2b872586465de5ecf2868b"
             },
             "require": {
@@ -193,12 +193,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "70572abb2ee34c79a566dc13d016f89011f8365e"
+                "reference": "71c5ccec1b04649c26b7fa510b1cc6b811cb3fb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/70572abb2ee34c79a566dc13d016f89011f8365e",
-                "reference": "70572abb2ee34c79a566dc13d016f89011f8365e",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/71c5ccec1b04649c26b7fa510b1cc6b811cb3fb9",
+                "reference": "71c5ccec1b04649c26b7fa510b1cc6b811cb3fb9",
                 "shasum": ""
             },
             "require": {
@@ -235,7 +235,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-11-09 08:42:27"
+            "time": "2016-12-02 14:05:09"
         },
         {
             "name": "guzzle/guzzle",

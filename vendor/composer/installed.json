@@ -310,12 +310,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/fzaninotto/Faker.git",
-            "reference": "70572abb2ee34c79a566dc13d016f89011f8365e"
+            "reference": "71c5ccec1b04649c26b7fa510b1cc6b811cb3fb9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/70572abb2ee34c79a566dc13d016f89011f8365e",
-            "reference": "70572abb2ee34c79a566dc13d016f89011f8365e",
+            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/71c5ccec1b04649c26b7fa510b1cc6b811cb3fb9",
+            "reference": "71c5ccec1b04649c26b7fa510b1cc6b811cb3fb9",
             "shasum": ""
         },
         "require": {
@@ -326,7 +326,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~1.5"
         },
-        "time": "2016-11-09 08:42:27",
+        "time": "2016-12-02 14:05:09",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3043,7 +3043,7 @@
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/KarinG/paypalstandard.git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git",
             "reference": "ecf18da4474697916d2b872586465de5ecf2868b"
         },
         "require": {
