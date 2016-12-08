@@ -3,12 +3,11 @@
 namespace Omnipay\AuthorizeNet\Message;
 
 use Omnipay\Common\CreditCard;
-use Omnipay\Omnipay;
 
 /**
  * Authorize.Net AIM Authorize Request
  */
-class QueryRequest extends QueryBatchRequest
+class QueryBatchRequest extends AIMAbstractRequest
 {
   protected $action = '';
   protected $requestType = 'getSettledBatchListRequest';
@@ -57,11 +56,6 @@ class QueryRequest extends QueryBatchRequest
   public function getData()
   {
     $data = $this->getBaseData();
-    $data->searchType = 'subscriptionActive';
-    $data->sorting->orderBy = 'id';
-    $data->sorting->orderDescending = true;
-    $data->paging->limit = $this->getLimit();
-    $data->paging->offset = $this->getOffset();
     return $data;
   }
 
@@ -73,6 +67,6 @@ class QueryRequest extends QueryBatchRequest
     $data = $data->saveXml();
     $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
 
-    return $this->response = new QueryResponse($this, $httpResponse->getBody());
+    return $this->response = new QueryBatchResponse($this, $httpResponse->getBody());
   }
 }

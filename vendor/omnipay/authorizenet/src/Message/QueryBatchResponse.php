@@ -11,7 +11,7 @@ use Omnipay\Common\Message\AbstractResponse;
 /**
  * Authorize.Net AIM Response
  */
-class QueryResponse extends AbstractResponse
+class QueryBatchResponse extends AbstractResponse
 {
     /**
      * For Error codes: @see https://developer.authorize.net/api/reference/responseCodes.html
