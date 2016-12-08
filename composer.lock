@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "302b5a1924543f79c924b4060a1a7557",
-    "content-hash": "7abeb0c676f6ff557652649d594de95b",
+    "hash": "3ecb901a32e2e812e265ee2d7bea9794",
+    "content-hash": "2842ff52056a469f2a0da8ef4a6dbb83",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -436,17 +436,11 @@
         },
         {
             "name": "omnipay/authorizenet",
-            "version": "2.4.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
-                "reference": "6e1990f5d22f0f8e4dfe363b89c9776d0d803c34"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/6e1990f5d22f0f8e4dfe363b89c9776d0d803c34",
-                "reference": "6e1990f5d22f0f8e4dfe363b89c9776d0d803c34",
-                "shasum": ""
+                "url": "https://github.com/eileenmcnaughton/omnipay-authorizenet.git",
+                "reference": "a955beac72955c8077229728d64069f0061315d1"
             },
             "require": {
                 "omnipay/common": "~2.2"
@@ -465,7 +459,6 @@
                     "Omnipay\\AuthorizeNet\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -491,7 +484,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-07-16 21:00:00"
+            "time": "2016-12-08 03:09:41"
         },
         {
             "name": "omnipay/bitpay",
@@ -3165,7 +3158,8 @@
         "civicrm/omnipay-paypalstandard": 20,
         "pointybeard/omnipay-nabtransact": 20,
         "fzaninotto/faker": 20,
-        "omnipay/paymentexpress": 20
+        "omnipay/paymentexpress": 20,
+        "omnipay/authorizenet": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
