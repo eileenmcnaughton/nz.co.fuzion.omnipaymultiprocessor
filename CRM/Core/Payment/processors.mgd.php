@@ -448,5 +448,28 @@ return array(
       'is_recur' => 1,
     ),
   ),
+  17 => array(
+    'name' => 'OmniPay - Beanstream',
+    'entity' => 'payment_processor_type',
+    'params' => array(
+      'version' => 3,
+      'title' => 'OmniPay - Beanstream',
+      'name' => 'omnipay_Beanstream',
+      'description' => 'Omnipay Beanstream',
+      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
+      'signature_label' => 'Api Passcode',
+      'subject_label' => 'Merchant Id',
+      'class_name' => 'Payment_OmnipayMultiProcessor',
+      'url_site_default' => 'http://unused.com',
+      'url_api_default' => 'http://unused.com',
+      'url_recur_default' => 'http://unused.com',
+      'url_site_test_default' => 'http://unused.com',
+      'url_recur_test_default' => 'http://unused.com',
+      'url_api_test_default' => 'http://unused.com',
+      'billing_mode' => 1,
+      'payment_type' => 1,
+      'is_recur' => 1,
+    ),
+  ),
 
 );
