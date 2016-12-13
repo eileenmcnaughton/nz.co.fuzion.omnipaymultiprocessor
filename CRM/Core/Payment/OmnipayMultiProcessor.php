@@ -136,7 +136,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
     $this->setProcessorFields();
     $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
-    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
+    // set return urls, but only if we've been invoked from a form
+    if ($params['qfKey']) {
+      $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
+    }
     $this->saveBillingAddressIfRequired($params);
 
     try {
@@ -360,7 +363,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'number' => 'credit_card_number',
     );
     foreach ($basicMappings as $cardField => $civicrmField) {
-      $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
+      if (isset($params[$civicrmField])) {
+        $cardFields[$cardField] = $params[$civicrmField];
+      }
     }
     if (!empty($params['credit_card_exp_date'])) {
       $cardFields['expiryMonth'] = $params['credit_card_exp_date']['M'];
@@ -395,9 +400,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'returnUrl' => $this->getNotifyUrl(TRUE),
       'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
       'notifyUrl' => $this->getNotifyUrl(),
-      'card' => $this->getCreditCardObjectParams($params),
       'cardReference' => CRM_Utils_Array::value('token', $params),
     );
+    $creditCardOptions['card'] = empty($creditCardOptions['cardReference']) ? $this->getCreditCardObjectParams($params) : array();
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
     return $creditCardOptions;
