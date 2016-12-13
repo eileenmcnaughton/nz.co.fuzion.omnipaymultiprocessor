@@ -323,7 +323,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'billingState' => 'billing_state_province-' . $billingID,
       'billingCountry' => 'billing_country-' . $billingID,
       // we don't specifically anticipate phone to come through - adding this & company as 'best guess'
-      'billingPhone' => 'phone',
+      'billingPhone' => 'phone-Primary-1',
       'company' => 'organization_name',
       'type' => 'credit_card_type',
     );
