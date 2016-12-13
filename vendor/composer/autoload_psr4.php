@@ -42,8 +42,9 @@ return array(
     'Omnipay\\Coinbase\\' => array($vendorDir . '/omnipay/coinbase/src'),
     'Omnipay\\CardSave\\' => array($vendorDir . '/omnipay/cardsave/src'),
     'Omnipay\\Buckaroo\\' => array($vendorDir . '/omnipay/buckaroo/src'),
-    'Omnipay\\BluePay\\' => array($vendorDir . '/adixon/omnipay-bluepay/src', $vendorDir . '/zburke/omnipay-bluepay/src'),
+    'Omnipay\\BluePay\\' => array($vendorDir . '/zburke/omnipay-bluepay/src', $vendorDir . '/adixon/omnipay-bluepay/src'),
     'Omnipay\\BitPay\\' => array($vendorDir . '/omnipay/bitpay/src'),
+    'Omnipay\\Beanstream\\' => array($vendorDir . '/lemonstand/omnipay-beanstream/src'),
     'Omnipay\\AuthorizeNet\\' => array($vendorDir . '/omnipay/authorizenet/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
 );

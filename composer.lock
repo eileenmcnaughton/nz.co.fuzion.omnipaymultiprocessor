@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8eae069179279c3837a269c047d2df5a",
-    "content-hash": "adc463431c3a7c0a45879c2bfeb7467e",
+    "hash": "92df5c47ac5d44ac0668608a8cdd65ef",
+    "content-hash": "0864b2cbfce72010f614b4a306f1d246",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -66,7 +66,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/KarinG/paypalstandard.git",
+                "url": "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git",
                 "reference": "ecf18da4474697916d2b872586465de5ecf2868b"
             },
             "require": {
@@ -374,6 +374,62 @@
                 "password"
             ],
             "time": "2014-11-20 19:18:42"
+        },
+        {
+            "name": "lemonstand/omnipay-beanstream",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adixon/omnipay-beanstream.git",
+                "reference": "71526db4e2d666fc6b1b062ca148c6bf7bd73523"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adixon/omnipay-beanstream/zipball/71526db4e2d666fc6b1b062ca148c6bf7bd73523",
+                "reference": "71526db4e2d666fc6b1b062ca148c6bf7bd73523",
+                "shasum": ""
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Beanstream\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "LemonStand",
+                    "email": "andy@lemonstand.com"
+                }
+            ],
+            "description": "Beanstream driver for the Omnipay payment processing library",
+            "homepage": "https://github.com/lemonstand/omnipay-beanstream",
+            "keywords": [
+                "beanstream",
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "payments"
+            ],
+            "support": {
+                "source": "https://github.com/adixon/omnipay-beanstream/tree/master"
+            },
+            "time": "2016-03-30 20:56:55"
         },
         {
             "name": "omnipay/2checkout",
@@ -2480,7 +2536,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-05-18 14:26:46"
+            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "zburke/omnipay-bluepay",
@@ -2539,7 +2595,7 @@
             "support": {
                 "source": "https://github.com/adixon/omnipay-bluepay/tree/master"
             },
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-09 20:54:36"
         }
     ],
     "packages-dev": [
@@ -3275,7 +3331,8 @@
         "pointybeard/omnipay-nabtransact": 20,
         "fzaninotto/faker": 20,
         "omnipay/paymentexpress": 20,
-        "zburke/omnipay-bluepay": 20
+        "zburke/omnipay-bluepay": 20,
+        "lemonstand/omnipay-beanstream": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

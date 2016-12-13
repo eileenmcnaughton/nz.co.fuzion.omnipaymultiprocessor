@@ -3043,7 +3043,7 @@
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/KarinG/paypalstandard.git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git",
             "reference": "ecf18da4474697916d2b872586465de5ecf2868b"
         },
         "require": {
@@ -3252,58 +3252,6 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "adixon/omnipay-bluepay",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/adixon/omnipay-bluepay.git",
-            "reference": "8a73ff49e6ea29b8e941cbe0f5a03aeec679ecd5"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2016-07-28 11:42:07",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\BluePay\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Zak Burke",
-                "email": "zak.burke@gmail.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/zburke/omnipay-bluepay/contributors"
-            }
-        ],
-        "description": "BluePay gateway for the Omnipay payment processing library",
-        "homepage": "https://github.com/zburke/omnipay-bluepay",
-        "keywords": [
-            "bluepay",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
-        ]
-    },
-    {
         "name": "zburke/omnipay-bluepay",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -3362,6 +3310,116 @@
         ],
         "support": {
             "source": "https://github.com/adixon/omnipay-bluepay/tree/master"
+        }
+    },
+    {
+        "name": "adixon/omnipay-bluepay",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/adixon/omnipay-bluepay.git",
+            "reference": "8a73ff49e6ea29b8e941cbe0f5a03aeec679ecd5"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-07-28 11:42:07",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\BluePay\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Zak Burke",
+                "email": "zak.burke@gmail.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/zburke/omnipay-bluepay/contributors"
+            }
+        ],
+        "description": "BluePay gateway for the Omnipay payment processing library",
+        "homepage": "https://github.com/zburke/omnipay-bluepay",
+        "keywords": [
+            "bluepay",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "lemonstand/omnipay-beanstream",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/adixon/omnipay-beanstream.git",
+            "reference": "71526db4e2d666fc6b1b062ca148c6bf7bd73523"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/adixon/omnipay-beanstream/zipball/71526db4e2d666fc6b1b062ca148c6bf7bd73523",
+            "reference": "71526db4e2d666fc6b1b062ca148c6bf7bd73523",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-03-30 20:56:55",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Beanstream\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "LemonStand",
+                "email": "andy@lemonstand.com"
+            }
+        ],
+        "description": "Beanstream driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/lemonstand/omnipay-beanstream",
+        "keywords": [
+            "beanstream",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "payments"
+        ],
+        "support": {
+            "source": "https://github.com/adixon/omnipay-beanstream/tree/master"
         }
     }
 ]
