@@ -457,7 +457,7 @@ return array(
       'name' => 'omnipay_Beanstream',
       'description' => 'Omnipay Beanstream',
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
-      'user_label' => 'Username'
+      'user_label' => 'Username',
       'signature_label' => 'Api Passcode',
       'subject_label' => 'Merchant Id',
       'class_name' => 'Payment_OmnipayMultiProcessor',
