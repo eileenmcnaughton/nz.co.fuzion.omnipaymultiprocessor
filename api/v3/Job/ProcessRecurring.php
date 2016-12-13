@@ -61,7 +61,7 @@ function civicrm_api3_job_process_recurring($params) {
         'failure_count' => $recurringPayment['failure_count'] + 1,
       ));
       civicrm_api3('Contribution', 'create', array(
-        'id' => $pending['id'], 'contribution_status_id' => 'Failed', 'debug' => $params['debug'])
+        'id' => $pending['id'], 'contribution_status_id' => 'Failed', 'debug' => (isset($params['debug']) ? $params['debug'] : FALSE))
       );
       $result[$recurringPayment['id']]['error'] = $e->getMessage();
       $result['failed']['ids'] = $recurringPayment['id'];
