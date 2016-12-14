@@ -888,9 +888,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
     $response = $this->gateway->completePurchase($params)->send();
-
-    if ($response->getTransactionId()) {
-      $this->setTransactionID($response->getTransactionId());
+    // Set the Transaction ID.
+    // If we're using an eWay processor, we want to get the Invoice Number from the eWay response. This should be the CiviCRM Contribution ID.
+    if (stripos($paymentProcessorTypeName, 'eway') !== FALSE) {
+      $this->setTransactionID($response->getInvoiceNumber());
+    } else {
+      if ($response->getTransactionId()) {
+        $this->setTransactionID($response->getTransactionId());
+      }
     }
     if ($response->isSuccessful()) {
       try {
