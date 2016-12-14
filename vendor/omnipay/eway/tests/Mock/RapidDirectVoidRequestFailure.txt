@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Cache-control: no-cache="set-cookie"
+Content-Type: application/json; charset=utf-8
+Date: Wed, 01 Jun 2016 06:00:19 GMT
+p3p: CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"
+Set-Cookie: AWSELB=8361C96B088FEBBC7D3ABDFE8BA0FF6501B9705E7D02FB0E46BA8D67B7A800B44A7D2ED0D94C6B4D750DDAD028ED5C0787DEB1569FF96BD73CDCF09B6E3F354EB31B6537F6;PATH=/;MAX-AGE=86400
+X-EWAY-VIA: api-au.sandbox.ewaypayments.com/
+X-EWAY-VIA-FROM: http://api.sandbox.ewaypayments.com/CancelAuthorisation
+X-EWAY-VIA-HTTP-METHOD: POST
+X-EWAY-VIA-HTTP-STATUS: 200
+X-EWAY-VIA-TO: http://api-au.sandbox.ewaypayments.com/CancelAuthorisation
+X-ID: AM-143
+X-Powered-By: eWAY
+Content-Length: 105
+Connection: keep-alive
+
+{"ResponseCode":null,"ResponseMessage":null,"TransactionID":0,"TransactionStatus":false,"Errors":"V6134"}

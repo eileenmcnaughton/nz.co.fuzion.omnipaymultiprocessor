@@ -186,6 +186,18 @@ class RapidDirectGateway extends AbstractGateway
     }
 
     /**
+     * Void a Transaction
+     *
+     * @link https://eway.io/api-v3/#pre-auth
+     * @param array $parameters
+     * @return \Omnipay\Eway\Message\RapidDirectVoidRequest
+     */
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Eway\Message\RapidDirectVoidRequest', $parameters);
+    }
+
+    /**
      * Store a credit card as a Token
      *
      * You can currently securely store card details with eWAY for future

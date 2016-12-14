@@ -75,7 +75,7 @@ class RapidDirectCreateCardRequestTest extends TestCase
         $this->setMockHttpResponse('RapidDirectCreateCardRequestSuccess.txt');
         $response = $this->request->send();
 
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertSame(916260137222, $response->getCardReference());
         $this->assertSame('Transaction Approved', $response->getMessage());
     }
