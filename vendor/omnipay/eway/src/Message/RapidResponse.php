@@ -52,4 +52,12 @@ class RapidResponse extends AbstractResponse implements RedirectResponseInterfac
 
         return null;
     }
+
+    /**
+     * Get InvoiceNumber - merchant reference for a transaction
+     */
+    public function getInvoiceNumber()
+    {
+        return $this->data['InvoiceNumber'];
+    }
 }
