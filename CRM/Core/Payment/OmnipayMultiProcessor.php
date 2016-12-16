@@ -857,7 +857,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
   public function queryPaymentPlans($params) {
     $this->createGateway($this->_paymentProcessor['id']);
-    $response = $this->gateway->paymentPlanQuery($params)->send();
+    $response = $this->gateway->paymentPlansQuery($params)->send();
     return $response->getPlanData();
   }
 

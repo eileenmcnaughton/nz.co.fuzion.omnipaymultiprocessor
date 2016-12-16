@@ -16,4 +16,8 @@ class CIMGetPaymentProfileResponse extends CIMCreatePaymentProfileResponse
         }
         return null;
     }
+
+    public function getCustomerId() {
+        print_r($this->data);
+    }
 }

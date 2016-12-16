@@ -44,4 +44,9 @@ class CIMGetProfileResponse extends CIMCreatePaymentProfileResponse
         }
         return null;
     }
+
+    public function getCustomerId()
+    {
+        return $this->data['profile'][0]['merchantCustomerId'];
+    }
 }

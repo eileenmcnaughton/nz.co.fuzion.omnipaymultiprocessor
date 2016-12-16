@@ -10,45 +10,35 @@ use Omnipay\Omnipay;
  */
 class QueryRequest extends QueryBatchRequest
 {
-  protected $action = '';
-  protected $requestType = 'getSettledBatchListRequest';
-  protected $limit = 1000;
-  protected $offset = 1;
+  protected $startTimestamp;
+  protected $endTimestamp;
 
   /**
-   * Get Limit.
-   *
-   * @return int
+   * @return mixed
    */
-  public function getLimit() {
-    return $this->limit;
+  public function getStartTimestamp() {
+    return $this->startTimestamp;
   }
 
   /**
-   * Set Limit.
-   *
-   * @param int $limit
+   * @param mixed $startTimestamp
    */
-  public function setLimit($limit) {
-    $this->limit = $limit;
+  public function setStartTimestamp($startTimestamp) {
+    $this->startTimestamp = $startTimestamp;
   }
 
   /**
-   * Get offset.
-   *
-   * @return int
+   * @return mixed
    */
-  public function getOffset() {
-    return $this->offset;
+  public function getEndTimestamp() {
+    return $this->endTimestamp;
   }
 
   /**
-   * Set offset.
-   *
-   * @param int $offset
+   * @param mixed $endTimestamp
    */
-  public function setOffset($offset) {
-    $this->offset = $offset;
+  public function setEndTimestamp($endTimestamp) {
+    $this->endTimestamp = $endTimestamp;
   }
 
   /**
@@ -57,15 +47,15 @@ class QueryRequest extends QueryBatchRequest
   public function getData()
   {
     $data = $this->getBaseData();
-    $data->searchType = 'subscriptionActive';
-    $data->sorting->orderBy = 'id';
-    $data->sorting->orderDescending = true;
-    $data->paging->limit = $this->getLimit();
-    $data->paging->offset = $this->getOffset();
+    if ($this->getStartTimestamp()) {
+        $data->firstSettlementDate = date('Y-m-d\Th:i:s\Z', $this->getStartTimestamp());
+        $data->lastSettlementDate = date('Y-m-d\Th:i:s\Z');
+    }
+    if ($this->getEndTimestamp()) {
+        $data->lastSettlementDate = date('Y-m-d\Th:i:s\Z', $this->getEndTimestamp());
+    }
     return $data;
   }
-
-  protected function addTransactionType(\SimpleXMLElement $data) {}
 
   public function sendData($data)
   {
@@ -73,6 +63,7 @@ class QueryRequest extends QueryBatchRequest
     $data = $data->saveXml();
     $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
 
-    return $this->response = new QueryResponse($this, $httpResponse->getBody());
+    $this->response = new QueryResponse($this, $httpResponse->getBody());
+    return $this->response;
   }
 }

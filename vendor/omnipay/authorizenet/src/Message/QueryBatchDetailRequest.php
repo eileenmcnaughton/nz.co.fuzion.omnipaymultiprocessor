@@ -7,25 +7,13 @@ use Omnipay\Common\CreditCard;
 /**
  * Authorize.Net AIM Authorize Request
  */
-class AIMPaymentPlanQueryRequest extends AIMAbstractRequest
+class QueryBatchDetailRequest extends QueryBatchRequest
 {
   protected $action = '';
-  protected $requestType = 'ARBGetSubscriptionRequest';
-  protected $recurringReference;
-
-  /**
-   * @return string
-   */
-  public function getRecurringReference() {
-    return $this->recurringReference;
-  }
-
-  /**
-   * @param string $recurringReference
-   */
-  public function setRecurringReference($recurringReference) {
-    $this->recurringReference = $recurringReference;
-  }
+  protected $requestType = 'getTransactionListRequest';
+  protected $limit = 1000;
+  protected $offset = 1;
+  protected $batchID;
 
   /**
    * Get Limit.
@@ -69,11 +57,9 @@ class AIMPaymentPlanQueryRequest extends AIMAbstractRequest
   public function getData()
   {
     $data = $this->getBaseData();
-    $data->subscriptionId = $this->getRecurringReference();
+    $data->batchId = $this->getBatchID();
     return $data;
   }
-
-  protected function addTransactionType(\SimpleXMLElement $data) {}
 
   public function sendData($data)
   {
@@ -81,6 +67,13 @@ class AIMPaymentPlanQueryRequest extends AIMAbstractRequest
     $data = $data->saveXml();
     $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
 
-    return $this->response = new AIMPaymentPlanQueryResponse($this, $httpResponse->getBody());
+    return $this->response = new QueryBatchDetailResponse($this, $httpResponse->getBody());
+  }
+
+  public function setBatchID($batchID) {
+    $this->batchID = $batchID;
+  }
+  public function getBatchID() {
+    return $this->batchID;
   }
 }

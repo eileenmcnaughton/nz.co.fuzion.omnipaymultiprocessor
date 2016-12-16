@@ -7,22 +7,20 @@ use Omnipay\AuthorizeNet\Model\TransactionReference;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Omnipay;
 
 /**
  * Authorize.Net AIM Response
  */
 class AIMPaymentPlanQueryResponse extends AbstractResponse
 {
-    /**
-     * For Error codes: @see https://developer.authorize.net/api/reference/responseCodes.html
-     */
-    const ERROR_RESPONSE_CODE_CANNOT_ISSUE_CREDIT = 54;
+    protected $subscription;
+    protected $profile;
 
     public function __construct(AbstractRequest $request, $data)
     {
         // Strip out the xmlns junk so that PHP can parse the XML
-        $xml = preg_replace('/<ARBGetSubscriptionListRequest[^>]+>/', '<ARBGetSubscriptionListRequest>', (string)$data);
-
+        $xml = preg_replace('/<ARBGetSubscriptionRequest[^>]+>/', '<ARBGetSubscriptionRequest>', (string)$data);
         try {
             $xml = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOWARNING);
         } catch (\Exception $e) {
@@ -34,6 +32,8 @@ class AIMPaymentPlanQueryResponse extends AbstractResponse
         }
 
         parent::__construct($request, $xml);
+        $result = $this->xml2array($this->data->subscription, TRUE);
+        $this->subscription = $result['subscription'][0];
     }
 
     public function isSuccessful()
@@ -41,9 +41,60 @@ class AIMPaymentPlanQueryResponse extends AbstractResponse
         return 1 === $this->getResultCode();
     }
 
-    public function getPlanData() {
-        $result = $this->xml2array($this->data->subscriptionDetails, TRUE);
-        return $result['subscriptionDetails'][0]['subscriptionDetail'];
+    public function getData() {
+        return $this->subscription;
+    }
+
+    public function getRecurStartDate() {
+        return $this->subscription['paymentSchedule']['interval']['startDate'];
+    }
+
+    public function getRecurInstallmentLimit() {
+        return $this->subscription['paymentSchedule']['interval']['totalOccurrences'];
+    }
+
+    public function getRecurrenceInterval() {
+        return $this->subscription['paymentSchedule']['interval'][0]['length'];
+    }
+
+    public function getRecurAmount() {
+        return $this->subscription['amount'];
+    }
+
+    public function getRecurReference() {
+        echo "he";
+        print_r($this->subscription);
+    }
+
+    public function getContactReference() {
+        $profileID = $this->subscription['profile'][0]['customerProfileId'];
+        $gateway = $gateway = Omnipay::create('AuthorizeNet_CIM');
+        $gateway->setApiLoginId($this->request->getApiLoginId());
+        $gateway->setHashSecret($this->request->getHashSecret());
+        $gateway->setTransactionKey($this->request->getTransactionKey());
+        $data = array(
+            'customerProfileId' => $profileID,
+            'customerPaymentProfileId' => $this->subscription['profile'][0]['paymentProfile'][0]['customerPaymentProfileId'],
+        );
+        $dataResponse = $gateway->getProfile($data)->send();
+        return $dataResponse->getCustomerId();
+    }
+
+    /**
+     * @todo formalise options.
+     *
+     * @return mixed
+     */
+    public function getRecurStatus() {
+        return $this->subscription['paymentSchedule']['interval'][0]['status'];
+    }
+
+    public function getRecurrenceUnit() {
+        $interval =  $this->subscription['paymentSchedule']['interval'][0]['unit'];
+        $options = array(
+            'months' => 'month',
+        );
+        return $options[$interval];
     }
 
     /**

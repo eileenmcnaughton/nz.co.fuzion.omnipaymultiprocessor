@@ -7,12 +7,13 @@ use Omnipay\Common\CreditCard;
 /**
  * Authorize.Net AIM Authorize Request
  */
-class QueryDetailRequest extends AIMAbstractRequest
+class QueryDetailRequest extends QueryBatchRequest
 {
   protected $action = '';
-  protected $requestType = 'getSettledBatchListRequest';
+  protected $requestType = 'getTransactionDetailsRequest';
   protected $limit = 1000;
   protected $offset = 1;
+  protected $transactionReference;
 
   /**
    * Get Limit.
@@ -56,10 +57,9 @@ class QueryDetailRequest extends AIMAbstractRequest
   public function getData()
   {
     $data = $this->getBaseData();
+    $data->transId = $this->getTransactionReference();
     return $data;
   }
-
-  protected function addTransactionType(\SimpleXMLElement $data) {}
 
   public function sendData($data)
   {
@@ -67,6 +67,13 @@ class QueryDetailRequest extends AIMAbstractRequest
     $data = $data->saveXml();
     $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
 
-    return $this->response = new QueryResponse($this, $httpResponse->getBody());
+    return $this->response = new QueryDetailResponse($this, $httpResponse->getBody());
+  }
+
+  public function setTransactionReference($transactionReference) {
+    $this->transactionReference = $transactionReference;
+  }
+  public function getTransactionReference() {
+    return $this->transactionReference;
   }
 }

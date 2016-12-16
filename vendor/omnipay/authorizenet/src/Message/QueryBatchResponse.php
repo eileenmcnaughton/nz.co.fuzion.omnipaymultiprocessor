@@ -42,10 +42,8 @@ class QueryBatchResponse extends AbstractResponse
     }
 
     public function getData() {
-        echo "resp";
-        print_r($this->data);
-        $result = $this->xml2array($this->data->subscriptionDetails, TRUE);
-        return $result['subscriptionDetails'][0]['subscriptionDetail'];
+        $result = $this->xml2array($this->data->batchList, TRUE);
+        return $result['batchList'][0]['batch'];
     }
 
     /**
