@@ -159,7 +159,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         // Serialization of 'Closure' is not allowed error - issue #17
         $this->gateway = NULL;
         CRM_Core_Session::storeSessionObjects(FALSE);
-        if ($$isTransparentRedirect) {
+        if ($response->isTransparentRedirect()) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
             'payment_processor_id' => $this->_paymentProcessor['id'],
             'post_submit_url' => $response->getRedirectURL(),
