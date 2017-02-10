@@ -14,10 +14,6 @@ namespace Omnipay\Eway\Message;
  * This requires the TokenCustomerID of the token being updated, handled
  * in OmniPay as the cardReference.
  *
- * Note that since no transaction is processed, the transaction
- * status is returned as false when a token is created. This means that
- * isSuccessful() cannot be used to check for success.
- *
  * Example:
  *
  * <code>
@@ -52,7 +48,9 @@ namespace Omnipay\Eway\Message;
  *   ));
  *
  *   $response = $request->send();
- *   $cardReference = $response->getCardReference();
+ *   if ($response->isSuccessful()) {
+ *       $cardReference = $response->getCardReference();
+ *   }
  * </code>
  *
  * @link https://eway.io/api-v3/#direct-connection
@@ -79,5 +77,14 @@ class RapidDirectUpdateCardRequest extends RapidDirectAbstractRequest
     protected function getEndpoint()
     {
         return $this->getEndpointBase().'/DirectPayment.json';
+    }
+
+    public function sendData($data)
+    {
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, json_encode($data))
+            ->setAuth($this->getApiKey(), $this->getPassword())
+            ->send();
+
+        return $this->response = new RapidDirectCreateCardResponse($this, $httpResponse->json());
     }
 }

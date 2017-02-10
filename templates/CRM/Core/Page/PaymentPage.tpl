@@ -4,6 +4,8 @@
   {/foreach}
   {foreach from=$display_fields key=display_field item=field_spec}
     {assign var='core_field_name' value=$field_spec.core_field_name}
+    {assign var='core_field_name_m' value=$field_spec.core_field_name_m}
+    {assign var='core_field_name_y' value=$field_spec.core_field_name_y}
     <div class="crm-section {$core_field_name}-section">
       <div class="label">{ts}{$field_spec.title}{/ts} <span class="crm-marker" title="This field is required.">*</span></div>
       <div class="content">
@@ -26,7 +28,7 @@
         </select>
       {elseif $field_spec.htmlType == 'date'}
         {*  @todo - fix this hard-coding hack *}
-        <select class="crm-form-date required" id="{$display_field}_M" name="card_expiry_date[M]">
+        <select class="crm-form-date required" id="{if $core_field_name_m}{$display_field}{else}{$display_field}_M{/if}" name="{if $core_field_name_m}{$core_field_name_m}{else}{$core_field_name}[M]{/if}">
           <option value="">-month-</option>
           <option value="01">Jan</option>
           <option value="02">Feb</option>
@@ -41,7 +43,7 @@
           <option value="11">Nov</option>
           <option value="12">Dec</option>
         </select>&nbsp;
-        <select class="crm-form-date required" id="{$display_field}_Y" name="card_expiry_date[Y]">
+        <select class="crm-form-date required" id="{if $core_field_name_y}{$display_field}{else}{$display_field}_Y{/if}" name="{if $core_field_name_y}{$core_field_name_y}{else}{$core_field_name}[Y]{/if}">
           <option value="">-year-</option>
           {foreach from=$field_spec.options.year item=year}
             <option value="{$year}">{$year}</option>

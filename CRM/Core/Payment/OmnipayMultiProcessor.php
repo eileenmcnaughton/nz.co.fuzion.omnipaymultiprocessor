@@ -520,6 +520,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function getTransparentDirectDisplayFields() {
     $corePaymentFields = $this->getCorePaymentFields();
+    // Get processor specific payment fields
+    $processorPaymentFields = $this->getProcessorPaymentFields();
+    $corePaymentFields = array_merge($corePaymentFields, $processorPaymentFields);
     $paymentFieldMappings = $this->getPaymentFieldMapping();
     foreach ($paymentFieldMappings as $fieldName => $fieldSpec) {
       $paymentFieldMappings[$fieldName] = array_merge($corePaymentFields[$fieldSpec['core_field_name']], $fieldSpec);
@@ -530,27 +533,62 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * Get mapping for payment fields.
    *
-   * We are just getting the cybersource specific mapping for now - see comments on
+   * Default is the cybersource specific mapping for now - see comments on
    * getTransparentDirectDisplayFields.
+   *
+   * Add new cases for processor types as they come, then define mappings as required by processors.
    *
    * @return array
    */
   private function getPaymentFieldMapping() {
-    return array(
-      'card_type' => array(
-        'core_field_name' => 'credit_card_type',
-        'options' => array(
-          '' => ts('- select -'),
-          '001' => 'Visa',
-          '002' => 'Mastercard',
-          '003' => 'Amex',
-          '004' => 'Discover',
-        ),
-      ),
-      'card_number' => array('core_field_name' => 'credit_card_number'),
-      'card_expiry_date' => array('core_field_name' => 'credit_card_exp_date'),
-      'card_cvn' => array('core_field_name' => 'cvv2'),
-    );
+    $processor = $this;
+    $this->ensurePaymentProcessorTypeIsSet();
+    $processorType = $this->_paymentProcessor['payment_processor_type'];
+
+    switch ($processorType) {
+      case 'omnipay_Eway_RapidDirect':
+      case 'omnipay_Eway_Rapid':
+      case 'omnipay_Eway_RapidShared':
+        $mapping = array(
+          'card_type' => array(
+            'core_field_name' => 'credit_card_type',
+            'options' => array(
+              '' => ts('- select -'),
+              '001' => 'Visa',
+              '002' => 'Mastercard',
+              '003' => 'Amex',
+              '004' => 'Discover',
+            ),
+          ),
+          'EWAY_CARDNUMBER' => array('core_field_name' => 'credit_card_number'),
+          'EWAY_CARDEXPIRY' => array(
+              'core_field_name' => 'credit_card_exp_date',
+              'core_field_name_m' => 'EWAY_CARDEXPIRYMONTH',
+              'core_field_name_y' => 'EWAY_CARDEXPIRYYEAR',
+            ),
+          'EWAY_CARDCVN' => array('core_field_name' => 'cvv2'),
+          'EWAY_CARDNAME' => array('core_field_name' => 'EWAY_CARDNAME'),
+        );
+        break;
+      default:
+        $mapping = array(
+          'card_type' => array(
+            'core_field_name' => 'credit_card_type',
+            'options' => array(
+              '' => ts('- select -'),
+              '001' => 'Visa',
+              '002' => 'Mastercard',
+              '003' => 'Amex',
+              '004' => 'Discover',
+            ),
+          ),
+          'card_number' => array('core_field_name' => 'credit_card_number'),
+          'card_expiry_date' => array('core_field_name' => 'credit_card_exp_date'),
+          'card_cvn' => array('core_field_name' => 'cvv2'),
+        );
+        break;
+    }
+    return $mapping;
   }
 
   /**
@@ -602,6 +640,42 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'is_required' => FALSE,
       ),
     );
+  }
+
+  /**
+   * Get payment processor payment fields.
+   *
+   * @return array
+   */
+  private function getProcessorPaymentFields() {
+    $processor = $this;
+    $this->ensurePaymentProcessorTypeIsSet();
+    $processorType = $this->_paymentProcessor['payment_processor_type'];
+
+    switch ($processorType) {
+      case 'omnipay_Eway_RapidDirect':
+      case 'omnipay_Eway_Rapid':
+      case 'omnipay_Eway_RapidShared':
+        $fields = array (
+          'EWAY_CARDNAME' => array(
+            'htmlType' => 'text',
+            'name' => 'EWAY_CARDNAME',
+            'title' => ts('Card Holder Name'),
+            'cc_field' => TRUE,
+            'attributes' => array(
+              'size' => 20,
+              'maxlength' => 20,
+              'autocomplete' => 'off',
+            ),
+            'is_required' => TRUE,
+          ),
+        );
+        break;
+      default:
+        $fields = array();
+        break;
+    }
+    return $fields;
   }
 
   /**
@@ -809,9 +883,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
     $response = $this->gateway->completePurchase($params)->send();
-
-    if ($response->getTransactionId()) {
-      $this->setTransactionID($response->getTransactionId());
+    // Set the Transaction ID.
+    // If we're using an eWay processor, we want to get the Invoice Number from the eWay response. This should be the CiviCRM Contribution ID.
+    if (stripos($paymentProcessorTypeName, 'eway') !== FALSE) {
+      $this->setTransactionID($response->getInvoiceNumber());
+    } else {
+      if ($response->getTransactionId()) {
+        $this->setTransactionID($response->getTransactionId());
+      }
     }
     if ($response->isSuccessful()) {
       try {
