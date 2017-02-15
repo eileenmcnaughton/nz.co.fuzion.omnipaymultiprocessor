@@ -380,7 +380,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     }
     $creditCardOptions = array(
       'amount' => $amount,
-      // Contribution page in 4.4 passes currencyID - not sure which passes currency (if any).
+      // Contribution page in 4.4 (confirmed Event online, 4.7) passes currencyID - not sure which passes currency (if any).
       'currency' => strtoupper(!empty($params['currencyID']) ? $params['currencyID'] : $params['currency']),
       'description' => $this->getPaymentDescription($params),
       'transactionId' => $this->transaction_id,
@@ -808,11 +808,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->createGateway($params['processor_id']);
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
-    $response = $this->gateway->completePurchase($params)->send();
+    try {
+      $response = $this->gateway->completePurchase($params)->send();
 
-    if ($response->getTransactionId()) {
-      $this->setTransactionID($response->getTransactionId());
+      if ($response->getTransactionId()) {
+        $this->setTransactionID($response->getTransactionId());
+      }
     }
+    catch (\Omnipay\Common\Exception\InvalidRequestException $e) {
+      $this->redirectOrExit('success');
+    }
+
     if ($response->isSuccessful()) {
       try {
         //cope with CRM14950 not being implemented
