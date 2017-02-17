@@ -810,12 +810,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $_REQUEST = $params;
     try {
       $response = $this->gateway->completePurchase($params)->send();
-
       if ($response->getTransactionId()) {
         $this->setTransactionID($response->getTransactionId());
       }
     }
     catch (\Omnipay\Common\Exception\InvalidRequestException $e) {
+      $q = explode('/', CRM_Utils_Array::value(CRM_Core_Config::singleton()->userFrameworkURLVar, $_GET, ''));
+      array_pop($q);
+      $this->setTransactionID(array_pop($q));
       $this->redirectOrExit('success');
     }
 

@@ -184,7 +184,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected function getNotifyUrl($allowLocalHost = FALSE) {
     if (omnipaymultiprocessor__versionAtLeast(4.6)) {
       $url = CRM_Utils_System::url(
-        'civicrm/payment/ipn/' . $this->_paymentProcessor['id'],
+        'civicrm/payment/ipn/' . $this->transaction_id . '/' . $this->_paymentProcessor['id'],
         array(),
         TRUE,
         NULL,
@@ -214,9 +214,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    */
   protected function storeReturnUrls($qfKey, $participantID = NULL, $eventID = NULL) {
     CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($qfKey));
-    CRM_Core_Session::singleton()->set("ipn_success_url_fallback", $this->getReturnSuccessUrl($qfKey));
     CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($qfKey, $participantID, $eventID));
-    CRM_Core_Session::singleton()->set("ipn_fail_url_fallback", $this->getReturnFailUrl($qfKey, $participantID, $eventID));
   }
 
   /**
@@ -239,7 +237,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *   Url to redirect to
    */
   protected function getStoredUrl($type) {
-    return CRM_Core_Session::singleton()->get("ipn_{$type}_url_" . ($this->transaction_id ? : 'fallback'));
+    return CRM_Core_Session::singleton()->get("ipn_{$type}_url_{$this->transaction_id}");
   }
 
   /**
