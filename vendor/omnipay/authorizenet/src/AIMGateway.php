@@ -6,6 +6,7 @@ use Omnipay\AuthorizeNet\Message\AIMAuthorizeRequest;
 use Omnipay\AuthorizeNet\Message\AIMCaptureRequest;
 use Omnipay\AuthorizeNet\Message\AIMPaymentPlanQueryResponse;
 use Omnipay\AuthorizeNet\Message\AIMPurchaseRequest;
+use Omnipay\AuthorizeNet\Message\QueryRequest;
 use Omnipay\AuthorizeNet\Message\AIMRefundRequest;
 use Omnipay\AuthorizeNet\Message\AIMVoidRequest;
 use Omnipay\Common\AbstractGateway;
@@ -27,6 +28,7 @@ class AIMGateway extends AbstractGateway
             'transactionKey'    => '',
             'testMode'          => false,
             'developerMode'     => false,
+            'hashSecret'        => '',
             'liveEndpoint'      => 'https://api2.authorize.net/xml/v1/request.api',
             'developerEndpoint' => 'https://apitest.authorize.net/xml/v1/request.api',
         );
@@ -155,7 +157,7 @@ class AIMGateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AIMPaymentPlansQueryResponse
+     * @return AIMPaymentPlansQueryRequest
      */
     public function paymentPlansQuery(array $parameters = array())
     {

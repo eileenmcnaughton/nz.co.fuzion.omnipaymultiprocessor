@@ -20,7 +20,8 @@ class QueryResponse extends QueryBatchResponse
         $result = array();
         /** @var \Omnipay\AuthorizeNet\AIMGateway $gateway */
         $gateway = Omnipay::create('AuthorizeNet_AIM');
-        foreach ($data as $batch) {
+        if (!empty($data)) {
+          foreach ($data as $batch) {
             $gateway->setApiLoginId($this->request->getApiLoginId());
             $gateway->setHashSecret($this->request->getHashSecret());
             $gateway->setTransactionKey($this->request->getTransactionKey());
@@ -28,9 +29,11 @@ class QueryResponse extends QueryBatchResponse
             $dataResponse = $gateway->queryBatchDetail($data)->send();
             $transactions = $dataResponse->getData();
             foreach ($transactions as $transaction) {
-                $detailResponse = $gateway->queryDetail(array('transactionReference' => $transaction['transId']))->send();
-                $result[] = $detailResponse;
+              $detailResponse = $gateway->queryDetail(array('transactionReference' => $transaction['transId']))
+                ->send();
+              $result[] = $detailResponse;
             }
+          }
         }
         return $result;
     }
