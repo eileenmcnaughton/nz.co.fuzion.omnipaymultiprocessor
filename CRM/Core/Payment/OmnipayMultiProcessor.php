@@ -265,7 +265,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   private function hasBillingAddressFields($params) {
-    $billingFields = array_intersect_key($params, array_flip($this->getBillingAddressFieldsPre47()));
+    $billingFields = array_intersect_key($params, array_flip($this->getBillingAddressFields()));
     return !empty($billingFields);
   }
 
@@ -447,38 +447,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
-   * Get name for the payment information type.
-   * @todo - use option group + name field (like Omnipay does)
-   * @return string
-   */
-  public function getPaymentTypeName() {
-    return $this->_paymentProcessor['payment_type'] == 1 ? 'credit_card' : 'direct_debit';
-  }
-
-  /**
-   * Get label for the payment information type.
-   *
-   * We are overriding this for the transparent redirect use case.
-   * Cybersource (our current example) adds billing details which is what we
-   * are calling this here.
-   *
-   * @return string
-   */
-  public function getPaymentTypeLabel() {
-    switch ($this->_paymentProcessor['payment_type']) {
-      case 1:
-        return 'Credit Card';
-
-      case 2:
-        return 'Direct Debit';
-
-      default:
-        return 'Billing';
-    }
-    return $this->_paymentProcessor['payment_type'] == 1 ? 'Credit Card' : 'Direct Debit';
-  }
-
-  /**
    * Get billing fields required for this block.
    *
    * @todo move this metadata requirement onto the class - or the mgd files
@@ -630,147 +598,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $billingFields[$addressField]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
     }
     return $billingFields;
-  }
-
-  /**
-   * Get core CiviCRM address fields.
-   *
-   * @return array
-   */
-  private function getBillingAddressFieldsPre47() {
-    $billingFields = array();
-    foreach (array(
-      'street_address',
-      'city',
-      'state_province_id',
-      'postal_code',
-      'country_id',
-      ) as $addressField) {
-      $billingFields[$addressField]  = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
-    }
-    return $billingFields;
-  }
-
-  /**
-   * Get metadata for payment form fields.
-   *
-   * @return array
-   */
-  public function getPaymentFormFieldsMetadata() {
-    // @todo - handle redirect for 4.7
-    return parent::getPaymentFormFieldsMetadata();
-    return self::getBillingAddressFieldsMetadataPre47();
-  }
-
-  /**
-   * Get form metadata for address fields.
-   *
-   * At the moment this is being called from getPaymentFormFields when we are
-   * dealing with a transparent redirect. It is a bit Cybersource use-casey.
-   *
-   * @return array
-   *   Array of metadata for address fields.
-   */
-  public function getBillingAddressFieldsMetadataPre47() {
-    $metadata = array();
-    $billingID = CRM_Core_BAO_LocationType::getBilling();
-    $metadata['billing_first_name'] = array(
-      'htmlType' => 'text',
-      'name' => 'billing_first_name',
-      'title' => ts('Billing First Name'),
-      'cc_field' => TRUE,
-      'attributes' => array(
-        'size' => 30,
-        'maxlength' => 60,
-        'autocomplete' => 'off',
-      ),
-      'is_required' => TRUE,
-    );
-
-    $metadata['billing_middle_name'] = array(
-      'htmlType' => 'text',
-      'name' => 'billing_middle_name',
-      'title' => ts('Billing Middle Name'),
-      'cc_field' => TRUE,
-      'attributes' => array(
-        'size' => 30,
-        'maxlength' => 60,
-        'autocomplete' => 'off',
-      ),
-      'is_required' => FALSE,
-    );
-
-    $metadata['billing_last_name'] = array(
-      'htmlType' => 'text',
-      'name' => 'billing_last_name',
-      'title' => ts('Billing Last Name'),
-      'cc_field' => TRUE,
-      'attributes' => array(
-        'size' => 30,
-        'maxlength' => 60,
-        'autocomplete' => 'off',
-      ),
-      'is_required' => TRUE,
-    );
-
-    $metadata["billing_street_address-{$billingID}"] = array(
-      'htmlType' => 'text',
-      'name' => "billing_street_address-{$billingID}",
-      'title' => ts('Street Address'),
-      'cc_field' => TRUE,
-      'attributes' => array(
-        'size' => 30,
-        'maxlength' => 60,
-        'autocomplete' => 'off',
-      ),
-      'is_required' => TRUE,
-    );
-
-    $metadata["billing_city-{$billingID}"] = array(
-      'htmlType' => 'text',
-      'name' => "billing_city-{$billingID}",
-      'title' => ts('City'),
-      'cc_field' => TRUE,
-      'attributes' => array(
-        'size' => 30,
-        'maxlength' => 60,
-        'autocomplete' => 'off',
-      ),
-      'is_required' => TRUE,
-    );
-
-    $metadata["billing_state_province_id-{$billingID}"] = array(
-      'htmlType' => 'chainSelect',
-      'title' => ts('State/Province'),
-      'name' => "billing_state_province_id-{$billingID}",
-      'cc_field' => TRUE,
-      'is_required' => TRUE,
-    );
-
-    $metadata["billing_postal_code-{$billingID}"] = array(
-      'htmlType' => 'text',
-      'name' => "billing_postal_code-{$billingID}",
-      'title' => ts('Postal Code'),
-      'cc_field' => TRUE,
-      'attributes' => array(
-        'size' => 30,
-        'maxlength' => 60,
-        'autocomplete' => 'off',
-      ),
-      'is_required' => TRUE,
-    );
-
-    $metadata["billing_country_id-{$billingID}"] = array(
-      'htmlType' => 'select',
-      'name' => "billing_country_id-{$billingID}",
-      'title' => ts('Country'),
-      'cc_field' => TRUE,
-      'attributes' => array(
-        '' => ts('- select -'),
-      ) + CRM_Core_PseudoConstant::country(),
-      'is_required' => TRUE,
-    );
-    return $metadata;
   }
 
   /**
@@ -933,9 +760,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws \CiviCRM_API3_Exception
    */
   protected function storePaymentToken($params, $contribution, $tokenReference) {
-    if (!omnipaymultiprocessor__versionAtLeast(4.6)) {
-      return;
-    }
     $contributionRecurID = $contribution['contribution_recur_id'];
     $token = civicrm_api3('payment_token', 'create', array(
       'contact_id' => $contribution['contact_id'],

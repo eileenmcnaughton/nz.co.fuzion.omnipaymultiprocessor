@@ -182,26 +182,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *    URL to notify outcome of transaction.
    */
   protected function getNotifyUrl($allowLocalHost = FALSE) {
-    if (omnipaymultiprocessor__versionAtLeast(4.6)) {
-      $url = CRM_Utils_System::url(
-        'civicrm/payment/ipn/' . $this->transaction_id . '/' . $this->_paymentProcessor['id'],
-        array(),
-        TRUE,
-        NULL,
-        FALSE
-      );
-    }
-    else {
-      $url = CRM_Utils_System::url(
-        'civicrm/payment/ipn',
-        array(
-          'processor_id' => $this->_paymentProcessor['id'],
-        ),
-        TRUE,
-        NULL,
-        FALSE
-      );
-    }
+    $url = CRM_Utils_System::url(
+      'civicrm/payment/ipn/' . $this->transaction_id . '/' . $this->_paymentProcessor['id'],
+      array(),
+      TRUE,
+      NULL,
+      FALSE
+    );
     return $allowLocalHost ? $url : ((stristr($url, '.')) ? $url : '');
   }
 
@@ -288,20 +275,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     // Reset gateway to NULL so don't cache it. The size of the object or closures within it could
     // cause problems when serializing & saving.
     $this->gateway = NULL;
-    if (omnipaymultiprocessor__versionAtLeast(4.5)) {
-      $log = new CRM_Utils_SystemLogger();
-      $log->log($level, $message, (array) $context);
-    }
-    else {
-      CRM_Core_Error::debug($errorCode . ': ' . $message . print_r($context, TRUE));
-    }
+    $log = new CRM_Utils_SystemLogger();
+    $log->log($level, $message, (array) $context);
+
     $userMessage = $userMessage ? $userMessage : $message;
     CRM_Core_Session::setStatus($userMessage);
-    if (omnipaymultiprocessor__versionAtLeast(4.7)) {
-      throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
-    }
-
-    return new CRM_Core_Error();
+    throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
   }
 
   /**

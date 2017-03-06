@@ -21,12 +21,9 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
     $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, TRUE));
     $paymentProcessorID = $formData['payment_processor_id'];
     $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
-    if (omnipaymultiprocessor__versionAtLeast(4.7)) {
-      $processor = Civi\Payment\System::singleton()->getByProcessor($paymentProcessor);
-    }
-    else {
-      $processor = CRM_Core_Payment::singleton('contribute', $paymentProcessor);
-    }
+
+    $processor = Civi\Payment\System::singleton()->getByProcessor($paymentProcessor);
+
     $displayFields = $processor->getTransparentDirectDisplayFields();
     foreach ($displayFields as $fieldName => $displayField) {
       if ($displayField['htmlType'] == 'date') {
