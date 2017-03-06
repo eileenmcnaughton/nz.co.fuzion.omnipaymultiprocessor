@@ -134,7 +134,7 @@ class AIMResponse extends AbstractResponse
             }
         } catch (\Exception $e) {
         }
-
+return (string)$body->transId;
         return $serialize ? (string)$transactionRef : $transactionRef;
     }
 }
