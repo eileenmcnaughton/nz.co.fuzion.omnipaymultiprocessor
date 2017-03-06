@@ -645,6 +645,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $q = explode('/', CRM_Utils_Array::value(CRM_Core_Config::singleton()->userFrameworkURLVar, $_GET, ''));
       array_pop($q);
       $this->setTransactionID(array_pop($q));
+      if (!civicrm_api3('Contribution', 'getcount', array(
+        'id' => $this->transaction_id,
+        'contribution_status_id' => array('IN' => array('Completed', 'Pending'))
+      ))) {
+        $this->redirectOrExit('fail');
+      }
       $this->redirectOrExit('success');
     }
 
