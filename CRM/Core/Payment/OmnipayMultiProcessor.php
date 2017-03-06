@@ -143,6 +143,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if (!empty($params['is_recur'])) {
         $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
       }
+      elseif (!empty($params['token'])) {
+        $params['transactionReference'] = ($params['token']);
+        $response = $this->gateway->capture($this->getCreditCardOptions($params, $component))
+          ->send();
+      }
       else {
         $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))
           ->send();
@@ -195,7 +200,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $this->gateway->$fn($value);
       }
       if (in_array('testMode', array_keys($this->gateway->getDefaultParameters()))) {
-        $this->gateway->setTestMode($this->_is_test);
+        if (method_exists($this->gateway, 'setDeveloperMode')) {
+          $this->gateway->setDeveloperMode($this->_is_test);
+        }
+        else {
+          $this->gateway->setTestMode($this->_is_test);
+        }
       }
     }
     catch (Exception $e) {
@@ -229,6 +239,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $result[$this->camelFieldName($processorFields[$label])] = $this->_paymentProcessor[$field];
     }
     return $result;
+  }
+
+  /**
+   * Get preapproval details that have been set.
+   *
+   * @param array $detail
+   *
+   * @return array mixed
+   */
+  function getPreApprovalDetails($detail) {
+    return $detail;
   }
 
   /**
@@ -390,6 +411,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'notifyUrl' => $this->getNotifyUrl(),
       'card' => $this->getCreditCardObjectParams($params),
       'cardReference' => CRM_Utils_Array::value('token', $params),
+      'transactionReference' => CRM_Utils_Array::value('token', $params),
     );
     if (!empty($params['action'])) {
       $creditCardOptions['action'] = 'Purchase';
@@ -829,6 +851,76 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected function supportsFutureRecurStartDate() {
     return $this->_paymentProcessor['is_recur'];
+  }
+
+  /**
+   * Is an authorize-capture flow supported.
+   *
+   * @return bool
+   */
+  protected function supportsPreApproval() {
+    $entities = array();
+    omnipaymultiprocessor_civicrm_managed($entities);
+    foreach ($entities as $entity) {
+      if ($entity['entity'] === 'payment_processor_type') {
+        if (!empty($entity['params']['supports_preapproval'])) {
+          return TRUE;
+        }
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Function to action pre-approval if supported
+   *
+   * @param array $params
+   *   Parameters from the form
+   *
+   * This function returns an array which should contain
+   *   - pre_approval_parameters (this will be stored on the calling form & available later)
+   *   - redirect_url (if set the browser will be redirected to this.
+   *
+   * @return array
+   */
+  public function doPreApproval(&$params) {
+    $this->_component = 'contribute';
+    $this->ensurePaymentProcessorTypeIsSet();
+    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
+    $this->setProcessorFields();
+    $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
+    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
+    $this->saveBillingAddressIfRequired($params);
+
+    try {
+      $response = $this->gateway->authorize($this->getCreditCardOptions($params, 'contribute'))
+        ->send();
+      if ($response->isSuccessful()) {
+        $params['trxn_id'] = $params['token'] = $response->getTransactionReference();
+        $creditCardPan = '************' . substr($params['credit_card_number'], -4);
+        foreach ($_SESSION as $key => $value) {
+          if (isset($value['values'])) {
+            foreach ($value['values'] as $pageName => $pageValues) {
+              if (isset($pageValues['credit_card_number'])) {
+                unset($_SESSION[$key]['values'][$pageName]['cvv2']);
+                $_SESSION[$key]['values'][$pageName]['credit_card_number'] = $creditCardPan;
+              }
+            }
+          }
+        }
+        unset($params['credit_card_number']);
+        unset($params['cvv2']);
+        return array(
+          'pre_approval_parameters' => array('token' => $response->getTransactionReference())
+        );
+      }
+      else {
+        return $this->handleError('alert', 'failed processor transaction ' . $this->_paymentProcessor['payment_processor_type'], (array) $response, 9001, $response->getMessage());
+      }
+    } catch (\Exception $e) {
+      // internal error, log exception and display a generic message to the customer
+      return $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
+    }
   }
 
   /**
