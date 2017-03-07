@@ -25,6 +25,7 @@ class QueryResponse extends QueryBatchResponse
             $gateway->setApiLoginId($this->request->getApiLoginId());
             $gateway->setHashSecret($this->request->getHashSecret());
             $gateway->setTransactionKey($this->request->getTransactionKey());
+            $gateway->setDeveloperMode($this->request->getDeveloperMode());
             $data = array('batch_id' => $batch['batchId']);
             $dataResponse = $gateway->queryBatchDetail($data)->send();
             $transactions = $dataResponse->getData();
