@@ -13,7 +13,7 @@
  */
 function civicrm_api3_payment_processor_query($params) {
   $processor = civicrm_api3('payment_processor', 'getsingle', array('id' => $params['payment_processor_id']));
-  $responder = new CRM_Core_Payment_OmnipayMultiProcessor('live', $processor);
+  $responder = new CRM_Core_Payment_OmnipayMultiProcessor(($processor['is_test'] ? 'test' : 'live'), $processor);
   $gatewayParams = array();
   if (!empty($params['start_date_time'])) {
     $gatewayParams['startTimestamp'] = strtotime($params['start_date_time']);
