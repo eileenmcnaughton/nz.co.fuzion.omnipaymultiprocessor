@@ -208,4 +208,13 @@ class AIMGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\AuthorizeNet\Message\QueryDetailRequest', $parameters);
     }
+
+    /**
+     * @param array $parameters
+     * @return QueryDetailResponse
+     */
+     public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\AuthorizeNet\Message\CIMCreateCardRequest', $parameters);
+    }
 }

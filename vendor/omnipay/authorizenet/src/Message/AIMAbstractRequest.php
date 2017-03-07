@@ -97,7 +97,7 @@ abstract class AIMAbstractRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->getDeveloperMode() || $this->getTestMode() ? $this->getDeveloperEndpoint() : $this->getLiveEndpoint();
+        return $this->getDeveloperMode() ? $this->getDeveloperEndpoint() : $this->getLiveEndpoint();
     }
 
     /**
