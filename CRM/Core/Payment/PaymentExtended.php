@@ -277,9 +277,6 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     $this->gateway = NULL;
     $log = new CRM_Utils_SystemLogger();
     $log->log($level, $message, (array) $context);
-
-    $userMessage = $userMessage ? $userMessage : $message;
-    CRM_Core_Session::setStatus($userMessage);
     throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
   }
 

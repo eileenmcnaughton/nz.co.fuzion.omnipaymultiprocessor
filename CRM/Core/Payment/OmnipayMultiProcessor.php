@@ -908,6 +908,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
             }
           }
         }
+        $this->gateway = NULL;
         unset($params['credit_card_number']);
         unset($params['cvv2']);
         return array(
@@ -915,11 +916,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         );
       }
       else {
+        $this->purgeSensitiveDataFromSession();
+        unset($params['credit_card_number']);
+        unset($params['cvv2']);
         return $this->handleError('alert', 'failed processor transaction ' . $this->_paymentProcessor['payment_processor_type'], (array) $response, 9001, $response->getMessage());
       }
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
+      $this->purgeSensitiveDataFromSession();
       // internal error, log exception and display a generic message to the customer
-      return $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
+      $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
     }
   }
 
@@ -979,6 +985,33 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     ));
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $paymentProcessorTypeName));
     $this->setProcessorFields();
+  }
+
+  /**
+   * Remove sensitive data from the session before it is stored.
+   *
+   * @return array
+   */
+  protected function purgeSensitiveDataFromSession() {
+    foreach ($_SESSION as &$key) {
+      if (isset($key['values']) && is_array($key['values'])) {
+        foreach ($key['values'] as &$values) {
+          foreach (array(
+                     'credit_card_number',
+                     'cvv2',
+                     'credit_cate_type'
+                   ) as $fieldName) {
+            if (!empty($values[$fieldName])) {
+              $values[$fieldName] = '';
+            }
+          }
+          if (isset($values['credit_card_exp_date'])) {
+            $values['credit_card_exp_date'] = array('M' => '', 'Y' => '');
+          }
+        }
+      }
+    }
+    return array($key, $values);
   }
 
 }
