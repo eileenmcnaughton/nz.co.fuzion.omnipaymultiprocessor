@@ -38,7 +38,12 @@ class QueryBatchResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        return 1 === $this->getResultCode();
+        return 'Ok' === $this->getResultCode();
+    }
+
+    public function getResultCode() {
+        $result = $this->xml2array($this->data->messages, TRUE);
+        return $result['messages'][0]['resultCode'];
     }
 
     public function getData() {

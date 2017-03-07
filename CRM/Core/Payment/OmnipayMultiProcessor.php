@@ -731,7 +731,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   public function query($params) {
     $this->createGateway($this->_paymentProcessor['id']);
     $response = $this->gateway->query($params)->send();
-    return $response->getData();
+    if ($response->isSuccessful()) {
+      return $response->getData();
+    }
+    throw new CRM_Core_Exception('Failed to retrieve data');
   }
 
   /**
