@@ -866,7 +866,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     omnipaymultiprocessor_civicrm_managed($entities);
     foreach ($entities as $entity) {
       if ($entity['entity'] === 'payment_processor_type') {
-        if (!empty($entity['params']['supports_preapproval'])) {
+        if (
+        $entity['params']['name'] === $this->_paymentProcessor['payment_processor_type']
+        && !empty($entity['params']['supports_preapproval'])) {
           return TRUE;
         }
       }
