@@ -332,6 +332,11 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
+   * Set transaction id - based on contribution id if exists or else a random string.
+   *
+   * Processors require this to be unique, and apply other constraints (eg DPS
+   * require it to be less than 16 characters).
+   *
    * Set transaction id - based on contribution id if exists or else a random string
    * Note that ideally the contribution ID would always be set in all flows but this would require a core change
    * currently it is not set on the on-site form flow - presumably to save creating & deleting them for failed transactions
@@ -342,12 +347,14 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    */
   protected function setTransactionID($contribution_id) {
     if ($contribution_id) {
-      $this->transaction_id = $contribution_id;
+      $this->transaction_id = $contribution_id . '-' . uniqid();
     }
     else {
-      $this->transaction_id = rand(0, 1000);
+      $this->transaction_id = uniqid();
     }
+    $this->transaction_id = substr($this->transaction_id, 0, 16);
   }
+
   /**
    * handle response from processor
    * (this doesn't do anything but by virtue of it existing at least the logger fires :-)
