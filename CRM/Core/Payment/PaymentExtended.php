@@ -275,6 +275,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     // Reset gateway to NULL so don't cache it. The size of the object or closures within it could
     // cause problems when serializing & saving.
     $this->gateway = NULL;
+    Civi::log()->log($level, $message, $context);
     $log = new CRM_Utils_SystemLogger();
     $log->log($level, $message, (array) $context);
     throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
