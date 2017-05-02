@@ -15,7 +15,7 @@
     <url desc="Licensing">http://civicrm.org/licensing</url>
   </urls>
   <releaseDate>2016-05-24</releaseDate>
-  <version>1.9</version>
+  <version>2.0</version>
   <develStage>stable</develStage>
   <compatibility>
     <ver>4.7</ver>
