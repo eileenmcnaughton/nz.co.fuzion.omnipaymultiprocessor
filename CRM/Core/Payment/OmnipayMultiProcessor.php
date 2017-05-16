@@ -768,6 +768,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *  - fail
    */
   protected function redirectOrExit($outcome) {
+    if ($outcome === 'fail') {
+      CRM_Core_Session::setStatus(ts('Your payment was not successful. Please try again'));
+    }
+
     if (($success_url = $this->getStoredUrl($outcome)) != FALSE) {
       CRM_Utils_System::redirect($success_url);
     }
