@@ -368,6 +368,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     return $cardFields;
   }
 
+  /**
+   * Get sensitive credit card fields.
+   *
+   * @param $params
+   *
+   * @return mixed
+   */
   private function getSensitiveCreditCardObjectOptions($params) {
     $basicMappings = array(
       'cvv' => 'cvv2',
