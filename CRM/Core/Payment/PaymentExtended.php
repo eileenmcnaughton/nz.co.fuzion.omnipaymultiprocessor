@@ -200,8 +200,14 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param int $eventID
    */
   protected function storeReturnUrls($qfKey, $participantID = NULL, $eventID = NULL) {
-    CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($qfKey));
-    CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($qfKey, $participantID, $eventID));
+    $successUrl = $this->getReturnSuccessUrl($qfKey);
+    $failUrl = $this->getReturnFailUrl($qfKey, $participantID, $eventID);
+    CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $successUrl);
+    CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $failUrl);
+
+    //Also store it in cache if we can't find it in session after redirection from payment page.
+    $returnUrls = array('success' => $successUrl, 'fail' => $failUrl);
+    CRM_Core_BAO_Cache::setItem($returnUrls, 'returnUrls', $this->transaction_id);
   }
 
   /**
@@ -224,7 +230,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *   Url to redirect to
    */
   protected function getStoredUrl($type) {
-    return CRM_Core_Session::singleton()->get("ipn_{$type}_url_{$this->transaction_id}");
+    $url = CRM_Core_Session::singleton()->get("ipn_{$type}_url_{$this->transaction_id}");
+    $returnUrls = CRM_Core_BAO_Cache::getItem('returnUrls', $this->transaction_id);
+    if (empty($url) && !empty($returnUrls[$type])) {
+      $url = $returnUrls[$type];
+    }
+    return $url;
   }
 
   /**
