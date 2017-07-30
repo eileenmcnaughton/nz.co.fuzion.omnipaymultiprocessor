@@ -103,3 +103,13 @@ function omnipaymultiprocessor__versionAtLeast($version) {
   }
   return FALSE;
 }
+
+/**
+ * Implements of hook_civicrm_config().
+ *
+ * @param array $metaDataFolders
+ */
+function omnipaymultiprocessor_civicrm_alterSettingsFolders(&$metaDataFolders) {
+  _omnipaymultiprocessor_civix_civicrm_alterSettingsFolders($metaDataFolders);
+}
+

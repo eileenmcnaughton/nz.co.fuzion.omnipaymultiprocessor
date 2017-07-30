@@ -355,12 +355,6 @@ function _omnipaymultiprocessor_civix_fixNavigationMenuItems(&$nodes, &$maxNavID
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
  */
 function _omnipaymultiprocessor_civix_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
-  static $configured = FALSE;
-  if ($configured) {
-    return;
-  }
-  $configured = TRUE;
-
   $settingsDir = __DIR__ . DIRECTORY_SEPARATOR . 'settings';
   if (is_dir($settingsDir) && !in_array($settingsDir, $metaDataFolders)) {
     $metaDataFolders[] = $settingsDir;

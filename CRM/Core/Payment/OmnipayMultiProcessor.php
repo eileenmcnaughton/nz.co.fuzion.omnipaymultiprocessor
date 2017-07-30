@@ -130,7 +130,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    *   The result in an nice formatted array (or an error object)
    */
-  public function doDirectPayment(&$params, $component = 'contribute') {
+  public function doPayment(&$params, $component = 'contribute') {
     $this->_component = strtolower($component);
     $this->ensurePaymentProcessorTypeIsSet();
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
@@ -138,6 +138,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
     $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
     $this->saveBillingAddressIfRequired($params);
+
+    if ($this->getDummySuccessResult()) {
+      return $this->getDummySuccessResult();
+    }
 
     try {
       if (!empty($params['is_recur'])) {
@@ -181,7 +185,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     catch (\Exception $e) {
       // internal error, log exception and display a generic message to the customer
       //@todo - looks like invalid credit card numbers are winding up here too - we could handle separately by capturing that exception type - what is good fraud practice?
-      return $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
+      $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
     }
   }
 
@@ -436,26 +440,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function checkConfig() {
     //@todo check gateway against $this->gateway->getDefaultParameters();
-  }
-
-  /**
-   * Implement doTransferCheckout.
-   *
-   * We treat transfer checkouts the same as direct payments & rely on our
-   * abstracted library to action the differences
-   *
-   * @param array $params
-   * @param string $component
-   *
-   * @throws CRM_Core_Exception
-   */
-  public function doTransferCheckout(&$params, $component = 'contribute') {
-    $this->doDirectPayment($params, $component);
-    if (!empty($params['token'])) {
-      // It is possible no redirect was required here.
-      return;
-    }
-    throw new CRM_Core_Exception('Payment redirect failed');
   }
 
   /**
@@ -1029,6 +1013,24 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     }
     return array($key, $values);
   }
+
+  /**
+   * If the site is in developer mode then early exit with mock success.
+   *
+   * @return array|bool
+   * @throws \CiviCRM_API3_Exception
+   */
+  protected function getDummySuccessResult() {
+    // If the site is in developer mode we return a mock success.
+    if (civicrm_api3('setting', 'getvalue', array('name' => 'omnipay_developer_mode'))) {
+      return array(
+        'trxn_id' => uniqid(),
+        'trxn_result_code' => TRUE,
+      );
+    }
+    return FALSE;
+  }
+
 
 }
 
