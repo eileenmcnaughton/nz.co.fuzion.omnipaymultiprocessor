@@ -32,6 +32,7 @@ function civicrm_api3_job_process_recurring($params) {
         'original_contribution_id' => $originalContribution['id'],
         'contribution_status_id' => 'Pending',
         'payment_processor_id' => $paymentProcessorID,
+        'is_email_receipt' => FALSE,
       ));
 
       $payment = civicrm_api3('PaymentProcessor', 'pay', array(
