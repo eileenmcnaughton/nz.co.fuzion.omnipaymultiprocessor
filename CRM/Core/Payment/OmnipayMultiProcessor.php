@@ -159,6 +159,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if ($response->isSuccessful()) {
         // mark order as complete
         $params['trxn_id'] = $response->getTransactionReference();
+        $params['payment_status_id'] = 1;
         //gross_amount ? fee_amount?
         return $params;
       }
@@ -1026,6 +1027,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       return array(
         'trxn_id' => uniqid(),
         'trxn_result_code' => TRUE,
+        'payment_status_id' => 1,
       );
     }
     return FALSE;
