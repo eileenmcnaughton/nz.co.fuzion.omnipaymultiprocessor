@@ -131,6 +131,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *   The result in an nice formatted array (or an error object)
    */
   public function doPayment(&$params, $component = 'contribute') {
+
+    $statuses = CRM_Contribute_BAO_Contribution::buildOptions('contribution_status_id');
+    // If we have a $0 amount, skip call to processor and set payment_status to Completed.
+    // Conceivably a processor might override this - perhaps for setting up a token - but we don't
+    // have an example of that at the mome.
+    if ($params['amount'] == 0) {
+      $result['payment_status_id'] = array_search('Completed', $statuses);
+      return $result;
+    }
+
     $this->_component = strtolower($component);
     $this->ensurePaymentProcessorTypeIsSet();
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
