@@ -157,7 +157,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if (!empty($params['is_recur'])) {
         $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
       }
-      elseif (!empty($params['token'])) {
+      // Ug we have 2 contexts for tokens, preApproval & actual token payment.
+      // Currently if a processor supports both there is no way to disambiguate.
+      elseif (!empty($params['token']) && $this->supportsPreApproval()) {
         $params['transactionReference'] = ($params['token']);
         $response = $this->gateway->capture($this->getCreditCardOptions($params, $component))
           ->send();
