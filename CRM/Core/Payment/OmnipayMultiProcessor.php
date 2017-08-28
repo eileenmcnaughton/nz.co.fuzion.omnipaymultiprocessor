@@ -468,8 +468,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws CiviCRM_API3_Exception
    */
   public function getPaymentFormFields() {
-    if ($this->_paymentProcessor['billing_mode'] == 4) {
-      $this->isTransparentRedirect();
+    if ($this->_paymentProcessor['billing_mode'] == 4 || $this->isTransparentRedirect()) {
       return array();
     }
     return $this->_paymentProcessor['payment_type'] == 1 ? $this->getCreditCardFormFields() : $this->getDirectDebitFormFields();

@@ -23,6 +23,10 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-authorizenet.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/eileenmcnaughton/omnipay-mercanet.git"
         }
     ],
     "require":
@@ -37,7 +41,8 @@
         "pointybeard/omnipay-nabtransact": "dev-transact",
         "fzaninotto/faker": "^1.6@dev",
         "omnipay/paymentexpress": "dev-master",
-        "omnipay/authorizenet": "dev-master"
+        "omnipay/authorizenet": "dev-master",
+        "fuzion/omnipay-mercanet": "dev-master"
     },
     "require-dev":
     {
