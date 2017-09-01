@@ -515,6 +515,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function getTransparentDirectDisplayFields() {
+    $fields = $this->getProcessorTypeMetadata('transparent_redirect');
+    if (isset ($fields['fields'])) {
+      return $fields['fields'];
+    }
+
     $corePaymentFields = $this->getCorePaymentFields();
     $paymentFieldMappings = $this->getPaymentFieldMapping();
     foreach ($paymentFieldMappings as $fieldName => $fieldSpec) {
@@ -610,6 +615,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   public function getBillingAddressFields($billingLocationID = NULL) {
     if (!$this->isTransparentRedirect()) {
       return parent::getBillingAddressFields($billingLocationID);
+    }
+    $fields = $this->getProcessorTypeMetadata('transparent_redirect');
+    if (isset ($fields['billing_fields'])) {
+      return $fields['billing_fields'];
     }
     $billingFields = array(
       'first_name' => 'billing_first_name',
@@ -872,17 +881,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   protected function supportsPreApproval() {
-    $entities = array();
-    omnipaymultiprocessor_civicrm_managed($entities);
-    foreach ($entities as $entity) {
-      if ($entity['entity'] === 'payment_processor_type') {
-        if (
-        $entity['params']['name'] === $this->_paymentProcessor['payment_processor_type']
-        && !empty($entity['params']['supports_preapproval'])) {
-          return TRUE;
-        }
-      }
-    }
+    $this->getProcessorTypeMetadata('supports_preapproval');
     return FALSE;
   }
 
@@ -1027,6 +1026,39 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
     }
     return array($key, $values);
+  }
+
+  /**
+   * @return array
+   */
+  protected function getEntitiesMetadata() {
+    $entities = array();
+    omnipaymultiprocessor_civicrm_managed($entities);
+    return $entities;
+  }
+
+  /**
+   * Get metadata for a processor entity.
+   *
+   * @param string $parameter
+   *
+   * @return mixed
+   */
+  protected function getProcessorTypeMetadata($parameter) {
+    $entities = $this->getEntitiesMetadata();
+    foreach ($entities as $entity) {
+      if ($entity['entity'] === 'payment_processor_type') {
+        if (!isset($this->_paymentProcessor['payment_processor_type'])) {
+          $this->_paymentProcessor['payment_processor_type'] = civicrm_api3('PaymentProcessorType', 'getvalue', array('id' => $this->_paymentProcessor['payment_processor_type_id'], 'return' => 'name'));
+        }
+        if (
+          $entity['params']['name'] === $this->_paymentProcessor['payment_processor_type']
+          && isset($entity['metadata'][$parameter])) {
+          return $entity['metadata'][$parameter];
+        }
+      }
+    }
+    return FALSE;
   }
 
 }

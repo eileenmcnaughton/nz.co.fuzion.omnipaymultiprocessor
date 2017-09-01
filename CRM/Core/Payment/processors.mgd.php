@@ -423,7 +423,7 @@ return array(
       'url_api_default' => 'https://secure.authorize.net/gateway/transact.dll',
       'billing_mode' => 1,
       'payment_type' => 1,
-      'supports_preapproval' => 1,
     ),
+    'metadata' => array('supports_preapproval' => 1),
   ),
 );
