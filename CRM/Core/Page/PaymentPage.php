@@ -17,7 +17,6 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
    * @throws \CiviCRM_API3_Exception
    */
   public function run() {
-    CRM_Utils_System::setTitle(ts('Enter your payment details'));
     $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, TRUE));
     $paymentProcessorID = $formData['payment_processor_id'];
     $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
@@ -29,6 +28,9 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
       if ($displayField['htmlType'] == 'date') {
         $displayFields[$fieldName]['options']['year'] = $this->getDateFieldsYearOptions($displayField);
       }
+    }
+    if (!empty($displayFields)) {
+      CRM_Utils_System::setTitle(ts('Enter your payment details'));
     }
     $this->assign('hidden_fields', array_diff_key($formData, $displayFields));
     $this->assign('display_fields', $displayFields);

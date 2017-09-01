@@ -1,4 +1,4 @@
-<form action="{$post_url}" method="post">
+<form action="{$post_url}" method="post" id="payment-redirect">
   {foreach from=$hidden_fields key=hidden_field item=hidden_field_input}
     <input name="{$hidden_field}" value="{$hidden_field_input}" type="hidden"/>
   {/foreach}
@@ -63,8 +63,13 @@
       <div class="clear"></div>
     </div>
   {/foreach}
+  {if empty($display_fields)}<p>{ts}Please Click the pay now button if you are not automatically redirected{/ts}</p>{/if}
 
-  <input class='form-submit default crm-form-submit' type="submit" value="{ts}Submit{/ts}">
+  <input class='form-submit default crm-form-submit' type="submit" value="{ts}Pay now{/ts}">
 
 </form>
+
+<script type="text/javascript">
+  document.getElementById("payment-redirect").submit();
+</script>
 
