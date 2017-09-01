@@ -4,20 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3ecb901a32e2e812e265ee2d7bea9794",
-    "content-hash": "2842ff52056a469f2a0da8ef4a6dbb83",
+    "content-hash": "1e833f52f02a46015cd048206fdb91b6",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/alfaproject/omnipay-skrill.git",
+                "url": "https://github.com/xcaliber-tech/omnipay-skrill.git",
                 "reference": "41a7a03c5b90d496720e288bebc157d898837ccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alfaproject/omnipay-skrill/zipball/41a7a03c5b90d496720e288bebc157d898837ccd",
+                "url": "https://api.github.com/repos/xcaliber-tech/omnipay-skrill/zipball/41a7a03c5b90d496720e288bebc157d898837ccd",
                 "reference": "41a7a03c5b90d496720e288bebc157d898837ccd",
                 "shasum": ""
             },
@@ -59,7 +58,7 @@
                 "payment",
                 "skrill"
             ],
-            "time": "2016-01-13 16:33:07"
+            "time": "2016-01-13T16:33:07+00:00"
         },
         {
             "name": "civicrm/omnipay-paypalstandard",
@@ -101,7 +100,7 @@
                 "purchase",
                 "shell"
             ],
-            "time": "2016-10-10 15:49:46"
+            "time": "2016-10-10T15:49:46+00:00"
         },
         {
             "name": "dioscouri/omnipay-cybersource",
@@ -143,7 +142,50 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-05-18 13:16:06"
+            "time": "2015-05-18T13:16:06+00:00"
+        },
+        {
+            "name": "fuzion/omnipay-mercanet",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
+                "reference": "a9cdd239f8cd1e1c32bbe08b8d01a5d04d9394cf"
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Mercanet\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eileen McNaughton",
+                    "email": "eileen@fuzion.co.nz"
+                }
+            ],
+            "description": "Mercanet support for Omnipay payment processing library",
+            "homepage": "https://github.com/eileenmcnaughton/omnipay-mercanet",
+            "keywords": [
+                "gateway",
+                "mercanet",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "purchase",
+                "shell"
+            ],
+            "time": "2017-08-28 09:17:13"
         },
         {
             "name": "fuzion/omnipay-paybox",
@@ -185,7 +227,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-05-18 12:56:56"
+            "time": "2015-05-18T12:56:56+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -235,7 +277,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-12-02 14:05:09"
+            "time": "2016-12-02T14:05:09+00:00"
         },
         {
             "name": "guzzle/guzzle",
@@ -331,7 +373,7 @@
                 "web service"
             ],
             "abandoned": "guzzlehttp/guzzle",
-            "time": "2016-10-26 18:22:07"
+            "time": "2016-10-26T18:22:07+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -373,7 +415,7 @@
                 "hashing",
                 "password"
             ],
-            "time": "2014-11-20 19:18:42"
+            "time": "2014-11-20T19:18:42+00:00"
         },
         {
             "name": "omnipay/2checkout",
@@ -432,7 +474,7 @@
                 "payment",
                 "twocheckout"
             ],
-            "time": "2014-09-17 00:35:37"
+            "time": "2014-09-17T00:35:37+00:00"
         },
         {
             "name": "omnipay/authorizenet",
@@ -599,7 +641,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-08-10 04:41:17"
+            "time": "2016-08-10T04:41:17+00:00"
         },
         {
             "name": "omnipay/cardsave",
@@ -657,7 +699,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2014-09-21 02:27:16"
+            "time": "2014-09-21T02:27:16+00:00"
         },
         {
             "name": "omnipay/coinbase",
@@ -714,7 +756,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2015-03-06 05:35:39"
+            "time": "2015-03-06T05:35:39+00:00"
         },
         {
             "name": "omnipay/common",
@@ -830,7 +872,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-03-30 14:34:46"
+            "time": "2015-03-30T14:34:46+00:00"
         },
         {
             "name": "omnipay/dummy",
@@ -887,7 +929,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-07-30 04:18:49"
+            "time": "2016-07-30T04:18:49+00:00"
         },
         {
             "name": "omnipay/eway",
@@ -944,7 +986,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-03-22 01:11:02"
+            "time": "2016-03-22T01:11:02+00:00"
         },
         {
             "name": "omnipay/firstdata",
@@ -1002,7 +1044,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-01-14 06:24:28"
+            "time": "2016-01-14T06:24:28+00:00"
         },
         {
             "name": "omnipay/gocardless",
@@ -1060,7 +1102,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2015-09-24 14:44:29"
+            "time": "2015-09-24T14:44:29+00:00"
         },
         {
             "name": "omnipay/manual",
@@ -1117,7 +1159,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-03-29 17:52:49"
+            "time": "2016-03-29T17:52:49+00:00"
         },
         {
             "name": "omnipay/migs",
@@ -1175,7 +1217,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-09-22 01:58:30"
+            "time": "2016-09-22T01:58:30+00:00"
         },
         {
             "name": "omnipay/mollie",
@@ -1232,7 +1274,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-09-14 09:25:40"
+            "time": "2016-09-14T09:25:40+00:00"
         },
         {
             "name": "omnipay/multisafepay",
@@ -1290,7 +1332,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-03-21 02:10:38"
+            "time": "2016-03-21T02:10:38+00:00"
         },
         {
             "name": "omnipay/netaxept",
@@ -1347,7 +1389,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2015-05-08 15:13:17"
+            "time": "2015-05-08T15:13:17+00:00"
         },
         {
             "name": "omnipay/netbanx",
@@ -1404,7 +1446,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-09-21 10:52:03"
+            "time": "2016-09-21T10:52:03+00:00"
         },
         {
             "name": "omnipay/omnipay",
@@ -1516,7 +1558,7 @@
                 "twocheckout",
                 "worldpay"
             ],
-            "time": "2014-12-10 13:55:00"
+            "time": "2014-12-10T13:55:00+00:00"
         },
         {
             "name": "omnipay/payfast",
@@ -1573,7 +1615,7 @@
                 "payfast",
                 "payment"
             ],
-            "time": "2014-09-29 01:07:03"
+            "time": "2014-09-29T01:07:03+00:00"
         },
         {
             "name": "omnipay/payflow",
@@ -1630,7 +1672,7 @@
                 "payflow",
                 "payment"
             ],
-            "time": "2016-07-30 08:33:58"
+            "time": "2016-07-30T08:33:58+00:00"
         },
         {
             "name": "omnipay/paymentexpress",
@@ -1751,7 +1793,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2016-10-18 01:32:46"
+            "time": "2016-10-18T01:32:46+00:00"
         },
         {
             "name": "omnipay/pin",
@@ -1808,7 +1850,7 @@
                 "payment",
                 "pin"
             ],
-            "time": "2016-03-25 18:06:33"
+            "time": "2016-03-25T18:06:33+00:00"
         },
         {
             "name": "omnipay/sagepay",
@@ -1867,7 +1909,7 @@
                 "sage pay",
                 "sagepay"
             ],
-            "time": "2016-02-07 13:25:23"
+            "time": "2016-02-07T13:25:23+00:00"
         },
         {
             "name": "omnipay/securepay",
@@ -1924,7 +1966,7 @@
                 "payment",
                 "securepay"
             ],
-            "time": "2016-11-09 04:52:42"
+            "time": "2016-11-09T04:52:42+00:00"
         },
         {
             "name": "omnipay/stripe",
@@ -1981,7 +2023,7 @@
                 "payment",
                 "stripe"
             ],
-            "time": "2016-09-14 09:11:40"
+            "time": "2016-09-14T09:11:40+00:00"
         },
         {
             "name": "omnipay/targetpay",
@@ -2038,7 +2080,7 @@
                 "payment",
                 "targetpay"
             ],
-            "time": "2014-09-17 00:38:39"
+            "time": "2014-09-17T00:38:39+00:00"
         },
         {
             "name": "omnipay/worldpay",
@@ -2095,7 +2137,7 @@
                 "payment",
                 "worldpay"
             ],
-            "time": "2016-01-28 12:55:58"
+            "time": "2016-01-28T12:55:58+00:00"
         },
         {
             "name": "pointybeard/omnipay-nabtransact",
@@ -2139,7 +2181,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2015-11-23 06:43:40"
+            "time": "2015-11-23T06:43:40+00:00"
         },
         {
             "name": "sergej-koscejev/omnipay-gopay",
@@ -2185,7 +2227,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2015-06-06 22:14:26"
+            "time": "2015-06-06T22:14:26+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2245,7 +2287,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-10-13 01:43:15"
+            "time": "2016-10-13T01:43:15+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -2300,7 +2342,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-27 04:20:28"
+            "time": "2016-11-27T04:20:28+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2359,7 +2401,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php54",
@@ -2417,7 +2459,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php55",
@@ -2473,7 +2515,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         }
     ],
     "packages-dev": [
@@ -2526,7 +2568,7 @@
             "keywords": [
                 "test"
             ],
-            "time": "2016-01-19 12:08:55"
+            "time": "2016-01-19T12:08:55+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -2648,7 +2690,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2016-07-07 09:35:23"
+            "time": "2016-07-07T09:35:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2709,7 +2751,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-09-02 10:13:14"
+            "time": "2014-09-02T10:13:14+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2797,7 +2839,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -2841,7 +2883,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2016-05-12T18:03:57+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -2891,7 +2933,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-03-03 05:10:30"
+            "time": "2014-03-03T05:10:30+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -2964,7 +3006,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-10-17 09:04:17"
+            "time": "2014-10-17T09:04:17+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3021,7 +3063,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-02-16 12:43:56"
+            "time": "2014-02-16T12:43:56+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -3096,7 +3138,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2014-12-04 22:32:15"
+            "time": "2014-12-04T22:32:15+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -3145,7 +3187,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-14 16:15:57"
+            "time": "2016-11-14T16:15:57+00:00"
         }
     ],
     "aliases": [],
@@ -3159,7 +3201,8 @@
         "pointybeard/omnipay-nabtransact": 20,
         "fzaninotto/faker": 20,
         "omnipay/paymentexpress": 20,
-        "omnipay/authorizenet": 20
+        "omnipay/authorizenet": 20,
+        "fuzion/omnipay-mercanet": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

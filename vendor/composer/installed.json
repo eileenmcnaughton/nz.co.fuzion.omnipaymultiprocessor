@@ -55,7 +55,7 @@
         "suggest": {
             "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
         },
-        "time": "2016-10-26 18:22:07",
+        "time": "2016-10-26T18:22:07+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -120,7 +120,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-03-30 14:34:46",
+        "time": "2015-03-30T14:34:46+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -230,7 +230,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-05-18 13:16:06",
+        "time": "2015-05-18T13:16:06+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -274,7 +274,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-05-18 12:56:56",
+        "time": "2015-05-18T12:56:56+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -326,7 +326,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~1.5"
         },
-        "time": "2016-12-02 14:05:09",
+        "time": "2016-12-02T14:05:09+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -376,7 +376,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-03-06 05:35:39",
+        "time": "2015-03-06T05:35:39+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -435,7 +435,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2014-09-17 00:38:39",
+        "time": "2014-09-17T00:38:39+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -494,7 +494,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-05-08 15:13:17",
+        "time": "2015-05-08T15:13:17+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -553,7 +553,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-09-24 14:44:29",
+        "time": "2015-09-24T14:44:29+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -613,7 +613,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2014-09-21 02:27:16",
+        "time": "2014-09-21T02:27:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -673,7 +673,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2014-09-17 00:35:37",
+        "time": "2014-09-17T00:35:37+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -759,7 +759,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2014-12-10 13:55:00",
+        "time": "2014-12-10T13:55:00+00:00",
         "type": "metapackage",
         "extra": {
             "branch-alias": {
@@ -843,7 +843,7 @@
             "fzaninotto/faker": "^1.6@dev",
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-11-23 06:43:40",
+        "time": "2015-11-23T06:43:40+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -887,7 +887,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-06-06 22:14:26",
+        "time": "2015-06-06T22:14:26+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -942,7 +942,7 @@
         "suggest": {
             "phpunit/php-timer": "dev-master"
         },
-        "time": "2014-12-04 22:32:15",
+        "time": "2014-12-04T22:32:15+00:00",
         "bin": [
             "scripts/phpcs"
         ],
@@ -1015,7 +1015,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2015-06-21 13:50:34",
+        "time": "2015-06-21T13:50:34+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1065,7 +1065,7 @@
         "suggest": {
             "ext-soap": "*"
         },
-        "time": "2014-02-16 12:43:56",
+        "time": "2014-02-16T12:43:56+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1117,7 +1117,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2016-10-03 07:40:28",
+        "time": "2016-10-03T07:40:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1167,7 +1167,7 @@
             "ext-tokenizer": "*",
             "php": ">=5.3.3"
         },
-        "time": "2014-03-03 05:10:30",
+        "time": "2014-03-03T05:10:30+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1228,7 +1228,7 @@
             "ext-dom": "*",
             "ext-xdebug": ">=2.0.5"
         },
-        "time": "2014-09-02 10:13:14",
+        "time": "2014-09-02T10:13:14+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1299,7 +1299,7 @@
         "suggest": {
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2014-10-17 09:04:17",
+        "time": "2014-10-17T09:04:17+00:00",
         "bin": [
             "composer/bin/phpunit"
         ],
@@ -1359,7 +1359,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-06-01 03:41:52",
+        "time": "2016-06-01T03:41:52+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1424,7 +1424,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-01-14 06:24:28",
+        "time": "2016-01-14T06:24:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1484,7 +1484,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-02-07 13:25:23",
+        "time": "2016-02-07T13:25:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1545,7 +1545,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-01-28 12:55:58",
+        "time": "2016-01-28T12:55:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1611,7 +1611,7 @@
             "phpunit/phpunit": "~4.0",
             "satooshi/php-coveralls": "^1.0"
         },
-        "time": "2016-01-19 12:08:55",
+        "time": "2016-01-19T12:08:55+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1642,12 +1642,12 @@
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/alfaproject/omnipay-skrill.git",
+            "url": "https://github.com/xcaliber-tech/omnipay-skrill.git",
             "reference": "41a7a03c5b90d496720e288bebc157d898837ccd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/alfaproject/omnipay-skrill/zipball/41a7a03c5b90d496720e288bebc157d898837ccd",
+            "url": "https://api.github.com/repos/xcaliber-tech/omnipay-skrill/zipball/41a7a03c5b90d496720e288bebc157d898837ccd",
             "reference": "41a7a03c5b90d496720e288bebc157d898837ccd",
             "shasum": ""
         },
@@ -1658,7 +1658,7 @@
             "omnipay/tests": "~2.0",
             "satooshi/php-coveralls": "dev-master"
         },
-        "time": "2016-01-13 16:33:07",
+        "time": "2016-01-13T16:33:07+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1713,7 +1713,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-03-22 01:11:02",
+        "time": "2016-03-22T01:11:02+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1772,7 +1772,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-03-21 02:10:38",
+        "time": "2016-03-21T02:10:38+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1832,7 +1832,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-03-25 18:06:33",
+        "time": "2016-03-25T18:06:33+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1888,7 +1888,7 @@
         "require-dev": {
             "phpunit/phpunit": "4.*"
         },
-        "time": "2014-11-20 19:18:42",
+        "time": "2014-11-20T19:18:42+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -1935,7 +1935,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-03-29 17:52:49",
+        "time": "2016-03-29T17:52:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1994,7 +1994,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-08-10 04:41:17",
+        "time": "2016-08-10T04:41:17+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2053,7 +2053,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-07-30 04:18:49",
+        "time": "2016-07-30T04:18:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2112,7 +2112,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-09-14 09:25:40",
+        "time": "2016-09-14T09:25:40+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2171,7 +2171,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2014-09-29 01:07:03",
+        "time": "2014-09-29T01:07:03+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2230,7 +2230,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-07-30 08:33:58",
+        "time": "2016-07-30T08:33:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2289,7 +2289,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-09-14 09:11:40",
+        "time": "2016-09-14T09:11:40+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2348,7 +2348,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4|~5"
         },
-        "time": "2016-05-12 18:03:57",
+        "time": "2016-05-12T18:03:57+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -2379,12 +2379,12 @@
         "version_normalized": "0.9.9999999.9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/padraic/mockery.git",
+            "url": "https://github.com/mockery/mockery.git",
             "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/padraic/mockery/zipball/65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
+            "url": "https://api.github.com/repos/mockery/mockery/zipball/65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
             "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
             "shasum": ""
         },
@@ -2396,7 +2396,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-09-30 12:09:40",
+        "time": "2016-09-30T12:09:40+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2461,7 +2461,7 @@
             "phpunit/phpunit": "~3.7.0",
             "squizlabs/php_codesniffer": "~1.5"
         },
-        "time": "2016-07-07 09:35:23",
+        "time": "2016-07-07T09:35:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2520,7 +2520,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-04-07 02:53:36",
+        "time": "2016-04-07T02:53:36+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2580,7 +2580,7 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2016-11-14 01:06:16",
+        "time": "2016-11-14T01:06:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2639,7 +2639,7 @@
             "ircmaxell/password-compat": "~1.0",
             "php": ">=5.3.3"
         },
-        "time": "2016-11-14 01:06:16",
+        "time": "2016-11-14T01:06:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2696,7 +2696,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2016-11-14 01:06:16",
+        "time": "2016-11-14T01:06:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2759,7 +2759,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-09-22 01:58:30",
+        "time": "2016-09-22T01:58:30+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2819,7 +2819,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-09-21 10:52:03",
+        "time": "2016-09-21T10:52:03+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2878,7 +2878,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-10-18 01:32:46",
+        "time": "2016-10-18T01:32:46+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2938,7 +2938,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-11-09 04:52:42",
+        "time": "2016-11-09T04:52:42+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2991,7 +2991,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-10-10 15:49:46",
+        "time": "2016-10-10T15:49:46+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -3038,7 +3038,7 @@
         "require": {
             "php": ">=5.3.9"
         },
-        "time": "2016-11-14 16:15:57",
+        "time": "2016-11-14T16:15:57+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3100,7 +3100,7 @@
             "symfony/dependency-injection": "",
             "symfony/http-kernel": ""
         },
-        "time": "2016-10-13 01:43:15",
+        "time": "2016-10-13T01:43:15+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3157,7 +3157,7 @@
         "require-dev": {
             "symfony/expression-language": "~2.4|~3.0.0"
         },
-        "time": "2016-11-27 04:20:28",
+        "time": "2016-11-27T04:20:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3205,7 +3205,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-12-08 03:09:41",
+        "time": "2016-12-08T03:09:41+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3242,6 +3242,51 @@
             "omnipay",
             "pay",
             "payment"
+        ]
+    },
+    {
+        "name": "fuzion/omnipay-mercanet",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
+            "reference": "a9cdd239f8cd1e1c32bbe08b8d01a5d04d9394cf"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2017-08-28T05:52:17+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Mercanet\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eileen McNaughton",
+                "email": "eileen@fuzion.co.nz"
+            }
+        ],
+        "description": "Mercanet support for Omnipay payment processing library",
+        "homepage": "https://github.com/eileenmcnaughton/omnipay-mercanet",
+        "keywords": [
+            "gateway",
+            "mercanet",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase",
+            "shell"
         ]
     }
 ]

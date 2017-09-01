@@ -1,0 +1,42 @@
+<?php
+namespace Omnipay\Mercanet\Message;
+
+use Omnipay\Mercanet\Message\AbstractRequest;
+
+/**
+ * Sample Complete Authorize Response
+ * The complete authorize action involves interpreting the an asynchronous response.
+ * These are most commonly https POSTs to a specific URL. Also sometimes known as IPNs or Silent Posts
+ *
+ * The data passed to these requests is most often the content of the POST and this class is responsible for
+ * interpreting it
+ */
+class OffsiteCompleteAuthorizeRequest extends OffsiteAbstractRequest
+{
+    /**
+     * Create a new Request
+     *
+     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
+     * @param HttpRequest     $httpRequest A Symfony HTTP request object
+     */
+    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
+    {
+        $this->httpClient = $httpClient;
+        $this->httpRequest = $httpRequest;
+        $this->initialize();
+    }
+
+    public function sendData($data)
+    {
+        return $this->response = new OffsiteCompleteAuthorizeResponse($this, $data);
+    }
+
+    public function getData()
+    {
+        if (strtolower($this->httpRequest->request->get('x_MD5_Hash')) !== $this->getHash()) {
+            throw new InvalidRequestException('Incorrect hash');
+        }
+
+        return $this->httpRequest->request->all();
+    }
+}

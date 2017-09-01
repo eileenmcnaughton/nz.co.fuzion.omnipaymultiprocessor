@@ -46,6 +46,7 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
             'Omnipay\\MultiSafepay\\' => 21,
             'Omnipay\\Mollie\\' => 15,
             'Omnipay\\Migs\\' => 13,
+            'Omnipay\\Mercanet\\' => 17,
             'Omnipay\\Manual\\' => 15,
             'Omnipay\\Gopay\\' => 14,
             'Omnipay\\GoCardless\\' => 19,
@@ -169,6 +170,10 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
         'Omnipay\\Migs\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/migs/src',
+        ),
+        'Omnipay\\Mercanet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fuzion/omnipay-mercanet/src',
         ),
         'Omnipay\\Manual\\' => 
         array (
