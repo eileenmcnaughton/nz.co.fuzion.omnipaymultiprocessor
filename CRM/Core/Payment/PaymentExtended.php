@@ -50,6 +50,11 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected $transaction_id;
 
   /**
+   * @var label for payemnt field set.
+   */
+  protected $payment_type_label;
+
+  /**
    * Class Constructor.
    *
    * @param string $mode the mode of operation: live or test
@@ -257,6 +262,22 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
+   * Get label for the payment information type.
+   *
+   * @return string
+   */
+  public function getPaymentTypeLabel() {
+    if (!isset($this->payment_type_label)) {
+      $this->payment_type_label = civicrm_api3('OptionValue', 'getvalue', array(
+        'option_group_id' => 'payment_type',
+        'return' => 'label',
+        'value' => $this->_paymentProcessor['payment_type'],
+      ));
+    }
+    return $this->payment_type_label;
+  }
+
+  /**
    * Handle processor error.
    *
    * If we pass error handling through this function it will be easy to switch to throwing exceptions later.
@@ -275,7 +296,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     // Reset gateway to NULL so don't cache it. The size of the object or closures within it could
     // cause problems when serializing & saving.
     $this->gateway = NULL;
-    Civi::log()->log($level, $message, $context);
+    Civi::log()->log($level, $message, (array) $context);
     $log = new CRM_Utils_SystemLogger();
     $log->log($level, $message, (array) $context);
     throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
