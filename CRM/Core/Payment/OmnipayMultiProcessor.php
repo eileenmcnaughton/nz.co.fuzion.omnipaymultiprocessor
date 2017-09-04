@@ -699,7 +699,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           //'return' => 'contribution_status_id, contribution_recur_id, contact_id, contribution_contact_id',
         ));
 
-        if ($contribution['contribution_status_id'] != CRM_Core_OptionGroup::getValue('contribution_status', 'Completed', 'name')) {
+        if (CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']) !== 'Completed') {
           civicrm_api3('contribution', 'completetransaction', array(
             'id' => $this->transaction_id,
             'trxn_id' => $response->getTransactionReference(),
