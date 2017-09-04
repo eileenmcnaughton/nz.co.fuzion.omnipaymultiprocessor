@@ -10,9 +10,10 @@ use Omnipay\Common\Message\RequestInterface;
 class OffsiteCompleteAuthorizeResponse extends AbstractResponse
 {
 
-    public function __construct(\Omnipay\Common\Message\RequestInterface $request, $data) {
-       parent::__construct($request, $data);
-       $this->data = $data;
+    public function __construct(\Omnipay\Common\Message\RequestInterface $request, $data)
+    {
+        parent::__construct($request, $data);
+        $this->data = $data;
     }
 
   /**
@@ -46,15 +47,15 @@ class OffsiteCompleteAuthorizeResponse extends AbstractResponse
         return isset($this->data['response_message']) ? $this->data['response_message'] : null;
     }
 
-  /**
-   * Check response for a transaction ID.
-   *
-   * Most commonly this will be the invoice id.
-   *
-   * @return string|null
-   */
-  public function getTransactionId()
-  {
-      return isset($this->data['transactionReference']) ? $this->data['transactionReference'] : null;
-  }
+    /**
+     * Check response for a transaction ID.
+     *
+     * Most commonly this will be the invoice id.
+     *
+     * @return string|null
+     */
+    public function getTransactionId()
+    {
+        return isset($this->data['transactionReference']) ? $this->data['transactionReference'] : null;
+    }
 }

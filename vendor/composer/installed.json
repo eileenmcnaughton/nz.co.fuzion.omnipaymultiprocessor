@@ -3251,7 +3251,7 @@
         "source": {
             "type": "git",
             "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
-            "reference": "a9cdd239f8cd1e1c32bbe08b8d01a5d04d9394cf"
+            "reference": "6c6f08560ee59a2fd623c826164a0e838230349e"
         },
         "require": {
             "omnipay/common": "~2.0"
@@ -3259,7 +3259,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2017-08-28T05:52:17+00:00",
+        "time": "2017-09-04T01:15:41+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {

@@ -13,7 +13,8 @@ abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRe
     /**
      * @param mixed $data
      */
-    public function setData($data) {
+    public function setData($data)
+    {
         $this->data = $data;
     }
 
@@ -22,7 +23,8 @@ abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRe
     /**
      * @param mixed $seal
      */
-    public function setSeal($seal) {
+    public function setSeal($seal)
+    {
         $this->seal = $seal;
     }
 
@@ -30,7 +32,8 @@ abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRe
     /**
      * @param mixed $interfaceVersion
      */
-   public function setInterfaceVersion($interfaceVersion) {
+    public function setInterfaceVersion($interfaceVersion)
+    {
         $this->interfaceVersion = $interfaceVersion;
     }
 
@@ -84,8 +87,8 @@ abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRe
         return $this->setParameter('transactionType', $value);
     }
 
-    public function getSeal($data) {
-       return hash('sha256', $data . $this->getSecretKey());
+    public function getSeal($data)
+    {
+        return hash('sha256', $data . $this->getSecretKey());
     }
-
 }

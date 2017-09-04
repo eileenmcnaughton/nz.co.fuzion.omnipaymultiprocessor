@@ -1,7 +1,7 @@
 <?php
 namespace Omnipay\Mercanet\Message;
 
-use Omnipay\Mercanet\Message\AbstractRequest;
+use Guzzle\Http\ClientInterface;
 
 /**
  * Sample Complete Authorize Response
@@ -13,18 +13,6 @@ use Omnipay\Mercanet\Message\AbstractRequest;
  */
 class OffsiteCompleteAuthorizeRequest extends OffsiteAbstractRequest
 {
-    /**
-     * Create a new Request
-     *
-     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
-     * @param HttpRequest     $httpRequest A Symfony HTTP request object
-     */
-    public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)
-    {
-        $this->httpClient = $httpClient;
-        $this->httpRequest = $httpRequest;
-        $this->initialize();
-    }
 
     public function sendData($data)
     {

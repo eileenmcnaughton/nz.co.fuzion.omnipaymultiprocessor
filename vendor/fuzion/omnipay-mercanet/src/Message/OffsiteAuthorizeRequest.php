@@ -8,6 +8,16 @@ use Omnipay\Mercanet\Message\AbstractRequest;
  */
 class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
 {
+
+    /**
+     * Endpoint is the remote url.
+     *
+     * @var string
+     */
+    public $testEndpoint = 'https://payment-webinit-mercanet.test.sips-atos.com/paymentInit';
+
+    public $liveEndpoint = 'https://payment-webinit.mercanet.bnpparibas.net/paymentInit';
+
     /**
      * sendData function. In this case, where the browser is to be directly it constructs and returns a response object
      * @param mixed $data
@@ -84,7 +94,7 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
     */
     public function getEndpoint()
     {
-        return 'https://payment-webinit-mercanet.test.sips-atos.com/paymentInit';
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
     public function getTransactionType()

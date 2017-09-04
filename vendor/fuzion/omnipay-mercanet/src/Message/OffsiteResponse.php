@@ -16,18 +16,36 @@ class OffsiteResponse extends AbstractResponse implements RedirectResponseInterf
    *
    * @var string
    */
-    public $endpoint = 'https://payment-webinit-mercanet.test.sips-atos.com/paymentInit';
+    protected $endpoint;
+
+    /**
+     * @return string
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
+     * @param string $endpoint
+     */
+    public function setEndpoint($endpoint)
+    {
+        $this->endpoint = $endpoint;
+    }
 
     public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
         $this->data = $data;
+        $this->endpoint = ($request->getEndPoint());
     }
 
     /**
      * @return string
      */
-    public function getSecretKey() {
+    public function getSecretKey()
+    {
         return $this->data['secret_key'];
     }
     /**
@@ -64,7 +82,7 @@ class OffsiteResponse extends AbstractResponse implements RedirectResponseInterf
 
     public function getRedirectUrl()
     {
-        return $this->endpoint .'?' . http_build_query($this->data);
+        return $this->endpoint;
     }
 
     /**
@@ -81,14 +99,13 @@ class OffsiteResponse extends AbstractResponse implements RedirectResponseInterf
         $allFields = $this->getData();
         $formData = array();
         foreach ($allFields['data'] as $field => $value) {
-          $formData[] = "{$field}={$value}";
+            $formData[] = "{$field}={$value}";
         }
         $data = implode('|', $formData);
         return array(
-          'data' => $data,
-          'InterfaceVersion' => 'HP_2.9',
-          'seal' => hash('sha256', $data . $this->getSecretKey()),
+            'data' => $data,
+            'InterfaceVersion' => 'HP_2.9',
+            'seal' => hash('sha256', $data . $this->getSecretKey()),
         );
     }
-
 }

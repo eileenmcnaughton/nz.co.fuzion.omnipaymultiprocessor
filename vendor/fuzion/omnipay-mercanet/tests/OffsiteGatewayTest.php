@@ -30,12 +30,12 @@ class OffsiteGatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $response = $this->gateway->purchase(array('amount' => '10.00', 'currency' => 978, 'card' => $this->card))->send();
+        $response = $this->gateway->purchase(array('testMode' => TRUE, 'amount' => '10.00', 'currency' => 978, 'card' => $this->card))->send();
         $this->assertInstanceOf('Omnipay\Mercanet\Message\OffsiteAuthorizeResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertNotEmpty($response->getRedirectUrl());
-        $this->assertSame('https://payment-webinit-mercanet.test.sips-atos.com/paymentInit?type=sale&merchant_id=Billy&secret_key=really_secure&total=10.00', $response->getRedirectUrl());
+        $this->assertSame('https://payment-webinit-mercanet.test.sips-atos.com/paymentInit', $response->getRedirectUrl());
         $this->assertTrue($response->isTransparentRedirect());
     }
 
@@ -46,18 +46,18 @@ class OffsiteGatewayTest extends GatewayTestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertNotEmpty($response->getRedirectUrl());
-        $this->assertSame('https://payment-webinit-mercanet.test.sips-atos.com/paymentInit?type=Authorize&merchant_id=Billy&secret_key=really_secure&total=10.00', $response->getRedirectUrl());
+        $this->assertSame('https://payment-webinit.mercanet.bnpparibas.net/paymentInit', $response->getRedirectUrl());
         $this->assertTrue($response->isTransparentRedirect());
     }
 
     public function testCapture()
     {
-        $response = $this->gateway->capture(array('amount' => '10.00', 'currency' => 978, 'card' => $this->card))->send();
+        $response = $this->gateway->capture(array('amount' => '10.00', 'currency' => 978, 'card' => $this->card, 'testMode' => true))->send();
         $this->assertInstanceOf('Omnipay\Mercanet\Message\OffsiteAuthorizeResponse', $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertNotEmpty($response->getRedirectUrl());
-        $this->assertSame('https://payment-webinit-mercanet.test.sips-atos.com/paymentInit?type=capture&merchant_id=Billy&secret_key=really_secure&total=10.00', $response->getRedirectUrl());
+        $this->assertSame('https://payment-webinit-mercanet.test.sips-atos.com/paymentInit', $response->getRedirectUrl());
         $this->assertTrue($response->isTransparentRedirect());
     }
 
