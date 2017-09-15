@@ -33,7 +33,7 @@ class OffsiteCompleteAuthorizeResponse extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        return isset($this->data['authorizationId']) ? $this->data['authorizationId'] : null;
+        return isset($this->data['authorisationId']) ? $this->data['authorisationId'] : null;
     }
 
     /**
