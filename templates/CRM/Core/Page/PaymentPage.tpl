@@ -26,7 +26,7 @@
         </select>
       {elseif $field_spec.htmlType == 'date'}
         {*  @todo - fix this hard-coding hack *}
-        <select class="crm-form-date required" id="{$display_field}_M" name="card_expiry_date[M]">
+        <select class="crm-form-date required" id="{$field_spec.month_field}" name="{$field_spec.month_field}">
           <option value="">-month-</option>
           <option value="01">Jan</option>
           <option value="02">Feb</option>
@@ -41,7 +41,7 @@
           <option value="11">Nov</option>
           <option value="12">Dec</option>
         </select>&nbsp;
-        <select class="crm-form-date required" id="{$display_field}_Y" name="card_expiry_date[Y]">
+        <select class="crm-form-date required" id="{$field_spec.year_field}" name="{$field_spec.year_field}">
           <option value="">-year-</option>
           {foreach from=$field_spec.options.year item=year}
             <option value="{$year}">{$year}</option>
@@ -51,8 +51,8 @@
         <script>
 
           // remove spaces, dashes from credit card number
-          cj('#{$display_field}_Y, #{$display_field}_M').change(function(){literal}{{/literal}
-            cj('#{$display_field}').val(cj('#{$display_field}_M').val() + '-' + cj('#{$display_field}_Y').val())
+          cj('#{$field_spec.year_field}, #{$field_spec.month_field}').change(function(){literal}{{/literal}
+            cj('#{$display_field}').val(cj('#{$field_spec.month_field}.val() + '-' + cj('#{$field_spec.year_field}').val())
             {literal}
           });
           {/literal}
@@ -68,8 +68,9 @@
   <input class='form-submit default crm-form-submit' type="submit" value="{ts}Pay now{/ts}">
 
 </form>
-
+{if empty($display_fields)}
 <script type="text/javascript">
   document.getElementById("payment-redirect").submit();
 </script>
+{/if}
 

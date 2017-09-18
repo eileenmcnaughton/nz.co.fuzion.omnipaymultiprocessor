@@ -28,4 +28,20 @@ class RapidSharedGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\Eway\Message\RapidCompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
+
+    public function testCreateCard()
+    {
+        $request = $this->gateway->createCard(array('amount' => '10.00'));
+
+        $this->assertInstanceOf('\Omnipay\Eway\Message\RapidSharedCreateCardRequest', $request);
+        $this->assertSame('10.00', $request->getAmount());
+    }
+
+    public function testUpdateCard()
+    {
+        $request = $this->gateway->updateCard(array('amount' => '10.00'));
+
+        $this->assertInstanceOf('\Omnipay\Eway\Message\RapidSharedUpdateCardRequest', $request);
+        $this->assertSame('10.00', $request->getAmount());
+    }
 }

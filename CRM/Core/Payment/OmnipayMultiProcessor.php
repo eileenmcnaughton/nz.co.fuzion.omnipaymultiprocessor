@@ -517,11 +517,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   public function getTransparentDirectDisplayFields() {
     $fields = $this->getProcessorTypeMetadata('transparent_redirect');
     if (isset ($fields['fields'])) {
-      return $fields['fields'];
+      $paymentFieldMappings = $fields['fields'];
+    }
+    else {
+      $paymentFieldMappings = $this->getPaymentFieldMapping();
+    }
+    if (empty($fields)) {
+      return $fields;
     }
 
     $corePaymentFields = $this->getCorePaymentFields();
-    $paymentFieldMappings = $this->getPaymentFieldMapping();
     foreach ($paymentFieldMappings as $fieldName => $fieldSpec) {
       $paymentFieldMappings[$fieldName] = array_merge($corePaymentFields[$fieldSpec['core_field_name']], $fieldSpec);
     }
@@ -593,7 +598,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'cc_field' => TRUE,
         'attributes' => CRM_Core_SelectValues::date('creditCard'),
         'is_required' => TRUE,
+        'month_field' => 'credit_card_exp_date_M',
+        'year_field' => 'credit_card_exp_date_Y',
       ),
+
       'credit_card_type' => array(
         'htmlType' => 'select',
         'name' => 'credit_card_type',
@@ -602,6 +610,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'attributes' => $creditCardType,
         'is_required' => FALSE,
       ),
+      'card_name' => array(
+        'htmlType' => 'text',
+        'name' => 'card_name',
+        'title' => ts('Card Name'),
+        'cc_field' => FALSE,
+        'is_required' => TRUE,
+      )
     );
   }
 
