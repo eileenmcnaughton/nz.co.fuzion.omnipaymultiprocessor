@@ -16,7 +16,7 @@ class TransferRequest extends Request
      */
     protected function getEndpoint()
     {
-        return 'https://www.moneybookers.com/app/pay.pl';
+        return 'https://www.skrill.com/app/pay.pl';
     }
 
     /**

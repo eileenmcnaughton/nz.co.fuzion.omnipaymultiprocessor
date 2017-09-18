@@ -1,4 +1,5 @@
 <?php
+
 namespace Omnipay\Skrill\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
@@ -12,10 +13,10 @@ use Omnipay\Common\Message\AbstractResponse;
  * until a response of HTTP OK (200) is received from the merchant's server or the number
  * of posts exceeds 10.
  *
- * @author Joao Dias <joao.dias@cherrygroup.com>
+ * @author    Joao Dias <joao.dias@cherrygroup.com>
  * @copyright 2013-2014 Cherry Ltd.
- * @license http://opensource.org/licenses/mit-license.php MIT
- * @version 6.19 Merchant Integration Manual
+ * @license   http://opensource.org/licenses/mit-license.php MIT
+ * @version   6.19 Merchant Integration Manual
  */
 class StatusCallback extends AbstractResponse
 {
@@ -66,22 +67,48 @@ class StatusCallback extends AbstractResponse
 
     /**
      * Is the response successful?
+     *
      * @return boolean
      */
     public function isSuccessful()
     {
-        // TODO: validate md5sig and/or sha2sig
+        if (!$this->testMdSignatures()) {
+            return false;
+        }
 
-        return in_array(
-            $this->getStatus(),
-            array(
-                self::STATUS_CHARGEBACK,
-                self::STATUS_FAILED,
-                self::STATUS_CANCELLED,
-                self::STATUS_PENDING,
-                self::STATUS_PROCESSED,
-            )
-        );
+        return in_array($this->getStatus(), [self::STATUS_PENDING, self::STATUS_PROCESSED]);
+    }
+
+    /**
+     * Was the payment cancelled?
+     *
+     * @return bool
+     */
+    public function isCancelled()
+    {
+        if (!$this->testMdSignatures()) {
+            return false;
+        }
+
+        return in_array($this->getStatus(), [self::STATUS_CHARGEBACK, self::STATUS_FAILED, self::STATUS_CANCELLED]);
+    }
+
+    /**
+     * Validates the MD5 signature and, if enabled, the SHA2 signature.
+     *
+     * @return bool
+     */
+    protected function validateSignatures()
+    {
+        if (!$this->testMdSignatures()) {
+            return false;
+        }
+
+        if ($this->getSha2Signature() !== null) {
+            return $this->getSha2Signature() === $this->calculateSha2Signature();
+        }
+
+        return true;
     }
 
     /**
@@ -107,7 +134,7 @@ class StatusCallback extends AbstractResponse
      */
     public function getStatus()
     {
-        return (int) $this->data['status'];
+        return (int)$this->data['status'];
     }
 
     /**
@@ -140,7 +167,7 @@ class StatusCallback extends AbstractResponse
      */
     public function getMerchantId()
     {
-        return (int) $this->data['merchant_id'];
+        return (int)$this->data['merchant_id'];
     }
 
     /**
@@ -153,7 +180,7 @@ class StatusCallback extends AbstractResponse
      */
     public function getCustomerId()
     {
-        return (int) $this->data['customer_id'] ?: null;
+        return (int)$this->data['customer_id'] ?: null;
     }
 
     /**
@@ -179,11 +206,18 @@ class StatusCallback extends AbstractResponse
     /**
      * Get the total amount of the payment in merchant's currency.
      *
-     * @return double amount
+     * @param $stringFormat
+     * @return float|string amount
      */
-    public function getSkrillAmount()
+    public function getSkrillAmount($stringFormat = false)
     {
-        return (double) $this->data['mb_amount'];
+        $amount = (double)$this->data['mb_amount'];
+
+        if ($stringFormat) {
+            $amount = number_format($amount, 2, '.', '');
+        }
+
+        return $amount;
     }
 
     /**
@@ -209,7 +243,7 @@ class StatusCallback extends AbstractResponse
      */
     public function getFailedReasonCode()
     {
-        return (int) $this->data['failed_reason_code'] ?: null;
+        return (int)$this->data['failed_reason_code'] ?: null;
     }
 
     /**
@@ -231,7 +265,7 @@ class StatusCallback extends AbstractResponse
      */
     public function getSha2Signature()
     {
-        return $this->data['sha2sig'] ?: null;
+        return isset($this->data['sha2sig']) ? $this->data['sha2sig'] : null;
     }
 
     /**
@@ -241,7 +275,7 @@ class StatusCallback extends AbstractResponse
      */
     public function getAmount()
     {
-        return (double) $this->data['amount'];
+        return (double)$this->data['amount'];
     }
 
     /**
@@ -277,15 +311,17 @@ class StatusCallback extends AbstractResponse
     /**
      * Get the fields that the merchant chose to submit in the merchant_fields parameter.
      *
-     * @param  array  $keys  keys for the fields
+     * @param  array $keys keys for the fields
+     *
      * @return array         merchant fields
      */
     public function getMerchantFields(array $keys)
     {
-        $fields = array();
+        $fields = [];
         foreach ($keys as $key) {
             $fields[$key] = $this->data[$key];
         }
+
         return $fields;
     }
 
@@ -296,23 +332,18 @@ class StatusCallback extends AbstractResponse
      * The md5sig is constructed by performing a MD5 calculation on a string built up by
      * concatenating the other fields returned to the status url.
      *
-     * @param  string  $secretWord  uppercase MD5 value of the ASCII equivalent of the
-     *                              secret word submitted in the 'Merchant Tools' section
-     *                              of the merchant's online Skrill account
      * @return string               md5 signature
      */
-    public function calculateMd5Signature($secretWord)
+    public function calculateMd5Signature()
     {
-        $md5sig = md5(
+        return strtoupper(md5(
             $this->getMerchantId() .
             $this->getTransactionReference() .
-            $secretWord .
-            $this->getSkrillAmount() .
+            $this->getSecretWordForMd5Signature() .
+            $this->getSkrillAmount(true) .
             $this->getSkrillCurrency() .
             $this->getStatus()
-        );
-
-        return strtoupper($md5sig);
+        ));
     }
 
     /**
@@ -322,21 +353,93 @@ class StatusCallback extends AbstractResponse
      * The sha2sig is constructed by performing a SHA256 calculation on a string built up
      * by concatenating the other fields returned to the status url.
      *
-     * @param  string  $secretWord  uppercase MD5 value of the ASCII equivalent of the
-     *                              secret word submitted in the 'Merchant Tools' section
-     *                              of the merchant's online Skrill account
      * @return string               sha2 signature
      */
-    public function calculateSha2Signature($secretWord)
+    public function calculateSha2Signature()
     {
-        return hash(
-            'sha256',
+        return hash('sha256',
             $this->getMerchantId() .
             $this->getTransactionReference() .
-            $secretWord .
+            $this->getSecretWordForMd5Signature() .
             $this->getSkrillAmount() .
             $this->getSkrillCurrency() .
             $this->getStatus()
         );
     }
+
+    /**
+     * Get the merchant's email address.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return isset($this->data['email']) ? $this->data['email'] : null;
+    }
+
+    /**
+     * Get the merchant's MD5 API/MQI password.
+     *
+     * @return string password
+     */
+    public function getPassword()
+    {
+        return isset($this->data['password']) ? $this->data['password'] : null;
+    }
+
+    /**
+     * Get the URL to which the transaction details will be posted after the payment
+     * process is complete.
+     *
+     * @return string notify url
+     */
+    public function getNotifyUrl()
+    {
+        return isset($this->data['notifyUrl']) ? $this->data['notifyUrl'] : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        if (!$this->testMdSignatures()) {
+            return "MD5 signature {$this->calculateMd5Signature()} ({$this->data['secretWord']}) doesn't match {$this->getMd5Signature()}";
+        } else {
+            return parent::getMessage();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function testMdSignatures()
+    {
+        return (! $this->getSecretWord()) || $this->getMd5Signature() == $this->calculateMd5Signature();
+    }
+
+    /**
+     * @param string $secretWord
+     * @return $this
+     */
+    public function setSecretWord($secretWord)
+    {
+        $this->data['secretWord'] = $secretWord;
+
+        return $this;
+    }
+
+    public function getSecretWord()
+    {
+        return isset($this->data['secretWord']) ? $this->data['secretWord'] : null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSecretWordForMd5Signature()
+    {
+        return strtoupper($this->getSecretWord());
+    }
+
 }

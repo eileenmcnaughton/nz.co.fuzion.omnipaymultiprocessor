@@ -4,7 +4,7 @@ Date: Thu, 02 Jan 2014 16:25:08 GMT
 Content-Type: text/html; charset=utf-8
 Transfer-Encoding: chunked
 Connection: keep-alive
-Set-Cookie: SESSION_ID=dc5299845857f51770334e0b03c4df02; path=/; secure; HttpOnly, JSESSIONID=dc5299845857f51770334e0b03c4df02; path=/; secure; HttpOnly, SESSION_KEY=; path=/; secure, MB_LANGUAGE=EN; domain=.moneybookers.com; path=/; expires=Sun, 31-Dec-2023 16:25:08 GMT
+Set-Cookie: SESSION_ID=dc5299845857f51770334e0b03c4df02; path=/; secure; HttpOnly, JSESSIONID=dc5299845857f51770334e0b03c4df02; path=/; secure; HttpOnly, SESSION_KEY=; path=/; secure, MB_LANGUAGE=EN; domain=.pay.skrill.com; path=/; expires=Sun, 31-Dec-2023 16:25:08 GMT
 Expires: Tue, 01 Jan 1980 00:00:00 GMT
 Pragma: no-cache
 Cache-control: no-cache
@@ -118,7 +118,7 @@ P3P: policyref="/w3c/p3p.xml", CP="NOI DSP COR NID CURa OUR NOR STA"
 			
 		
 
-<title>moneybookers.com</title>
+<title>pay.skrill.com</title>
         
         
    
@@ -133,7 +133,7 @@ P3P: policyref="/w3c/p3p.xml", CP="NOI DSP COR NID CURa OUR NOR STA"
 <meta name="rating" content="general" />
 
 
-	<link rel="icon" href="https://www.moneybookers.com/favicon.ico" type="image/vnd.microsoft.icon" />
+	<link rel="icon" href="https://pay.skrill.com/favicon.ico" type="image/vnd.microsoft.icon" />
 <link rel="styleSheet" href="https://i1.mbsvr.net/css/style_en.css?version=v1.1" type="text/css" media="screen">
 
 
@@ -302,7 +302,7 @@ In order to pay using Skrill, please enable cookies by changing your browser’s
 	<dl>
 		<dd><div class="separator" id="separator"></div><dl class="buttons">    <dd ><button type="button" 
 		class="submit_btn"
-		value="Continue"			onclick="location.replace('https://www.moneybookers.com/app/payment.pl?sid=dc5299845857f51770334e0b03c4df02');">
+		value="Continue"			onclick="location.replace('https://pay.skrill.com?sid=dc5299845857f51770334e0b03c4df02');">
 <span class="msg">CONTINUE</span></button>    </dd></dl>   		</dd>
    	</dl>	</div></div>
 

@@ -223,6 +223,7 @@ class Expectation implements ExpectationInterface
             $type = (string) $rm->getReturnType();
             switch ($type) {
                 case '':       return;
+                case 'void':   return;
                 case 'string': return '';
                 case 'int':    return 0;
                 case 'float':  return 0.0;
@@ -309,7 +310,8 @@ class Expectation implements ExpectationInterface
         if (empty($this->_expectedArgs) && !$this->_noArgsExpectation) {
             return true;
         }
-        if (count($args) !== count($this->_expectedArgs)) {
+        $expected = is_array($this->_expectedArgs) ? count($this->_expectedArgs) : 0;
+        if (count($args) !== $expected) {
             return false;
         }
         $argCount = count($args);

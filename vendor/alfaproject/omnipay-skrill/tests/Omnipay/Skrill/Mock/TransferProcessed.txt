@@ -4,7 +4,7 @@ Date: Tue, 07 Jan 2014 16:09:20 GMT
 Content-Type: text/xml; charset=ISO-8859-1
 Transfer-Encoding: chunked
 Connection: keep-alive
-Set-Cookie: MB_LANGUAGE=EN; domain=.moneybookers.com; path=/; expires=Fri, 05-Jan-2024 16:09:20 GMT
+Set-Cookie: MB_LANGUAGE=EN; domain=.pay.skrill.com; path=/; expires=Fri, 05-Jan-2024 16:09:20 GMT
 Expires: Tue, 01 Jan 1980 00:00:00 GMT
 Pragma: no-cache
 Cache-control: no-cache

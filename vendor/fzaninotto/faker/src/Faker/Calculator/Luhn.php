@@ -2,7 +2,6 @@
 
 namespace Faker\Calculator;
 
-use Faker\Provider\Base as BaseProvider;
 use InvalidArgumentException;
 
 /**
@@ -62,7 +61,8 @@ class Luhn
     /**
      * Generate a Luhn compliant number.
      *
-     * @param string $prefix
+     * @param string $partialValue
+     *
      * @return string
      */
     public static function generateLuhnNumber($partialValue)

@@ -63,7 +63,7 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
      *
      * @return mixed Contents of array key
      *
-     * @throws \InvalidArgumentException If key is not found.
+     * @throws \InvalidArgumentException if key is not found
      */
     public function getArgument($key)
     {
@@ -80,7 +80,7 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
      * @param string $key   Argument name
      * @param mixed  $value Value
      *
-     * @return GenericEvent
+     * @return $this
      */
     public function setArgument($key, $value)
     {
@@ -104,7 +104,7 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
      *
      * @param array $args Arguments
      *
-     * @return GenericEvent
+     * @return $this
      */
     public function setArguments(array $args = array())
     {
@@ -132,7 +132,7 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
      *
      * @return mixed
      *
-     * @throws \InvalidArgumentException If key does not exist in $this->args.
+     * @throws \InvalidArgumentException if key does not exist in $this->args
      */
     public function offsetGet($key)
     {

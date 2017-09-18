@@ -6,10 +6,10 @@ use Omnipay\Common\AbstractGateway;
 /**
  * Skrill Gateway
  *
- * @author Joao Dias <joao.dias@cherrygroup.com>
+ * @author    Joao Dias <joao.dias@cherrygroup.com>
  * @copyright 2013-2014 Cherry Ltd.
- * @license http://opensource.org/licenses/mit-license.php MIT
- * @version 2.0.0
+ * @license   http://opensource.org/licenses/mit-license.php MIT
+ * @version   2.0.0
  */
 class Gateway extends AbstractGateway
 {
@@ -26,11 +26,11 @@ class Gateway extends AbstractGateway
      */
     public function getDefaultParameters()
     {
-        return array(
-            'email'     => '',
-            'notifyUrl' => '',
-            'testMode'  => false,
-        );
+        return [
+            'email'      => '',
+            'notifyUrl'  => '',
+            'testMode'   => false,
+        ];
     }
 
     /**
@@ -47,6 +47,7 @@ class Gateway extends AbstractGateway
      * Set the merchant's email address.
      *
      * @param string $value email
+     *
      * @return self
      */
     public function setEmail($value)
@@ -68,6 +69,7 @@ class Gateway extends AbstractGateway
      * Set the merchant's MD5 API/MQI password.
      *
      * @param string $value password
+     *
      * @return self
      */
     public function setPassword($value)
@@ -95,6 +97,7 @@ class Gateway extends AbstractGateway
      * the merchant.
      *
      * @param string $value notify url
+     *
      * @return self
      */
     public function setNotifyUrl($value)
@@ -103,23 +106,59 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * Get the secret word used for signatures.
+     *
+     * @return string Secret word
+     */
+    public function getSecretWord()
+    {
+        return $this->getParameter('secretWord');
+    }
+
+    /**
+     * Set the secret word used for signatures.
+     *
+     * @param string $value Secret word
+     *
+     * @return self
+     */
+    public function setSecretWord($value)
+    {
+        return $this->setParameter('secretWord', $value);
+    }
+
+    /**
      * Create a new charge.
      *
-     * @param  array                    $parameters  request parameters
+     * @param  array $parameters request parameters
+     *
      * @return Message\PaymentResponse               response
      */
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = [])
     {
         return $this->createRequest('Omnipay\Skrill\Message\PaymentRequest', $parameters);
     }
 
     /**
+     * Finalises a payment (callback).
+     *
+     * @param  array $parameters request parameters
+     *
+     * @return Message\PaymentResponse               response
+     */
+    public function completePurchase(array $parameters = [])
+    {
+        return $this->createRequest('Omnipay\Skrill\Message\CompletePurchaseRequest', $parameters);
+    }
+
+    /**
      * Authorize and prepare a transfer.
      *
-     * @param  array                      $parameters  request parameters
+     * @param  array $parameters request parameters
+     *
      * @return Message\AuthorizeResponse               response
      */
-    public function authorizeTransfer(array $parameters = array())
+    public function authorizeTransfer(array $parameters = [])
     {
         return $this->createRequest('Omnipay\Skrill\Message\AuthorizeTransferRequest', $parameters);
     }
@@ -127,10 +166,11 @@ class Gateway extends AbstractGateway
     /**
      * Create a new transfer.
      *
-     * @param  array                     $parameters  request parameters
+     * @param  array $parameters request parameters
+     *
      * @return Message\TransferResponse               response
      */
-    public function transfer(array $parameters = array())
+    public function transfer(array $parameters = [])
     {
         return $this->createRequest('Omnipay\Skrill\Message\TransferRequest', $parameters);
     }
@@ -138,10 +178,11 @@ class Gateway extends AbstractGateway
     /**
      * Authorize and prepare a refund.
      *
-     * @param  array                      $parameters  request parameters
+     * @param  array $parameters request parameters
+     *
      * @return Message\AuthorizeResponse               response
      */
-    public function authorizeRefund(array $parameters = array())
+    public function authorizeRefund(array $parameters = [])
     {
         return $this->createRequest('Omnipay\Skrill\Message\AuthorizeRefundRequest', $parameters);
     }

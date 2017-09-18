@@ -1,4 +1,5 @@
 <?php
+
 namespace Omnipay\Skrill\Message;
 
 use DateTime;
@@ -21,40 +22,40 @@ class PaymentRequestTest extends TestCase
     public function testGetData()
     {
         $expectedData = array(
-            'email'                => 'test@php.unit',
-            'language'             => 'EN',
-            'amount'               => '12.34',
-            'currency'             => 'EUR',
-            'details'              => array('key' => 'value'),
+            'email' => 'test@php.unit',
+            'language' => 'EN',
+            'amount' => '12.34',
+            'currency' => 'EUR',
+            'details' => array('key' => 'value'),
             'recipientDescription' => 'phpunit',
-            'transactionId'        => 'ref',
-            'returnUrl'            => 'http://php.unit/return',
-            'returnUrlText'        => 'return',
-            'returnUrlTarget'      => 3,
-            'cancelUrl'            => 'http://php.unit/cancel',
-            'cancelUrlTarget'      => 3,
-            'notifyUrl'            => 'http://php.unit/status',
-            'notifyUrl2'           => 'http://php.unit/status2',
-            'newWindowRedirect'    => 0,
-            'hideLogin'            => false,
-            'confirmationNote'     => 'confirmation note',
-            'logoUrl'              => 'http://php.unit/logo.png',
-            'referralId'           => 'ref_id',
-            'extReferralId'        => 'ext_ref_id',
-            'merchantFields'       => array('key' => 'value'),
-            'customerEmail'        => 'customer@php.unit',
-            'customerTitle'        => 'Mr',
-            'customerFirstName'    => 'php',
-            'customerLastName'     => 'unit',
-            'customerBirthday'     => new DateTime('2014-01-03'),
-            'customerAddress1'     => 'address1',
-            'customerAddress2'     => 'address2',
-            'customerPhone'        => '987654321',
-            'customerPostalCode'   => 'zip',
-            'customerCity'         => 'city',
-            'customerState'        => 'state',
-            'customerCountry'      => 'XXX',
-            'amountDescriptions'   => array('key' => 'value'),
+            'transactionId' => 'ref',
+            'returnUrl' => 'http://php.unit/return',
+            'returnUrlText' => 'return',
+            'returnUrlTarget' => 3,
+            'cancelUrl' => 'http://php.unit/cancel',
+            'cancelUrlTarget' => 3,
+            'notifyUrl' => 'http://php.unit/status',
+            'notifyUrl2' => 'http://php.unit/status2',
+            'newWindowRedirect' => 0,
+            'hideLogin' => false,
+            'confirmationNote' => 'confirmation note',
+            'logoUrl' => 'http://php.unit/logo.png',
+            'referralId' => 'ref_id',
+            'extReferralId' => 'ext_ref_id',
+            'merchantFields' => array('key' => 'value'),
+            'customerEmail' => 'customer@php.unit',
+            'customerTitle' => 'Mr',
+            'customerFirstName' => 'php',
+            'customerLastName' => 'unit',
+            'customerBirthday' => new DateTime('2014-01-03'),
+            'customerAddress1' => 'address1',
+            'customerAddress2' => 'address2',
+            'customerPhone' => '987654321',
+            'customerPostalCode' => 'zip',
+            'customerCity' => 'city',
+            'customerState' => 'state',
+            'customerCountry' => 'XXX',
+            'amountDescriptions' => array('key' => 'value'),
         );
         $this->request->initialize($expectedData);
         $this->request->setPaymentMethod(PaymentMethod::SKRILL_DIRECT);
@@ -66,8 +67,8 @@ class PaymentRequestTest extends TestCase
         $this->assertSame($expectedData['amount'], $data['amount']);
         $this->assertSame($expectedData['currency'], $data['currency']);
 
-        $this->assertSame('key', $data['details1_description']);
-        $this->assertSame('value', $data['details1_text']);
+        $this->assertSame('key', $data['detail1_description']);
+        $this->assertSame('value', $data['detail1_text']);
 
         $this->assertSame($expectedData['recipientDescription'], $data['recipient_description']);
         $this->assertSame($expectedData['transactionId'], $data['transaction_id']);

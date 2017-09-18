@@ -113,7 +113,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             if (strcasecmp($key, 'Brq_signature') === 0) {
                 continue;
             }
-            $str .= $key.'='.$value;
+            $str .= $key.'='.urldecode($value);
         }
 
         return sha1($str.$this->getSecretKey());

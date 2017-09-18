@@ -16,7 +16,7 @@ class AuthorizeTransferRequest extends AuthRequest
      */
     protected function getEndpoint()
     {
-        return 'https://www.moneybookers.com/app/pay.pl';
+        return 'https://www.skrill.com/app/pay.pl';
     }
 
     /**

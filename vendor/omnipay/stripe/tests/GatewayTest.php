@@ -4,6 +4,9 @@ namespace Omnipay\Stripe;
 
 use Omnipay\Tests\GatewayTestCase;
 
+/**
+ * @property Gateway gateway
+ */
 class GatewayTest extends GatewayTestCase
 {
     public function setUp()
@@ -71,6 +74,15 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->fetchToken(array());
 
         $this->assertInstanceOf('Omnipay\Stripe\Message\FetchTokenRequest', $request);
+    }
+
+    public function testCreateToken()
+    {
+        $request = $this->gateway->createToken(array('customer' => 'cus_foo'));
+
+        $this->assertInstanceOf('Omnipay\Stripe\Message\CreateTokenRequest', $request);
+        $params = $request->getParameters();
+        $this->assertSame('cus_foo', $params['customer']);
     }
 
     public function testCreateCard()
@@ -150,6 +162,13 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('Omnipay\Stripe\Message\DeletePlanRequest', $request);
         $this->assertSame('basic', $request->getId());
+    }
+
+    public function testListPlans()
+    {
+        $request = $this->gateway->listPlans(array());
+
+        $this->assertInstanceOf('Omnipay\Stripe\Message\ListPlansRequest', $request);
     }
 
     public function testCreateSubscription()

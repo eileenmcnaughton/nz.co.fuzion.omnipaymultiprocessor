@@ -13,12 +13,13 @@ use Omnipay\Common\Exception\InvalidRequestException;
  */
 class AuthorizeRefundRequest extends AuthRequest
 {
+
     /**
      * {@inheritdoc}
      */
     protected function getEndpoint()
     {
-        return 'https://www.moneybookers.com/app/refund.pl';
+        return 'https://www.skrill.com/app/refund.pl';
     }
 
     /**

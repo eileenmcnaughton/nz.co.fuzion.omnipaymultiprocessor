@@ -57,7 +57,7 @@ class AcceptHeaderItem
      *
      * @param string $itemValue
      *
-     * @return AcceptHeaderItem
+     * @return self
      */
     public static function fromString($itemValue)
     {
@@ -67,7 +67,7 @@ class AcceptHeaderItem
 
         $lastNullAttribute = null;
         foreach ($bits as $bit) {
-            if (($start = substr($bit, 0, 1)) === ($end = substr($bit, -1)) && ($start === '"' || $start === '\'')) {
+            if (($start = substr($bit, 0, 1)) === ($end = substr($bit, -1)) && ('"' === $start || '\'' === $start)) {
                 $attributes[$lastNullAttribute] = substr($bit, 1, -1);
             } elseif ('=' === $end) {
                 $lastNullAttribute = $bit = substr($bit, 0, -1);
@@ -78,7 +78,7 @@ class AcceptHeaderItem
             }
         }
 
-        return new self(($start = substr($value, 0, 1)) === ($end = substr($value, -1)) && ($start === '"' || $start === '\'') ? substr($value, 1, -1) : $value, $attributes);
+        return new self(($start = substr($value, 0, 1)) === ($end = substr($value, -1)) && ('"' === $start || '\'' === $start) ? substr($value, 1, -1) : $value, $attributes);
     }
 
     /**
@@ -103,7 +103,7 @@ class AcceptHeaderItem
      *
      * @param string $value
      *
-     * @return AcceptHeaderItem
+     * @return $this
      */
     public function setValue($value)
     {
@@ -127,7 +127,7 @@ class AcceptHeaderItem
      *
      * @param float $quality
      *
-     * @return AcceptHeaderItem
+     * @return $this
      */
     public function setQuality($quality)
     {
@@ -151,7 +151,7 @@ class AcceptHeaderItem
      *
      * @param int $index
      *
-     * @return AcceptHeaderItem
+     * @return $this
      */
     public function setIndex($index)
     {
@@ -211,7 +211,7 @@ class AcceptHeaderItem
      * @param string $name
      * @param string $value
      *
-     * @return AcceptHeaderItem
+     * @return $this
      */
     public function setAttribute($name, $value)
     {

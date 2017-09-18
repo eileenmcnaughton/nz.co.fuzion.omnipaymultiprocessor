@@ -383,6 +383,26 @@ class RestPurchaseRequest extends RestAbstractRequest
         return $this->setParameter('google_analytics', $value);
     }
 
+    /** 
+     * Get items HTML
+     *
+     * @return  string
+     */
+    public function setItemsHtml($itemsHtml)
+    {
+        $this->setParameter('itemsHtml', $itemsHtml);
+    }
+
+    /** 
+     * Get items HTML
+     *
+     * @return  string
+     */
+    public function getItemsHtml()
+    {
+        return $this->getParameter('itemsHtml');
+    }
+
     /**
      * Get the payment options.
      *
@@ -420,13 +440,13 @@ class RestPurchaseRequest extends RestAbstractRequest
         }
 
         $cardData = array(
-            'address_1'         => $this->getCard()->getAddress1(),
-            'address_2'         => $this->getCard()->getAddress2(),
+            'address1'         => $this->getCard()->getAddress1(),
+            'address2'         => $this->getCard()->getAddress2(),
             'city'              => $this->getCard()->getCity(),
             'country'           => $this->getCard()->getCountry(),
             'email'             => $this->getCard()->getEmail(),
             'first_name'        => $this->getCard()->getFirstName(),
-            'house_number'      => $this->getCard()->getNumber(),
+            'house_number'      => $this->getVar1(),
             'last_name'         => $this->getCard()->getLastName(),
             'phone'             => $this->getCard()->getPhone(),
             'state'             => $this->getCard()->getState(),
@@ -450,6 +470,29 @@ class RestPurchaseRequest extends RestAbstractRequest
         );
 
         return array_filter($data);
+    }
+
+    /**
+     * Get itembag data.
+     * 
+     * @return array
+     */
+    protected function getItemBagData()
+    {
+        $items = array();
+        $itemBag = $this->getItems();
+        if (! empty($itemBag)) {
+            foreach ($itemBag->all() as $item) {
+                $items[] = array(
+                    'name' => $item->getName(),
+                    'description' => $item->getDescription(),
+                    'quantity' => $item->getQuantity(),
+                    'unit_price' => $item->getPrice(),
+                );
+            }
+        }
+
+        return $items;
     }
 
     /**
@@ -492,7 +535,7 @@ class RestPurchaseRequest extends RestAbstractRequest
             'description'      => $this->getDescription(),
             'gateway'          => $this->getGateway(),
             'google_analytics' => $this->getGoogleAnalyticsCode(),
-            'items'            => $this->getItems(),
+            'items'            => $this->getItemsHtml(),
             'manual'           => $this->getManual(),
             'order_id'         => $this->getTransactionId(),
             'recurring_id'     => $this->getRecurringId(),
@@ -518,6 +561,12 @@ class RestPurchaseRequest extends RestAbstractRequest
 
         if (! empty($gatewayData)) {
             $data['gateway_info'] = $gatewayData;
+        }
+
+        $getItemBagData = $this->getItemBagData();
+
+        if (! empty($getItemBagData)) {
+            $data['shopping_cart']['items'] = $getItemBagData;
         }
 
         return array_filter($data);

@@ -3,8 +3,6 @@
 namespace Omnipay\WorldPay;
 
 use Omnipay\Common\AbstractGateway;
-use Omnipay\WorldPay\Message\CompletePurchaseRequest;
-use Omnipay\WorldPay\Message\PurchaseRequest;
 
 /**
  * WorldPay Gateway
@@ -26,7 +24,22 @@ class Gateway extends AbstractGateway
             'secretWord' => '',
             'callbackPassword' => '',
             'testMode' => false,
+            'noLanguageMenu' => false,
+            'fixContact' => false,
+            'hideContact' => false,
+            'hideCurrency' => false,
+            'signatureFields' => 'instId:amount:currency:cartId',
         );
+    }
+
+    public function getSignatureFields()
+    {
+        return $this->getParameter('signatureFields');
+    }
+
+    public function setSignatureFields($value)
+    {
+        return $this->setParameter('signatureFields', $value);
     }
 
     public function getInstallationId()
@@ -67,6 +80,66 @@ class Gateway extends AbstractGateway
     public function setCallbackPassword($value)
     {
         return $this->setParameter('callbackPassword', $value);
+    }
+
+    /**
+     * If true, hides WorldPay's language selection menu.
+     *
+     * @param boolean
+     */
+    public function getNoLanguageMenu()
+    {
+        return $this->getParameter('noLanguageMenu');
+    }
+
+    public function setNoLanguageMenu($value)
+    {
+        return $this->setParameter('noLanguageMenu', $value);
+    }
+
+    /**
+     * If true, prevents editing of address details by user.
+     *
+     * @param boolean
+     */
+    public function getFixContact()
+    {
+        return $this->getParameter('fixContact');
+    }
+
+    public function setFixContact($value)
+    {
+        return $this->setParameter('fixContact', $value);
+    }
+
+    /**
+     * If true, hides address details from user.
+     *
+     * @param boolean
+     */
+    public function getHideContact()
+    {
+        return $this->getParameter('hideContact');
+    }
+
+    public function setHideContact($value)
+    {
+        return $this->setParameter('hideContact', $value);
+    }
+
+    /**
+     * If true, hides currency options from user.
+     *
+     * @param boolean
+     */
+    public function getHideCurrency()
+    {
+        return $this->getParameter('hideCurrency');
+    }
+
+    public function setHideCurrency($value)
+    {
+        return $this->setParameter('hideCurrency', $value);
     }
 
     public function purchase(array $parameters = array())

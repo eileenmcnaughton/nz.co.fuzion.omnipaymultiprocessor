@@ -54,7 +54,7 @@ class ResponseTest extends TestCase
 
     public function testCaptureSuccess()
     {
-        $httpResponse = $this->getMockHttpResponse('CaptureSuccess.txt');
+        $httpResponse = $this->getMockHttpResponse('SharedCaptureSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
@@ -64,11 +64,20 @@ class ResponseTest extends TestCase
 
     public function testCaptureFailure()
     {
-        $httpResponse = $this->getMockHttpResponse('CaptureFailure.txt');
+        $httpResponse = $this->getMockHttpResponse('SharedCaptureFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('{"VendorTxCode":"123456"}', $response->getTransactionReference());
         $this->assertSame('You are trying to RELEASE a transaction that has already been RELEASEd or ABORTed.', $response->getMessage());
+    }
+
+    public function testDirectPurchaseWithToken()
+    {
+        $httpResponse = $this->getMockHttpResponse('DirectPurchaseWithToken.txt');
+        $response = new Response($this->getMockRequest(), $httpResponse->getBody());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('{ABCDEFGH-ABCD-ABCD-ABCD-ABCDEFGHIJKL}', $response->getToken());
     }
 }

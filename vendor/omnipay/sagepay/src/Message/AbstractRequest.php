@@ -9,6 +9,11 @@ use Omnipay\Common\Exception\InvalidRequestException;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    const APPLY_3DSECURE_APPLY = 0;
+    const APPLY_3DSECURE_FORCE = 1;
+    const APPLY_3DSECURE_NONE = 2;
+    const APPLY_3DSECURE_AUTH = 3;
+
     protected $liveEndpoint = 'https://live.sagepay.com/gateway/service';
     protected $testEndpoint = 'https://test.sagepay.com/gateway/service';
 
@@ -22,9 +27,34 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('vendor', $value);
     }
 
+    public function getVendorData()
+    {
+        return $this->getParameter('vendorData');
+    }
+
+    /**
+     * @param string $value ASCII alphanumeric and spaces, max 200 characters.
+     */
+    public function setVendorData($value)
+    {
+        return $this->setParameter('vendorData', $value);
+    }
+
     public function getService()
     {
         return $this->action;
+    }
+
+    public function setUseOldBasketFormat($value)
+    {
+        $value = (bool)$value;
+
+        return $this->setParameter('useOldBasketFormat', $value);
+    }
+
+    public function getUseOldBasketFormat()
+    {
+        return $this->getParameter('useOldBasketFormat');
     }
 
     public function getAccountType()
@@ -34,9 +64,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * Set account type.
-     * 
+     *
      * This is ignored for all PAYPAL transactions.
-     * 
+     *
      * @param string $value E: Use the e-commerce merchant account. (default)
      *                      M: Use the mail/telephone order account. (if present)
      *                      C: Use the continuous authority merchant account. (if present)
@@ -66,7 +96,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * Set the apply AVSCV2 checks.
-     * 
+     *
      * @param  int $value 0: If AVS/CV2 enabled then check them. If rules apply, use rules. (default)
      *                    1: Force AVS/CV2 checks even if not enabled for the account. If rules apply
      *                       use rules.
@@ -86,9 +116,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * Whether or not to apply 3D secure authentication.
-     * 
+     *
      * This is ignored for PAYPAL, EUROPEAN PAYMENT transactions.
-     * 
+     *
      * @param  int $value 0: If 3D-Secure checks are possible and rules allow, perform the
      *                       checks and apply the authorisation rules. (default)
      *                    1: Force 3D-Secure checks for this transaction if possible and
@@ -114,6 +144,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
+    /**
+     * Send data to the remote gateway, parse the result into an array,
+     * then use that to instantiate the response object.
+     */
     public function sendData($data)
     {
         // Issue #20 no data values should be null.
@@ -125,7 +159,22 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data)->send();
 
-        return $this->createResponse($httpResponse->getBody());
+        // The body is a string.
+        $body = $httpResponse->getBody();
+
+        // Split into lines.
+        $lines = preg_split('/[\n\r]+/', $body);
+
+        $response_data = array();
+
+        foreach ($lines as $line) {
+            $line = explode('=', $line, 2);
+            if (!empty($line[0])) {
+                $response_data[trim($line[0])] = isset($line[1]) ? trim($line[1]) : '';
+            }
+        }
+
+        return $this->createResponse($response_data);
     }
 
     public function getEndpoint()
@@ -137,6 +186,46 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
 
         return $this->liveEndpoint."/$service.vsp";
+    }
+
+    /**
+     * Use this flag to indicate you wish to have a token generated and stored in the SagePay database and
+     * returned to you for future use.
+     *
+     * @param bool|int $createToken 0 = This will not create a token from the payment (default).
+     *                              1 = This will create a token from the payment if
+     *                                  successful and return a Token.
+     */
+    public function setCreateToken($createToken)
+    {
+        $createToken = (bool)$createToken;
+
+        $this->setParameter('createToken', (int)$createToken);
+    }
+
+    public function getCreateToken()
+    {
+        return $this->parameters->get('createToken', 0);
+    }
+
+    /**
+     * An optional flag to indicate if you wish to continue to store the Token in the SagePay
+     * token database for future use.
+     *
+     * @param bool|int $storeToken  0 = The Token will be deleted from the SagePay database if
+     *                                  authorised by the bank (default).
+     *                              1 = Continue to store the Token in the SagePay database for future use.
+     */
+    public function setStoreToken($storeToken)
+    {
+        $storeToken = (bool)$storeToken;
+
+        $this->setParameter('storeToken', (int)$storeToken);
+    }
+
+    public function getStoreToken()
+    {
+        return $this->parameters->get('storeToken', 0);
     }
 
     protected function createResponse($data)
@@ -216,6 +305,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 $item->addChild('totalGrossAmount', $total);
             }
         }
+
         if ($cartHasDiscounts) {
             $discounts = $xml->addChild('discounts');
             foreach ($items as $discountItem) {
@@ -226,10 +316,54 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 }
             }
         }
+
         $xmlString = $xml->asXML();
+
         if ($xmlString) {
             $result = $xmlString;
         }
+
+        return $result;
+    }
+
+    /**
+     * Generate Basket string in the old format
+     * This is called if "useOldBasketFormat" is set to true in the gateway config
+     * @return string Basket field in format of:
+     * 1:Item:2:10.00:0.00:10.00:20.00
+     * [number of lines]:[item name]:[quantity]:[unit cost]:[item tax]:[item total]:[line total]
+     */
+    protected function getItemDataNonXML()
+    {
+        $result = '';
+        $items = $this->getItems();
+        $count = 0;
+
+        foreach ($items as $basketItem) {
+            $lineTotal = ($basketItem->getQuantity() * $basketItem->getPrice());
+
+            $description = $this->filterItemName($basketItem->getName());
+
+            // Make sure there aren't any colons in the name
+            // Perhaps ":" should be replaced with '-' or other symbol?
+            $description = str_replace(':', ' ', $description);
+
+            $result .= ':' . $description .    // Item name
+                ':' . $basketItem->getQuantity() . // Quantity
+                // Unit cost (without tax)
+                ':' . number_format($basketItem->getPrice(), 2, '.', '') .
+                ':0.00' .    // Item tax
+                // Item total
+                ':' . number_format($basketItem->getPrice(), 2, '.', '') .
+                // As the getItemData() puts 0.00 into tax, same was done here
+                ':' . number_format($lineTotal, 2, '.', '');  // Line total
+
+            $count++;
+
+        }
+
+        // Prepend number of lines to the result string
+        $result = $count . $result;
 
         return $result;
     }

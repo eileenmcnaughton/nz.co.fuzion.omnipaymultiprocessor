@@ -24,20 +24,13 @@ use Omnipay\Common\Message\AbstractRequest;
  * This way the details of the payment are communicated securely only between the
  * merchant's server and Skrill.
  *
- * @author Joao Dias <joao.dias@cherrygroup.com>
+ * @author    Joao Dias <joao.dias@cherrygroup.com>
  * @copyright 2013-2014 Cherry Ltd.
- * @license http://opensource.org/licenses/mit-license.php MIT
- * @version 6.5 Skrill Payment Gateway Integration Guide
+ * @license   http://opensource.org/licenses/mit-license.php MIT
+ * @version   6.5 Skrill Payment Gateway Integration Guide
  */
 class PaymentRequest extends AbstractRequest
 {
-    /**
-     * Endpoint for this request.
-     *
-     * @var string
-     */
-    protected $endpoint = 'https://www.moneybookers.com/app/payment.pl';
-
     /**
      * Get the email address of the merchant's Skrill account.
      *
@@ -52,6 +45,8 @@ class PaymentRequest extends AbstractRequest
      * Set the email address of the merchant's Skrill account.
      *
      * @param string $value email
+     *
+     * @return $this
      */
     public function setEmail($value)
     {
@@ -75,6 +70,8 @@ class PaymentRequest extends AbstractRequest
      * (Max. 30 characters)
      *
      * @param string $value recipient description
+     *
+     * @return $this
      */
     public function setRecipientDescription($value)
     {
@@ -99,6 +96,8 @@ class PaymentRequest extends AbstractRequest
      * website from where they were redirected to Skrill.
      *
      * @param string $value return url
+     *
+     * @return $this|\Omnipay\Common\Message\AbstractRequest
      */
     public function setReturnUrl($value)
     {
@@ -119,6 +118,8 @@ class PaymentRequest extends AbstractRequest
      * Set the text on the button when the customer finishes their payment.
      *
      * @param string $value return url text
+     *
+     * @return $this
      */
     public function setReturnUrlText($value)
     {
@@ -148,10 +149,33 @@ class PaymentRequest extends AbstractRequest
      * * 4 = _blank
      *
      * @param int $value return url target
+     *
+     * @return $this
      */
     public function setReturnUrlTarget($value)
     {
-        return $this->setParameter('returnUrlTarget', (int) $value);
+        switch ($value) {
+            case '_top':
+                $value = 1;
+                break;
+
+            case '_parent':
+                $value = 2;
+                break;
+
+            case '_self':
+                $value = 3;
+                break;
+
+            case '_blank':
+                $value = 4;
+                break;
+
+            default:
+                $value = (int)$value;
+        }
+
+        return $this->setParameter('returnUrlTarget', $value);
     }
 
     /**
@@ -172,6 +196,8 @@ class PaymentRequest extends AbstractRequest
      * site from where they redirected to Skrill.
      *
      * @param string $value cancel url
+     *
+     * @return $this|\Omnipay\Common\Message\AbstractRequest
      */
     public function setCancelUrl($value)
     {
@@ -201,10 +227,33 @@ class PaymentRequest extends AbstractRequest
      * * 4 = _blank
      *
      * @param int $value cancel url target
+     *
+     * @return $this
      */
     public function setCancelUrlTarget($value)
     {
-        return $this->setParameter('cancelUrlTarget', (int) $value);
+        switch ($value) {
+            case '_top':
+                $value = 1;
+                break;
+
+            case '_parent':
+                $value = 2;
+                break;
+
+            case '_self':
+                $value = 3;
+                break;
+
+            case '_blank':
+                $value = 4;
+                break;
+
+            default:
+                $value = (int)$value;
+        }
+
+        return $this->setParameter('cancelUrlTarget', $value);
     }
 
     /**
@@ -225,6 +274,8 @@ class PaymentRequest extends AbstractRequest
      * Alternatively, you may specify an email address where the results are sent.
      *
      * @param string $value notify url 2
+     *
+     * @return $this
      */
     public function setNotifyUrl2($value)
     {
@@ -232,7 +283,7 @@ class PaymentRequest extends AbstractRequest
     }
 
     /**
-     * Get whether the gateaway redirects customers to a new window instead of in the
+     * Get whether the gateway redirects customers to a new window instead of in the
      * same browser window.
      *
      * @return bool new window redirect
@@ -243,16 +294,18 @@ class PaymentRequest extends AbstractRequest
     }
 
     /**
-     * Set whether the gateaway redirects customers to a new window instead of in the
+     * Set whether the gateway redirects customers to a new window instead of in the
      * same browser window.
      *
      * e.g., for online bank transfer payment methods, such as Sofortueberweisung.
      *
      * @param bool $value new window redirect
+     *
+     * @return $this
      */
     public function setNewWindowRedirect($value)
     {
-        return $this->setParameter('newWindowRedirect', (bool) $value);
+        return $this->setParameter('newWindowRedirect', (bool)$value);
     }
 
     /**
@@ -271,6 +324,8 @@ class PaymentRequest extends AbstractRequest
      * Can be any of EN, DE, ES, FR, IT, PL, GR, RO, RU, TR, CN, CZ, NL, DA, SV or FI.
      *
      * @param string $value email
+     *
+     * @return $this
      */
     public function setLanguage($value)
     {
@@ -294,12 +349,14 @@ class PaymentRequest extends AbstractRequest
      * prominent login section.
      *
      * @deprecated On the new payment page, the login fields are hidden by default.
+     *
      * @param  bool $value hide login
+     *
      * @return self
      */
     public function setHideLogin($value)
     {
-        return $this->setParameter('hideLogin', (bool) $value);
+        return $this->setParameter('hideLogin', (bool)$value);
     }
 
     /**
@@ -318,6 +375,8 @@ class PaymentRequest extends AbstractRequest
      * Line breaks &lt;br&gt; may be used for longer messages.
      *
      * @param string $value confirmation note
+     *
+     * @return $this
      */
     public function setConfirmationNote($value)
     {
@@ -343,6 +402,8 @@ class PaymentRequest extends AbstractRequest
      * use logos with dimensions up to 200px in width and 50px in height.
      *
      * @param string $value logo url
+     *
+     * @return $this
      */
     public function setLogoUrl($value)
     {
@@ -367,6 +428,8 @@ class PaymentRequest extends AbstractRequest
      * The referral ID value must be included within the actual payment request.
      *
      * @param string $value referral id
+     *
+     * @return $this
      */
     public function setReferralId($value)
     {
@@ -392,6 +455,8 @@ class PaymentRequest extends AbstractRequest
      * so that affiliates can be tracked.
      *
      * @param string $value ext. referral id
+     *
+     * @return $this
      */
     public function setExtReferralId($value)
     {
@@ -416,6 +481,8 @@ class PaymentRequest extends AbstractRequest
      * Maximum of 5 fields.
      *
      * @param array $value merchant fields
+     *
+     * @return $this
      */
     public function setMerchantFields(array $value)
     {
@@ -438,6 +505,8 @@ class PaymentRequest extends AbstractRequest
      * If left empty, the customer has to enter their email address.
      *
      * @param string $value customer's email
+     *
+     * @return $this
      */
     public function setCustomerEmail($value)
     {
@@ -460,6 +529,8 @@ class PaymentRequest extends AbstractRequest
      * Accepted values: Mr, Mrs or Ms.
      *
      * @param string $value customer's title
+     *
+     * @return $this
      */
     public function setCustomerTitle($value)
     {
@@ -480,6 +551,8 @@ class PaymentRequest extends AbstractRequest
      * Set the customer's first name.
      *
      * @param string $value customer's first name
+     *
+     * @return $this
      */
     public function setCustomerFirstName($value)
     {
@@ -500,6 +573,8 @@ class PaymentRequest extends AbstractRequest
      * Set the customer's last name.
      *
      * @param string $value customer's last name
+     *
+     * @return $this
      */
     public function setCustomerLastName($value)
     {
@@ -520,6 +595,8 @@ class PaymentRequest extends AbstractRequest
      * Set the date of birth of the customer.
      *
      * @param DateTime|null $value customer's birthday
+     *
+     * @return $this
      */
     public function setCustomerBirthday(DateTime $value = null)
     {
@@ -540,6 +617,8 @@ class PaymentRequest extends AbstractRequest
      * Set the customer's address. (e.g. street)
      *
      * @param string $value customer's address
+     *
+     * @return $this
      */
     public function setCustomerAddress1($value)
     {
@@ -560,6 +639,8 @@ class PaymentRequest extends AbstractRequest
      * Set the customer's address. (e.g. town)
      *
      * @param string $value customer's address
+     *
+     * @return $this
      */
     public function setCustomerAddress2($value)
     {
@@ -582,6 +663,8 @@ class PaymentRequest extends AbstractRequest
      * Only numeric values are accepted.
      *
      * @param string $value customer's phone
+     *
+     * @return $this
      */
     public function setCustomerPhone($value)
     {
@@ -604,6 +687,8 @@ class PaymentRequest extends AbstractRequest
      * Only alphanumeric values are accepted. (e.g., no punctuation marks or dashes)
      *
      * @param string $value customer's postal code
+     *
+     * @return $this
      */
     public function setCustomerPostalCode($value)
     {
@@ -624,6 +709,8 @@ class PaymentRequest extends AbstractRequest
      * Set the customer's city.
      *
      * @param string $value customer's city
+     *
+     * @return $this
      */
     public function setCustomerCity($value)
     {
@@ -644,6 +731,8 @@ class PaymentRequest extends AbstractRequest
      * Set the customer's state or region.
      *
      * @param string $value customer's state or region
+     *
+     * @return $this
      */
     public function setCustomerState($value)
     {
@@ -664,6 +753,8 @@ class PaymentRequest extends AbstractRequest
      * Set the customer's country in the 3-digit ISO Code.
      *
      * @param string $value customer's country
+     *
+     * @return $this
      */
     public function setCustomerCountry($value)
     {
@@ -694,6 +785,8 @@ class PaymentRequest extends AbstractRequest
      * next to the descriptions.
      *
      * @param array $value amount descriptions
+     *
+     * @return $this
      */
     public function setAmountDescriptions(array $value)
     {
@@ -723,6 +816,8 @@ class PaymentRequest extends AbstractRequest
      * These texts are also shown to the client in his history at Skrill's website.
      *
      * @param array $value details
+     *
+     * @return $this
      */
     public function setDetails(array $value)
     {
@@ -745,6 +840,7 @@ class PaymentRequest extends AbstractRequest
      * presented to the customer.
      *
      * @param  array $value payment methods
+     *
      * @return self
      */
     public function setPaymentMethods(array $value)
@@ -759,11 +855,12 @@ class PaymentRequest extends AbstractRequest
      * Warning: this resets any previously set payment methods.
      *
      * @param  string $value payment method
+     *
      * @return self
      */
     public function setPaymentMethod($value)
     {
-        return $this->setPaymentMethods(array($value));
+        return $this->setPaymentMethods([$value]);
     }
 
     /**
@@ -855,12 +952,14 @@ class PaymentRequest extends AbstractRequest
     }
 
     /**
-     * @param  array            $data  payment data to send
+     * @param  array $data payment data to send
+     *
      * @return PaymentResponse         payment response
      */
     public function sendData($data)
     {
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data)->send();
+
         return $this->response = new PaymentResponse($this, $httpResponse);
     }
 
@@ -871,6 +970,6 @@ class PaymentRequest extends AbstractRequest
      */
     public function getEndpoint()
     {
-        return $this->endpoint;
+        return 'https://pay.skrill.com';
     }
 }
