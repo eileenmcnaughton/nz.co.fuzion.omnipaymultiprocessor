@@ -130,7 +130,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    *   The result in an nice formatted array (or an error object)
    */
-  public function doDirectPayment(&$params, $component = 'contribute') {
+  public function doPayment(&$params, $component = 'contribute') {
     $this->_component = strtolower($component);
     $this->ensurePaymentProcessorTypeIsSet();
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
