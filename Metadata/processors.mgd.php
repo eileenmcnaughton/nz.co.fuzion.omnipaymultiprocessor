@@ -250,29 +250,6 @@ return array(
       'is_recur' => 0,
     ),
   ),
-  11 => array(
-    'name' => 'OmniPay - Eway_RapidShared',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - Eway_RapidShared',
-      'name' => 'omnipay_Eway_RapidShared',
-      'description' => 'Omnipay Eway Rapid',
-      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
-      'user_name_label' => 'Api Key',
-      'password_label' => 'Password',
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => 'http://unused.com',
-      'url_api_default' => 'http://unused.com',
-      'url_recur_default' => 'http://unused.com',
-      'url_site_test_default' => 'http://unused.com',
-      'url_recur_test_default' => 'http://unused.com',
-      'url_api_test_default' => 'http://unused.com',
-      'billing_mode' => 4,
-      'payment_type' => 1,
-      'is_recur' => 1,
-    ),
-  ),
   12 =>
     array(
       'name' => 'OmniPay - PayPal_Standard',

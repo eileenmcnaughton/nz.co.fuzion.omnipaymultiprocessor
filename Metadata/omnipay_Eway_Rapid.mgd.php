@@ -40,16 +40,43 @@
  */
 return array(
   array(
-    'name' => 'OmniPay - Eway_RapidDirect',
+    'name' => 'OmniPay - Eway_Rapid',
     'entity' => 'payment_processor_type',
     'metadata' => array(
-      'is_transparent_redirect' => FALSE,
+      'transparent_redirect' => array(
+        'fields' => array(
+          'EWAY_CARDNAME' => array('core_field_name' => 'card_name'),
+          'card_type' => array(
+            'core_field_name' => 'credit_card_type',
+              'options' => array(
+                '' => ts('- select -'),
+                '001' => 'Visa',
+                '002' => 'Mastercard',
+                '003' => 'Amex',
+                '004' => 'Discover',
+              ),
+           ),
+          'EWAY_CARDNUMBER' => array('core_field_name' => 'credit_card_number'),
+          'EWAY_CARDEXPIRY' => array(
+            'core_field_name' => 'credit_card_exp_date',
+            'month_field' => 'EWAY_CARDEXPIRYMONTH',
+            'year_field' => 'EWAY_CARDEXPIRYYEAR',
+           ),
+          'EWAY_CARDCVN' => array('core_field_name' => 'cvv2'),
+        ),
+        'billing_fields' => array(
+          'billing_first_name',
+          'billing_middle_name',
+          'billing_last_name',
+          'billing_country_id' . '-' . CRM_Core_BAO_LocationType::getBilling(),
+        ),
+      ),
     ),
     'params' => array(
       'version' => 3,
-      'title' => 'OmniPay - Eway_RapidDirect',
-      'name' => 'omnipay_Eway_RapidDirect',
-      'description' => 'Omnipay Eway Rapid Direct Onsite processing',
+      'title' => 'OmniPay - Eway_Rapid',
+      'name' => 'omnipay_Eway_Rapid',
+      'description' => 'Omnipay Eway Rapid Transparent Redirect',
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
       'user_name_label' => 'Api Key',
       'password_label' => 'Password',
@@ -61,7 +88,7 @@ return array(
       'url_recur_test_default' => 'http://unused.com',
       'url_api_test_default' => 'http://unused.com',
       'billing_mode' => 1,
-      'payment_type' => 1,
+      'payment_type' => 3,
       'is_recur' => 1,
     ),
   ),
