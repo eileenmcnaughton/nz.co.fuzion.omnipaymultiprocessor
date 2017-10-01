@@ -140,21 +140,44 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->saveBillingAddressIfRequired($params);
 
     try {
-      if (!empty($params['is_recur'])) {
-        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
-      }
-      elseif (!empty($params['token'])) {
+      if (!empty($params['token'])) {
+        // If it is not recurring we will have succeeded in an Authorize so we should capture.
+        // The only recurring currently working with is_recur + pre-authorize is eWay rapid
+        // and, at least in that case, the createCreditCard call ignores any attempt to authorise.
+        // that is likely to be a pattern.
+        $action = CRM_Utils_Array::value('payment_action', $params, empty($params['is_recur']) ? 'capture' : 'purchase');
         $params['transactionReference'] = ($params['token']);
-        $response = $this->gateway->capture($this->getCreditCardOptions($params, $component))
+        $response = $this->gateway->$action($this->getCreditCardOptions($params))
           ->send();
       }
+      elseif (!empty($params['is_recur'])) {
+        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
+      }
       else {
-        $response = $this->gateway->purchase($this->getCreditCardOptions($params, $component))
+        $response = $this->gateway->purchase($this->getCreditCardOptions($params))
           ->send();
       }
       if ($response->isSuccessful()) {
         // mark order as complete
+        if (!empty($params['is_recur'])) {
+          $paymentToken = civicrm_api3('PaymentToken', 'create', array(
+            'contact_id' => $params['contactID'],
+            'token' => $params['token'],
+            'payment_processor_id' => $this->_paymentProcessor['id'],
+            'created_id' => CRM_Core_Session::getLoggedInContactID(),
+            'email' => $params['email'],
+            'billing_first_name' => $params['billing_first_name'],
+            'billing_middle_name' => $params['billing_middle_name'],
+            'billing_last_name' => $params['billing_last_name'],
+            'expiry_date' => date("Y-m-t", strtotime($params['credit_card_exp_date']['Y'] . '-' . $params['credit_card_exp_date']['M'])),
+            'masked_account_number' => $this->getMaskedCreditCardNumber($params),
+            'ip_address' => CRM_Utils_System::ipAddress(),
+          ));
+          civicrm_api3('ContributionRecur', 'create', array('id' => $params['contributionRecurID'], 'payment_token_id' => $paymentToken['id']));
+        }
         $params['trxn_id'] = $response->getTransactionReference();
+        $params['payment_status_id'] = 1;
+        // @todo fetch masked card, card type, card expiry from params. Eway def provides these.
         //gross_amount ? fee_amount?
         return $params;
       }
@@ -343,6 +366,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
     }
 
+    // Compensate for some unreliability in calling function, especially from pre-Approval.
+    if (empty($cardFields['billingCountry']) && isset($params['billing_country_id-' . $billingID])) {
+      $cardFields['billingCountry'] = $params['billing_country_id-' . $billingID];
+    }
     if (empty($cardFields['email'])) {
       if (!empty($params['email-' . $billingID])) {
         $cardFields['email'] = $params['email-' . $billingID];
@@ -394,11 +421,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Get options for credit card.
    *
    * @param array $params
-   * @param string $component
    *
    * @return array
    */
-  private function getCreditCardOptions($params, $component) {
+  private function getCreditCardOptions($params) {
     // Contribution page in 4.4 passes amount - not sure which passes total_amount if any.
     if (isset($params['total_amount'])) {
       $amount = (float) CRM_Utils_Rule::cleanMoney($params['total_amount']);
@@ -628,6 +654,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function getBillingAddressFields($billingLocationID = NULL) {
+    $fields = $this->getProcessorTypeMetadata('fields');
+    if (isset ($fields['billing_fields'])) {
+      return $fields['billing_fields'];
+    }
     if (!$this->isTransparentRedirect()) {
       return parent::getBillingAddressFields($billingLocationID);
     }
@@ -896,8 +926,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   protected function supportsPreApproval() {
-    $this->getProcessorTypeMetadata('supports_preapproval');
-    return FALSE;
+    return $this->getProcessorTypeMetadata('supports_preapproval');
   }
 
   /**
@@ -913,7 +942,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function doPreApproval(&$params) {
-    $this->_component = 'contribute';
+    $this->_component = $params['component'];
     $this->ensurePaymentProcessorTypeIsSet();
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
     $this->setProcessorFields();
@@ -922,11 +951,20 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->saveBillingAddressIfRequired($params);
 
     try {
-      $response = $this->gateway->authorize($this->getCreditCardOptions($params, 'contribute'))
-        ->send();
+      if (!empty($params['is_recur'])) {
+        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Authorize'))))->send();
+      }
+      else {
+        $response = $this->gateway->authorize($this->getCreditCardOptions($params))
+          ->send();
+      }
       if ($response->isSuccessful()) {
         $params['trxn_id'] = $params['token'] = $response->getTransactionReference();
-        $creditCardPan = '************' . substr($params['credit_card_number'], -4);
+        if (!empty($params['is_recur'])) {
+          $params['token'] = $response->getCardReference();
+        }
+
+        $creditCardPan = $this->getMaskedCreditCardNumber($params);
         foreach ($_SESSION as $key => $value) {
           if (isset($value['values'])) {
             foreach ($value['values'] as $pageName => $pageValues) {
@@ -941,7 +979,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         unset($params['credit_card_number']);
         unset($params['cvv2']);
         return array(
-          'pre_approval_parameters' => array('token' => $response->getTransactionReference())
+          'pre_approval_parameters' => array('token' => $params['token'])
         );
       }
       else {
@@ -1074,6 +1112,31 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
     }
     return FALSE;
+  }
+
+  /**
+   * @param $params
+   * @return string
+   */
+  protected function getMaskedCreditCardNumber(&$params) {
+    $creditCardPan = '************' . substr($params['credit_card_number'], -4);
+    return $creditCardPan;
+  }
+
+  /**
+   * Default payment instrument validation.
+   *
+   * Implement the usual Luhn algorithm via a static function in the CRM_Core_Payment_Form if it's a credit card
+   * Not a static function, because I need to check for payment_type.
+   *
+   * @param array $values
+   * @param array $errors
+   */
+  public function validatePaymentInstrument($values, &$errors) {
+    CRM_Core_Form::validateMandatoryFields($this->getMandatoryFields(), $values, $errors);
+    if ($this->_paymentProcessor['payment_type'] == 1) {
+      CRM_Core_Payment_Form::validateCreditCard($values, $errors, $this->_paymentProcessor['id']);
+    }
   }
 
 }

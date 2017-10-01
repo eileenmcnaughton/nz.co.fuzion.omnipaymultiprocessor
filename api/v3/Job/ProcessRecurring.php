@@ -46,6 +46,7 @@ function civicrm_api3_job_process_recurring($params) {
           'return' => 'token',
         )),
       ));
+      $payment = reset($payment['values']);
 
       civicrm_api3('Contribution', 'completetransaction', array(
         'id' => $pending['id'],
