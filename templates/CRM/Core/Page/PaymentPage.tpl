@@ -17,6 +17,9 @@
         {if $core_field_name == 'cvv2'}
           <span class="cvv2-icon" title="{ts}Usually the last 3-4 digits in the signature area on the back of the card.{/ts}"> </span>
         {/if}
+        {if $core_field_name == 'credit_card_type'}
+          <div class="crm-credit_card_type-icons"></div>
+        {/if}
 
      {elseif $field_spec.htmlType == 'select'}
         <select name="{$display_field}" id="{$core_field_name}" class="crm-form-select">

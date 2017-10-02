@@ -46,16 +46,6 @@ return array(
       'transparent_redirect' => array(
         'fields' => array(
           'EWAY_CARDNAME' => array('core_field_name' => 'card_name'),
-          'card_type' => array(
-            'core_field_name' => 'credit_card_type',
-              'options' => array(
-                '' => ts('- select -'),
-                '001' => 'Visa',
-                '002' => 'Mastercard',
-                '003' => 'Amex',
-                '004' => 'Discover',
-              ),
-           ),
           'EWAY_CARDNUMBER' => array('core_field_name' => 'credit_card_number'),
           'EWAY_CARDEXPIRY' => array(
             'core_field_name' => 'credit_card_exp_date',
@@ -74,7 +64,7 @@ return array(
     ),
     'params' => array(
       'version' => 3,
-      'title' => 'OmniPay - Eway_Rapid',
+      'title' => 'OmniPay - Eway_Rapid Transparent Redirect',
       'name' => 'omnipay_Eway_Rapid',
       'description' => 'Omnipay Eway Rapid Transparent Redirect',
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
