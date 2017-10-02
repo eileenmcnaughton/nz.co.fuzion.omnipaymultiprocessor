@@ -36,3 +36,13 @@ site URL and `XX` is the processor ID).
   and run composer update.
 * Edit `CRM/Core/Payment/processors.mgd.php`.
 
+### Eway
+
+The gateways supported are:
+Rapid Direct - this is the onsite processor
+Rapid Shared - re-directs to an eway hosted page
+Rapid - transparent redirect, redirects to a form on your site that submits to eway
+
+Note that we always collect Country & Billing name details for
+the Shared & transparent redirect variants as it is necessary
+for recurring and simpler to always collect them.
