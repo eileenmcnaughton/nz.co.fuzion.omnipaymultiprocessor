@@ -27,11 +27,17 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-mercanet.git"
+        },
+        {
+          "type": "git",
+          "url":  "https://github.com/eileenmcnaughton/omnipay-eway.git"
         }
+
     ],
     "require":
     {
         "omnipay/omnipay": "~2.0",
+        "omnipay/eway": "dev-master",
         "dioscouri/omnipay-cybersource": "master",
         "alfaproject/omnipay-skrill": "dev-master",
         "omnipay/bitpay": "dev-master",

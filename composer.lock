@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e833f52f02a46015cd048206fdb91b6",
+    "content-hash": "b0131302287d46c915c8dc4f57384d83",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -873,17 +873,11 @@
         },
         {
             "name": "omnipay/eway",
-            "version": "v2.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thephpleague/omnipay-eway.git",
-                "reference": "1c953630f7097bfdeed200b17a847015a4df5607"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-eway/zipball/1c953630f7097bfdeed200b17a847015a4df5607",
-                "reference": "1c953630f7097bfdeed200b17a847015a4df5607",
-                "shasum": ""
+                "url": "https://github.com/eileenmcnaughton/omnipay-eway.git",
+                "reference": "e516e650a97b531ace1e62ffed1f9de31204dc3c"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -902,7 +896,6 @@
                     "Omnipay\\Eway\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -926,7 +919,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-03-22T01:11:02+00:00"
+            "time": "2017-10-02 01:59:50"
         },
         {
             "name": "omnipay/firstdata",
@@ -3063,6 +3056,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "omnipay/eway": 20,
         "alfaproject/omnipay-skrill": 20,
         "omnipay/bitpay": 20,
         "fuzion/omnipay-paybox": 20,

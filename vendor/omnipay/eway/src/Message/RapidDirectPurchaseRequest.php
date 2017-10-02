@@ -82,6 +82,11 @@ class RapidDirectPurchaseRequest extends RapidDirectAbstractRequest
         $data['Payment']['CurrencyCode'] = $this->getCurrency();
         $data['Payment']['InvoiceReference'] = $this->getInvoiceReference();
 
+        if (empty($data['Customer']['CardDetails']['CVN']) && $this->getCardReference()) {
+            // We have a token and card is not present so treat as MOTO.
+            $data['TransactionType'] = 'MOTO';
+        }
+
         if ($this->getCardReference()) {
             $data['Method'] = 'TokenPayment';
         } else {

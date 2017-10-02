@@ -6,6 +6,7 @@
 namespace Omnipay\Eway;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Omnipay;
 
 /**
  * eWAY Rapid Transparent Redirect Gateway
@@ -64,6 +65,13 @@ class RapidGateway extends AbstractGateway
 
     public function purchase(array $parameters = array())
     {
+        if (!empty($parameters['cardTransactionType']) && $parameters['cardTransactionType'] === 'continuous') {
+            $gateway = Omnipay::create('Eway_RapidDirect');
+            $gateway->setApiKey($this->getApiKey());
+            $gateway->setPassword($this->getPassword());
+            $gateway->setTestMode($this->getTestMode());
+            return $gateway->createRequest('\Omnipay\Eway\Message\RapidDirectPurchaseRequest', $parameters);
+        }
         return $this->createRequest('\Omnipay\Eway\Message\RapidPurchaseRequest', $parameters);
     }
 
@@ -75,5 +83,10 @@ class RapidGateway extends AbstractGateway
     public function refund(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Eway\Message\RefundRequest', $parameters);
+    }
+
+    public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Eway\Message\RapidCreateCardRequest', $parameters);
     }
 }

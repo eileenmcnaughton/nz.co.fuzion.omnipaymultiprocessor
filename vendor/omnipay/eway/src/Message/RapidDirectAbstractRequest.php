@@ -62,8 +62,12 @@ abstract class RapidDirectAbstractRequest extends AbstractRequest
         if ($this->getCard()) {
             $data['Customer']['CardDetails'] = array();
             $data['Customer']['CardDetails']['Name'] = $this->getCard()->getName();
-            $data['Customer']['CardDetails']['ExpiryMonth'] = $this->getCard()->getExpiryDate('m');
-            $data['Customer']['CardDetails']['ExpiryYear'] = $this->getCard()->getExpiryDate('y');
+
+            if ($this->getCard()->getExpiryYear() && $this->getCard()->getExpiryMonth()) {
+                // Expiry date not required if token present
+                $data['Customer']['CardDetails']['ExpiryMonth'] = $this->getCard()->getExpiryDate('m');
+                $data['Customer']['CardDetails']['ExpiryYear'] = $this->getCard()->getExpiryDate('y');
+            }
             $data['Customer']['CardDetails']['CVN'] = $this->getCard()->getCvv();
 
             if ($this->getEncryptedCardNumber()) {

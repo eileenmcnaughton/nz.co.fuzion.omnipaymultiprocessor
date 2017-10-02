@@ -59,6 +59,11 @@ class RapidResponse extends AbstractResponse implements RedirectResponseInterfac
         if (isset($this->data['Customer']['TokenCustomerID'])) {
             return $this->data['Customer']['TokenCustomerID'];
         }
+        if (isset($this->data['TokenCustomerID'])) {
+            // This format appears when creating a card and making a concurrent
+            // payment using Shared or Transparent redirect methods.
+            return $this->data['TokenCustomerID'];
+        }
 
         return null;
     }

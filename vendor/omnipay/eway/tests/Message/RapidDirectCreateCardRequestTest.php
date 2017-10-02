@@ -69,7 +69,38 @@ class RapidDirectCreateCardRequestTest extends TestCase
         $this->assertSame('4111111111111111', $data['Customer']['CardDetails']['Number']);
         $this->assertSame('12', $data['Customer']['CardDetails']['ExpiryMonth']);
     }
-    
+
+    /**
+     * Test that expiry is optional and not mis-set if token is present.
+     */
+    public function testGetDataNoExpiryTokenPresent()
+    {
+      $this->request->initialize(array(
+        'apiKey' => 'my api key',
+        'password' => 'secret',
+        'transactionId' => '999',
+        'description' => 'new car',
+        'currency' => 'AUD',
+        'invoiceReference' => 'INV-123',
+        'card' => array(
+          'title' => 'Mr.',
+          'firstName' => 'John',
+          'lastName' => 'Smith',
+          'shippingFirstName' => 'Bob',
+          'shippingLastName' => 'Mann',
+          'shippingAddress1' => 'Level 1',
+          'shippingAddress2' => '123 Test Lane',
+          'shippingState' => 'NSW',
+          'shippingCountry' => 'AU',
+          'cardReference' => 'myRef',
+        ),
+      ));
+
+      $data = $this->request->getData();
+      $this->assertTrue(!isset($data['Customer']['CardDetails']['ExpiryMonth']));
+      $this->assertTrue(!isset($data['Customer']['CardDetails']['ExpiryYear']));
+    }
+
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('RapidDirectCreateCardRequestSuccess.txt');
