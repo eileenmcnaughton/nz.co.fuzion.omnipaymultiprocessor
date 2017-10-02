@@ -147,7 +147,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         // that is likely to be a pattern.
         $action = CRM_Utils_Array::value('payment_action', $params, empty($params['is_recur']) ? 'capture' : 'purchase');
         $params['transactionReference'] = ($params['token']);
-        $response = $this->gateway->$action($this->getCreditCardOptions($params))
+        $response = $this->gateway->$action($this->getCreditCardOptions(array_merge($params, array('cardTransactionType' => 'continuous'))))
           ->send();
       }
       elseif (!empty($params['is_recur'])) {
@@ -445,6 +445,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'card' => $this->getCreditCardObjectParams($params),
       'cardReference' => CRM_Utils_Array::value('token', $params),
       'transactionReference' => CRM_Utils_Array::value('token', $params),
+      'cardTransactionType' => CRM_Utils_Array::value('cardTransactionType', $params),
     );
     if (!empty($params['action'])) {
       $creditCardOptions['action'] = 'Purchase';
