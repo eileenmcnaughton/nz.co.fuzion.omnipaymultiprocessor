@@ -52,7 +52,7 @@
 
           // remove spaces, dashes from credit card number
           cj('#{$field_spec.year_field}, #{$field_spec.month_field}').change(function(){literal}{{/literal}
-            cj('#{$display_field}').val(cj('#{$field_spec.month_field}.val() + '-' + cj('#{$field_spec.year_field}').val())
+            cj('#{$display_field}').val(cj('#{$field_spec.month_field}').val() + '-' + cj('#{$field_spec.year_field}').val())
             {literal}
           });
           {/literal}
