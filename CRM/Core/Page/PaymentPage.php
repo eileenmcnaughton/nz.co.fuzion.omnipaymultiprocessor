@@ -20,6 +20,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
     $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, TRUE));
     $paymentProcessorID = $formData['payment_processor_id'];
     $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
+    $contactID = $formData['contact_id'];
 
     $processor = Civi\Payment\System::singleton()->getByProcessor($paymentProcessor);
 
@@ -27,6 +28,10 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
     foreach ($displayFields as $fieldName => $displayField) {
       if ($displayField['htmlType'] == 'date') {
         $displayFields[$fieldName]['options']['year'] = $this->getDateFieldsYearOptions($displayField);
+      }
+      if (!empty($displayField['contact_api'])) {
+        $contact = civicrm_api3('Contact', 'get', array('id' => $contactID, 'sequential' => 1, 'options' => array('limit' => 1)));
+        $displayFields[$fieldName]['options']['value'] = !empty($contact['values'][0]['display_name']) ? $contact['values'][0]['display_name'] : '';
       }
     }
     if (!empty($displayFields)) {

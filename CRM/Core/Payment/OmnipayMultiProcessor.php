@@ -191,6 +191,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
             'payment_processor_id' => $this->_paymentProcessor['id'],
             'post_submit_url' => $response->getRedirectURL(),
+            'contact_id' => $params['contactID'],
           ));
           CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/payment/details', array('key' => $params['qfKey'])));
         }
@@ -643,6 +644,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'title' => ts('Card Name'),
         'cc_field' => FALSE,
         'is_required' => TRUE,
+        'contact_api' => 'display_name',
       )
     );
   }
