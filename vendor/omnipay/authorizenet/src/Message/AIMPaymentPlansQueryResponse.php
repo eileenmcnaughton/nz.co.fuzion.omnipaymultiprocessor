@@ -36,8 +36,9 @@ class AIMPaymentPlansQueryResponse extends AbstractResponse
         return 1 === $this->getResultCode();
     }
 
-    public function getPlanData() {
-        $result = $this->xml2array($this->data->subscriptionDetails, TRUE);
+    public function getPlanData()
+    {
+        $result = $this->xml2array($this->data->subscriptionDetails, true);
         return $result['subscriptionDetails'][0]['subscriptionDetail'];
     }
 

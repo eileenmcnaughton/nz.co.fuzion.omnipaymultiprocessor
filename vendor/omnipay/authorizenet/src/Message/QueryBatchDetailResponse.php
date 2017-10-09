@@ -36,8 +36,9 @@ class QueryBatchDetailResponse extends AbstractResponse
         return 1 === $this->getResultCode();
     }
 
-    public function getData() {
-        $result = $this->xml2array($this->data->transactions, TRUE);
+    public function getData()
+    {
+        $result = $this->xml2array($this->data->transactions, true);
         return $result['transactions'][0]['transaction'];
     }
 

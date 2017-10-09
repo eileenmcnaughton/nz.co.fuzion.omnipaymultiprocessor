@@ -46,8 +46,9 @@ class QueryBatchResponse extends AbstractResponse
         return $result['messages'][0]['resultCode'];
     }
 
-    public function getData() {
-        $result = $this->xml2array($this->data->batchList, TRUE);
+    public function getData()
+    {
+        $result = $this->xml2array($this->data->batchList, true);
         return $result['batchList'][0]['batch'];
     }
 

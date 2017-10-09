@@ -9,71 +9,78 @@ use Omnipay\Common\CreditCard;
  */
 class QueryDetailRequest extends QueryBatchRequest
 {
-  protected $action = '';
-  protected $requestType = 'getTransactionDetailsRequest';
-  protected $limit = 1000;
-  protected $offset = 1;
-  protected $transactionReference;
+    protected $action = '';
+    protected $requestType = 'getTransactionDetailsRequest';
+    protected $limit = 1000;
+    protected $offset = 1;
+    protected $transactionReference;
 
-  /**
-   * Get Limit.
-   *
-   * @return int
-   */
-  public function getLimit() {
-    return $this->limit;
-  }
+    /**
+     * Get Limit.
+     *
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
 
-  /**
-   * Set Limit.
-   *
-   * @param int $limit
-   */
-  public function setLimit($limit) {
-    $this->limit = $limit;
-  }
+    /**
+     * Set Limit.
+     *
+     * @param int $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+    }
 
-  /**
-   * Get offset.
-   *
-   * @return int
-   */
-  public function getOffset() {
-    return $this->offset;
-  }
+    /**
+     * Get offset.
+     *
+     * @return int
+     */
+    public function getOffset()
+    {
+        return $this->offset;
+    }
 
-  /**
-   * Set offset.
-   *
-   * @param int $offset
-   */
-  public function setOffset($offset) {
-    $this->offset = $offset;
-  }
+    /**
+     * Set offset.
+     *
+     * @param int $offset
+     */
+    public function setOffset($offset)
+    {
+        $this->offset = $offset;
+    }
 
-  /**
-   * Get data to send.
-   */
-  public function getData()
-  {
-    $data = $this->getBaseData();
-    $data->transId = $this->getTransactionReference();
-    return $data;
-  }
+    /**
+     * Get data to send.
+     */
+    public function getData()
+    {
+        $data = $this->getBaseData();
+        $data->transId = $this->getTransactionReference();
+        return $data;
+    }
 
-  public function sendData($data)
-  {
-    $headers = array('Content-Type' => 'text/xml; charset=utf-8');
-    $data = $data->saveXml();
-    $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
+    public function sendData($data)
+    {
+        $headers = array('Content-Type' => 'text/xml; charset=utf-8');
+        $data = $data->saveXml();
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
 
-    return $this->response = new QueryDetailResponse($this, $httpResponse->getBody());
-  }
+        return $this->response = new QueryDetailResponse($this, $httpResponse->getBody());
+    }
 
-  public function setTransactionReference($transactionReference) {
-    $this->transactionReference = $transactionReference;
-  }
-  public function getTransactionReference() {
-    return $this->transactionReference;
-  }
+    public function setTransactionReference($transactionReference)
+    {
+        $this->transactionReference = $transactionReference;
+    }
+
+    public function getTransactionReference()
+    {
+        return $this->transactionReference;
+    }
 }

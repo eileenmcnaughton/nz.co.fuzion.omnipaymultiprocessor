@@ -440,7 +440,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-authorizenet.git",
-                "reference": "2a6e6af4aeb89e2a0a47e16e741cb3f7cf9a3c9a"
+                "reference": "1406246532f8aadab99806c64981795129a17c85"
             },
             "require": {
                 "omnipay/common": "~2.2"
@@ -484,7 +484,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-03-07 12:35:59"
+            "time": "2017-10-08 23:05:00"
         },
         {
             "name": "omnipay/bitpay",
@@ -2269,12 +2269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "372641e1ad07a05aa69687304ee131c74d6b1460"
+                "reference": "90222d1b1dfa5438874116a9e7b32f71d4090b52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/372641e1ad07a05aa69687304ee131c74d6b1460",
-                "reference": "372641e1ad07a05aa69687304ee131c74d6b1460",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/90222d1b1dfa5438874116a9e7b32f71d4090b52",
+                "reference": "90222d1b1dfa5438874116a9e7b32f71d4090b52",
                 "shasum": ""
             },
             "require": {
@@ -2314,7 +2314,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-09-30 13:57:19"
+            "time": "2017-10-06 09:16:43"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -3009,12 +3009,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f0e77ff0f1f4f906f4918a1a700d7758c4bc003d"
+                "reference": "842fb6df22180244b4c65935ce1a88d324e5ff9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f0e77ff0f1f4f906f4918a1a700d7758c4bc003d",
-                "reference": "f0e77ff0f1f4f906f4918a1a700d7758c4bc003d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/842fb6df22180244b4c65935ce1a88d324e5ff9e",
+                "reference": "842fb6df22180244b4c65935ce1a88d324e5ff9e",
                 "shasum": ""
             },
             "require": {
@@ -3050,7 +3050,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-01T21:00:16+00:00"
+            "time": "2017-10-05T14:38:30+00:00"
         }
     ],
     "aliases": [],

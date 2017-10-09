@@ -9,69 +9,75 @@ use Omnipay\Common\CreditCard;
  */
 class AIMPaymentPlansQueryRequest extends AIMAbstractRequest
 {
-  protected $action = '';
-  protected $requestType = 'ARBGetSubscriptionListRequest';
-  protected $limit = 1000;
-  protected $offset = 1;
+    protected $action = '';
+    protected $requestType = 'ARBGetSubscriptionListRequest';
+    protected $limit = 1000;
+    protected $offset = 1;
 
-  /**
-   * Get Limit.
-   *
-   * @return int
-   */
-  public function getLimit() {
-    return $this->limit;
-  }
+    /**
+     * Get Limit.
+     *
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
 
-  /**
-   * Set Limit.
-   *
-   * @param int $limit
-   */
-  public function setLimit($limit) {
-    $this->limit = $limit;
-  }
+    /**
+     * Set Limit.
+     *
+     * @param int $limit
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+    }
 
-  /**
-   * Get offset.
-   *
-   * @return int
-   */
-  public function getOffset() {
-    return $this->offset;
-  }
+    /**
+     * Get offset.
+     *
+     * @return int
+     */
+    public function getOffset()
+    {
+        return $this->offset;
+    }
 
-  /**
-   * Set offset.
-   *
-   * @param int $offset
-   */
-  public function setOffset($offset) {
-    $this->offset = $offset;
-  }
+    /**
+     * Set offset.
+     *
+     * @param int $offset
+     */
+    public function setOffset($offset)
+    {
+        $this->offset = $offset;
+    }
 
-  /**
-   * Get data to send.
-   */
-  public function getData()
-  {
-    $data = $this->getBaseData();
-    $data->searchType = 'subscriptionActive';
-    $data->sorting->orderBy = 'id';
-    $data->sorting->orderDescending = true;
-    $data->paging->limit = $this->getLimit();
-    $data->paging->offset = $this->getOffset();
-    return $data;
-  }
+    /**
+     * Get data to send.
+     */
+    public function getData()
+    {
+        $data = $this->getBaseData();
+        $data->searchType = 'subscriptionActive';
+        $data->sorting->orderBy = 'id';
+        $data->sorting->orderDescending = true;
+        $data->paging->limit = $this->getLimit();
+        $data->paging->offset = $this->getOffset();
+        return $data;
+    }
 
-  protected function addTransactionType(\SimpleXMLElement $data) {}
+    protected function addTransactionType(\SimpleXMLElement $data)
+    {
+    }
 
-  public function sendData($data)
-  {
-    $headers = array('Content-Type' => 'text/xml; charset=utf-8');
-    $data = $data->saveXml();
-    $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
+    public function sendData($data)
+    {
+        $headers = array('Content-Type' => 'text/xml; charset=utf-8');
+        $data = $data->saveXml();
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), $headers, $data)->send();
 
-    return $this->response = new AIMPaymentPlansQueryResponse($this, $httpResponse->getBody());
-  }
+        return $this->response = new AIMPaymentPlansQueryResponse($this, $httpResponse->getBody());
+    }
 }

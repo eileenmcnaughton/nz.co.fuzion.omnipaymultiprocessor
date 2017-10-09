@@ -32,7 +32,7 @@ class AIMPaymentPlanQueryResponse extends AbstractResponse
         }
 
         parent::__construct($request, $xml);
-        $result = $this->xml2array($this->data->subscription, TRUE);
+        $result = $this->xml2array($this->data->subscription, true);
         $this->subscription = $result['subscription'][0];
     }
 
@@ -41,32 +41,39 @@ class AIMPaymentPlanQueryResponse extends AbstractResponse
         return 1 === $this->getResultCode();
     }
 
-    public function getData() {
+    public function getData()
+    {
         return $this->subscription;
     }
 
-    public function getRecurStartDate() {
+    public function getRecurStartDate()
+    {
         return $this->subscription['paymentSchedule']['interval']['startDate'];
     }
 
-    public function getRecurInstallmentLimit() {
+    public function getRecurInstallmentLimit()
+    {
         return $this->subscription['paymentSchedule']['interval']['totalOccurrences'];
     }
 
-    public function getRecurrenceInterval() {
+    public function getRecurrenceInterval()
+    {
         return $this->subscription['paymentSchedule']['interval'][0]['length'];
     }
 
-    public function getRecurAmount() {
+    public function getRecurAmount()
+    {
         return $this->subscription['amount'];
     }
 
-    public function getRecurReference() {
+    public function getRecurReference()
+    {
         echo "he";
         print_r($this->subscription);
     }
 
-    public function getContactReference() {
+    public function getContactReference()
+    {
         $profileID = $this->subscription['profile'][0]['customerProfileId'];
         $gateway = $gateway = Omnipay::create('AuthorizeNet_CIM');
         $gateway->setApiLoginId($this->request->getApiLoginId());
@@ -74,7 +81,8 @@ class AIMPaymentPlanQueryResponse extends AbstractResponse
         $gateway->setTransactionKey($this->request->getTransactionKey());
         $data = array(
             'customerProfileId' => $profileID,
-            'customerPaymentProfileId' => $this->subscription['profile'][0]['paymentProfile'][0]['customerPaymentProfileId'],
+            'customerPaymentProfileId' =>
+                $this->subscription['profile'][0]['paymentProfile'][0]['customerPaymentProfileId'],
         );
         $dataResponse = $gateway->getProfile($data)->send();
         return $dataResponse->getCustomerId();
@@ -85,12 +93,14 @@ class AIMPaymentPlanQueryResponse extends AbstractResponse
      *
      * @return mixed
      */
-    public function getRecurStatus() {
+    public function getRecurStatus()
+    {
         return $this->subscription['paymentSchedule']['interval'][0]['status'];
     }
 
-    public function getRecurrenceUnit() {
-        $interval =  $this->subscription['paymentSchedule']['interval'][0]['unit'];
+    public function getRecurrenceUnit()
+    {
+        $interval = $this->subscription['paymentSchedule']['interval'][0]['unit'];
         $options = array(
             'months' => 'month',
         );

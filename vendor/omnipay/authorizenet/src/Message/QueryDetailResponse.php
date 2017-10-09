@@ -32,8 +32,8 @@ class QueryDetailResponse extends AbstractResponse
         }
 
         parent::__construct($request, $xml);
-        $result = $this->xml2array($this->data->transaction, TRUE);
-        $this->transaction =  $result['transaction'][0];
+        $result = $this->xml2array($this->data->transaction, true);
+        $this->transaction = $result['transaction'][0];
     }
 
     public function isSuccessful()
@@ -57,7 +57,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return mixed
      */
-    public function getTransactionReference() {
+    public function getTransactionReference()
+    {
         return $this->transaction['transId'];
     }
 
@@ -66,15 +67,18 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return mixed
      */
-    public function getTransactionId() {
+    public function getTransactionId()
+    {
         return $this->transaction['order'][0]['invoiceNumber'];
     }
 
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->transaction['settleAmount'];
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->transaction['order'][0]['description'];
     }
 
@@ -83,7 +87,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return string
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->transaction['customer'][0]['email'];
     }
 
@@ -99,7 +104,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return string
      */
-    public function getCurrency() {
+    public function getCurrency()
+    {
         return 'USD';
     }
 
@@ -110,7 +116,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return string
      */
-    public function getFirstName() {
+    public function getFirstName()
+    {
         return $this->transaction['billTo'][0]['firstName'];
     }
 
@@ -151,7 +158,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return string
      */
-    public function getLastName() {
+    public function getLastName()
+    {
         return $this->transaction['billTo'][0]['lastName'];
     }
 
@@ -160,27 +168,33 @@ class QueryDetailResponse extends AbstractResponse
      *
      * This is masked. Is this the correct parameter name.
      */
-    public function getNumber() {
+    public function getNumber()
+    {
         return $this->transaction['payment'][0]['creditCard'][0]['cardNumber'];
     }
 
-    public function getType() {
+    public function getType()
+    {
         return $this->transaction['payment'][0]['creditCard'][0]['cardType'];
     }
 
-    public function getBillingAddress1() {
+    public function getBillingAddress1()
+    {
         return $this->transaction['billTo'][0]['address'];
     }
 
-    public function getBillingAddress2() {
+    public function getBillingAddress2()
+    {
         return '';
     }
 
-    public function getBillingCity() {
+    public function getBillingCity()
+    {
         return $this->transaction['billTo'][0]['city'];
     }
 
-    public function getBillingPostcode() {
+    public function getBillingPostcode()
+    {
         return $this->transaction['billTo'][0]['zip'];
     }
 
@@ -191,7 +205,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return mixed
      */
-    public function getBillingState() {
+    public function getBillingState()
+    {
         return $this->transaction['billTo'][0]['state'];
     }
 
@@ -202,7 +217,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return mixed
      */
-    public function getBillingCountry() {
+    public function getBillingCountry()
+    {
         return $this->transaction['billTo'][0]['country'];
     }
 
@@ -211,7 +227,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return string
      */
-    public function getSettlementDate() {
+    public function getSettlementDate()
+    {
         return $this->transaction['batch'][0]['settlementTimeUTC'];
     }
 
@@ -220,7 +237,8 @@ class QueryDetailResponse extends AbstractResponse
      *
      * @return string
      */
-    public function getTransactionDate() {
+    public function getTransactionDate()
+    {
         return $this->transaction['submitTimeUTC'];
     }
 
