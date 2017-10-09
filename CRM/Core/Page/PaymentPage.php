@@ -67,9 +67,10 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
     if (isset($field['attributes']['minYear'])
     ) {
       $field['options']['year'] = array();
+      $digits = CRM_Utils_Array::value('year_digits', $field, 4);
       $year = $field['attributes']['minYear'];
       while ($year <= $field['attributes']['maxYear']) {
-        $options[] = $year;
+        $options[substr($year, -$digits)] = $year;
         $year++;
       }
       return $options;

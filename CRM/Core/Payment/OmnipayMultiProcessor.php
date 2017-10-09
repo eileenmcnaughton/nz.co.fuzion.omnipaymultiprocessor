@@ -775,7 +775,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     }
 
     try {
-      $this->handleError('error', $this->transaction_id . ' ' . $response->getMessage(), 'processor_error', 9002, $userMessage);
+      $this->handleError('error', $this->transaction_id . ' ' . $response->getMessage(), array('processor_error', $response->getMessage()), 9002, $userMessage);
     }
     catch (\Civi\Payment\Exception\PaymentProcessorException $e) {
 

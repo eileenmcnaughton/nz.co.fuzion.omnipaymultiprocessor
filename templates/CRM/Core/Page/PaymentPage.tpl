@@ -46,8 +46,8 @@
         </select>&nbsp;
         <select class="crm-form-date required" id="{$field_spec.year_field}" name="{$field_spec.year_field}">
           <option value="">-year-</option>
-          {foreach from=$field_spec.options.year item=year}
-            <option value="{$year}">{$year}</option>
+          {foreach from=$field_spec.options.year key=yearKey item=year}
+            <option value="{$yearKey}">{$year}</option>
           {/foreach}
         </select>
         <input name="{$display_field}" id="{$display_field}" type='hidden' value=""/>
