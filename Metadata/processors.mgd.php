@@ -201,31 +201,7 @@ return array(
       ),
   ),
   */
-  6 => array(
-    'name' => 'OmniPay - Payment Express PxPay',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - Payment Express PxPay',
-      'name' => 'omnipay_PaymentExpress_PxPay',
-      'description' => 'Omnipay Payment Express PxPay Payment Processor',
-      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
-      'user_name_label' => 'Username',
-      'password_label' => 'Password', // PxPay calls this "Key".
-      'signature_label' => null,
-      'subject_label' => null,
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => '',
-      'url_api_default' => '',
-      'url_recur_default' => '',
-      'url_site_test_default' => '',
-      'url_recur_test_default' => '',
-      'url_api_test_default' => '',
-      'billing_mode' => 4,
-      'payment_type' => 1,
-      'is_recur' => 1,
-    ),
-  ),
+
   7 => array(
     'name' => 'OmniPay - NABTransact_Transact',
     'entity' => 'payment_processor_type',
@@ -336,24 +312,5 @@ return array(
         'billing_mode' => 4,
         'payment_type' => 1,
       ),
-  ),
-  16 => array(
-    'name' => 'OmniPay - Authorize AIM',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - Authorize AIM',
-      'name' => 'omnipay_AuthorizeNet_AIM',
-      'description' => 'Omnipay OmniPay - Authorize AIM Payment Processor',
-      'user_name_label' => 'Api Login ID',
-      'password_label' => 'Transaction Key',
-      'signature_label' => 'Hash Secret',
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => 'https://secure.authorize.net/gateway/transact.dll',
-      'url_api_default' => 'https://secure.authorize.net/gateway/transact.dll',
-      'billing_mode' => 1,
-      'payment_type' => 1,
-    ),
-    'metadata' => array('supports_preapproval' => 1),
   ),
 );
