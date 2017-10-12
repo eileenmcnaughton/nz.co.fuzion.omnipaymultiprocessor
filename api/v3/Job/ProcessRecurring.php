@@ -1,4 +1,4 @@
-_<?php
+<?php
 /**
  * Pass all due recurring contributions to the processor to action (if possible).
  *
