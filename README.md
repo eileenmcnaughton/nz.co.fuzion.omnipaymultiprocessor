@@ -6,7 +6,7 @@ This extension provides support for multiple payment processors in CiviCRM.
 
 The following payment processors are supported:
 
-* Cybersource
+* [Cybersource](../docs/Cybersource.md)
 * Paybox System
 * GoPay
 * Mollie
@@ -20,19 +20,19 @@ The following payment processors are supported:
 
 * Visit **Administer > System Settings > Payment Processors**
 * Select the appropriate **Payment Processor Type**
-* 
+
 
 ### IPN / Notification URL configuration
 
-If your payment processor requires configuration of an IPN or payment notification URL, 
-obtain the payment processor ID from the URL when editing the payment processor at 
-CiviCRM's Administer > System Settings > Payment Processors, then use a URL similar to 
-`https://example.org/civicrm/payment/ipn/XX` (where `https://example.org` is your actual 
-site URL and `XX` is the processor ID). 
+If your payment processor requires configuration of an IPN or payment notification URL,
+obtain the payment processor ID from the URL when editing the payment processor at
+CiviCRM's Administer > System Settings > Payment Processors, then use a URL similar to
+`https://example.org/civicrm/payment/ipn/XX` (where `https://example.org` is your actual
+site URL and `XX` is the processor ID).
 
 ## Adding support for new payment gateways
 
-* Update `composer.json` with the required Omnipay package for your payment processor 
+* Update `composer.json` with the required Omnipay package for your payment processor
   and run composer update.
 * Edit `CRM/Core/Payment/processors.mgd.php`.
 
