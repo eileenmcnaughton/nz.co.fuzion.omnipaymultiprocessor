@@ -10,7 +10,7 @@ The following payment processors are supported:
 * Paybox System
 * GoPay
 * Mollie
-* Payment Express - PXPay
+* Payment Express - PXPay, PxFusion
 * NAB Transact
 * Eway RapidDirect, Rapid & Shared
 * PayPal - Standard, Pro, REST & Express
