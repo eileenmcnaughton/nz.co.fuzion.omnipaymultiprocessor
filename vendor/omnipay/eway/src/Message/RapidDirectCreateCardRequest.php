@@ -5,6 +5,9 @@
 
 namespace Omnipay\Eway\Message;
 
+use Omnipay\Eway\RapidDirectGateway;
+use Omnipay\Omnipay;
+
 /**
  * eWAY Rapid Direct Create Card Request
  *
@@ -78,6 +81,25 @@ class RapidDirectCreateCardRequest extends RapidDirectAbstractRequest
             ->setAuth($this->getApiKey(), $this->getPassword())
             ->send();
 
-        return $this->response = new RapidDirectCreateCardResponse($this, $httpResponse->json());
+        $this->response = new RapidDirectCreateCardResponse($this, $httpResponse->json());
+
+        if ($this->getAction() === 'Purchase' && $this->response->isSuccessful()) {
+            /** @var RapidDirectGateway $purchaseGateway */
+            $purchaseGateway = Omnipay::create('Eway_RapidDirect');
+            $purchaseGateway->setApiKey($this->getApiKey());
+            $purchaseGateway->setPassword($this->getPassword());
+            $purchaseGateway->setTestMode($this->getTestMode());
+            $purchaseResponse = $purchaseGateway->purchase(array(
+                'amount' => $this->getAmount(),
+                'currency' => $this->getCurrency(),
+                'description' => $this->getDescription(),
+                'transactionId' => $this->getTransactionId(),
+                'card' => $this->getCard(),
+                'cardReference' => $this->response->getCardReference(),
+            ))->send();
+            $this->response->setPurchaseResponse($purchaseResponse);
+        }
+
+        return $this->response;
     }
 }

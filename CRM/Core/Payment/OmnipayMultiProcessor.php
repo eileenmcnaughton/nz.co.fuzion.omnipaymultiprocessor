@@ -158,6 +158,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           ->send();
       }
       if ($response->isSuccessful()) {
+        if ($response->getCardReference()) {
+          $params['token'] = $response->getCardReference();
+        }
         // mark order as complete
         if (!empty($params['is_recur'])) {
           $paymentToken = civicrm_api3('PaymentToken', 'create', array(

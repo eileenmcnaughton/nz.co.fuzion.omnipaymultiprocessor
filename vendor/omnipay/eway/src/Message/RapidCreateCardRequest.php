@@ -14,24 +14,6 @@ namespace Omnipay\Eway\Message;
  */
 class RapidCreateCardRequest extends RapidPurchaseRequest
 {
-    protected $action;
-
-    /**
-     * @return string|NULL
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param string $action
-     */
-    public function setAction($action)
-    {
-        $this->action = $action;
-    }
-
     public function getData()
     {
         $this->validate('returnUrl');

@@ -2872,7 +2872,7 @@
         "source": {
             "type": "git",
             "url": "https://github.com/eileenmcnaughton/omnipay-eway.git",
-            "reference": "e516e650a97b531ace1e62ffed1f9de31204dc3c"
+            "reference": "bb28152c5bdfc0a11a41a74e1bd06ef4c81dd88f"
         },
         "require": {
             "omnipay/common": "~2.0"
@@ -2880,7 +2880,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2017-10-02T00:40:57+00:00",
+        "time": "2017-10-15T23:37:35+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

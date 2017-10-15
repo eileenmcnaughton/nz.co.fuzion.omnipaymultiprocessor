@@ -877,7 +877,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-eway.git",
-                "reference": "e516e650a97b531ace1e62ffed1f9de31204dc3c"
+                "reference": "bb28152c5bdfc0a11a41a74e1bd06ef4c81dd88f"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -919,7 +919,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-10-02 01:59:50"
+            "time": "2017-10-15 23:37:35"
         },
         {
             "name": "omnipay/firstdata",
@@ -3050,7 +3050,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-05T14:38:30+00:00"
+            "time": "2017-10-05 14:38:30"
         }
     ],
     "aliases": [],
