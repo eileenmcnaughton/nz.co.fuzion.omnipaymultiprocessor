@@ -711,6 +711,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $paymentProcessorID = $params['processor_id'];
     $this->_paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
     $this->_paymentProcessor['name'] = civicrm_api3('payment_processor_type', 'getvalue', array('id' => $this->_paymentProcessor['payment_processor_type_id'], 'return' => 'name'));
+    if (empty(CRM_Core_Session::singleton()->getLoggedInContactID())) {
+      // Don't be too efficient on processing the ipn return.
+      // So far the best way of telling the difference is the session.
+      sleep(45);
+    }
     $this->processPaymentNotification($params);
   }
 
