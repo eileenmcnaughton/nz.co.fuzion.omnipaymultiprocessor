@@ -226,6 +226,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $fn = "set{$name}";
         $this->gateway->$fn($value);
       }
+      if (\Civi::settings()->get('omnipay_test_mode')) {
+        $this->_is_test = TRUE;
+      }
       if (in_array('testMode', array_keys($this->gateway->getDefaultParameters()))) {
         if (method_exists($this->gateway, 'setDeveloperMode')) {
           $this->gateway->setDeveloperMode($this->_is_test);
