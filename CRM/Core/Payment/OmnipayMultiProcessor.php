@@ -553,9 +553,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (isset ($fields['fields'])) {
       $paymentFieldMappings = $fields['fields'];
     }
-    else {
-      $paymentFieldMappings = $this->getPaymentFieldMapping();
-    }
     if (empty($fields)) {
       return $fields;
     }
@@ -565,32 +562,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $paymentFieldMappings[$fieldName] = array_merge($corePaymentFields[$fieldSpec['core_field_name']], $fieldSpec);
     }
     return $paymentFieldMappings;
-  }
-
-  /**
-   * Get mapping for payment fields.
-   *
-   * We are just getting the cybersource specific mapping for now - see comments on
-   * getTransparentDirectDisplayFields.
-   *
-   * @return array
-   */
-  private function getPaymentFieldMapping() {
-    return array(
-      'card_type' => array(
-        'core_field_name' => 'credit_card_type',
-        'options' => array(
-          '' => ts('- select -'),
-          '001' => 'Visa',
-          '002' => 'Mastercard',
-          '003' => 'Amex',
-          '004' => 'Discover',
-        ),
-      ),
-      'card_number' => array('core_field_name' => 'credit_card_number'),
-      'card_expiry_date' => array('core_field_name' => 'credit_card_exp_date'),
-      'card_cvn' => array('core_field_name' => 'cvv2'),
-    );
   }
 
   /**

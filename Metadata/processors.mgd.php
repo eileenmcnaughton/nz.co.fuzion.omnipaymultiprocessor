@@ -63,24 +63,6 @@ return array(
         ),
     ),
   */
-  1 => array(
-    'name' => 'OmniPay - Cybersource',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - Cybersource',
-      'name' => 'omnipay_Cybersource',
-      'description' => 'Omnipay Cybersource Payment Processor',
-      'user_name_label' => 'Profile ID',
-      'password_label' => 'Access Key',
-      'signature_label' => 'Secret Key',
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => 'https://testsecureacceptance.cybersource.com/silent/pay',
-      'url_api_default' => 'https://testsecureacceptance.cybersource.com/silent/pay',
-      'billing_mode' => 4,
-      'payment_type' => 3,
-    ),
-  ),
   2 => array(
     'name' => 'OmniPay - Paybox System',
     'entity' => 'payment_processor_type',

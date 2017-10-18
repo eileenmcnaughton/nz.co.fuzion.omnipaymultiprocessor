@@ -29,7 +29,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
       if ($displayField['htmlType'] == 'date') {
         $displayFields[$fieldName]['options']['year'] = $this->getDateFieldsYearOptions($displayField);
       }
-      if (!empty($displayField['contact_api'])) {
+      if (!empty($displayField['contact_api']) && !empty($contactID)) {
         $contact = civicrm_api3('Contact', 'get', array('id' => $contactID, 'sequential' => 1, 'options' => array('limit' => 1)));
         $displayFields[$fieldName]['options']['value'] = !empty($contact['values'][0]['display_name']) ? $contact['values'][0]['display_name'] : '';
       }
