@@ -5,6 +5,7 @@
  * Date: 10/18/17
  * Time: 12:53 PM
  */
+$billingLocationID = CRM_Core_BAO_LocationType::getBilling();
 return array(
   array(
     'name' => 'OmniPay - Cybersource',
