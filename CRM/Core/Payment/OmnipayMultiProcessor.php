@@ -32,19 +32,10 @@
  * Class CRM_Core_Payment_OmnipayMultiProcessor.
  */
 class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExtended {
-  /**
-   * We only need one instance of this object. So we use the singleton
-   * pattern and cache the instance in this variable.
-   *
-   * This is redundant from 4.4.
-   *
-   * @var CRM_Core_Payment_OmnipayMultiProcessor
-   * @static
-   */
-  static private $_singleton = NULL;
 
   /**
-   * For code clarity declare is_test as a boolean
+   * For code clarity declare is_test as a boolean.
+   *
    * @var bool
    */
   protected $_is_test = FALSE;
@@ -66,35 +57,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected $gateway;
 
-
-  /**
-   * Singleton function used to manage this object.
-   *
-   * Redundant from 4.6.
-   *
-   * @param string $mode the mode of operation: live or test
-   *
-   * @param array $paymentProcessor
-   * @param null $paymentForm
-   * @param bool $force
-   *
-   * @return object
-   * @static
-   */
-  static function &singleton($mode = 'test', &$paymentProcessor, &$paymentForm = NULL, $force = FALSE) {
-    if (!empty($paymentProcessor['id'])) {
-      $cacheKey = $paymentProcessor['id'];
-    }
-    else {
-      //@todo eliminated instances of this in favour of id-specific instances.
-      $cacheKey = $mode . '_' . $paymentProcessor['name'];
-    }
-    if (!isset(self::$_singleton[$cacheKey]) || self::$_singleton[$cacheKey] === NULL) {
-      self::$_singleton[$cacheKey] = new CRM_Core_Payment_Omnipaymultiprocessor($mode, $paymentProcessor);
-    }
-    return self::$_singleton[$cacheKey];
-  }
-
   /**
    * Express checkout code.
    *
@@ -107,7 +69,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function setExpressCheckOut(&$params) {
   }
-
 
   /**
    * Do the express checkout at paypal.
