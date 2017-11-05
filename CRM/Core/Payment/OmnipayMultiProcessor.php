@@ -504,25 +504,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * It is conceivable that we could POST to the processor first but that possibility is not yet applicable to
    * the processors we have
    *
-   * at this stage we only have the scenario of cybersource - later we can get metadata from
-   * omnipay depending how it develops or use our own yml file (if we go down the yml path the mgd.php file
-   * should parse it to avoid duplication https://groups.google.com/forum/#!topic/omnipay/hjxBCU5blaU
-   * @return array
+   * The metadata for the processor declares what fields to display.
    */
   public function getTransparentDirectDisplayFields() {
     $fields = $this->getProcessorTypeMetadata('transparent_redirect');
-    if (isset ($fields['fields'])) {
-      $paymentFieldMappings = $fields['fields'];
+    if (isset($fields['fields'])) {
+      $fields['fields'];
     }
-    if (empty($fields)) {
-      return $fields;
-    }
-
-    $corePaymentFields = $this->getCorePaymentFields();
-    foreach ($paymentFieldMappings as $fieldName => $fieldSpec) {
-      $paymentFieldMappings[$fieldName] = array_merge($corePaymentFields[$fieldSpec['core_field_name']], $fieldSpec);
-    }
-    return $paymentFieldMappings;
+    return array();
   }
 
   /**
