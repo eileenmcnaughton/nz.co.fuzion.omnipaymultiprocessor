@@ -9,6 +9,7 @@ use Omnipay\Common\Exception\InvalidRequestException;
 abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $data;
+    protected $keyVersion;
 
     /**
      * @param mixed $data
@@ -75,6 +76,22 @@ abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRe
     public function setSecretKey($value)
     {
         return $this->setParameter('secret_key', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyVersion()
+    {
+      $this->getParameter('key_version');
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setKeyVersion($value)
+    {
+        $this->setParameter('key_version', $value);
     }
 
     public function getTransactionType()

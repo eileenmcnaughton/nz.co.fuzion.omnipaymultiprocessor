@@ -51,6 +51,7 @@ return array(
           'user_name_label' => 'Merchant ID',
           'password_label' => 'Secret Key',
           'signature_label' => '',
+          'subject_label' => 'Key Version',
           'site_url' => '',
           'class_name' => 'Payment_OmnipayMultiProcessor',
           'billing_mode' => 1,

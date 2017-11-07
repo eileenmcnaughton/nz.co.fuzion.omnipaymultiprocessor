@@ -70,7 +70,6 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
                 'merchantId' => $this->getMerchantID(),
                 'normalReturnUrl'=> $this->getReturnUrl(),
                 'transactionReference' => $this->getTransactionId(),
-                'keyVersion' => 1,
             ),
         );
     }
@@ -85,6 +84,7 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
             'type' => $this->getTransactionType(),
             'merchant_id' => $this->getMerchantID(),
             'secret_key' => $this->getSecretKey(),
+            'keyVersion' => $this->getKeyVersion(),
         );
     }
 

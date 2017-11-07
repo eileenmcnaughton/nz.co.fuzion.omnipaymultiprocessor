@@ -32,6 +32,7 @@ class OffsiteGateway extends AbstractGateway
           'merchant_id' => '',
           'secret_key' => '',
           'testMode' => false,
+          'key_version' => 2,
         );
     }
 
