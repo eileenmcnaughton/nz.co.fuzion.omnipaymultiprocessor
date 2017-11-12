@@ -67,6 +67,7 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
             'data' => array(
                 'amount' => $this->getAmountInteger(),
                 'currencyCode' => $this->getCurrencyNumeric(),
+                'keyVersion' => $this->getKeyVersion(),
                 'merchantId' => $this->getMerchantID(),
                 'normalReturnUrl'=> $this->getReturnUrl(),
                 'transactionReference' => $this->getTransactionId(),
@@ -84,7 +85,6 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
             'type' => $this->getTransactionType(),
             'merchant_id' => $this->getMerchantID(),
             'secret_key' => $this->getSecretKey(),
-            'keyVersion' => $this->getKeyVersion(),
         );
     }
 

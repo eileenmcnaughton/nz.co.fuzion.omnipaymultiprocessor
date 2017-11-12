@@ -105,4 +105,20 @@ class OffsiteGateway extends AbstractGateway
     {
         return $this->setParameter('secret_key', $value);
     }
+
+    /**
+     * @return int
+     */
+    public function getKeyVersion()
+    {
+        return $this->getParameter('key_version');
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setKeyVersion($value)
+    {
+        $this->setParameter('key_version', $value);
+    }
 }

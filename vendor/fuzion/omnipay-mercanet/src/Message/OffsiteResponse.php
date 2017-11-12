@@ -104,7 +104,7 @@ class OffsiteResponse extends AbstractResponse implements RedirectResponseInterf
         $data = implode('|', $formData);
         return array(
             'data' => $data,
-            'InterfaceVersion' => 'HP_2.9',
+            'InterfaceVersion' => 'HP_2.18',
             'seal' => hash('sha256', $data . $this->getSecretKey()),
         );
     }

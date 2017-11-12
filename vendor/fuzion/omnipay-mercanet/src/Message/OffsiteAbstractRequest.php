@@ -9,7 +9,6 @@ use Omnipay\Common\Exception\InvalidRequestException;
 abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $data;
-    protected $keyVersion;
 
     /**
      * @param mixed $data
@@ -83,7 +82,7 @@ abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRe
      */
     public function getKeyVersion()
     {
-      $this->getParameter('key_version');
+        return $this->getParameter('key_version');
     }
 
     /**
