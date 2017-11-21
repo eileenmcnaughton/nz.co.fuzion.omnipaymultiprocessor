@@ -30,6 +30,9 @@ CiviCRM's Administer > System Settings > Payment Processors, then use a URL simi
 `https://example.org/civicrm/payment/ipn/XX` (where `https://example.org` is your actual
 site URL and `XX` is the processor ID).
 
+This extension creates `ProcessRecurring` schedule job on installation. It passes all 
+due recur contributions and is configured to execute `Hourly`.
+
 ## Adding support for new payment gateways
 
 * Update `composer.json` with the required Omnipay package for your payment processor
