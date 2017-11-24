@@ -71,6 +71,7 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
                 'merchantId' => $this->getMerchantID(),
                 'normalReturnUrl'=> $this->getReturnUrl(),
                 'transactionReference' => $this->getTransactionId(),
+                'automaticResponseUrl' => $this->getNotifyUrl(),
             ),
         );
     }
