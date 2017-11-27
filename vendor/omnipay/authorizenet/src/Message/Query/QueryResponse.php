@@ -39,5 +39,4 @@ class QueryResponse extends QueryBatchResponse
         }
         return $result;
     }
-
 }

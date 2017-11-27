@@ -241,5 +241,4 @@ class QueryDetailResponse extends AbstractQueryResponse
     {
         return $this->transaction['submitTimeUTC'];
     }
-
 }

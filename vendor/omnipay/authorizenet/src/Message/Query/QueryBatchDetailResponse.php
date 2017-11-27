@@ -41,5 +41,4 @@ class QueryBatchDetailResponse extends AbstractQueryResponse
         $result = $this->xml2array($this->data->transactions, true);
         return $result['transactions'][0]['transaction'];
     }
-
 }

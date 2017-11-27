@@ -52,5 +52,4 @@ class QueryBatchResponse extends AbstractQueryResponse
         $result = $this->xml2array($this->data->batchList, true);
         return $result['batchList'][0]['batch'];
     }
-
 }

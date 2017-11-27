@@ -58,5 +58,4 @@ abstract class AIMAbstractQueryRequest extends AIMAbstractRequest
         $data = $this->getBaseData();
         return $data;
     }
-
 }

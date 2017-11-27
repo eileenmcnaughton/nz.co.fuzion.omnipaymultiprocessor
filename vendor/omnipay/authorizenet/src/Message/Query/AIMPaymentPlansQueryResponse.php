@@ -41,5 +41,4 @@ class AIMPaymentPlansQueryResponse extends AbstractQueryResponse
         $result = $this->xml2array($this->data->subscriptionDetails, true);
         return $result['subscriptionDetails'][0]['subscriptionDetail'];
     }
-
 }
