@@ -28,7 +28,7 @@ use Omnipay\Common\Message\AbstractRequest;
  * $card = new CreditCard(array(
  *             'firstName'    => 'Example',
  *             'lastName'     => 'Customer',
- *             'number'       => '4242424242424242',
+ *             'number'       => '4111111111111111',
  *             'expiryMonth'  => '01',
  *             'expiryYear'   => '2020',
  *             'cvv'          => '123',
@@ -188,6 +188,16 @@ class AuthorizeRequest extends AbstractRequest
         return $this->setParameter('orderid', $value);
     }
 
+    public function setPoNum($value)
+    {
+        return $this->setParameter('ponum', $value);
+    }
+
+    public function getPoNum()
+    {
+        return $this->getParameter('ponum');
+    }
+
     /**
      * @deprecated
      */
@@ -245,6 +255,7 @@ class AuthorizeRequest extends AbstractRequest
         $data['COMMENT1'] = $this->getDescription();
         $data['COMMENT2'] = $this->getComment2();
         $data['ORDERID'] = $this->getOrderId();
+        $data['PONUM'] = $this->getPoNum();
 
         $data['BILLTOEMAIL'] = $this->getCard()->getEmail();
         $data['BILLTOPHONENUM'] = $this->getCard()->getBillingPhone();
