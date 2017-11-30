@@ -69,9 +69,9 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
                 'currencyCode' => $this->getCurrencyNumeric(),
                 'keyVersion' => $this->getKeyVersion(),
                 'merchantId' => $this->getMerchantID(),
+                'automaticResponseUrl' => $this->getNotifyUrl(),
                 'normalReturnUrl'=> $this->getReturnUrl(),
                 'transactionReference' => $this->getTransactionId(),
-                'automaticResponseUrl' => $this->getNotifyUrl(),
             ),
         );
     }
