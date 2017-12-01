@@ -17,6 +17,7 @@ return array(
     'Omnipay\\SecurePay\\' => array($vendorDir . '/omnipay/securepay/src'),
     'Omnipay\\SagePay\\' => array($vendorDir . '/omnipay/sagepay/src'),
     'Omnipay\\Pin\\' => array($vendorDir . '/omnipay/pin/src'),
+    'Omnipay\\Pergo\\' => array($vendorDir . '/pergo/omnipay-pergo/src'),
     'Omnipay\\Paypalstandard\\' => array($vendorDir . '/civicrm/omnipay-paypalstandard/src'),
     'Omnipay\\PaymentExpress\\' => array($vendorDir . '/omnipay/paymentexpress/src'),
     'Omnipay\\Payflow\\' => array($vendorDir . '/omnipay/payflow/src'),

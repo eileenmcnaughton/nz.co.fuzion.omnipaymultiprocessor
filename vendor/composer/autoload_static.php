@@ -28,6 +28,7 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
             'Omnipay\\SecurePay\\' => 18,
             'Omnipay\\SagePay\\' => 16,
             'Omnipay\\Pin\\' => 12,
+            'Omnipay\\Pergo\\' => 14,
             'Omnipay\\Paypalstandard\\' => 23,
             'Omnipay\\PaymentExpress\\' => 23,
             'Omnipay\\Payflow\\' => 16,
@@ -105,6 +106,10 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
         'Omnipay\\Pin\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/pin/src',
+        ),
+        'Omnipay\\Pergo\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pergo/omnipay-pergo/src',
         ),
         'Omnipay\\Paypalstandard\\' => 
         array (

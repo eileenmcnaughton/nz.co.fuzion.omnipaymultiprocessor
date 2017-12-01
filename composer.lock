@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0131302287d46c915c8dc4f57384d83",
+    "content-hash": "5c5653afad5c43d9ab65cc28f97a94c0",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -150,7 +150,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
-                "reference": "0c1e05c63f594571f27cf4130daad8a9f8f7c5ac"
+                "reference": "5292b1b02ac0d09e9fef724ccb3a95f9d26cd6f5"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -185,7 +185,7 @@
                 "purchase",
                 "shell"
             ],
-            "time": "2017-09-18 03:34:51"
+            "time": "2017-12-01 00:47:52"
         },
         {
             "name": "fuzion/omnipay-paybox",
@@ -235,12 +235,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "2a1e07740c76b0c9da9c5708e8b3e927fc9a2796"
+                "reference": "493d896b3f4a6c09ab737d53777bcfec5ff1daf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/2a1e07740c76b0c9da9c5708e8b3e927fc9a2796",
-                "reference": "2a1e07740c76b0c9da9c5708e8b3e927fc9a2796",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/493d896b3f4a6c09ab737d53777bcfec5ff1daf1",
+                "reference": "493d896b3f4a6c09ab737d53777bcfec5ff1daf1",
                 "shasum": ""
             },
             "require": {
@@ -248,7 +248,7 @@
             },
             "require-dev": {
                 "ext-intl": "*",
-                "phpunit/phpunit": "^4.0 || ^5.0",
+                "phpunit/phpunit": "^4.8.35 || ^5.7",
                 "squizlabs/php_codesniffer": "^1.5"
             },
             "type": "library",
@@ -277,7 +277,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-09-29 08:05:07"
+            "time": "2017-11-30 21:42:10"
         },
         {
             "name": "guzzle/guzzle",
@@ -440,7 +440,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-authorizenet.git",
-                "reference": "1406246532f8aadab99806c64981795129a17c85"
+                "reference": "75a990a46155536acdae9b3bde16f578db72cf7c"
             },
             "require": {
                 "omnipay/common": "~2.2"
@@ -484,7 +484,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-10-08 23:05:00"
+            "time": "2017-11-27 05:10:28"
         },
         {
             "name": "omnipay/bitpay",
@@ -923,16 +923,16 @@
         },
         {
             "name": "omnipay/firstdata",
-            "version": "v2.3.0",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-firstdata.git",
-                "reference": "e33826821db88d90886cad6c81a29452d3cf91a2"
+                "reference": "c0123a03bec861e0c00fa19772582dc3639fbb6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-firstdata/zipball/e33826821db88d90886cad6c81a29452d3cf91a2",
-                "reference": "e33826821db88d90886cad6c81a29452d3cf91a2",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-firstdata/zipball/c0123a03bec861e0c00fa19772582dc3639fbb6e",
+                "reference": "c0123a03bec861e0c00fa19772582dc3639fbb6e",
                 "shasum": ""
             },
             "require": {
@@ -977,7 +977,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-01-14T06:24:28+00:00"
+            "time": "2017-07-14T09:26:59+00:00"
         },
         {
             "name": "omnipay/gocardless",
@@ -1593,16 +1593,16 @@
         },
         {
             "name": "omnipay/payflow",
-            "version": "v2.2.2",
+            "version": "v2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-payflow.git",
-                "reference": "8dbfaf9accc1c2b388c9ab89c4b30176396c973a"
+                "reference": "2348f82f7eda1e9fb991767d61a3534e4935e9ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-payflow/zipball/8dbfaf9accc1c2b388c9ab89c4b30176396c973a",
-                "reference": "8dbfaf9accc1c2b388c9ab89c4b30176396c973a",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-payflow/zipball/2348f82f7eda1e9fb991767d61a3534e4935e9ba",
+                "reference": "2348f82f7eda1e9fb991767d61a3534e4935e9ba",
                 "shasum": ""
             },
             "require": {
@@ -1646,7 +1646,7 @@
                 "payflow",
                 "payment"
             ],
-            "time": "2017-05-12T08:10:23+00:00"
+            "time": "2017-11-10T08:14:36+00:00"
         },
         {
             "name": "omnipay/paymentexpress",
@@ -1654,12 +1654,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paymentexpress.git",
-                "reference": "43f5765dd196336b7252bcd4d94e010b5c5c1110"
+                "reference": "a9a48434d5341e300b7121270e92109793738cee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/43f5765dd196336b7252bcd4d94e010b5c5c1110",
-                "reference": "43f5765dd196336b7252bcd4d94e010b5c5c1110",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/a9a48434d5341e300b7121270e92109793738cee",
+                "reference": "a9a48434d5341e300b7121270e92109793738cee",
                 "shasum": ""
             },
             "require": {
@@ -1709,20 +1709,20 @@
                 "pxpay",
                 "pxpost"
             ],
-            "time": "2017-07-15 04:41:46"
+            "time": "2017-11-22 07:02:14"
         },
         {
             "name": "omnipay/paypal",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-paypal.git",
-                "reference": "e06c8814deacc793715bb9fd3fcae5995b5d8d6b"
+                "reference": "9e44c31a7038d4a23232b3739b602e8842106c4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/e06c8814deacc793715bb9fd3fcae5995b5d8d6b",
-                "reference": "e06c8814deacc793715bb9fd3fcae5995b5d8d6b",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/9e44c31a7038d4a23232b3739b602e8842106c4e",
+                "reference": "9e44c31a7038d4a23232b3739b602e8842106c4e",
                 "shasum": ""
             },
             "require": {
@@ -1767,7 +1767,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2016-12-22T12:35:25+00:00"
+            "time": "2017-11-10T08:10:43+00:00"
         },
         {
             "name": "omnipay/pin",
@@ -2112,6 +2112,49 @@
                 "worldpay"
             ],
             "time": "2017-06-15T07:04:25+00:00"
+        },
+        {
+            "name": "pergo/omnipay-pergo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eileenmcnaughton/omnipay-pergo.git",
+                "reference": "03c9e89f6ebef5089eab17b10b1b76a02d495d7c"
+            },
+            "require": {
+                "omnipay/common": "~2.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Pergo\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eileen McNaughton",
+                    "email": "eileen@fuzion.co.nz"
+                }
+            ],
+            "description": "Pergo support for Omnipay payment processing library",
+            "homepage": "https://github.com/eileenmcnaughton/omnipay-pergo",
+            "keywords": [
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "pergo",
+                "purchase",
+                "shell"
+            ],
+            "time": "2017-11-27 05:15:05"
         },
         {
             "name": "pointybeard/omnipay-nabtransact",
@@ -2613,16 +2656,16 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "dev-master",
+            "version": "1.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5"
+                "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/730b01bc3e867237eaac355e06a36b85dd93a8b4",
+                "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4",
                 "shasum": ""
             },
             "require": {
@@ -2656,7 +2699,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2017-11-27T13:52:08+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3066,7 +3109,8 @@
         "fzaninotto/faker": 20,
         "omnipay/paymentexpress": 20,
         "omnipay/authorizenet": 20,
-        "fuzion/omnipay-mercanet": 20
+        "fuzion/omnipay-mercanet": 20,
+        "pergo/omnipay-pergo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
