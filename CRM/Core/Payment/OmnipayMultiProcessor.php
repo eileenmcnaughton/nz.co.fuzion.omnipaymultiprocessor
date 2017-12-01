@@ -456,8 +456,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * Get array of fields that should be displayed on the payment form.
    *
-   * This function is new to 4.6 and will not be called on lower versions.
-   *
    * @return array
    *
    * @throws CiviCRM_API3_Exception
