@@ -1,5 +1,5 @@
 <?php
-namespace Omnipay\pergo\Message;
+namespace Omnipay\Pergo\Message;
 
 /**
  * Purchase Request

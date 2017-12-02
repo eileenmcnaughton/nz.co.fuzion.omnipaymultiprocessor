@@ -1,5 +1,5 @@
 <?php
-namespace Omnipay\pergo\Message;
+namespace Omnipay\Pergo\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 
@@ -30,22 +30,32 @@ abstract class OffsiteAbstractRequest extends \Omnipay\Common\Message\AbstractRe
     }
     public function getAuthenticationToken()
     {
-        return $this->getParameter('authenticationtoken');
+        return $this->getParameter('authenticationToken');
     }
 
     public function setAuthenticationToken($value)
     {
-        return $this->setParameter('authenticationtoken', $value);
+        return $this->setParameter('authenticationToken', $value);
     }
 
     public function getBillerAccountId()
     {
-        return $this->getParameter('billeraccountid');
+        return $this->getParameter('billerAccountId');
     }
 
     public function setBillerAccountId($value)
     {
-        return $this->setParameter('billeraccountid', $value);
+        return $this->setParameter('billerAccountId', $value);
+    }
+
+    public function getMerchantProfileId()
+    {
+        return $this->getParameter('merchantProfileId');
+    }
+
+    public function setMerchantProfileId($value)
+    {
+        return $this->setParameter('merchantProfileId', $value);
     }
 
     public function getTransactionType()

@@ -1,7 +1,7 @@
 <?php
-namespace Omnipay\pergo\Message;
+namespace Omnipay\Pergo\Message;
 
-use Omnipay\pergo\Message\AbstractRequest;
+use Omnipay\Pergo\Message\AbstractRequest;
 
 /**
  * Sample Complete Authorize Response

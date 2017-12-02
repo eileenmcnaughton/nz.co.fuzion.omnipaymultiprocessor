@@ -24,7 +24,8 @@
     "psr-4": { "Omnipay\\Pergo\\" : "src/" }
   },
   "require": {
-    "omnipay/common": "~2.0"
+    "omnipay/common": "~2.0",
+    "guzzlehttp/guzzle": "^6.3"
   },
   "require-dev": {
     "omnipay/tests": "~2.0"

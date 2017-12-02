@@ -1,7 +1,9 @@
 <?php
-namespace Omnipay\pergo\Message;
+namespace Omnipay\Pergo\Message;
 
-use Omnipay\pergo\Message\AbstractRequest;
+use Omnipay\Pergo\Message\AbstractRequest;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 
 /**
  * pergo Authorize Request
@@ -16,6 +18,26 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
      */
     public function sendData($data)
     {
+        $auth = 'Basic ' . base64_encode($this->getBillerAccountId() . ':' . $this->getAuthenticationToken());
+        $httpRequest = $this->httpClient->request('PUT',$this->getEndpoint(), [
+            'json' => $data,
+            'auth' => [$this->getBillerAccountId(), $this->getAuthenticationToken()],
+            'debug' => TRUE,
+        ]);
+
+        //$httpRequest->setBody($data);
+        try {
+            $httpResponse = $httpRequest->getBody();
+        }
+          catch (\Exception $e) {
+            $c = 4;
+            }
+
+     //   "AuthOnly":true,
+ //"ProcessCard":true,
+ //"StoreCard":true,
+
+        $b = $httpResponse->getContents();
         return $this->response = new OffsiteAuthorizeResponse($this, $data, $this->getEndpoint());
     }
 
@@ -45,10 +67,7 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
     }
 
     /**
-     * Map Omnipay normalised fields to gateway defined fields. If the order the fields are
-     * passed to the gateway matters you should order them correctly here
-     *
-     * @fixMe you will need to update this to reflect the processor.
+     * Map Omnipay normalised fields to gateway defined fields.
      *
      * @return array
      * @throws \Omnipay\Common\Exception\InvalidRequestException
@@ -57,9 +76,18 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
     {
         return array
         (
-            'site_ref' => $this->getTransactionId(),
-            'amount' => $this->getAmount(),
-            'currency' => $this->getCurrencyNumeric(),
+            'InvoiceNumber' => $this->getTransactionId(),
+            'Amount' => $this->getAmountInteger(),
+            'CurrencyCode' => $this->getCurrency(),
+            // Loose AVS is 2 - review this.
+            'AvsRequirementType' => 2,
+            // 1 is required. ie. card name must be filled in.
+            'CardHolderNameRequirementType' => 1,
+            'OnlyStoreCardOnSuccessfulProcess' => True,
+            'PaymentTypeId' => 0,
+            'ReturnURL' => $this->getReturnUrl(),
+            'SecurityCodeRequirementType' => 1,
+            'PayerAccountId' => '32302245',
         );
     }
 
@@ -70,9 +98,11 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
     public function getBaseData()
     {
         return array(
-            'type' => $this->getTransactionType(),
-            'authenticationtoken' => $this->getAuthenticationToken(),
-            'billeraccountid' => $this->getBillerAccountId(),
+            'AuthOnly ' => ($this->getTransactionType() === 'Purchase' ? False: True),
+            'AuthenticationToken' => $this->getAuthenticationToken(),
+            'BillerAccountId' => $this->getBillerAccountId(),
+            'MerchantProfileId ' => $this->getMerchantProfileId(),
+            'ProcessCard' => true,
         );
     }
 
@@ -82,6 +112,7 @@ class OffsiteAuthorizeRequest extends OffsiteAbstractRequest
     */
     public function getEndpoint()
     {
+        return 'https://xmltestapi.propay.com/protectpay/HostedTransactions/';
         return 'https://protectpaytest.propay.com/hpp/v2/[hostedtransactionidentifier';
     }
 

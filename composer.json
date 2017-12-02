@@ -53,7 +53,8 @@
         "omnipay/paymentexpress": "dev-master",
         "omnipay/authorizenet": "dev-master",
         "fuzion/omnipay-mercanet": "dev-master",
-        "pergo/omnipay-pergo": "dev-master"
+        "pergo/omnipay-pergo": "dev-master",
+        "guzzlehttp/guzzle": "^6.2@dev"
     },
     "require-dev":
     {

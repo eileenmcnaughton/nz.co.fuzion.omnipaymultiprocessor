@@ -6,6 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'ArithmeticError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
+    'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+    'DivisionByZeroError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
+    'Error' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/Error.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
@@ -564,6 +568,8 @@ return array(
     'PSR2_Sniffs_Methods_MethodDeclarationSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Methods/MethodDeclarationSniff.php',
     'PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Namespaces/NamespaceDeclarationSniff.php',
     'PSR2_Sniffs_Namespaces_UseDeclarationSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Namespaces/UseDeclarationSniff.php',
+    'ParseError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ParseError.php',
+    'SessionUpdateTimestampHandlerInterface' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
     'Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Arrays/ArrayBracketSpacingSniff.php',
     'Squiz_Sniffs_Arrays_ArrayDeclarationSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Arrays/ArrayDeclarationSniff.php',
     'Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ClassDefinitionClosingBraceSpaceSniff.php',
@@ -667,6 +673,7 @@ return array(
     'Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SemicolonSpacingSniff.php',
     'Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'TypeError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
     'Zend_Sniffs_Debug_CodeAnalyzerSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/Debug/CodeAnalyzerSniff.php',
     'Zend_Sniffs_Files_ClosingTagSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/Files/ClosingTagSniff.php',
     'Zend_Sniffs_NamingConventions_ValidVariableNameSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/NamingConventions/ValidVariableNameSniff.php',

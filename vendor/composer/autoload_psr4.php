@@ -6,10 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Polyfill\\Php70\\' => array($vendorDir . '/symfony/polyfill-php70'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Omnipay\\WorldPay\\' => array($vendorDir . '/omnipay/worldpay/src'),
     'Omnipay\\TwoCheckout\\' => array($vendorDir . '/omnipay/2checkout/src'),
     'Omnipay\\TargetPay\\' => array($vendorDir . '/omnipay/targetpay/src'),
@@ -44,5 +46,8 @@ return array(
     'Omnipay\\Buckaroo\\' => array($vendorDir . '/omnipay/buckaroo/src'),
     'Omnipay\\BitPay\\' => array($vendorDir . '/omnipay/bitpay/src'),
     'Omnipay\\AuthorizeNet\\' => array($vendorDir . '/omnipay/authorizenet/src'),
+    'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
+    'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
+    'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
 );
