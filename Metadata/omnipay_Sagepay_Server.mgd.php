@@ -38,10 +38,25 @@
  * database as appropriate. For more details, see "hook_civicrm_managed" at:
  * http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
  */
+$billingLocationID = CRM_Core_BAO_LocationType::getBilling();
 return array(
     array(
       'name' => 'OmniPay - SagePay',
       'entity' => 'payment_processor_type',
+      'metadata' => array(
+        'fields' => array(
+          'billing_fields' => array(
+            'first_name' => 'billing_first_name',
+            'middle_name' => 'billing_middle_name',
+            'last_name' => 'billing_last_name',
+            'street_address' => "billing_street_address-{$billingLocationID}",
+            'city' => "billing_city-{$billingLocationID}",
+            'country' => "billing_country_id-{$billingLocationID}",
+            'state_province' => "billing_state_province_id-{$billingLocationID}",
+            'postal_code' => "billing_postal_code-{$billingLocationID}",
+          ),
+        ),
+      ),
       'params' =>
         array(
           'version' => 3,
