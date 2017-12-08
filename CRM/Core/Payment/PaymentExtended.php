@@ -162,7 +162,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected function getNotifyUrl($allowLocalHost = FALSE) {
     $url = CRM_Utils_System::url(
       'civicrm/payment/ipn/' . $this->formatted_transaction_id . '/' . $this->_paymentProcessor['id'],
-      NULL,
+      array('qfKey' => CRM_Utils_Request::retrieve('qfKey', 'String')),
       TRUE,
       NULL,
       FALSE
