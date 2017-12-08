@@ -651,7 +651,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
     try {
-      $response = $this->gateway->completePurchase($params)->send();
+      if ($this->gateway->supportsAcceptNotification()) {
+        $response = $this->gateway->acceptNotification($params)->send();
+      }
+      else {
+        $response = $this->gateway->completePurchase($params)->send();
+      }
       if ($response->getTransactionId()) {
         $this->setTransactionID($response->getTransactionId());
       }
@@ -664,9 +669,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'id' => $this->transaction_id,
         'contribution_status_id' => array('IN' => array('Completed', 'Pending'))
       ))) {
-        $this->redirectOrExit('fail');
+        $this->redirectOrExit('fail', $response);
       }
-      $this->redirectOrExit('success');
+      $this->redirectOrExit('success', $response);
     }
 
     if ($response->isSuccessful()) {
@@ -694,25 +699,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
       $_REQUEST = $originalRequest;
-      $this->redirectOrExit('success');
+      $this->redirectOrExit('success', $response);
     }
     elseif ($this->transaction_id) {
       civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
     }
-    $userMessage = ts('The transaction was not processed. The message from the bank was : %1. Please try again', array(1 => $response->getMessage()));
-    if (method_exists($response, 'getInvalidFields') && ($invalidFields = $response->getInvalidFields()) != array()) {
-      $userMessage = ts('Invalid data entered in fields ' . implode(', ', $invalidFields));
-    }
 
-    try {
-      $this->handleError('error', $this->transaction_id . ' ' . $response->getMessage(), array('processor_error', $response->getMessage()), 9002, $userMessage);
-    }
-    catch (\Civi\Payment\Exception\PaymentProcessorException $e) {
-
-    }
+    //$this->redirectOrExit('error', $response);
 
     $_REQUEST = $originalRequest;
-    $this->redirectOrExit('fail');
+    $this->redirectOrExit('fail', $response);
   }
 
   public function queryPaymentPlans($params) {
@@ -760,13 +756,46 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *  - success
    *  - fail
    */
-  protected function redirectOrExit($outcome) {
-    if ($outcome === 'fail') {
-      CRM_Core_Session::setStatus(ts('Your payment was not successful. Please try again'));
+  protected function redirectOrExit($outcome, $response) {
+    switch ($outcome) {
+      case 'fail':
+        $userMsg = ts('Your payment was not successful. Please try again');
+        CRM_Core_Session::setStatus($userMsg);
+        $redirectUrl = $this->getStoredUrl('fail');
+        if (method_exists($response, 'invalid')) {
+          $response->invalid($redirectUrl, $userMsg);
+        }
+        break;
+
+      case 'error':
+        $userMsg = ts('The transaction was not processed. The message from the bank was : %1. Please try again', array(1 => $response->getMessage()));
+        if (method_exists($response, 'getInvalidFields') && ($invalidFields = $response->getInvalidFields()) != array()) {
+          $userMsg = ts('Invalid data entered in fields ' . implode(', ', $invalidFields));
+        }
+        CRM_Core_Session::setStatus($userMsg);
+        $redirectUrl = $this->getStoredUrl('fail');
+        if (method_exists($response, 'error')) {
+          $response->error($redirectUrl, $userMsg);
+        }
+        try {
+          $this->handleError('error', $this->transaction_id . ' ' . $response->getMessage(), array('processor_error', $response->getMessage()), 9002, $userMsg);
+        }
+        catch (\Civi\Payment\Exception\PaymentProcessorException $e) {
+
+        }
+        break;
+
+      case 'success':
+        $userMsg = NULL;
+        $redirectUrl = $this->getStoredUrl('success');
+        if (method_exists($response, 'confirm')) {
+          $response->confirm($redirectUrl, $userMsg);
+        }
+        break;
     }
 
-    if (($success_url = $this->getStoredUrl($outcome)) != FALSE) {
-      CRM_Utils_System::redirect($success_url);
+    if ($redirectUrl != FALSE) {
+      CRM_Utils_System::redirect($redirectUrl);
     }
     CRM_Utils_System::civiExit();
   }
