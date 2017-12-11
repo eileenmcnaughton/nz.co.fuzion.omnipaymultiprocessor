@@ -235,12 +235,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "493d896b3f4a6c09ab737d53777bcfec5ff1daf1"
+                "reference": "07201f7e54015f78b42eda26c7430212fa141928"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/493d896b3f4a6c09ab737d53777bcfec5ff1daf1",
-                "reference": "493d896b3f4a6c09ab737d53777bcfec5ff1daf1",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/07201f7e54015f78b42eda26c7430212fa141928",
+                "reference": "07201f7e54015f78b42eda26c7430212fa141928",
                 "shasum": ""
             },
             "require": {
@@ -277,7 +277,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-11-30 21:42:10"
+            "time": "2017-12-07 06:17:24"
         },
         {
             "name": "guzzle/guzzle",
@@ -446,12 +446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "e9cdab6ff93ff789b5b599326c727f51d10893a6"
+                "reference": "2e48ae638dc0bf0849772f5590835fcd700a2e1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/e9cdab6ff93ff789b5b599326c727f51d10893a6",
-                "reference": "e9cdab6ff93ff789b5b599326c727f51d10893a6",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/2e48ae638dc0bf0849772f5590835fcd700a2e1d",
+                "reference": "2e48ae638dc0bf0849772f5590835fcd700a2e1d",
                 "shasum": ""
             },
             "require": {
@@ -489,7 +489,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2017-10-06 12:25:00"
+            "time": "2017-12-07 21:04:15"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -665,7 +665,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-11-27 05:10:28"
+            "time": "2017-10-16T07:10:08+00:00"
         },
         {
             "name": "omnipay/bitpay",
@@ -2349,9 +2349,10 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-pergo.git",
-                "reference": "03c9e89f6ebef5089eab17b10b1b76a02d495d7c"
+                "reference": "4a0f94ecd20e0460954ad91c7f32f186ce6efe97"
             },
             "require": {
+                "guzzlehttp/guzzle": "^6.3",
                 "omnipay/common": "~2.0"
             },
             "require-dev": {
@@ -2384,7 +2385,7 @@
                 "purchase",
                 "shell"
             ],
-            "time": "2017-11-27 05:15:05"
+            "time": "2017-12-01 01:58:18"
         },
         {
             "name": "pointybeard/omnipay-nabtransact",
@@ -2532,12 +2533,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "b59aacf238fadda50d612c9de73b74751872a903"
+                "reference": "6bd742d35140bd6dc265bf9c198b88afff5afe0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/b59aacf238fadda50d612c9de73b74751872a903",
-                "reference": "b59aacf238fadda50d612c9de73b74751872a903",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/6bd742d35140bd6dc265bf9c198b88afff5afe0b",
+                "reference": "6bd742d35140bd6dc265bf9c198b88afff5afe0b",
                 "shasum": ""
             },
             "require": {
@@ -2584,7 +2585,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-05 15:25:56"
+            "time": "2017-12-08 12:32:59"
         },
         {
             "name": "symfony/http-foundation",
@@ -2592,12 +2593,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "d9625c8abb907e0ca2d7506afd7a719a572c766f"
+                "reference": "bc4d7b5a3007572a5c222f611fee30fbfcf1ddea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/d9625c8abb907e0ca2d7506afd7a719a572c766f",
-                "reference": "d9625c8abb907e0ca2d7506afd7a719a572c766f",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/bc4d7b5a3007572a5c222f611fee30fbfcf1ddea",
+                "reference": "bc4d7b5a3007572a5c222f611fee30fbfcf1ddea",
                 "shasum": ""
             },
             "require": {
@@ -2638,7 +2639,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-30 14:56:21"
+            "time": "2017-12-08 16:11:27"
         },
         {
             "name": "symfony/polyfill-mbstring",

@@ -1099,6 +1099,9 @@ $faker->department; // array('18' => 'Cher');
 
 // Generates a random region
 echo $faker->region; // "Saint-Pierre-et-Miquelon"
+
+// Generates a random appartement,stair
+echo $faker->secondaryAddress; // "Bat. 961"
 ```
 
 ### `Faker\Provider\fr_FR\Company`
@@ -1589,6 +1592,7 @@ echo $faker->VAT; //23456789
 * [pattern-lab/plugin-php-faker](https://github.com/pattern-lab/plugin-php-faker): Pattern Lab is a Styleguide, Component Library, and Prototyping tool. This creates unique content each time Pattern Lab is generated.
 * [guidocella/eloquent-populator](https://github.com/guidocella/eloquent-populator): Adapter for Laravel's Eloquent ORM.
 * [tamperdata/exiges](https://github.com/tamperdata/exiges): Faker provider for generating random temperatures
+* [jzonta/FakerRestaurant](https://github.com/jzonta/FakerRestaurant): Faker for Food and Beverage names generate
 
 ## License
 
