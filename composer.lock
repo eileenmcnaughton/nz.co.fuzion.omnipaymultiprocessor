@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "79a242d779b9d39068cbd058cb8dc672",
+    "content-hash": "a64e00ce167dc479292f6cbac8a177f0",
     "packages": [
         {
             "name": "alfaproject/omnipay-skrill",
@@ -143,6 +143,46 @@
                 "purchase"
             ],
             "time": "2015-05-18T13:16:06+00:00"
+        },
+        {
+            "name": "fuzion/omnipay-authorizenetstd",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eileenmcnaughton/omnipay-authorizenetstd.git",
+                "reference": "80a77844b09a1a465f4122c201415f2d1660688b"
+            },
+            "require": {
+                "omnipay/authorizenet": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\AuthorizeNetStd\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eileen McNaughton",
+                    "email": "eileen@fuzion.co.nz"
+                }
+            ],
+            "description": "Authorize.Net standardised gateway for the Omnipay payment processing library. Extends & standardises main version",
+            "homepage": "https://github.com/emcnaughton/omnipay-authorizenetstd",
+            "keywords": [
+                "authorize",
+                "authorize net",
+                "authorize.net",
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment"
+            ],
+            "time": "2017-12-11 02:00:18"
         },
         {
             "name": "fuzion/omnipay-mercanet",
@@ -620,8 +660,14 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/eileenmcnaughton/omnipay-authorizenet.git",
-                "reference": "75a990a46155536acdae9b3bde16f578db72cf7c"
+                "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
+                "reference": "2d0b1def2e4ee0126ade5811c4f163fd9059dff2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/2d0b1def2e4ee0126ade5811c4f163fd9059dff2",
+                "reference": "2d0b1def2e4ee0126ade5811c4f163fd9059dff2",
+                "shasum": ""
             },
             "require": {
                 "omnipay/common": "~2.2"
@@ -640,6 +686,7 @@
                     "Omnipay\\AuthorizeNet\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -665,7 +712,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-10-16T07:10:08+00:00"
+            "time": "2017-11-27 12:22:28"
         },
         {
             "name": "omnipay/bitpay",
@@ -3448,8 +3495,9 @@
         "civicrm/omnipay-paypalstandard": 20,
         "pointybeard/omnipay-nabtransact": 20,
         "fzaninotto/faker": 20,
-        "omnipay/paymentexpress": 20,
         "omnipay/authorizenet": 20,
+        "omnipay/paymentexpress": 20,
+        "fuzion/omnipay-authorizenetstd": 20,
         "fuzion/omnipay-mercanet": 20,
         "pergo/omnipay-pergo": 20,
         "guzzlehttp/guzzle": 20

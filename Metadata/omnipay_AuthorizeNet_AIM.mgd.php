@@ -45,7 +45,7 @@ return array(
         'params' => array(
             'version' => 3,
             'title' => 'OmniPay - Authorize AIM',
-            'name' => 'omnipay_AuthorizeNet_AIM',
+            'name' => 'omnipay_AuthorizeNetAIMStd',
             'description' => 'Omnipay OmniPay - Authorize AIM Payment Processor',
             'user_name_label' => 'Api Login ID',
             'password_label' => 'Transaction Key',

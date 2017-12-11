@@ -65,6 +65,7 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
             'Omnipay\\Buckaroo\\' => 17,
             'Omnipay\\BitPay\\' => 15,
             'Omnipay\\AuthorizeNet\\' => 21,
+            'Omnipay\\AuthorizeNetStd\\' => 24,
         ),
         'G' => 
         array (
@@ -238,6 +239,10 @@ class ComposerStaticInitc9ef76b3c4ca80d184aa0c79f412a58f
         'Omnipay\\AuthorizeNet\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/authorizenet/src',
+        ),
+        'Omnipay\\AuthorizeNetStd\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fuzion/omnipay-authorizenetstd/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

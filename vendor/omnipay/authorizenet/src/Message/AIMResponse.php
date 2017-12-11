@@ -155,14 +155,6 @@ class AIMResponse extends AbstractResponse
 
         if (isset($this->data->transactionResponse[0])) {
             $body = $this->data->transactionResponse[0];
-            // CiviCRM hack - just return the damn reference!
-            // Authorize.net requires the expiry date & last 4 card numbers so omnipay has kinda
-            // hacked around that by returning a json reference including all 3. We want auditability so that's no
-            // good. Since we have other edits in place just going for the hack :-(
-            // https://github.com/thephpleague/omnipay-authorizenet/issues/50
-            // if we can de-fork one day maybe a metadata/listener thing instead.
-            return (string) $body->transId;
-
             $transactionRef = new TransactionReference();
             $transactionRef->setApprovalCode((string)$body->authCode);
             $transactionRef->setTransId((string)$body->transId);

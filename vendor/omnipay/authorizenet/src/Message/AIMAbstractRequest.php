@@ -124,13 +124,10 @@ abstract class AIMAbstractRequest extends AbstractRequest
         if (substr($value, 0, 1) === '{') {
             // Value is a complex key containing the transaction ID and other properties
             $transactionRef = new TransactionReference($value);
-            $data = json_decode($value);
-            $transactionRef = $data->transId;
         } else {
             // Value just contains the transaction ID
             $transactionRef = new TransactionReference();
             $transactionRef->setTransId($value);
-            $transactionRef = $value;
         }
 
         return $this->setParameter('transactionReference', $transactionRef);

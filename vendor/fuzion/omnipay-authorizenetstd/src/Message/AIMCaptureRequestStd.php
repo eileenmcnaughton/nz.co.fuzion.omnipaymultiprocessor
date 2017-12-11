@@ -1,11 +1,11 @@
 <?php
 
-namespace Omnipay\AuthorizeNet\Message;
+namespace Omnipay\AuthorizeNetStd\Message;
 
 /**
  * Authorize.Net Capture Request
  */
-class AIMCaptureRequest extends AIMAbstractRequest
+class AIMCaptureRequestStd extends AIMAbstractRequestStd
 {
     protected $action = 'priorAuthCaptureTransaction';
 
@@ -15,7 +15,7 @@ class AIMCaptureRequest extends AIMAbstractRequest
 
         $data = $this->getBaseData();
         $data->transactionRequest->amount = $this->getAmount();
-        $data->transactionRequest->refTransId = $this->getTransactionReference()->getTransId();
+        $data->transactionRequest->refTransId = $this->getTransactionReference();
         $this->addTransactionSettings($data);
 
         return $data;
