@@ -919,7 +919,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $this->purgeSensitiveDataFromSession();
         unset($params['credit_card_number']);
         unset($params['cvv2']);
-        return $this->handleError('alert', 'failed processor transaction ' . $this->_paymentProcessor['payment_processor_type'], (array) $response, 9001, $response->getMessage());
+        $contextKeys = array('id', 'name', 'payment_processor_type_id', 'payment_processor_type', 'is_test');
+        return $this->handleError('alert', 'failed processor transaction', array_intersect_key($this->_paymentProcessor, array_flip($contextKeys)), 9001, $response->getMessage());
       }
     }
     catch (\Exception $e) {
