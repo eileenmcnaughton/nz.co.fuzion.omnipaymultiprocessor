@@ -56,6 +56,7 @@ return array(
             'postal_code' => "billing_postal_code-{$billingLocationID}",
           ),
         ),
+        'ipn_processing_delay' => 0,
       ),
       'params' =>
         array(
