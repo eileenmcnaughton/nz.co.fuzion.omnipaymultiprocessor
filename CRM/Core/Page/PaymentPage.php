@@ -60,20 +60,22 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
    * Quickform would normally do this but we are operating as a page
    * to get around the off-site submit.
    *
-   * @return mixed
+   * @param array $field
+   *   Metadata for the field.
+   *
+   * @return array
    */
   protected function getDateFieldsYearOptions($field) {
     $options = array();
-    if (isset($field['attributes']['minYear'])
-    ) {
-      $field['options']['year'] = array();
-      $digits = CRM_Utils_Array::value('year_digits', $field, 4);
-      $year = $field['attributes']['minYear'];
-      while ($year <= $field['attributes']['maxYear']) {
-        $options[substr($year, -$digits)] = $year;
-        $year++;
-      }
-      return $options;
+    $defaults = ['minYear' => date('Y'), 'maxYear' => date('Y') + 10];
+    $attributes = array_merge($defaults, CRM_Utils_Array::value('attributes', $field, []));
+
+    $field['options']['year'] = array();
+    $digits = CRM_Utils_Array::value('year_digits', $field, 4);
+    $year = $attributes['minYear'];
+    while ($year <= $attributes['maxYear']) {
+      $options[substr($year, -$digits)] = $year;
+      $year++;
     }
     return $options;
   }

@@ -507,7 +507,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   public function getTransparentDirectDisplayFields() {
     $fields = $this->getProcessorTypeMetadata('transparent_redirect');
     if (isset($fields['fields'])) {
-      $fields['fields'];
+      return $fields['fields'];
     }
     return array();
   }
@@ -539,7 +539,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'cc_field' => TRUE,
         'attributes' => array(
           'size' => 5,
-          'maxlength' => 10,
+          'maxlength' => 5,
           'autocomplete' => 'off',
         ),
         'is_required' => TRUE,
