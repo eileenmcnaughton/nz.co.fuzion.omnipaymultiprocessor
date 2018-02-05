@@ -5,7 +5,7 @@ namespace Omnipay\AuthorizeNetStd\Message;
 /**
  * Authorize.Net Capture Request
  */
-class AIMCaptureRequestStd extends AIMAbstractRequestStd
+class AIMCaptureRequestStd extends AIMAuthorizeRequestStd
 {
     protected $action = 'priorAuthCaptureTransaction';
 
