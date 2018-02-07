@@ -702,10 +702,23 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $this->redirectOrExit('success', $response);
     }
     elseif ($this->transaction_id) {
-      civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
-    }
+      // Mark the contribution as failed (only allowed if status=Pending).
+      // We get multiple requests from some processors (eg. Sagepay) where the contribution has already been marked as "Cancelled".
+      try {
+        $contribution = civicrm_api3('contribution', 'getsingle', array(
+          'id' => $this->transaction_id,
+          'return' => 'contribution_status_id',
+        ));
 
-    //$this->redirectOrExit('error', $response);
+        $contributionStatusName = CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']);
+        if ($contributionStatusName === 'Pending') {
+          civicrm_api3('contribution', 'create', array('id' => $this->transaction_id, 'contribution_status_id' => 'Failed'));
+        }
+      }
+      catch (Exception $e) {
+        Civi::log()->error('CRM_Core_Payment_OmnipayMultiProcessor::processPaymentNotification: ' . $e->getMessage());
+      }
+    }
 
     $_REQUEST = $originalRequest;
     $this->redirectOrExit('fail', $response);
