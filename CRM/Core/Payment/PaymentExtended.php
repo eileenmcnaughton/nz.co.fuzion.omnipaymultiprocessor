@@ -103,7 +103,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
         '_qf_ThankYou_display' => 1,
         'qfKey' => $qfKey,
       ),
-      TRUE, NULL, FALSE
+      TRUE, NULL, FALSE, TRUE
     );
   }
 
@@ -121,13 +121,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     if ($this->_component == "event") {
       return CRM_Utils_System::url('civicrm/event/register',
         "reset=1&cc=fail&participantId={$participantID}&id={$eventID}{$test}&qfKey={$key}",
-        FALSE, NULL, FALSE
+        TRUE, NULL, FALSE, TRUE
       );
     }
     else {
       return CRM_Utils_System::url('civicrm/contribute/transact',
         "_qf_Main_display=1&cancel=1&qfKey={$key}{$test}",
-        FALSE, NULL, FALSE
+        TRUE, NULL, FALSE, TRUE
       );
     }
   }
