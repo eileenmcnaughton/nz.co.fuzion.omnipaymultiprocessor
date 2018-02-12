@@ -26,7 +26,6 @@ class NativeFileSessionHandler extends NativeSessionHandler
      * @see http://php.net/session.configuration.php#ini.session.save-path for further details.
      *
      * @throws \InvalidArgumentException On invalid $savePath
-     * @throws \RuntimeException         When failing to create the save directory
      */
     public function __construct($savePath = null)
     {

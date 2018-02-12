@@ -4,19 +4,19 @@ GH-455: expectOutputString not working in strict mode
 <?php
 
 $_SERVER['argv'][1] = '--no-configuration';
-$_SERVER['argv'][2] = '--strict';
+$_SERVER['argv'][2] = '--disallow-test-output';
 $_SERVER['argv'][3] = 'Issue445Test';
-$_SERVER['argv'][4] = dirname(__FILE__).'/445/Issue445Test.php';
+$_SERVER['argv'][4] = dirname(__FILE__) . '/445/Issue445Test.php';
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/PHPUnit/Autoload.php';
+require __DIR__ . '/../../bootstrap.php';
 PHPUnit_TextUI_Command::main();
 ?>
 --EXPECTF--
-PHPUnit %s by Sebastian Bergmann.
+PHPUnit %s by Sebastian Bergmann and contributors.
 
 ..F
 
-Time: %s, Memory: %sMb
+Time: %s, Memory: %s
 
 There was 1 failure:
 
@@ -28,7 +28,5 @@ Failed asserting that two strings are equal.
 -'foo'
 +'bar'
 
-
 FAILURES!
 Tests: 3, Assertions: 3, Failures: 1.
-

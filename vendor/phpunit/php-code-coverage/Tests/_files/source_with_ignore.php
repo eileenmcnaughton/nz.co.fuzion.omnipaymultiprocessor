@@ -30,9 +30,8 @@ function baz()
     print '*'; // @codeCoverageIgnore
 }
 
-interface Bor {
-
+interface Bor
+{
     public function foo();
 
 }
-

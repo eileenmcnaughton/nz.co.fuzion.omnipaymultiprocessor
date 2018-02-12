@@ -5,17 +5,17 @@ GH-581: PHPUnit_Util_Type::export adds extra newlines in Windows
 
 $_SERVER['argv'][1] = '--no-configuration';
 $_SERVER['argv'][2] = 'Issue581Test';
-$_SERVER['argv'][3] = dirname(__FILE__).'/581/Issue581Test.php';
+$_SERVER['argv'][3] = dirname(__FILE__) . '/581/Issue581Test.php';
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/PHPUnit/Autoload.php';
+require __DIR__ . '/../../bootstrap.php';
 PHPUnit_TextUI_Command::main();
 ?>
 --EXPECTF--
-PHPUnit %s by Sebastian Bergmann.
+PHPUnit %s by Sebastian Bergmann and contributors.
 
 F
 
-Time: %s, Memory: %sMb
+Time: %s, Memory: %s
 
 There was 1 failure:
 
@@ -40,4 +40,3 @@ Failed asserting that two objects are equal.
 
 FAILURES!
 Tests: 1, Assertions: 1, Failures: 1.
-

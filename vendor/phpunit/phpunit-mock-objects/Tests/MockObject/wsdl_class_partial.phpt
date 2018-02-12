@@ -6,17 +6,18 @@ if (!extension_loaded('soap')) echo 'skip: SOAP extension is required';
 ?>
 --FILE--
 <?php
-require_once 'PHPUnit/Autoload.php';
-require_once 'Text/Template.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
-print PHPUnit_Framework_MockObject_Generator::generateClassFromWsdl(
-  dirname(dirname(__FILE__)) . '/_files/GoogleSearch.wsdl',
+$generator = new PHPUnit_Framework_MockObject_Generator;
+
+print $generator->generateClassFromWsdl(
+  dirname(dirname(__FILE__)) . '/_fixture/GoogleSearch.wsdl',
   'GoogleSearch',
   array('doGoogleSearch')
 );
 ?>
 --EXPECTF--
-class GoogleSearch extends \SOAPClient
+class GoogleSearch extends \SoapClient
 {
     public function __construct($wsdl, array $options)
     {
