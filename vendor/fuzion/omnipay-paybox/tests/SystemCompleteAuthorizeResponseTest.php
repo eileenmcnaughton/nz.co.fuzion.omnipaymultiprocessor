@@ -20,7 +20,7 @@ class SystemCompleteAuthorizeResponseTest extends TestCase
         );
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame(47, $response->getTransactionReference());
+        $this->assertSame(601957, $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
@@ -37,7 +37,7 @@ class SystemCompleteAuthorizeResponseTest extends TestCase
         );
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame(45, $response->getTransactionReference());
+        $this->assertSame(45, $response->getTransactionId());
         $this->assertSame('Transaction failed', $response->getMessage());
     }
 }

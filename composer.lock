@@ -58,7 +58,7 @@
                 "payment",
                 "skrill"
             ],
-            "time": "2017-08-23 08:56:17"
+            "time": "2017-08-23T08:56:17+00:00"
         },
         {
             "name": "civicrm/omnipay-paypalstandard",
@@ -150,7 +150,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-authorizenetstd.git",
-                "reference": "80a77844b09a1a465f4122c201415f2d1660688b"
+                "reference": "14a1d84d6e72b30ff95e569135d2b00ea0c5c73a"
             },
             "require": {
                 "omnipay/authorizenet": "dev-master"
@@ -182,7 +182,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-12-11 02:00:18"
+            "time": "2017-12-11T02:15:00+00:00"
         },
         {
             "name": "fuzion/omnipay-mercanet",
@@ -225,7 +225,7 @@
                 "purchase",
                 "shell"
             ],
-            "time": "2017-12-01 00:47:52"
+            "time": "2017-12-01T00:47:52+00:00"
         },
         {
             "name": "fuzion/omnipay-paybox",
@@ -233,7 +233,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-                "reference": "47d25dae1e808a88071febd733ea7bb9d94bf511"
+                "reference": "e12d152109013e5fa396c1ce63885b526104ab0f"
             },
             "require": {
                 "omnipay/common": "~2.0"
@@ -267,7 +267,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2015-05-18T12:56:56+00:00"
+            "time": "2018-02-09T00:18:09+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -275,12 +275,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "07201f7e54015f78b42eda26c7430212fa141928"
+                "reference": "c8db65327b73c8e0fa1c9e4d8d179d14a185b13a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/07201f7e54015f78b42eda26c7430212fa141928",
-                "reference": "07201f7e54015f78b42eda26c7430212fa141928",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/c8db65327b73c8e0fa1c9e4d8d179d14a185b13a",
+                "reference": "c8db65327b73c8e0fa1c9e4d8d179d14a185b13a",
                 "shasum": ""
             },
             "require": {
@@ -317,7 +317,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-12-07 06:17:24"
+            "time": "2018-02-05T15:03:34+00:00"
         },
         {
             "name": "guzzle/guzzle",
@@ -529,7 +529,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2017-12-07 21:04:15"
+            "time": "2017-12-07T21:04:15+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -594,7 +594,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-10-07 03:19:56"
+            "time": "2017-10-07T03:19:56+00:00"
         },
         {
             "name": "omnipay/2checkout",
@@ -661,12 +661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
-                "reference": "2d0b1def2e4ee0126ade5811c4f163fd9059dff2"
+                "reference": "c2ed2361fc9b6dbd571b9e2d8ed00c731aa2ae2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/2d0b1def2e4ee0126ade5811c4f163fd9059dff2",
-                "reference": "2d0b1def2e4ee0126ade5811c4f163fd9059dff2",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/c2ed2361fc9b6dbd571b9e2d8ed00c731aa2ae2d",
+                "reference": "c2ed2361fc9b6dbd571b9e2d8ed00c731aa2ae2d",
                 "shasum": ""
             },
             "require": {
@@ -712,7 +712,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-11-27 12:22:28"
+            "time": "2018-01-13T18:47:39+00:00"
         },
         {
             "name": "omnipay/bitpay",
@@ -770,7 +770,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-04-07 02:53:36"
+            "time": "2016-04-07T02:53:36+00:00"
         },
         {
             "name": "omnipay/buckaroo",
@@ -942,7 +942,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-07-01 03:37:43"
+            "time": "2017-07-01T03:37:43+00:00"
         },
         {
             "name": "omnipay/common",
@@ -1040,7 +1040,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2017-01-08 16:58:11"
+            "time": "2017-01-08T16:58:11+00:00"
         },
         {
             "name": "omnipay/dummy",
@@ -1147,7 +1147,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2017-10-15 23:37:35"
+            "time": "2017-10-15T23:37:35+00:00"
         },
         {
             "name": "omnipay/firstdata",
@@ -1435,7 +1435,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-10-11 09:44:09"
+            "time": "2016-10-11T09:44:09+00:00"
         },
         {
             "name": "omnipay/multisafepay",
@@ -1937,7 +1937,7 @@
                 "pxpay",
                 "pxpost"
             ],
-            "time": "2017-11-22 07:02:14"
+            "time": "2017-11-22T07:02:14+00:00"
         },
         {
             "name": "omnipay/paypal",
@@ -2432,7 +2432,7 @@
                 "purchase",
                 "shell"
             ],
-            "time": "2017-12-01 01:58:18"
+            "time": "2017-12-01T01:58:18+00:00"
         },
         {
             "name": "pointybeard/omnipay-nabtransact",
@@ -2526,7 +2526,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "sergej-koscejev/omnipay-gopay",
@@ -2580,12 +2580,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "6bd742d35140bd6dc265bf9c198b88afff5afe0b"
+                "reference": "f5d2d7dcc33b89e20c2696ea9afcbddf6540081c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/6bd742d35140bd6dc265bf9c198b88afff5afe0b",
-                "reference": "6bd742d35140bd6dc265bf9c198b88afff5afe0b",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/f5d2d7dcc33b89e20c2696ea9afcbddf6540081c",
+                "reference": "f5d2d7dcc33b89e20c2696ea9afcbddf6540081c",
                 "shasum": ""
             },
             "require": {
@@ -2632,7 +2632,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-12-08 12:32:59"
+            "time": "2018-02-11T16:53:59+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -2640,12 +2640,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "bc4d7b5a3007572a5c222f611fee30fbfcf1ddea"
+                "reference": "d478fe6c43db4eda3b302a2ab3af885b3cacb1b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/bc4d7b5a3007572a5c222f611fee30fbfcf1ddea",
-                "reference": "bc4d7b5a3007572a5c222f611fee30fbfcf1ddea",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/d478fe6c43db4eda3b302a2ab3af885b3cacb1b5",
+                "reference": "d478fe6c43db4eda3b302a2ab3af885b3cacb1b5",
                 "shasum": ""
             },
             "require": {
@@ -2686,7 +2686,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-12-08 16:11:27"
+            "time": "2018-02-09T14:10:47+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2694,12 +2694,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
+                "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
-                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/78be803ce01e55d3491c1397cf1c64beb9c1b63b",
+                "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b",
                 "shasum": ""
             },
             "require": {
@@ -2711,7 +2711,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6-dev"
+                    "dev-master": "1.7-dev"
                 }
             },
             "autoload": {
@@ -2745,7 +2745,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-10-11 12:05:26"
+            "time": "2018-01-30T19:27:44+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -2753,12 +2753,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php70.git",
-                "reference": "0442b9c0596610bd24ae7b5f0a6cdbbc16d9fcff"
+                "reference": "3532bfcd8f933a7816f3a0a59682fc404776600f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/0442b9c0596610bd24ae7b5f0a6cdbbc16d9fcff",
-                "reference": "0442b9c0596610bd24ae7b5f0a6cdbbc16d9fcff",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/3532bfcd8f933a7816f3a0a59682fc404776600f",
+                "reference": "3532bfcd8f933a7816f3a0a59682fc404776600f",
                 "shasum": ""
             },
             "require": {
@@ -2768,7 +2768,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6-dev"
+                    "dev-master": "1.7-dev"
                 }
             },
             "autoload": {
@@ -2804,7 +2804,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-10-11 12:05:26"
+            "time": "2018-01-30T19:27:44+00:00"
         }
     ],
     "packages-dev": [
@@ -2865,12 +2865,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "80ac8060487db317c133ee00154f0862bd4d4ec7"
+                "reference": "e206aa48a851b95a91eeb61bfcce536d51b7cd96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/80ac8060487db317c133ee00154f0862bd4d4ec7",
-                "reference": "80ac8060487db317c133ee00154f0862bd4d4ec7",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/e206aa48a851b95a91eeb61bfcce536d51b7cd96",
+                "reference": "e206aa48a851b95a91eeb61bfcce536d51b7cd96",
                 "shasum": ""
             },
             "require": {
@@ -2922,7 +2922,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2017-06-07 08:41:50"
+            "time": "2018-02-02T16:28:49+00:00"
         },
         {
             "name": "omnipay/tests",
@@ -2979,7 +2979,7 @@
                 "payment",
                 "purchase"
             ],
-            "time": "2016-07-07 09:35:23"
+            "time": "2016-07-07T09:35:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3087,7 +3087,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2017-11-27 13:52:08"
+            "time": "2017-11-27T13:52:08+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3132,16 +3132,16 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "dev-master",
+            "version": "1.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "d107f347d368dd8a384601398280c7c608390ab7"
+                "reference": "9513098641797ce5f459dbc1de5a54c29b0ec1fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/d107f347d368dd8a384601398280c7c608390ab7",
-                "reference": "d107f347d368dd8a384601398280c7c608390ab7",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/9513098641797ce5f459dbc1de5a54c29b0ec1fb",
+                "reference": "9513098641797ce5f459dbc1de5a54c29b0ec1fb",
                 "shasum": ""
             },
             "require": {
@@ -3177,7 +3177,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-03-07 15:42:04"
+            "time": "2018-01-06T05:27:16+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -3440,12 +3440,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "968ef42161e4bc04200119da473077f9e7015128"
+                "reference": "be720fcfae4614df204190d57795351059946a77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/968ef42161e4bc04200119da473077f9e7015128",
-                "reference": "968ef42161e4bc04200119da473077f9e7015128",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/be720fcfae4614df204190d57795351059946a77",
+                "reference": "be720fcfae4614df204190d57795351059946a77",
                 "shasum": ""
             },
             "require": {
@@ -3481,7 +3481,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-29 09:33:18"
+            "time": "2018-01-03T07:36:31+00:00"
         }
     ],
     "aliases": [],
@@ -3505,5 +3505,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.6"
+    }
 }

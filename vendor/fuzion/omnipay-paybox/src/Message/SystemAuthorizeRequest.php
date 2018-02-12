@@ -138,7 +138,7 @@ class SystemAuthorizeRequest extends AbstractRequest
     {
         $data = array();
         if ($this->getNotifyUrl()) {
-            $data['PBX_REPONDRE_A'] = urlencode($this->getNotifyUrl());
+            $data['PBX_REPONDRE_A'] = $this->getNotifyUrl();
         }
         if ($this->getReturnUrl()) {
             $data['PBX_EFFECTUE'] = $this->getReturnUrl();

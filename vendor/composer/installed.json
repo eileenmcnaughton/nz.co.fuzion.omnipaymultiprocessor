@@ -1,5 +1,332 @@
 [
     {
+        "name": "alfaproject/omnipay-skrill",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/xcaliber-tech/omnipay-skrill.git",
+            "reference": "f90a185b5e26fb5b4150d664f01ad8048b460bcf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/xcaliber-tech/omnipay-skrill/zipball/f90a185b5e26fb5b4150d664f01ad8048b460bcf",
+            "reference": "f90a185b5e26fb5b4150d664f01ad8048b460bcf",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0",
+            "satooshi/php-coveralls": "dev-master"
+        },
+        "time": "2017-08-23T08:56:17+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Omnipay\\Skrill\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Joao Dias",
+                "email": "joao.dias@cherrygroup.com"
+            }
+        ],
+        "description": "Skrill driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/alfaproject/omnipay-skrill",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "skrill"
+        ]
+    },
+    {
+        "name": "civicrm/omnipay-paypalstandard",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git",
+            "reference": "ecf18da4474697916d2b872586465de5ecf2868b"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-10-10T15:49:46+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Paypalstandard\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "KarinG",
+                "email": "frontdesk@semper-it.com"
+            }
+        ],
+        "description": "PayPal Standard support for Omnipay payment processing library",
+        "homepage": "https://github.com/KarinG/omnipay-paypalstandard",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase",
+            "shell"
+        ]
+    },
+    {
+        "name": "dioscouri/omnipay-cybersource",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
+            "reference": "cfef76407d59ae3f820a6bf946aa5ab062f7debb"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-05-18T13:16:06+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Cybersource\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rafael Diaz-Tushman",
+                "email": "rdiaztushman@dioscouri.com"
+            }
+        ],
+        "description": "Cybersource support for Omnipay payment processing library",
+        "homepage": "https://github.com/dioscouri/omnipay-cybersource",
+        "keywords": [
+            "cybersource",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase"
+        ]
+    },
+    {
+        "name": "fuzion/omnipay-authorizenetstd",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-authorizenetstd.git",
+            "reference": "14a1d84d6e72b30ff95e569135d2b00ea0c5c73a"
+        },
+        "require": {
+            "omnipay/authorizenet": "dev-master"
+        },
+        "time": "2017-12-11T02:15:00+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\AuthorizeNetStd\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eileen McNaughton",
+                "email": "eileen@fuzion.co.nz"
+            }
+        ],
+        "description": "Authorize.Net standardised gateway for the Omnipay payment processing library. Extends & standardises main version",
+        "homepage": "https://github.com/emcnaughton/omnipay-authorizenetstd",
+        "keywords": [
+            "authorize",
+            "authorize net",
+            "authorize.net",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "fuzion/omnipay-mercanet",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
+            "reference": "5292b1b02ac0d09e9fef724ccb3a95f9d26cd6f5"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2017-12-01T00:47:52+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Mercanet\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eileen McNaughton",
+                "email": "eileen@fuzion.co.nz"
+            }
+        ],
+        "description": "Mercanet support for Omnipay payment processing library",
+        "homepage": "https://github.com/eileenmcnaughton/omnipay-mercanet",
+        "keywords": [
+            "gateway",
+            "mercanet",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase",
+            "shell"
+        ]
+    },
+    {
+        "name": "fuzion/omnipay-paybox",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
+            "reference": "e12d152109013e5fa396c1ce63885b526104ab0f"
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2018-02-09T00:18:09+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Paybox\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eileen McNaughton",
+                "email": "eileen@fuzion.co.nz"
+            }
+        ],
+        "description": "Paybox support for Omnipay payment processing library",
+        "homepage": "https://github.com/eileenmcnaughton/omnipay-paybox",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "paybox",
+            "payment",
+            "purchase"
+        ]
+    },
+    {
+        "name": "fzaninotto/faker",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/fzaninotto/Faker.git",
+            "reference": "c8db65327b73c8e0fa1c9e4d8d179d14a185b13a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/c8db65327b73c8e0fa1c9e4d8d179d14a185b13a",
+            "reference": "c8db65327b73c8e0fa1c9e4d8d179d14a185b13a",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3 || ^7.0"
+        },
+        "require-dev": {
+            "ext-intl": "*",
+            "phpunit/phpunit": "^4.8.35 || ^5.7",
+            "squizlabs/php_codesniffer": "^1.5"
+        },
+        "time": "2018-02-05T15:03:34+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.8-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Faker\\": "src/Faker/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "François Zaninotto"
+            }
+        ],
+        "description": "Faker is a PHP library that generates fake data for you.",
+        "keywords": [
+            "data",
+            "faker",
+            "fixtures"
+        ]
+    },
+    {
         "name": "guzzle/guzzle",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -98,126 +425,108 @@
         "abandoned": "guzzlehttp/guzzle"
     },
     {
-        "name": "dioscouri/omnipay-cybersource",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "name": "guzzlehttp/guzzle",
+        "version": "6.3.0",
+        "version_normalized": "6.3.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-cybersource.git",
-            "reference": "cfef76407d59ae3f820a6bf946aa5ab062f7debb"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2015-05-18T13:16:06+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Cybersource\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Rafael Diaz-Tushman",
-                "email": "rdiaztushman@dioscouri.com"
-            }
-        ],
-        "description": "Cybersource support for Omnipay payment processing library",
-        "homepage": "https://github.com/dioscouri/omnipay-cybersource",
-        "keywords": [
-            "cybersource",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "purchase"
-        ]
-    },
-    {
-        "name": "fuzion/omnipay-paybox",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-paybox.git",
-            "reference": "47d25dae1e808a88071febd733ea7bb9d94bf511"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2015-05-18T12:56:56+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Paybox\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Eileen McNaughton",
-                "email": "eileen@fuzion.co.nz"
-            }
-        ],
-        "description": "Paybox support for Omnipay payment processing library",
-        "homepage": "https://github.com/eileenmcnaughton/omnipay-paybox",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "paybox",
-            "payment",
-            "purchase"
-        ]
-    },
-    {
-        "name": "omnipay/coinbase",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-coinbase.git",
-            "reference": "1046f0a40de69281d413ac191689e8c1329b76d4"
+            "url": "https://github.com/guzzle/guzzle.git",
+            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-coinbase/zipball/1046f0a40de69281d413ac191689e8c1329b76d4",
-            "reference": "1046f0a40de69281d413ac191689e8c1329b76d4",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
             "shasum": ""
         },
         "require": {
-            "omnipay/common": "~2.0"
+            "guzzlehttp/promises": "^1.0",
+            "guzzlehttp/psr7": "^1.4",
+            "php": ">=5.5"
         },
         "require-dev": {
-            "omnipay/tests": "~2.0"
+            "ext-curl": "*",
+            "phpunit/phpunit": "^4.0 || ^5.0",
+            "psr/log": "^1.0"
         },
-        "time": "2017-07-01T03:37:43+00:00",
+        "suggest": {
+            "psr/log": "Required for using the Log middleware"
+        },
+        "time": "2017-06-22T18:50:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.0.x-dev"
+                "dev-master": "6.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "src/functions_include.php"
+            ],
+            "psr-4": {
+                "GuzzleHttp\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
+            }
+        ],
+        "description": "Guzzle is a PHP HTTP client library",
+        "homepage": "http://guzzlephp.org/",
+        "keywords": [
+            "client",
+            "curl",
+            "framework",
+            "http",
+            "http client",
+            "rest",
+            "web service"
+        ]
+    },
+    {
+        "name": "guzzlehttp/promises",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/guzzle/promises.git",
+            "reference": "2e48ae638dc0bf0849772f5590835fcd700a2e1d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/guzzle/promises/zipball/2e48ae638dc0bf0849772f5590835fcd700a2e1d",
+            "reference": "2e48ae638dc0bf0849772f5590835fcd700a2e1d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.8.36"
+        },
+        "time": "2017-12-07T21:04:15+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
             }
         },
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\Coinbase\\": "src/"
-            }
+                "GuzzleHttp\\Promise\\": "src/"
+            },
+            "files": [
+                "src/functions_include.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -225,58 +534,56 @@
         ],
         "authors": [
             {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-coinbase/contributors"
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
             }
         ],
-        "description": "Coinbase driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-coinbase",
+        "description": "Guzzle promises library",
         "keywords": [
-            "coinbase",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
+            "promise"
         ]
     },
     {
-        "name": "omnipay/targetpay",
-        "version": "v2.2.1",
-        "version_normalized": "2.2.1.0",
+        "name": "guzzlehttp/psr7",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-targetpay.git",
-            "reference": "fc74d5d0f7929ce86298faec9e195985d7d4afe0"
+            "url": "https://github.com/guzzle/psr7.git",
+            "reference": "d2537c86fa8b004c29e9b9f5e10028f0a29df101"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-targetpay/zipball/fc74d5d0f7929ce86298faec9e195985d7d4afe0",
-            "reference": "fc74d5d0f7929ce86298faec9e195985d7d4afe0",
+            "url": "https://api.github.com/repos/guzzle/psr7/zipball/d2537c86fa8b004c29e9b9f5e10028f0a29df101",
+            "reference": "d2537c86fa8b004c29e9b9f5e10028f0a29df101",
             "shasum": ""
         },
         "require": {
-            "omnipay/common": "~2.0"
+            "php": ">=5.4.0",
+            "psr/http-message": "~1.0"
+        },
+        "provide": {
+            "psr/http-message-implementation": "1.0"
         },
         "require-dev": {
-            "omnipay/tests": "~2.0"
+            "phpunit/phpunit": "~4.0"
         },
-        "time": "2014-09-17T00:38:39+00:00",
+        "time": "2017-10-07T03:19:56+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.0.x-dev"
+                "dev-master": "1.4-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\TargetPay\\": "src/"
-            }
+                "GuzzleHttp\\Psr7\\": "src/"
+            },
+            "files": [
+                "src/functions_include.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -284,202 +591,144 @@
         ],
         "authors": [
             {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
             },
             {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-targetpay/contributors"
+                "name": "Tobias Schultze",
+                "homepage": "https://github.com/Tobion"
             }
         ],
-        "description": "TargetPay driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-targetpay",
+        "description": "PSR-7 message implementation that also provides common utility methods",
         "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "targetpay"
+            "http",
+            "message",
+            "request",
+            "response",
+            "stream",
+            "uri",
+            "url"
         ]
     },
     {
-        "name": "omnipay/netaxept",
-        "version": "v2.3.0",
-        "version_normalized": "2.3.0.0",
+        "name": "hamcrest/hamcrest-php",
+        "version": "1.2.x-dev",
+        "version_normalized": "1.2.9999999.9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-netaxept.git",
-            "reference": "a15ab75a338726536880b9ac0c1e6071a81342f9"
+            "url": "https://github.com/hamcrest/hamcrest-php.git",
+            "reference": "b72949ccf2f640e7de66ff7dd92d83f577ce782e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-netaxept/zipball/a15ab75a338726536880b9ac0c1e6071a81342f9",
-            "reference": "a15ab75a338726536880b9ac0c1e6071a81342f9",
+            "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/b72949ccf2f640e7de66ff7dd92d83f577ce782e",
+            "reference": "b72949ccf2f640e7de66ff7dd92d83f577ce782e",
             "shasum": ""
         },
         "require": {
-            "omnipay/common": "~2.0"
+            "php": "^5.3|^7.0"
+        },
+        "replace": {
+            "cordoval/hamcrest-php": "*",
+            "davedevelopment/hamcrest-php": "*",
+            "kodova/hamcrest-php": "*"
         },
         "require-dev": {
-            "omnipay/tests": "~2.0"
+            "phpunit/php-file-iterator": "1.3.3",
+            "phpunit/phpunit": "~4.0",
+            "satooshi/php-coveralls": "^1.0"
         },
-        "time": "2015-05-08T15:13:17+00:00",
+        "time": "2016-01-19T12:08:55+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.0.x-dev"
+                "dev-master": "1.2-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
-            "psr-4": {
-                "Omnipay\\Netaxept\\": "src/"
-            }
+            "classmap": [
+                "hamcrest"
+            ],
+            "files": [
+                "hamcrest/Hamcrest.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "MIT"
+            "BSD"
         ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-netaxept/contributors"
-            }
-        ],
-        "description": "Netaxept driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-netaxept",
+        "description": "This is the PHP port of Hamcrest Matchers",
         "keywords": [
-            "gateway",
-            "merchant",
-            "netaxept",
-            "omnipay",
-            "pay",
-            "payment"
+            "test"
         ]
     },
     {
-        "name": "omnipay/gocardless",
-        "version": "2.2.0",
-        "version_normalized": "2.2.0.0",
+        "name": "mockery/mockery",
+        "version": "0.9.x-dev",
+        "version_normalized": "0.9.9999999.9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-gocardless.git",
-            "reference": "1c0bebdcc32d89fd243e1183028d2d50316e8bb1"
+            "url": "https://github.com/mockery/mockery.git",
+            "reference": "e206aa48a851b95a91eeb61bfcce536d51b7cd96"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-gocardless/zipball/1c0bebdcc32d89fd243e1183028d2d50316e8bb1",
-            "reference": "1c0bebdcc32d89fd243e1183028d2d50316e8bb1",
+            "url": "https://api.github.com/repos/mockery/mockery/zipball/e206aa48a851b95a91eeb61bfcce536d51b7cd96",
+            "reference": "e206aa48a851b95a91eeb61bfcce536d51b7cd96",
             "shasum": ""
         },
         "require": {
-            "omnipay/common": "~2.0"
+            "hamcrest/hamcrest-php": "~1.1",
+            "lib-pcre": ">=7.0",
+            "php": ">=5.3.2"
         },
         "require-dev": {
-            "omnipay/tests": "~2.0"
+            "phpunit/phpunit": "~4.0"
         },
-        "time": "2015-09-24T14:44:29+00:00",
+        "time": "2018-02-02T16:28:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.0.x-dev"
+                "dev-master": "0.9.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
-            "psr-4": {
-                "Omnipay\\GoCardless\\": "src/"
+            "psr-0": {
+                "Mockery": "library/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "MIT"
+            "BSD-3-Clause"
         ],
         "authors": [
             {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
+                "name": "Pádraic Brady",
+                "email": "padraic.brady@gmail.com",
+                "homepage": "http://blog.astrumfutura.com"
             },
             {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-gocardless/contributors"
+                "name": "Dave Marshall",
+                "email": "dave.marshall@atstsolutions.co.uk",
+                "homepage": "http://davedevelopment.co.uk"
             }
         ],
-        "description": "GoCardless driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-gocardless",
+        "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
+        "homepage": "http://github.com/padraic/mockery",
         "keywords": [
-            "gateway",
-            "go cardless",
-            "gocardless",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
-        ]
-    },
-    {
-        "name": "omnipay/cardsave",
-        "version": "2.1.2",
-        "version_normalized": "2.1.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-cardsave.git",
-            "reference": "368fb2f56adb5be2ffcb3c29a7ddcd585cb41a04"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-cardsave/zipball/368fb2f56adb5be2ffcb3c29a7ddcd585cb41a04",
-            "reference": "368fb2f56adb5be2ffcb3c29a7ddcd585cb41a04",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2014-09-21T02:27:16+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\CardSave\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-cardsave/contributors"
-            }
-        ],
-        "description": "CardSave driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-cardsave",
-        "keywords": [
-            "card save",
-            "cardsave",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
+            "BDD",
+            "TDD",
+            "library",
+            "mock",
+            "mock objects",
+            "mockery",
+            "stub",
+            "test",
+            "test double",
+            "testing"
         ]
     },
     {
@@ -544,490 +793,27 @@
         ]
     },
     {
-        "name": "pointybeard/omnipay-nabtransact",
-        "version": "dev-transact",
-        "version_normalized": "dev-transact",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-nabtransact.git",
-            "reference": "f18625800f9715378a91c761b5e7ee6782892005"
-        },
-        "require": {
-            "omnipay/common": "~2.3",
-            "php": ">=5.4"
-        },
-        "require-dev": {
-            "fzaninotto/faker": "^1.6@dev",
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2015-11-23T06:43:40+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\NABTransact\\": "src",
-                "Omnipay\\NABTransact\\Tests\\Lib\\": "tests\\lib"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "email": "hi@alistairkearney.com",
-                "name": "pointybeard"
-            }
-        ],
-        "description": "NAB Transact XML API gateway for the Omnipay payment processing library",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "nab",
-            "nabtransact",
-            "omnipay",
-            "pay",
-            "payment"
-        ]
-    },
-    {
-        "name": "sergej-koscejev/omnipay-gopay",
+        "name": "omnipay/authorizenet",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/sergej-koscejev/omnipay-gopay.git",
-            "reference": "d2e63595a0d4139528278016d817fa5dd80da7e7"
+            "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
+            "reference": "c2ed2361fc9b6dbd571b9e2d8ed00c731aa2ae2d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/c2ed2361fc9b6dbd571b9e2d8ed00c731aa2ae2d",
+            "reference": "c2ed2361fc9b6dbd571b9e2d8ed00c731aa2ae2d",
+            "shasum": ""
         },
         "require": {
-            "omnipay/common": "~2.0"
+            "omnipay/common": "~2.2"
         },
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2015-06-06T22:14:26+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Gopay\\": "src/"
-            }
-        },
-        "license": [
-            "GPLv3"
-        ],
-        "authors": [
-            {
-                "name": "Sergej Koščejev",
-                "email": "sergej@koscejev.cz"
-            }
-        ],
-        "description": "GoPay driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/sergej-koscejev/omnipay-gopay",
-        "keywords": [
-            "gateway",
-            "gopay",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
-        ]
-    },
-    {
-        "name": "squizlabs/php_codesniffer",
-        "version": "1.5.x-dev",
-        "version_normalized": "1.5.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-            "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/6f3e42d311b882b25b4d409d23a289f4d3b803d5",
-            "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5",
-            "shasum": ""
-        },
-        "require": {
-            "ext-tokenizer": "*",
-            "php": ">=5.1.2"
-        },
-        "suggest": {
-            "phpunit/php-timer": "dev-master"
-        },
-        "time": "2014-12-04T22:32:15+00:00",
-        "bin": [
-            "scripts/phpcs"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-phpcs-fixer": "2.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "CodeSniffer.php",
-                "CodeSniffer/CLI.php",
-                "CodeSniffer/Exception.php",
-                "CodeSniffer/File.php",
-                "CodeSniffer/Report.php",
-                "CodeSniffer/Reporting.php",
-                "CodeSniffer/Sniff.php",
-                "CodeSniffer/Tokens.php",
-                "CodeSniffer/Reports/",
-                "CodeSniffer/CommentParser/",
-                "CodeSniffer/Tokenizers/",
-                "CodeSniffer/DocGenerators/",
-                "CodeSniffer/Standards/AbstractPatternSniff.php",
-                "CodeSniffer/Standards/AbstractScopeSniff.php",
-                "CodeSniffer/Standards/AbstractVariableSniff.php",
-                "CodeSniffer/Standards/IncorrectPatternException.php",
-                "CodeSniffer/Standards/Generic/Sniffs/",
-                "CodeSniffer/Standards/MySource/Sniffs/",
-                "CodeSniffer/Standards/PEAR/Sniffs/",
-                "CodeSniffer/Standards/PSR1/Sniffs/",
-                "CodeSniffer/Standards/PSR2/Sniffs/",
-                "CodeSniffer/Standards/Squiz/Sniffs/",
-                "CodeSniffer/Standards/Zend/Sniffs/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Greg Sherwood",
-                "role": "lead"
-            }
-        ],
-        "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-        "homepage": "http://www.squizlabs.com/php-codesniffer",
-        "keywords": [
-            "phpcs",
-            "standards"
-        ]
-    },
-    {
-        "name": "phpunit/php-text-template",
-        "version": "1.2.1",
-        "version_normalized": "1.2.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-text-template.git",
-            "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
-            "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "time": "2015-06-21T13:50:34+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de",
-                "role": "lead"
-            }
-        ],
-        "description": "Simple template engine.",
-        "homepage": "https://github.com/sebastianbergmann/php-text-template/",
-        "keywords": [
-            "template"
-        ]
-    },
-    {
-        "name": "phpunit/phpunit-mock-objects",
-        "version": "1.2.x-dev",
-        "version_normalized": "1.2.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-            "reference": "c39c4511c3b007539eb170c32cbc2af49a07351a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/c39c4511c3b007539eb170c32cbc2af49a07351a",
-            "reference": "c39c4511c3b007539eb170c32cbc2af49a07351a",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "phpunit/php-text-template": ">=1.1.1@stable"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*@dev"
-        },
-        "suggest": {
-            "ext-soap": "*"
-        },
-        "time": "2014-02-16T12:43:56+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.2.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "PHPUnit/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "include-path": [
-            ""
-        ],
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "Mock Object library for PHPUnit",
-        "homepage": "https://github.com/sebastianbergmann/phpunit-mock-objects/",
-        "keywords": [
-            "mock",
-            "xunit"
-        ]
-    },
-    {
-        "name": "phpunit/php-token-stream",
-        "version": "1.2.2",
-        "version_normalized": "1.2.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-            "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/ad4e1e23ae01b483c16f600ff1bebec184588e32",
-            "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32",
-            "shasum": ""
-        },
-        "require": {
-            "ext-tokenizer": "*",
-            "php": ">=5.3.3"
-        },
-        "time": "2014-03-03T05:10:30+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.2-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "PHP/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "include-path": [
-            ""
-        ],
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "Wrapper around PHP's tokenizer extension.",
-        "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
-        "keywords": [
-            "tokenizer"
-        ]
-    },
-    {
-        "name": "phpunit/php-code-coverage",
-        "version": "1.2.x-dev",
-        "version_normalized": "1.2.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-            "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
-            "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "phpunit/php-file-iterator": ">=1.3.0@stable",
-            "phpunit/php-text-template": ">=1.2.0@stable",
-            "phpunit/php-token-stream": ">=1.1.3,<1.3.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*@dev"
-        },
-        "suggest": {
-            "ext-dom": "*",
-            "ext-xdebug": ">=2.0.5"
-        },
-        "time": "2014-09-02T10:13:14+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.2.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "PHP/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "include-path": [
-            ""
-        ],
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
-        "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
-        "keywords": [
-            "coverage",
-            "testing",
-            "xunit"
-        ]
-    },
-    {
-        "name": "phpunit/phpunit",
-        "version": "3.7.x-dev",
-        "version_normalized": "3.7.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "38709dc22d519a3d1be46849868aa2ddf822bcf6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/38709dc22d519a3d1be46849868aa2ddf822bcf6",
-            "reference": "38709dc22d519a3d1be46849868aa2ddf822bcf6",
-            "shasum": ""
-        },
-        "require": {
-            "ext-ctype": "*",
-            "ext-dom": "*",
-            "ext-json": "*",
-            "ext-pcre": "*",
-            "ext-reflection": "*",
-            "ext-spl": "*",
-            "php": ">=5.3.3",
-            "phpunit/php-code-coverage": "~1.2",
-            "phpunit/php-file-iterator": "~1.3",
-            "phpunit/php-text-template": "~1.1",
-            "phpunit/php-timer": "~1.0",
-            "phpunit/phpunit-mock-objects": "~1.2",
-            "symfony/yaml": "~2.0"
-        },
-        "require-dev": {
-            "pear-pear.php.net/pear": "1.9.4"
-        },
-        "suggest": {
-            "phpunit/php-invoker": "~1.1"
-        },
-        "time": "2014-10-17T09:04:17+00:00",
-        "bin": [
-            "composer/bin/phpunit"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.7.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "PHPUnit/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "include-path": [
-            "",
-            "../../symfony/yaml/"
-        ],
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de",
-                "role": "lead"
-            }
-        ],
-        "description": "The PHP Unit Testing framework.",
-        "homepage": "http://www.phpunit.de/",
-        "keywords": [
-            "phpunit",
-            "testing",
-            "xunit"
-        ]
-    },
-    {
-        "name": "omnipay/paymentexpress",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-paymentexpress.git",
-            "reference": "a9a48434d5341e300b7121270e92109793738cee"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/a9a48434d5341e300b7121270e92109793738cee",
-            "reference": "a9a48434d5341e300b7121270e92109793738cee",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2017-11-22T07:02:14+00:00",
+        "time": "2018-01-13T18:47:39+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1037,7 +823,7 @@
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\PaymentExpress\\": "src/"
+                "Omnipay\\AuthorizeNet\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -1051,190 +837,15 @@
             },
             {
                 "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-paymentexpress/contributors"
+                "homepage": "https://github.com/thephpleague/omnipay-authorizenet/contributors"
             }
         ],
-        "description": "Payment Express (DPS) driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-paymentexpress",
+        "description": "Authorize.Net gateway for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-authorizenet",
         "keywords": [
-            "direct payment solutions",
-            "dps",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "payment express",
-            "paymentexpress",
-            "pxaccess",
-            "pxpay",
-            "pxpost"
-        ]
-    },
-    {
-        "name": "hamcrest/hamcrest-php",
-        "version": "1.2.x-dev",
-        "version_normalized": "1.2.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hamcrest/hamcrest-php.git",
-            "reference": "b72949ccf2f640e7de66ff7dd92d83f577ce782e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/b72949ccf2f640e7de66ff7dd92d83f577ce782e",
-            "reference": "b72949ccf2f640e7de66ff7dd92d83f577ce782e",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.3|^7.0"
-        },
-        "replace": {
-            "cordoval/hamcrest-php": "*",
-            "davedevelopment/hamcrest-php": "*",
-            "kodova/hamcrest-php": "*"
-        },
-        "require-dev": {
-            "phpunit/php-file-iterator": "1.3.3",
-            "phpunit/phpunit": "~4.0",
-            "satooshi/php-coveralls": "^1.0"
-        },
-        "time": "2016-01-19T12:08:55+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.2-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "hamcrest"
-            ],
-            "files": [
-                "hamcrest/Hamcrest.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD"
-        ],
-        "description": "This is the PHP port of Hamcrest Matchers",
-        "keywords": [
-            "test"
-        ]
-    },
-    {
-        "name": "omnipay/pin",
-        "version": "v2.2.2",
-        "version_normalized": "2.2.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-pin.git",
-            "reference": "8c859bc71de8def70623eacd1b3ec6da1829a445"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-pin/zipball/8c859bc71de8def70623eacd1b3ec6da1829a445",
-            "reference": "8c859bc71de8def70623eacd1b3ec6da1829a445",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2016-03-25T18:06:33+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Pin\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-pin/contributors"
-            }
-        ],
-        "description": "Pin Payments driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-pin",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "pin"
-        ]
-    },
-    {
-        "name": "omnipay/dummy",
-        "version": "v2.1.2",
-        "version_normalized": "2.1.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-dummy.git",
-            "reference": "8232954c15a24b848057c30ef25470d10dcfc956"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-dummy/zipball/8232954c15a24b848057c30ef25470d10dcfc956",
-            "reference": "8232954c15a24b848057c30ef25470d10dcfc956",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2016-07-30T04:18:49+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Dummy\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-dummy/contributors"
-            }
-        ],
-        "description": "Dummy driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-dummy",
-        "keywords": [
-            "Dummy",
+            "authorize",
+            "authorize net",
+            "authorize.net",
             "gateway",
             "merchant",
             "omnipay",
@@ -1303,18 +914,18 @@
         ]
     },
     {
-        "name": "omnipay/netbanx",
-        "version": "v2.2",
+        "name": "omnipay/buckaroo",
+        "version": "v2.2.0",
         "version_normalized": "2.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-netbanx.git",
-            "reference": "3684bbbf0dbdb977c1484d7252d776d81c68c813"
+            "url": "https://github.com/thephpleague/omnipay-buckaroo.git",
+            "reference": "b1d74b4121a9c889fe8cc77715e6cffb14b8833c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-netbanx/zipball/3684bbbf0dbdb977c1484d7252d776d81c68c813",
-            "reference": "3684bbbf0dbdb977c1484d7252d776d81c68c813",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-buckaroo/zipball/b1d74b4121a9c889fe8cc77715e6cffb14b8833c",
+            "reference": "b1d74b4121a9c889fe8cc77715e6cffb14b8833c",
             "shasum": ""
         },
         "require": {
@@ -1323,7 +934,66 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-09-21T10:52:03+00:00",
+        "time": "2017-05-30T09:43:42+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Buckaroo\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-buckaroo/contributors"
+            }
+        ],
+        "description": "Buckaroo driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-buckaroo",
+        "keywords": [
+            "buckaroo",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "omnipay/cardsave",
+        "version": "2.1.2",
+        "version_normalized": "2.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-cardsave.git",
+            "reference": "368fb2f56adb5be2ffcb3c29a7ddcd585cb41a04"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-cardsave/zipball/368fb2f56adb5be2ffcb3c29a7ddcd585cb41a04",
+            "reference": "368fb2f56adb5be2ffcb3c29a7ddcd585cb41a04",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2014-09-21T02:27:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1333,7 +1003,7 @@
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Omnipay\\NetBanx\\": "src/"
+                "Omnipay\\CardSave\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -1347,177 +1017,14 @@
             },
             {
                 "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-netbanx/contributors"
+                "homepage": "https://github.com/thephpleague/omnipay-cardsave/contributors"
             }
         ],
-        "description": "NetBanx driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-netbanx",
+        "description": "CardSave driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-cardsave",
         "keywords": [
-            "gateway",
-            "merchant",
-            "netbanx",
-            "omnipay",
-            "pay",
-            "payment"
-        ]
-    },
-    {
-        "name": "omnipay/securepay",
-        "version": "v2.1.1",
-        "version_normalized": "2.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-securepay.git",
-            "reference": "e68954d455edc8337bb30e6c579d32b6e691d29a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-securepay/zipball/e68954d455edc8337bb30e6c579d32b6e691d29a",
-            "reference": "e68954d455edc8337bb30e6c579d32b6e691d29a",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2016-11-09T04:52:42+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\SecurePay\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-securepay/contributors"
-            }
-        ],
-        "description": "SecurePay driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-securepay",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "securepay"
-        ]
-    },
-    {
-        "name": "civicrm/omnipay-paypalstandard",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git",
-            "reference": "ecf18da4474697916d2b872586465de5ecf2868b"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2016-10-10T15:49:46+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Paypalstandard\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "KarinG",
-                "email": "frontdesk@semper-it.com"
-            }
-        ],
-        "description": "PayPal Standard support for Omnipay payment processing library",
-        "homepage": "https://github.com/KarinG/omnipay-paypalstandard",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "purchase",
-            "shell"
-        ]
-    },
-    {
-        "name": "omnipay/authorizenet",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
-            "reference": "2d0b1def2e4ee0126ade5811c4f163fd9059dff2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/2d0b1def2e4ee0126ade5811c4f163fd9059dff2",
-            "reference": "2d0b1def2e4ee0126ade5811c4f163fd9059dff2",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.2"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2017-11-27T12:22:28+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\AuthorizeNet\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-authorizenet/contributors"
-            }
-        ],
-        "description": "Authorize.Net gateway for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-authorizenet",
-        "keywords": [
-            "authorize",
-            "authorize net",
-            "authorize.net",
+            "card save",
+            "cardsave",
             "gateway",
             "merchant",
             "omnipay",
@@ -1526,80 +1033,27 @@
         ]
     },
     {
-        "name": "fzaninotto/faker",
+        "name": "omnipay/coinbase",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/fzaninotto/Faker.git",
-            "reference": "07201f7e54015f78b42eda26c7430212fa141928"
+            "url": "https://github.com/thephpleague/omnipay-coinbase.git",
+            "reference": "1046f0a40de69281d413ac191689e8c1329b76d4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/07201f7e54015f78b42eda26c7430212fa141928",
-            "reference": "07201f7e54015f78b42eda26c7430212fa141928",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.3.3 || ^7.0"
-        },
-        "require-dev": {
-            "ext-intl": "*",
-            "phpunit/phpunit": "^4.8.35 || ^5.7",
-            "squizlabs/php_codesniffer": "^1.5"
-        },
-        "time": "2017-12-07T06:17:24+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.8-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Faker\\": "src/Faker/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "François Zaninotto"
-            }
-        ],
-        "description": "Faker is a PHP library that generates fake data for you.",
-        "keywords": [
-            "data",
-            "faker",
-            "fixtures"
-        ]
-    },
-    {
-        "name": "alfaproject/omnipay-skrill",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/xcaliber-tech/omnipay-skrill.git",
-            "reference": "f90a185b5e26fb5b4150d664f01ad8048b460bcf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/xcaliber-tech/omnipay-skrill/zipball/f90a185b5e26fb5b4150d664f01ad8048b460bcf",
-            "reference": "f90a185b5e26fb5b4150d664f01ad8048b460bcf",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-coinbase/zipball/1046f0a40de69281d413ac191689e8c1329b76d4",
+            "reference": "1046f0a40de69281d413ac191689e8c1329b76d4",
             "shasum": ""
         },
         "require": {
             "omnipay/common": "~2.0"
         },
         "require-dev": {
-            "omnipay/tests": "~2.0",
-            "satooshi/php-coveralls": "dev-master"
+            "omnipay/tests": "~2.0"
         },
-        "time": "2017-08-23T08:56:17+00:00",
+        "time": "2017-07-01T03:37:43+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1608,8 +1062,8 @@
         },
         "installation-source": "source",
         "autoload": {
-            "psr-0": {
-                "Omnipay\\Skrill\\": "src/"
+            "psr-4": {
+                "Omnipay\\Coinbase\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -1618,19 +1072,23 @@
         ],
         "authors": [
             {
-                "name": "Joao Dias",
-                "email": "joao.dias@cherrygroup.com"
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-coinbase/contributors"
             }
         ],
-        "description": "Skrill driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/alfaproject/omnipay-skrill",
+        "description": "Coinbase driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-coinbase",
         "keywords": [
+            "coinbase",
             "gateway",
             "merchant",
             "omnipay",
             "pay",
-            "payment",
-            "skrill"
+            "payment"
         ]
     },
     {
@@ -1734,18 +1192,18 @@
         ]
     },
     {
-        "name": "omnipay/stripe",
-        "version": "V2.4.7",
-        "version_normalized": "2.4.7.0",
+        "name": "omnipay/dummy",
+        "version": "v2.1.2",
+        "version_normalized": "2.1.2.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-stripe.git",
-            "reference": "26a33414a75939af75064022112005d5e51fc9ea"
+            "url": "https://github.com/thephpleague/omnipay-dummy.git",
+            "reference": "8232954c15a24b848057c30ef25470d10dcfc956"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/26a33414a75939af75064022112005d5e51fc9ea",
-            "reference": "26a33414a75939af75064022112005d5e51fc9ea",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-dummy/zipball/8232954c15a24b848057c30ef25470d10dcfc956",
+            "reference": "8232954c15a24b848057c30ef25470d10dcfc956",
             "shasum": ""
         },
         "require": {
@@ -1754,7 +1212,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2017-07-14T09:22:01+00:00",
+        "time": "2016-07-30T04:18:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1764,7 +1222,7 @@
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Omnipay\\Stripe\\": "src/"
+                "Omnipay\\Dummy\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -1778,161 +1236,36 @@
             },
             {
                 "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-stripe/contributors"
+                "homepage": "https://github.com/thephpleague/omnipay-dummy/contributors"
             }
         ],
-        "description": "Stripe driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-stripe",
+        "description": "Dummy driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-dummy",
         "keywords": [
+            "Dummy",
             "gateway",
             "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "stripe"
-        ]
-    },
-    {
-        "name": "omnipay/payfast",
-        "version": "v2.1.3",
-        "version_normalized": "2.1.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-payfast.git",
-            "reference": "21741c7197509bfc295c0b9a944fcd7c1b3a0633"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-payfast/zipball/21741c7197509bfc295c0b9a944fcd7c1b3a0633",
-            "reference": "21741c7197509bfc295c0b9a944fcd7c1b3a0633",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2017-08-15T07:52:52+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\PayFast\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-payfast/contributors"
-            }
-        ],
-        "description": "PayFast driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-payfast",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payfast",
-            "payment"
-        ]
-    },
-    {
-        "name": "omnipay/multisafepay",
-        "version": "v2.3.6",
-        "version_normalized": "2.3.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-multisafepay.git",
-            "reference": "6d7a6d64fa0e124b90767e505ea105f4c3ecbadd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-multisafepay/zipball/6d7a6d64fa0e124b90767e505ea105f4c3ecbadd",
-            "reference": "6d7a6d64fa0e124b90767e505ea105f4c3ecbadd",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2017-05-28T06:28:10+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\MultiSafepay\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-multisafepay/contributors"
-            }
-        ],
-        "description": "MultiSafepay driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-multisafepay",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "multi safepay",
-            "multisafepay",
             "omnipay",
             "pay",
             "payment"
         ]
     },
     {
-        "name": "omnipay/mollie",
-        "version": "3.2.x-dev",
-        "version_normalized": "3.2.9999999.9999999-dev",
+        "name": "omnipay/eway",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-mollie.git",
-            "reference": "8a81a9980a3de726e6badb2ca0edc3728bba6c95"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-mollie/zipball/8a81a9980a3de726e6badb2ca0edc3728bba6c95",
-            "reference": "8a81a9980a3de726e6badb2ca0edc3728bba6c95",
-            "shasum": ""
+            "url": "https://github.com/eileenmcnaughton/omnipay-eway.git",
+            "reference": "bb28152c5bdfc0a11a41a74e1bd06ef4c81dd88f"
         },
         "require": {
-            "omnipay/common": "~2.2"
+            "omnipay/common": "~2.0"
         },
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-10-11T09:44:09+00:00",
+        "time": "2017-10-15T23:37:35+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1942,7 +1275,65 @@
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\Mollie\\": "src/"
+                "Omnipay\\Eway\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-eway/contributors"
+            }
+        ],
+        "description": "eWay driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-eway",
+        "keywords": [
+            "eway",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "omnipay/firstdata",
+        "version": "v2.4.0",
+        "version_normalized": "2.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-firstdata.git",
+            "reference": "c0123a03bec861e0c00fa19772582dc3639fbb6e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-firstdata/zipball/c0123a03bec861e0c00fa19772582dc3639fbb6e",
+            "reference": "c0123a03bec861e0c00fa19772582dc3639fbb6e",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2017-07-14T09:26:59+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\FirstData\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -1956,15 +1347,135 @@
             },
             {
                 "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-mollie/contributors"
+                "homepage": "https://github.com/thephpleague/omnipay-firstdata/contributors"
             }
         ],
-        "description": "Mollie driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-mollie",
+        "description": "First Data driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-firstdata",
         "keywords": [
+            "first data",
+            "firstdata",
             "gateway",
             "merchant",
-            "mollie",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "omnipay/gocardless",
+        "version": "2.2.0",
+        "version_normalized": "2.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-gocardless.git",
+            "reference": "1c0bebdcc32d89fd243e1183028d2d50316e8bb1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-gocardless/zipball/1c0bebdcc32d89fd243e1183028d2d50316e8bb1",
+            "reference": "1c0bebdcc32d89fd243e1183028d2d50316e8bb1",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-09-24T14:44:29+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\GoCardless\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-gocardless/contributors"
+            }
+        ],
+        "description": "GoCardless driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-gocardless",
+        "keywords": [
+            "gateway",
+            "go cardless",
+            "gocardless",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "omnipay/manual",
+        "version": "v2.2.1",
+        "version_normalized": "2.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-manual.git",
+            "reference": "d896909093422f25a9deec13232b31ea69a72994"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-manual/zipball/d896909093422f25a9deec13232b31ea69a72994",
+            "reference": "d896909093422f25a9deec13232b31ea69a72994",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-12-28T03:02:15+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Manual\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-manual/contributors"
+            }
+        ],
+        "description": "Manual driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-manual",
+        "keywords": [
+            "gateway",
+            "manual",
+            "merchant",
             "omnipay",
             "pay",
             "payment"
@@ -2031,86 +1542,27 @@
         ]
     },
     {
-        "name": "omnipay/manual",
-        "version": "v2.2.1",
-        "version_normalized": "2.2.1.0",
+        "name": "omnipay/mollie",
+        "version": "3.2.x-dev",
+        "version_normalized": "3.2.9999999.9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-manual.git",
-            "reference": "d896909093422f25a9deec13232b31ea69a72994"
+            "url": "https://github.com/thephpleague/omnipay-mollie.git",
+            "reference": "8a81a9980a3de726e6badb2ca0edc3728bba6c95"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-manual/zipball/d896909093422f25a9deec13232b31ea69a72994",
-            "reference": "d896909093422f25a9deec13232b31ea69a72994",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-mollie/zipball/8a81a9980a3de726e6badb2ca0edc3728bba6c95",
+            "reference": "8a81a9980a3de726e6badb2ca0edc3728bba6c95",
             "shasum": ""
         },
         "require": {
-            "omnipay/common": "~2.0"
+            "omnipay/common": "~2.2"
         },
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2016-12-28T03:02:15+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Manual\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-manual/contributors"
-            }
-        ],
-        "description": "Manual driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-manual",
-        "keywords": [
-            "gateway",
-            "manual",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
-        ]
-    },
-    {
-        "name": "omnipay/buckaroo",
-        "version": "v2.2.0",
-        "version_normalized": "2.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-buckaroo.git",
-            "reference": "b1d74b4121a9c889fe8cc77715e6cffb14b8833c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-buckaroo/zipball/b1d74b4121a9c889fe8cc77715e6cffb14b8833c",
-            "reference": "b1d74b4121a9c889fe8cc77715e6cffb14b8833c",
-            "shasum": ""
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2017-05-30T09:43:42+00:00",
+        "time": "2016-10-11T09:44:09+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2120,7 +1572,7 @@
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\Buckaroo\\": "src/"
+                "Omnipay\\Mollie\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -2134,15 +1586,193 @@
             },
             {
                 "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-buckaroo/contributors"
+                "homepage": "https://github.com/thephpleague/omnipay-mollie/contributors"
             }
         ],
-        "description": "Buckaroo driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-buckaroo",
+        "description": "Mollie driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-mollie",
         "keywords": [
-            "buckaroo",
             "gateway",
             "merchant",
+            "mollie",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "omnipay/multisafepay",
+        "version": "v2.3.6",
+        "version_normalized": "2.3.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-multisafepay.git",
+            "reference": "6d7a6d64fa0e124b90767e505ea105f4c3ecbadd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-multisafepay/zipball/6d7a6d64fa0e124b90767e505ea105f4c3ecbadd",
+            "reference": "6d7a6d64fa0e124b90767e505ea105f4c3ecbadd",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2017-05-28T06:28:10+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\MultiSafepay\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-multisafepay/contributors"
+            }
+        ],
+        "description": "MultiSafepay driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-multisafepay",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "multi safepay",
+            "multisafepay",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "omnipay/netaxept",
+        "version": "v2.3.0",
+        "version_normalized": "2.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-netaxept.git",
+            "reference": "a15ab75a338726536880b9ac0c1e6071a81342f9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-netaxept/zipball/a15ab75a338726536880b9ac0c1e6071a81342f9",
+            "reference": "a15ab75a338726536880b9ac0c1e6071a81342f9",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-05-08T15:13:17+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Netaxept\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-netaxept/contributors"
+            }
+        ],
+        "description": "Netaxept driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-netaxept",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "netaxept",
+            "omnipay",
+            "pay",
+            "payment"
+        ]
+    },
+    {
+        "name": "omnipay/netbanx",
+        "version": "v2.2",
+        "version_normalized": "2.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-netbanx.git",
+            "reference": "3684bbbf0dbdb977c1484d7252d776d81c68c813"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-netbanx/zipball/3684bbbf0dbdb977c1484d7252d776d81c68c813",
+            "reference": "3684bbbf0dbdb977c1484d7252d776d81c68c813",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-09-21T10:52:03+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\NetBanx\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-netbanx/contributors"
+            }
+        ],
+        "description": "NetBanx driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-netbanx",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "netbanx",
             "omnipay",
             "pay",
             "payment"
@@ -2303,468 +1933,18 @@
         ]
     },
     {
-        "name": "phpunit/php-timer",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "name": "omnipay/payfast",
+        "version": "v2.1.3",
+        "version_normalized": "2.1.3.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-timer.git",
-            "reference": "d107f347d368dd8a384601398280c7c608390ab7"
+            "url": "https://github.com/thephpleague/omnipay-payfast.git",
+            "reference": "21741c7197509bfc295c0b9a944fcd7c1b3a0633"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/d107f347d368dd8a384601398280c7c608390ab7",
-            "reference": "d107f347d368dd8a384601398280c7c608390ab7",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.3.3 || ^7.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
-        },
-        "time": "2017-03-07T15:42:04+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "Utility class for timing",
-        "homepage": "https://github.com/sebastianbergmann/php-timer/",
-        "keywords": [
-            "timer"
-        ]
-    },
-    {
-        "name": "omnipay/tests",
-        "version": "2.1.x-dev",
-        "version_normalized": "2.1.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-tests.git",
-            "reference": "137fdeaa8ef449c88ced15a50e02821732e7a125"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-tests/zipball/137fdeaa8ef449c88ced15a50e02821732e7a125",
-            "reference": "137fdeaa8ef449c88ced15a50e02821732e7a125",
-            "shasum": ""
-        },
-        "require": {
-            "guzzle/plugin-mock": "~3.1",
-            "mockery/mockery": "~0.8",
-            "phpunit/phpunit": "~3.7.0",
-            "squizlabs/php_codesniffer": "~1.5"
-        },
-        "time": "2016-07-07T09:35:23+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Omnipay\\Tests\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-tests/contributors"
-            }
-        ],
-        "description": "Testing components for Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-tests",
-        "keywords": [
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment",
-            "purchase"
-        ]
-    },
-    {
-        "name": "mockery/mockery",
-        "version": "0.9.x-dev",
-        "version_normalized": "0.9.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/mockery/mockery.git",
-            "reference": "80ac8060487db317c133ee00154f0862bd4d4ec7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/mockery/mockery/zipball/80ac8060487db317c133ee00154f0862bd4d4ec7",
-            "reference": "80ac8060487db317c133ee00154f0862bd4d4ec7",
-            "shasum": ""
-        },
-        "require": {
-            "hamcrest/hamcrest-php": "~1.1",
-            "lib-pcre": ">=7.0",
-            "php": ">=5.3.2"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2017-06-07T08:41:50+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.9.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Mockery": "library/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Pádraic Brady",
-                "email": "padraic.brady@gmail.com",
-                "homepage": "http://blog.astrumfutura.com"
-            },
-            {
-                "name": "Dave Marshall",
-                "email": "dave.marshall@atstsolutions.co.uk",
-                "homepage": "http://davedevelopment.co.uk"
-            }
-        ],
-        "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
-        "homepage": "http://github.com/padraic/mockery",
-        "keywords": [
-            "BDD",
-            "TDD",
-            "library",
-            "mock",
-            "mock objects",
-            "mockery",
-            "stub",
-            "test",
-            "test double",
-            "testing"
-        ]
-    },
-    {
-        "name": "omnipay/eway",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-eway.git",
-            "reference": "bb28152c5bdfc0a11a41a74e1bd06ef4c81dd88f"
-        },
-        "require": {
-            "omnipay/common": "~2.0"
-        },
-        "require-dev": {
-            "omnipay/tests": "~2.0"
-        },
-        "time": "2017-10-15T23:37:35+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Omnipay\\Eway\\": "src/"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Adrian Macneil",
-                "email": "adrian@adrianmacneil.com"
-            },
-            {
-                "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-eway/contributors"
-            }
-        ],
-        "description": "eWay driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-eway",
-        "keywords": [
-            "eway",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
-        ]
-    },
-    {
-        "name": "phpunit/php-file-iterator",
-        "version": "1.4.x-dev",
-        "version_normalized": "1.4.9999999.9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-            "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/730b01bc3e867237eaac355e06a36b85dd93a8b4",
-            "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "time": "2017-11-27T13:52:08+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sb@sebastian-bergmann.de",
-                "role": "lead"
-            }
-        ],
-        "description": "FilterIterator implementation that filters files based on a list of suffixes.",
-        "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
-        "keywords": [
-            "filesystem",
-            "iterator"
-        ]
-    },
-    {
-        "name": "symfony/polyfill-mbstring",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
-            "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "suggest": {
-            "ext-mbstring": "For best performance"
-        },
-        "time": "2017-10-11T12:05:26+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.6-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Mbstring\\": ""
-            },
-            "files": [
-                "bootstrap.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfill for the Mbstring extension",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "mbstring",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    },
-    {
-        "name": "paragonie/random_compat",
-        "version": "v2.0.11",
-        "version_normalized": "2.0.11.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/paragonie/random_compat.git",
-            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
-            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*|5.*"
-        },
-        "suggest": {
-            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-        },
-        "time": "2017-09-27T21:40:39+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/random.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Paragon Initiative Enterprises",
-                "email": "security@paragonie.com",
-                "homepage": "https://paragonie.com"
-            }
-        ],
-        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-        "keywords": [
-            "csprng",
-            "pseudorandom",
-            "random"
-        ]
-    },
-    {
-        "name": "symfony/polyfill-php70",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-php70.git",
-            "reference": "0442b9c0596610bd24ae7b5f0a6cdbbc16d9fcff"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/0442b9c0596610bd24ae7b5f0a6cdbbc16d9fcff",
-            "reference": "0442b9c0596610bd24ae7b5f0a6cdbbc16d9fcff",
-            "shasum": ""
-        },
-        "require": {
-            "paragonie/random_compat": "~1.0|~2.0",
-            "php": ">=5.3.3"
-        },
-        "time": "2017-10-11T12:05:26+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.6-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Php70\\": ""
-            },
-            "files": [
-                "bootstrap.php"
-            ],
-            "classmap": [
-                "Resources/stubs"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfill backporting some PHP 7.0+ features to lower PHP versions",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    },
-    {
-        "name": "omnipay/firstdata",
-        "version": "v2.4.0",
-        "version_normalized": "2.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/thephpleague/omnipay-firstdata.git",
-            "reference": "c0123a03bec861e0c00fa19772582dc3639fbb6e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/omnipay-firstdata/zipball/c0123a03bec861e0c00fa19772582dc3639fbb6e",
-            "reference": "c0123a03bec861e0c00fa19772582dc3639fbb6e",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-payfast/zipball/21741c7197509bfc295c0b9a944fcd7c1b3a0633",
+            "reference": "21741c7197509bfc295c0b9a944fcd7c1b3a0633",
             "shasum": ""
         },
         "require": {
@@ -2773,7 +1953,7 @@
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2017-07-14T09:26:59+00:00",
+        "time": "2017-08-15T07:52:52+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2783,7 +1963,7 @@
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Omnipay\\FirstData\\": "src/"
+                "Omnipay\\PayFast\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -2797,18 +1977,17 @@
             },
             {
                 "name": "Omnipay Contributors",
-                "homepage": "https://github.com/thephpleague/omnipay-firstdata/contributors"
+                "homepage": "https://github.com/thephpleague/omnipay-payfast/contributors"
             }
         ],
-        "description": "First Data driver for the Omnipay payment processing library",
-        "homepage": "https://github.com/thephpleague/omnipay-firstdata",
+        "description": "PayFast driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-payfast",
         "keywords": [
-            "first data",
-            "firstdata",
             "gateway",
             "merchant",
             "omnipay",
             "pay",
+            "payfast",
             "payment"
         ]
     },
@@ -2872,6 +2051,71 @@
         ]
     },
     {
+        "name": "omnipay/paymentexpress",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-paymentexpress.git",
+            "reference": "a9a48434d5341e300b7121270e92109793738cee"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-paymentexpress/zipball/a9a48434d5341e300b7121270e92109793738cee",
+            "reference": "a9a48434d5341e300b7121270e92109793738cee",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2017-11-22T07:02:14+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\PaymentExpress\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-paymentexpress/contributors"
+            }
+        ],
+        "description": "Payment Express (DPS) driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-paymentexpress",
+        "keywords": [
+            "direct payment solutions",
+            "dps",
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "payment express",
+            "paymentexpress",
+            "pxaccess",
+            "pxpay",
+            "pxpost"
+        ]
+    },
+    {
         "name": "omnipay/paypal",
         "version": "v2.6.4",
         "version_normalized": "2.6.4.0",
@@ -2929,6 +2173,65 @@
             "payment",
             "paypal",
             "purchase"
+        ]
+    },
+    {
+        "name": "omnipay/pin",
+        "version": "v2.2.2",
+        "version_normalized": "2.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-pin.git",
+            "reference": "8c859bc71de8def70623eacd1b3ec6da1829a445"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-pin/zipball/8c859bc71de8def70623eacd1b3ec6da1829a445",
+            "reference": "8c859bc71de8def70623eacd1b3ec6da1829a445",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-03-25T18:06:33+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Pin\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-pin/contributors"
+            }
+        ],
+        "description": "Pin Payments driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-pin",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "pin"
         ]
     },
     {
@@ -2994,6 +2297,242 @@
         ]
     },
     {
+        "name": "omnipay/securepay",
+        "version": "v2.1.1",
+        "version_normalized": "2.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-securepay.git",
+            "reference": "e68954d455edc8337bb30e6c579d32b6e691d29a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-securepay/zipball/e68954d455edc8337bb30e6c579d32b6e691d29a",
+            "reference": "e68954d455edc8337bb30e6c579d32b6e691d29a",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2016-11-09T04:52:42+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\SecurePay\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-securepay/contributors"
+            }
+        ],
+        "description": "SecurePay driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-securepay",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "securepay"
+        ]
+    },
+    {
+        "name": "omnipay/stripe",
+        "version": "V2.4.7",
+        "version_normalized": "2.4.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-stripe.git",
+            "reference": "26a33414a75939af75064022112005d5e51fc9ea"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/26a33414a75939af75064022112005d5e51fc9ea",
+            "reference": "26a33414a75939af75064022112005d5e51fc9ea",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2017-07-14T09:22:01+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Stripe\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-stripe/contributors"
+            }
+        ],
+        "description": "Stripe driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-stripe",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "stripe"
+        ]
+    },
+    {
+        "name": "omnipay/targetpay",
+        "version": "v2.2.1",
+        "version_normalized": "2.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-targetpay.git",
+            "reference": "fc74d5d0f7929ce86298faec9e195985d7d4afe0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-targetpay/zipball/fc74d5d0f7929ce86298faec9e195985d7d4afe0",
+            "reference": "fc74d5d0f7929ce86298faec9e195985d7d4afe0",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "~2.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2014-09-17T00:38:39+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\TargetPay\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-targetpay/contributors"
+            }
+        ],
+        "description": "TargetPay driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-targetpay",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "targetpay"
+        ]
+    },
+    {
+        "name": "omnipay/tests",
+        "version": "2.1.x-dev",
+        "version_normalized": "2.1.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/thephpleague/omnipay-tests.git",
+            "reference": "137fdeaa8ef449c88ced15a50e02821732e7a125"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/thephpleague/omnipay-tests/zipball/137fdeaa8ef449c88ced15a50e02821732e7a125",
+            "reference": "137fdeaa8ef449c88ced15a50e02821732e7a125",
+            "shasum": ""
+        },
+        "require": {
+            "guzzle/plugin-mock": "~3.1",
+            "mockery/mockery": "~0.8",
+            "phpunit/phpunit": "~3.7.0",
+            "squizlabs/php_codesniffer": "~1.5"
+        },
+        "time": "2016-07-07T09:35:23+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Omnipay\\Tests\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Adrian Macneil",
+                "email": "adrian@adrianmacneil.com"
+            },
+            {
+                "name": "Omnipay Contributors",
+                "homepage": "https://github.com/thephpleague/omnipay-tests/contributors"
+            }
+        ],
+        "description": "Testing components for Omnipay payment processing library",
+        "homepage": "https://github.com/thephpleague/omnipay-tests",
+        "keywords": [
+            "gateway",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase"
+        ]
+    },
+    {
         "name": "omnipay/worldpay",
         "version": "v2.2.2",
         "version_normalized": "2.2.2.0",
@@ -3053,26 +2592,77 @@
         ]
     },
     {
-        "name": "fuzion/omnipay-mercanet",
+        "name": "paragonie/random_compat",
+        "version": "v2.0.11",
+        "version_normalized": "2.0.11.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/paragonie/random_compat.git",
+            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.*|5.*"
+        },
+        "suggest": {
+            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+        },
+        "time": "2017-09-27T21:40:39+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/random.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Paragon Initiative Enterprises",
+                "email": "security@paragonie.com",
+                "homepage": "https://paragonie.com"
+            }
+        ],
+        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+        "keywords": [
+            "csprng",
+            "pseudorandom",
+            "random"
+        ]
+    },
+    {
+        "name": "pergo/omnipay-pergo",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
-            "reference": "5292b1b02ac0d09e9fef724ccb3a95f9d26cd6f5"
+            "url": "https://github.com/eileenmcnaughton/omnipay-pergo.git",
+            "reference": "4a0f94ecd20e0460954ad91c7f32f186ce6efe97"
         },
         "require": {
+            "guzzlehttp/guzzle": "^6.3",
             "omnipay/common": "~2.0"
         },
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2017-12-01T00:47:52+00:00",
+        "time": "2017-11-27T05:15:05+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\Mercanet\\": "src/"
+                "Omnipay\\Pergo\\": "src/"
             }
         },
         "license": [
@@ -3084,121 +2674,455 @@
                 "email": "eileen@fuzion.co.nz"
             }
         ],
-        "description": "Mercanet support for Omnipay payment processing library",
-        "homepage": "https://github.com/eileenmcnaughton/omnipay-mercanet",
+        "description": "Pergo support for Omnipay payment processing library",
+        "homepage": "https://github.com/eileenmcnaughton/omnipay-pergo",
         "keywords": [
             "gateway",
-            "mercanet",
             "merchant",
             "omnipay",
             "pay",
             "payment",
+            "pergo",
             "purchase",
             "shell"
         ]
     },
     {
-        "name": "symfony/yaml",
-        "version": "2.8.x-dev",
-        "version_normalized": "2.8.9999999.9999999-dev",
+        "name": "phpunit/php-code-coverage",
+        "version": "1.2.x-dev",
+        "version_normalized": "1.2.9999999.9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/symfony/yaml.git",
-            "reference": "968ef42161e4bc04200119da473077f9e7015128"
+            "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+            "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/968ef42161e4bc04200119da473077f9e7015128",
-            "reference": "968ef42161e4bc04200119da473077f9e7015128",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
+            "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3.9"
-        },
-        "time": "2017-11-29T09:33:18+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.8-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Yaml\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Yaml Component",
-        "homepage": "https://symfony.com"
-    },
-    {
-        "name": "guzzlehttp/promises",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/guzzle/promises.git",
-            "reference": "2e48ae638dc0bf0849772f5590835fcd700a2e1d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/promises/zipball/2e48ae638dc0bf0849772f5590835fcd700a2e1d",
-            "reference": "2e48ae638dc0bf0849772f5590835fcd700a2e1d",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.0"
+            "php": ">=5.3.3",
+            "phpunit/php-file-iterator": ">=1.3.0@stable",
+            "phpunit/php-text-template": ">=1.2.0@stable",
+            "phpunit/php-token-stream": ">=1.1.3,<1.3.0"
         },
         "require-dev": {
-            "phpunit/phpunit": "^4.8.36"
+            "phpunit/phpunit": "3.7.*@dev"
         },
-        "time": "2017-12-07T21:04:15+00:00",
+        "suggest": {
+            "ext-dom": "*",
+            "ext-xdebug": ">=2.0.5"
+        },
+        "time": "2014-09-02T10:13:14+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.4-dev"
+                "dev-master": "1.2.x-dev"
             }
         },
         "installation-source": "source",
         "autoload": {
-            "psr-4": {
-                "GuzzleHttp\\Promise\\": "src/"
-            },
-            "files": [
-                "src/functions_include.php"
+            "classmap": [
+                "PHP/"
             ]
         },
         "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            ""
+        ],
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
+        "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
+        "keywords": [
+            "coverage",
+            "testing",
+            "xunit"
+        ]
+    },
+    {
+        "name": "phpunit/php-file-iterator",
+        "version": "1.4.x-dev",
+        "version_normalized": "1.4.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
+            "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/730b01bc3e867237eaac355e06a36b85dd93a8b4",
+            "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2017-11-27T13:52:08+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "FilterIterator implementation that filters files based on a list of suffixes.",
+        "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
+        "keywords": [
+            "filesystem",
+            "iterator"
+        ]
+    },
+    {
+        "name": "phpunit/php-text-template",
+        "version": "1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-text-template.git",
+            "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-text-template/zipball/31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
+            "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2015-06-21T13:50:34+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de",
+                "role": "lead"
+            }
+        ],
+        "description": "Simple template engine.",
+        "homepage": "https://github.com/sebastianbergmann/php-text-template/",
+        "keywords": [
+            "template"
+        ]
+    },
+    {
+        "name": "phpunit/php-timer",
+        "version": "1.0.x-dev",
+        "version_normalized": "1.0.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-timer.git",
+            "reference": "9513098641797ce5f459dbc1de5a54c29b0ec1fb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/9513098641797ce5f459dbc1de5a54c29b0ec1fb",
+            "reference": "9513098641797ce5f459dbc1de5a54c29b0ec1fb",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3.3 || ^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
+        },
+        "time": "2018-01-06T05:27:16+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "Utility class for timing",
+        "homepage": "https://github.com/sebastianbergmann/php-timer/",
+        "keywords": [
+            "timer"
+        ]
+    },
+    {
+        "name": "phpunit/php-token-stream",
+        "version": "1.2.2",
+        "version_normalized": "1.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/php-token-stream.git",
+            "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/ad4e1e23ae01b483c16f600ff1bebec184588e32",
+            "reference": "ad4e1e23ae01b483c16f600ff1bebec184588e32",
+            "shasum": ""
+        },
+        "require": {
+            "ext-tokenizer": "*",
+            "php": ">=5.3.3"
+        },
+        "time": "2014-03-03T05:10:30+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "PHP/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            ""
+        ],
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "Wrapper around PHP's tokenizer extension.",
+        "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
+        "keywords": [
+            "tokenizer"
+        ]
+    },
+    {
+        "name": "phpunit/phpunit",
+        "version": "3.7.x-dev",
+        "version_normalized": "3.7.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/phpunit.git",
+            "reference": "38709dc22d519a3d1be46849868aa2ddf822bcf6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/38709dc22d519a3d1be46849868aa2ddf822bcf6",
+            "reference": "38709dc22d519a3d1be46849868aa2ddf822bcf6",
+            "shasum": ""
+        },
+        "require": {
+            "ext-ctype": "*",
+            "ext-dom": "*",
+            "ext-json": "*",
+            "ext-pcre": "*",
+            "ext-reflection": "*",
+            "ext-spl": "*",
+            "php": ">=5.3.3",
+            "phpunit/php-code-coverage": "~1.2",
+            "phpunit/php-file-iterator": "~1.3",
+            "phpunit/php-text-template": "~1.1",
+            "phpunit/php-timer": "~1.0",
+            "phpunit/phpunit-mock-objects": "~1.2",
+            "symfony/yaml": "~2.0"
+        },
+        "require-dev": {
+            "pear-pear.php.net/pear": "1.9.4"
+        },
+        "suggest": {
+            "phpunit/php-invoker": "~1.1"
+        },
+        "time": "2014-10-17T09:04:17+00:00",
+        "bin": [
+            "composer/bin/phpunit"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.7.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "PHPUnit/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            "",
+            "../../symfony/yaml/"
+        ],
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de",
+                "role": "lead"
+            }
+        ],
+        "description": "The PHP Unit Testing framework.",
+        "homepage": "http://www.phpunit.de/",
+        "keywords": [
+            "phpunit",
+            "testing",
+            "xunit"
+        ]
+    },
+    {
+        "name": "phpunit/phpunit-mock-objects",
+        "version": "1.2.x-dev",
+        "version_normalized": "1.2.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
+            "reference": "c39c4511c3b007539eb170c32cbc2af49a07351a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/c39c4511c3b007539eb170c32cbc2af49a07351a",
+            "reference": "c39c4511c3b007539eb170c32cbc2af49a07351a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "phpunit/php-text-template": ">=1.1.1@stable"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*@dev"
+        },
+        "suggest": {
+            "ext-soap": "*"
+        },
+        "time": "2014-02-16T12:43:56+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.2.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "PHPUnit/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            ""
+        ],
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sb@sebastian-bergmann.de",
+                "role": "lead"
+            }
+        ],
+        "description": "Mock Object library for PHPUnit",
+        "homepage": "https://github.com/sebastianbergmann/phpunit-mock-objects/",
+        "keywords": [
+            "mock",
+            "xunit"
+        ]
+    },
+    {
+        "name": "pointybeard/omnipay-nabtransact",
+        "version": "dev-transact",
+        "version_normalized": "dev-transact",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-nabtransact.git",
+            "reference": "f18625800f9715378a91c761b5e7ee6782892005"
+        },
+        "require": {
+            "omnipay/common": "~2.3",
+            "php": ">=5.4"
+        },
+        "require-dev": {
+            "fzaninotto/faker": "^1.6@dev",
+            "omnipay/tests": "~2.0"
+        },
+        "time": "2015-11-23T06:43:40+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\NABTransact\\": "src",
+                "Omnipay\\NABTransact\\Tests\\Lib\\": "tests\\lib"
+            }
+        },
         "license": [
             "MIT"
         ],
         "authors": [
             {
-                "name": "Michael Dowling",
-                "email": "mtdowling@gmail.com",
-                "homepage": "https://github.com/mtdowling"
+                "email": "hi@alistairkearney.com",
+                "name": "pointybeard"
             }
         ],
-        "description": "Guzzle promises library",
+        "description": "NAB Transact XML API gateway for the Omnipay payment processing library",
         "keywords": [
-            "promise"
+            "gateway",
+            "merchant",
+            "nab",
+            "nabtransact",
+            "omnipay",
+            "pay",
+            "payment"
         ]
     },
     {
@@ -3254,183 +3178,128 @@
         ]
     },
     {
-        "name": "guzzlehttp/psr7",
+        "name": "sergej-koscejev/omnipay-gopay",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/guzzle/psr7.git",
-            "reference": "d2537c86fa8b004c29e9b9f5e10028f0a29df101"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/psr7/zipball/d2537c86fa8b004c29e9b9f5e10028f0a29df101",
-            "reference": "d2537c86fa8b004c29e9b9f5e10028f0a29df101",
-            "shasum": ""
+            "url": "https://github.com/sergej-koscejev/omnipay-gopay.git",
+            "reference": "d2e63595a0d4139528278016d817fa5dd80da7e7"
         },
         "require": {
-            "php": ">=5.4.0",
-            "psr/http-message": "~1.0"
-        },
-        "provide": {
-            "psr/http-message-implementation": "1.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2017-10-07T03:19:56+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "GuzzleHttp\\Psr7\\": "src/"
-            },
-            "files": [
-                "src/functions_include.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Michael Dowling",
-                "email": "mtdowling@gmail.com",
-                "homepage": "https://github.com/mtdowling"
-            },
-            {
-                "name": "Tobias Schultze",
-                "homepage": "https://github.com/Tobion"
-            }
-        ],
-        "description": "PSR-7 message implementation that also provides common utility methods",
-        "keywords": [
-            "http",
-            "message",
-            "request",
-            "response",
-            "stream",
-            "uri",
-            "url"
-        ]
-    },
-    {
-        "name": "guzzlehttp/guzzle",
-        "version": "6.3.0",
-        "version_normalized": "6.3.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
-            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
-            "shasum": ""
-        },
-        "require": {
-            "guzzlehttp/promises": "^1.0",
-            "guzzlehttp/psr7": "^1.4",
-            "php": ">=5.5"
-        },
-        "require-dev": {
-            "ext-curl": "*",
-            "phpunit/phpunit": "^4.0 || ^5.0",
-            "psr/log": "^1.0"
-        },
-        "suggest": {
-            "psr/log": "Required for using the Log middleware"
-        },
-        "time": "2017-06-22T18:50:49+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "6.2-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "src/functions_include.php"
-            ],
-            "psr-4": {
-                "GuzzleHttp\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Michael Dowling",
-                "email": "mtdowling@gmail.com",
-                "homepage": "https://github.com/mtdowling"
-            }
-        ],
-        "description": "Guzzle is a PHP HTTP client library",
-        "homepage": "http://guzzlephp.org/",
-        "keywords": [
-            "client",
-            "curl",
-            "framework",
-            "http",
-            "http client",
-            "rest",
-            "web service"
-        ]
-    },
-    {
-        "name": "pergo/omnipay-pergo",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-pergo.git",
-            "reference": "4a0f94ecd20e0460954ad91c7f32f186ce6efe97"
-        },
-        "require": {
-            "guzzlehttp/guzzle": "^6.3",
             "omnipay/common": "~2.0"
         },
         "require-dev": {
             "omnipay/tests": "~2.0"
         },
-        "time": "2017-11-27T05:15:05+00:00",
+        "time": "2015-06-06T22:14:26+00:00",
         "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\Pergo\\": "src/"
+                "Omnipay\\Gopay\\": "src/"
             }
         },
         "license": [
-            "MIT"
+            "GPLv3"
         ],
         "authors": [
             {
-                "name": "Eileen McNaughton",
-                "email": "eileen@fuzion.co.nz"
+                "name": "Sergej Koščejev",
+                "email": "sergej@koscejev.cz"
             }
         ],
-        "description": "Pergo support for Omnipay payment processing library",
-        "homepage": "https://github.com/eileenmcnaughton/omnipay-pergo",
+        "description": "GoPay driver for the Omnipay payment processing library",
+        "homepage": "https://github.com/sergej-koscejev/omnipay-gopay",
         "keywords": [
             "gateway",
+            "gopay",
             "merchant",
             "omnipay",
             "pay",
-            "payment",
-            "pergo",
-            "purchase",
-            "shell"
+            "payment"
+        ]
+    },
+    {
+        "name": "squizlabs/php_codesniffer",
+        "version": "1.5.x-dev",
+        "version_normalized": "1.5.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+            "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/6f3e42d311b882b25b4d409d23a289f4d3b803d5",
+            "reference": "6f3e42d311b882b25b4d409d23a289f4d3b803d5",
+            "shasum": ""
+        },
+        "require": {
+            "ext-tokenizer": "*",
+            "php": ">=5.1.2"
+        },
+        "suggest": {
+            "phpunit/php-timer": "dev-master"
+        },
+        "time": "2014-12-04T22:32:15+00:00",
+        "bin": [
+            "scripts/phpcs"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-phpcs-fixer": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "CodeSniffer.php",
+                "CodeSniffer/CLI.php",
+                "CodeSniffer/Exception.php",
+                "CodeSniffer/File.php",
+                "CodeSniffer/Report.php",
+                "CodeSniffer/Reporting.php",
+                "CodeSniffer/Sniff.php",
+                "CodeSniffer/Tokens.php",
+                "CodeSniffer/Reports/",
+                "CodeSniffer/CommentParser/",
+                "CodeSniffer/Tokenizers/",
+                "CodeSniffer/DocGenerators/",
+                "CodeSniffer/Standards/AbstractPatternSniff.php",
+                "CodeSniffer/Standards/AbstractScopeSniff.php",
+                "CodeSniffer/Standards/AbstractVariableSniff.php",
+                "CodeSniffer/Standards/IncorrectPatternException.php",
+                "CodeSniffer/Standards/Generic/Sniffs/",
+                "CodeSniffer/Standards/MySource/Sniffs/",
+                "CodeSniffer/Standards/PEAR/Sniffs/",
+                "CodeSniffer/Standards/PSR1/Sniffs/",
+                "CodeSniffer/Standards/PSR2/Sniffs/",
+                "CodeSniffer/Standards/Squiz/Sniffs/",
+                "CodeSniffer/Standards/Zend/Sniffs/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Greg Sherwood",
+                "role": "lead"
+            }
+        ],
+        "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+        "homepage": "http://www.squizlabs.com/php-codesniffer",
+        "keywords": [
+            "phpcs",
+            "standards"
         ]
     },
     {
@@ -3440,12 +3309,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/event-dispatcher.git",
-            "reference": "6bd742d35140bd6dc265bf9c198b88afff5afe0b"
+            "reference": "f5d2d7dcc33b89e20c2696ea9afcbddf6540081c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/6bd742d35140bd6dc265bf9c198b88afff5afe0b",
-            "reference": "6bd742d35140bd6dc265bf9c198b88afff5afe0b",
+            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/f5d2d7dcc33b89e20c2696ea9afcbddf6540081c",
+            "reference": "f5d2d7dcc33b89e20c2696ea9afcbddf6540081c",
             "shasum": ""
         },
         "require": {
@@ -3462,7 +3331,7 @@
             "symfony/dependency-injection": "",
             "symfony/http-kernel": ""
         },
-        "time": "2017-12-08T12:32:59+00:00",
+        "time": "2018-02-11T16:53:59+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3502,12 +3371,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/http-foundation.git",
-            "reference": "bc4d7b5a3007572a5c222f611fee30fbfcf1ddea"
+            "reference": "d478fe6c43db4eda3b302a2ab3af885b3cacb1b5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/http-foundation/zipball/bc4d7b5a3007572a5c222f611fee30fbfcf1ddea",
-            "reference": "bc4d7b5a3007572a5c222f611fee30fbfcf1ddea",
+            "url": "https://api.github.com/repos/symfony/http-foundation/zipball/d478fe6c43db4eda3b302a2ab3af885b3cacb1b5",
+            "reference": "d478fe6c43db4eda3b302a2ab3af885b3cacb1b5",
             "shasum": ""
         },
         "require": {
@@ -3518,7 +3387,7 @@
         "require-dev": {
             "symfony/expression-language": "~2.8|~3.0|~4.0"
         },
-        "time": "2017-12-08T16:11:27+00:00",
+        "time": "2018-02-09T14:10:47+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3552,45 +3421,176 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "fuzion/omnipay-authorizenetstd",
+        "name": "symfony/polyfill-mbstring",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/eileenmcnaughton/omnipay-authorizenetstd.git",
-            "reference": "80a77844b09a1a465f4122c201415f2d1660688b"
+            "url": "https://github.com/symfony/polyfill-mbstring.git",
+            "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/78be803ce01e55d3491c1397cf1c64beb9c1b63b",
+            "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b",
+            "shasum": ""
         },
         "require": {
-            "omnipay/authorizenet": "dev-master"
+            "php": ">=5.3.3"
         },
-        "time": "2017-12-11T02:00:18+00:00",
+        "suggest": {
+            "ext-mbstring": "For best performance"
+        },
+        "time": "2018-01-30T19:27:44+00:00",
         "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.7-dev"
+            }
+        },
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Omnipay\\AuthorizeNetStd\\": "src/"
-            }
+                "Symfony\\Polyfill\\Mbstring\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
         },
+        "notification-url": "https://packagist.org/downloads/",
         "license": [
             "MIT"
         ],
         "authors": [
             {
-                "name": "Eileen McNaughton",
-                "email": "eileen@fuzion.co.nz"
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
             }
         ],
-        "description": "Authorize.Net standardised gateway for the Omnipay payment processing library. Extends & standardises main version",
-        "homepage": "https://github.com/emcnaughton/omnipay-authorizenetstd",
+        "description": "Symfony polyfill for the Mbstring extension",
+        "homepage": "https://symfony.com",
         "keywords": [
-            "authorize",
-            "authorize net",
-            "authorize.net",
-            "gateway",
-            "merchant",
-            "omnipay",
-            "pay",
-            "payment"
+            "compatibility",
+            "mbstring",
+            "polyfill",
+            "portable",
+            "shim"
         ]
+    },
+    {
+        "name": "symfony/polyfill-php70",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-php70.git",
+            "reference": "3532bfcd8f933a7816f3a0a59682fc404776600f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/3532bfcd8f933a7816f3a0a59682fc404776600f",
+            "reference": "3532bfcd8f933a7816f3a0a59682fc404776600f",
+            "shasum": ""
+        },
+        "require": {
+            "paragonie/random_compat": "~1.0|~2.0",
+            "php": ">=5.3.3"
+        },
+        "time": "2018-01-30T19:27:44+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.7-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Php70\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ],
+            "classmap": [
+                "Resources/stubs"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill backporting some PHP 7.0+ features to lower PHP versions",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "polyfill",
+            "portable",
+            "shim"
+        ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "2.8.x-dev",
+        "version_normalized": "2.8.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "be720fcfae4614df204190d57795351059946a77"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/be720fcfae4614df204190d57795351059946a77",
+            "reference": "be720fcfae4614df204190d57795351059946a77",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2018-01-03T07:36:31+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
     }
 ]
