@@ -53,13 +53,39 @@ class OffsiteNotifyResponse implements \Omnipay\Common\Message\NotificationInter
     }
 
     /**
+     * Construct the response body.
+     *
+     * @param string $status The status to send to Sage Pay, one of static::RESPONSE_STATUS_*
+     * @param string $nextUrl URL to forward the customer to.
+     * @param string $detail Optional human readable reason for this response.
+     *
+     * @return string
+     */
+    public function getResponseBody($status, $nextUrl, $detail = null)
+    {
+        $body = array(
+            'Status=' . $status,
+            'RedirectUrl=' . $nextUrl,
+        );
+
+        if ($detail !== null) {
+            $body[] = 'StatusDetail=' . $detail;
+        }
+
+        return implode(static::LINE_SEP, $body);
+    }
+
+    /**
      * Confirm
      *
      * Notify Mercanet you received the payment details and wish to confirm the payment.
      *
      * @param string $nextUrl URL to forward the customer to.
      * @param string $detail Optional human readable reasons for accepting the transaction.
-
+     *
+     * @return string
+     * @throws \Omnipay\Common\Exception\InvalidResponseException
+     */
     public function confirm($nextUrl, $detail = null)
     {
         // If the signature is invalid, then do not allow the confirm.
@@ -67,7 +93,7 @@ class OffsiteNotifyResponse implements \Omnipay\Common\Message\NotificationInter
             throw new InvalidResponseException('Cannot confirm an invalid notification');
         }
 
-        $this->sendResponse(static::RESPONSE_STATUS_OK, $nextUrl, $detail);
+        return $this->getResponseBody(static::RESPONSE_STATUS_OK, $nextUrl, $detail);
     }
 
     /**
@@ -131,27 +157,6 @@ class OffsiteNotifyResponse implements \Omnipay\Common\Message\NotificationInter
     public function setExitOnResponse($value)
     {
         $this->exit_on_response = (bool)$value;
-    }
-
-    /**
-     * Construct the response body.
-     *
-     * @param string The status to send to Sage Pay, one of static::RESPONSE_STATUS_*
-     * @param string URL to forward the customer to.
-     * @param string Optional human readable reason for this response.
-     *
-    public function getResponseBody($status, $nextUrl, $detail = null)
-    {
-        $body = array(
-            'Status=' . $status,
-            'RedirectUrl=' . $nextUrl,
-        );
-
-        if ($detail !== null) {
-            $body[] = 'StatusDetail=' . $detail;
-        }
-
-        return implode(static::LINE_SEP, $body);
     }
 
     /**
