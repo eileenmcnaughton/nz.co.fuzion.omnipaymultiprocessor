@@ -5,7 +5,8 @@ namespace Omnipay\Mercanet\Message;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\NotificationInterface;
 
-trait OffsiteNotificationTrait{
+trait OffsiteNotificationTrait
+{
 
     /**
      * Check the parameters that have been passed in to determine if the response represents a successful transaction.
@@ -47,5 +48,4 @@ trait OffsiteNotificationTrait{
     {
         return isset($this->data['transactionReference']) ? $this->data['transactionReference'] : null;
     }
-
 }

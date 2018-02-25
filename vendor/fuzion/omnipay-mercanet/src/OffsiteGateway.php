@@ -87,6 +87,15 @@ class OffsiteGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\Mercanet\Message\OffsiteCompleteAuthorizeRequest', $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Mercanet\Message\CompleteAuthorizeRequest
+     */
+    public function acceptNotification(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Mercanet\Message\OffsiteNotifyRequest', $parameters);
+    }
+
     public function getMerchantID()
     {
         return $this->getParameter('merchant_id');

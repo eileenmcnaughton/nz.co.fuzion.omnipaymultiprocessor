@@ -48,31 +48,19 @@ class OffsiteNotifyResponse implements \Omnipay\Common\Message\NotificationInter
      * @return string Transaction status, one of {@see STATUS_COMPLETED}, {@see #STATUS_PENDING},
      * or {@see #STATUS_FAILED}.
      */
-    public function getTransactionStatus() {
-
+    public function getTransactionStatus()
+    {
+        // @todo
     }
 
     /**
      * Construct the response body.
      *
-     * @param string $status The status to send to Sage Pay, one of static::RESPONSE_STATUS_*
-     * @param string $nextUrl URL to forward the customer to.
-     * @param string $detail Optional human readable reason for this response.
-     *
      * @return string
      */
-    public function getResponseBody($status, $nextUrl, $detail = null)
+    public function getResponseBody()
     {
-        $body = array(
-            'Status=' . $status,
-            'RedirectUrl=' . $nextUrl,
-        );
-
-        if ($detail !== null) {
-            $body[] = 'StatusDetail=' . $detail;
-        }
-
-        return implode(static::LINE_SEP, $body);
+        return "Success<p>";
     }
 
     /**
@@ -86,95 +74,8 @@ class OffsiteNotifyResponse implements \Omnipay\Common\Message\NotificationInter
      * @return string
      * @throws \Omnipay\Common\Exception\InvalidResponseException
      */
-    public function confirm($nextUrl, $detail = null)
+    public function confirm()
     {
-        // If the signature is invalid, then do not allow the confirm.
-        if (! $this->isValid()) {
-            throw new InvalidResponseException('Cannot confirm an invalid notification');
-        }
-
-        return $this->getResponseBody(static::RESPONSE_STATUS_OK, $nextUrl, $detail);
+        return $this->getResponseBody();
     }
-
-    /**
-     * Alias for confirm(), trying to define some more general conventions.
-     *
-    public function accept($nextUrl, $detail = null)
-    {
-        return $this->confirm($nextUrl, $detail);
-    }
-
-
-    /**
-     * Error
-     *
-     * Notify Sage Pay you received the payment details but there was an error and the payment
-     * cannot be completed.
-     *
-     * @param string URL to foward the customer to.
-     * @param string Optional human readable reasons for not accepting the transaction.
-     *
-    public function error($nextUrl, $detail = null)
-    {
-        // If the signature is invalid, then do not allow the reject.
-        // CHECKME: why?
-        if (! $this->isValid()) {
-            throw new InvalidResponseException('Cannot reject an invalid notification');
-        }
-
-        $this->sendResponse(static::RESPONSE_STATUS_ERROR, $nextUrl, $detail);
-    }
-
-    /**
-     * Alias for error(), trying to define some more general conventions.
-     *
-    public function reject($nextUrl, $detail = null)
-    {
-        return $this->error($nextUrl, $detail);
-    }
-
-    /**
-     * Invalid
-     *
-     * Notify Sage Pay you received *something* but the details were invalid and no payment
-     * cannot be completed. Invalid should be called if you are not happy with the contents
-     * of the POST, such as the MD5 hash signatures did not match or you do not wish to proceed
-     * with the order.
-     *
-     * @param string URL to foward the customer to.
-     * @param string Optional human readable reasons for not accepting the transaction.
-     *
-    public function invalid($nextUrl, $detail = null)
-    {
-        $this->sendResponse(static::RESPONSE_STATUS_INVALID, $nextUrl, $detail);
-    }
-
-    /**
-     * Set or reset flag to exit immediately on responding.
-     * Switch auto-exit off if you have further processing to do.
-     * @param boolean true to exit; false to not exit.
-     *
-    public function setExitOnResponse($value)
-    {
-        $this->exit_on_response = (bool)$value;
-    }
-
-    /**
-     * Respond to SagePay confirming or rejecting the notification.
-     *
-     * @param string The status to send to Sage Pay, one of static::RESPONSE_STATUS_*
-     * @param string URL to forward the customer to.
-     * @param string Optional human readable reason for this response.
-     *
-    public function sendResponse($status, $nextUrl, $detail = null)
-    {
-        $message = $this->getResponseBody($status, $nextUrl, $detail);
-
-        echo $message;
-
-        if ($this->exit_on_response) {
-            exit;
-        }
-    }
-    */
 }

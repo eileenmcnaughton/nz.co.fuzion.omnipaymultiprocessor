@@ -8,15 +8,15 @@ use Omnipay\Common\Message\NotificationInterface;
 use Guzzle\Http\ClientInterface;
 
 /**
- * Sage Pay Server Notification.
+ * Mercanet Notification.
  * The gateway will send the results of Server transactions here.
  */
-class OffsiteNotifyRequest extends AbstractRequest implements NotificationInterface
+class OffsiteNotifyRequest extends OffsiteAbstractRequest implements NotificationInterface
 {
-  /**
-   * Copy of the POST data sent in.
-   */
-  protected $data;
+    /**
+     * Copy of the POST data sent in.
+     */
+    protected $data;
 
     /**
      * Initialise the data from the server request.
@@ -34,28 +34,57 @@ class OffsiteNotifyRequest extends AbstractRequest implements NotificationInterf
 
     public function getData()
     {
-        return $this->data;
+        if (!$this->getSeal($this->data) === $this->seal) {
+            throw new InvalidResponseException('Reponse not signed correctly');
+        }
+        $parts = explode('|', $this->data);
+        $data = array();
+        foreach ($parts as $part) {
+            $subParts = explode('=', $part);
+            $data[$subParts[0]] = $subParts[1];
+        }
+        return $data;
     }
 
-  /**
-   * Was the transaction successful?
-   *
-   * @return string Transaction status, one of {@see STATUS_COMPLETED}, {@see #STATUS_PENDING},
-   * or {@see #STATUS_FAILED}.
-   */
-  public function getTransactionStatus()
-  {
+    /**
+     * Was the transaction successful?
+     *
+     * @return string Transaction status, one of {@see STATUS_COMPLETED}, {@see #STATUS_PENDING},
+     * or {@see #STATUS_FAILED}.
+     */
+    public function getTransactionStatus()
+    {
 
-  }
+    }
 
-  /**
-   * Response Textual Message
-   *
-   * @return string A response message from the payment gateway
-   */
-  public function getMessage()
-  {
-    return $this->getDataItem('StatusDetail');
-  }
+    /**
+     * Gateway Reference
+     *
+     * @return null|string A reference provided by the gateway to represent this transaction
+     */
+    public function getTransactionReference()
+    {
 
+    }
+
+    /**
+     * Get the Sage Pay Responder.
+     *
+     * @param string $data message body.
+     * @return ServerNotifyResponse
+     */
+    public function sendData($data)
+    {
+        return $this->response = new OffsiteNotifyResponse($this, $data);
+    }
+
+    /**
+     * Response Textual Message
+     *
+     * @return string A response message from the payment gateway
+     */
+    public function getMessage()
+    {
+        return $this->getDataItem('StatusDetail');
+    }
 }

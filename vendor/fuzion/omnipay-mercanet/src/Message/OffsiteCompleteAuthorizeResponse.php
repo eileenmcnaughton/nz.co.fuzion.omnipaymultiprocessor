@@ -17,5 +17,4 @@ class OffsiteCompleteAuthorizeResponse extends AbstractResponse
         parent::__construct($request, $data);
         $this->data = $data;
     }
-
 }
