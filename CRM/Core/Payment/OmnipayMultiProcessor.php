@@ -738,8 +738,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       return $lock->isAcquired();
     }
     if (empty(CRM_Core_Session::singleton()->getLoggedInContactID())) {
+      $delay = $this->getProcessorTypeMetadata('ipn_processing_delay');
+      if (!is_numeric($delay)) {
+        $delay = 45;
+      }
       // So far the best way of telling the difference is the session.
-      sleep(45);
+      sleep($delay);
     }
     return TRUE;
   }

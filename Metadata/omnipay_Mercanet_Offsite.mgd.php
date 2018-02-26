@@ -65,6 +65,7 @@ return array(
             ),
             'billing_fields' => array(),
           ),
+          'ipn_processing_delay' => 0,
         ),
     ),
 );
