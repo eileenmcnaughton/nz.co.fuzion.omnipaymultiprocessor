@@ -630,11 +630,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $paymentProcessorID = $params['processor_id'];
     $this->_paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
     $this->_paymentProcessor['name'] = civicrm_api3('payment_processor_type', 'getvalue', array('id' => $this->_paymentProcessor['payment_processor_type_id'], 'return' => 'name'));
-    if (empty(CRM_Core_Session::singleton()->getLoggedInContactID())) {
-      // Don't be too efficient on processing the ipn return.
-      // So far the best way of telling the difference is the session.
-      sleep(45);
-    }
     $this->processPaymentNotification($params);
   }
 
@@ -682,7 +677,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           //'return' => 'contribution_status_id, contribution_recur_id, contact_id, contribution_contact_id',
         ));
 
-        if (CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']) !== 'Completed') {
+        if ($this->getLock() && CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']) !== 'Completed') {
           civicrm_api3('contribution', 'completetransaction', array(
             'id' => $this->transaction_id,
             'trxn_id' => $response->getTransactionReference(),
@@ -722,6 +717,31 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
     $_REQUEST = $originalRequest;
     $this->redirectOrExit('fail', $response);
+  }
+
+  /**
+   * Get a lock so we don't process browser return & ipn return at the same time.
+   *
+   * Paralell processing notably results in 2 receipts.
+   *
+   * Currently mysql 5.7.5+ will process a cross-session lock. If we can't do that
+   * then we should be tardy on the processing of the ipn response.
+   *
+   * @return bool
+   */
+  protected function getLock() {
+    $mysqlVersion = CRM_Core_DAO::singleValueQuery('SELECT VERSION()');
+    if (stripos($mysqlVersion, 'mariadb') === FALSE
+      && version_compare($mysqlVersion, '5.7.5', '>=')
+    ) {
+      $lock = Civi::lockManager()->acquire('data.contribute.contribution.' . $this->transaction_id);
+      return $lock->isAcquired();
+    }
+    if (empty(CRM_Core_Session::singleton()->getLoggedInContactID())) {
+      // So far the best way of telling the difference is the session.
+      sleep(45);
+    }
+    return TRUE;
   }
 
   public function queryPaymentPlans($params) {
