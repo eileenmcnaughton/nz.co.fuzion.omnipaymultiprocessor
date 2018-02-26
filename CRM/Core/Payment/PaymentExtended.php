@@ -50,6 +50,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected $transaction_id;
 
   /**
+   * Transaction id (contribution id)  with any transformations applied.
+   *
+   * @var string
+   */
+  protected $formatted_transaction_id;
+
+  /**
    * @var label for payemnt field set.
    */
   protected $payment_type_label;
@@ -193,7 +200,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    */
   protected function getNotifyUrl($allowLocalHost = FALSE) {
     $url = CRM_Utils_System::url(
-      'civicrm/payment/ipn/' . $this->transaction_id . '/' . $this->_paymentProcessor['id'],
+      'civicrm/payment/ipn/' . $this->formatted_transaction_id . '/' . $this->_paymentProcessor['id'],
       NULL,
       TRUE,
       NULL,
@@ -371,18 +378,40 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *
    * @param integer|null $contribution_id Contribution ID
    */
-  protected function setTransactionID($contribution_id) {
+  protected function setTransactionID($contribution_id, $prefixAction = 'add') {
+    $prefix = $this->getPrefix();
     if ($contribution_id) {
-      $this->transaction_id = $contribution_id;
+      if ($prefixAction === 'strip') {
+        $this->transaction_id = substr($contribution_id, strlen($prefix));
+      }
+      else {
+        $this->transaction_id = $contribution_id;
+      }
     }
     else {
+      // When does this miserable occurence still happen.
+      // need to fix if it does!
       $this->transaction_id = rand(0, 1000);
     }
+    $this->formatted_transaction_id = $prefix . $this->transaction_id;
   }
   /**
    * handle response from processor
    * (this doesn't do anything but by virtue of it existing at least the logger fires :-)
    */
   public function handlePaymentNotification() {
+  }
+
+  protected function getPrefix() {
+    $paymentFields = civicrm_api3('PaymentProcessor', 'getfields', []);
+    foreach ($paymentFields['values'] as $paymentField) {
+      if (substr($paymentField['name'], 0, 7) === 'custom_'
+        && ts($paymentField['title']) === ts('Transaction Prefix')) {
+          $processor = civicrm_api3('PaymentProcessor',
+            'getsingle', ['id' => $this->_paymentProcessor['id']]
+          );
+          return CRM_Utils_Array::value($paymentField['name'], $processor);
+        }
+    }
   }
 }

@@ -405,7 +405,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       // Contribution page in 4.4 (confirmed Event online, 4.7) passes currencyID - not sure which passes currency (if any).
       'currency' => strtoupper(!empty($params['currencyID']) ? $params['currencyID'] : $params['currency']),
       'description' => $this->getPaymentDescription($params),
-      'transactionId' => $this->transaction_id,
+      'transactionId' => $this->formatted_transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getNotifyUrl(TRUE),
       'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
@@ -653,7 +653,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $response = $this->gateway->completePurchase($params)->send();
       }
       if ($response->getTransactionId()) {
-        $this->setTransactionID($response->getTransactionId());
+        $this->setTransactionID($response->getTransactionId(), 'strip');
       }
     }
     catch (\Omnipay\Common\Exception\InvalidRequestException $e) {
