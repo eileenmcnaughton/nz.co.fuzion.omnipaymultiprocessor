@@ -12,11 +12,14 @@
  *   API Result array
  */
 function civicrm_api3_payment_processor_getmissing($params) {
+  $lazyLogging = $params['lazy_logging'];
+  unset($params['lazy_logging']);
   $result = civicrm_api3('PaymentProcessor', 'query', $params);
+  $params['lazy_logging']  = $lazyLogging;
   $missing = array();
   $contributionStatuses = civicrm_api3('Contribution', 'getoptions', array('field' => 'contribution_status_id'));
   $contributionStatusFilter = empty($params['contribution_status_id']) ? NULL : $contributionStatuses['values'][$params['contribution_status_id']];
-
+  $first = TRUE;
   foreach ($result['values'] as $payment) {
     if ($contributionStatusFilter && $payment['contribution_status_id'] != $contributionStatusFilter) {
       continue;
@@ -34,9 +37,19 @@ function civicrm_api3_payment_processor_getmissing($params) {
     }
     catch (Exception $e) {
       $missing[$payment['trxn_id']] = $payment;
+      if (!empty($params['lazy_logging'])) {
+        $payment['payment_processor_id'] = $params['payment_processor_id'];
+        if ($first) {
+          echo implode('|', array_keys($payment)) . "\n";
+          $first = FALSE;
+        }
+        echo implode('|', $payment) . "\n";
+      }
     }
   }
-  return civicrm_api3_create_success($missing, $params);
+  if (empty($params['lazy_logging'])) {
+    return civicrm_api3_create_success($missing, $params);
+  }
 }
 
 /**
