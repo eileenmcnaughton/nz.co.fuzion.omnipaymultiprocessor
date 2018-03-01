@@ -358,7 +358,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $cardFields['billingCountry'] = CRM_Core_PseudoConstant::countryIsoCode($cardFields['billingCountry']);
     }
     if (is_numeric($cardFields['billingState'])) {
-      $cardFields['billingCountry'] = CRM_Core_PseudoConstant::stateProvince($cardFields['billingState']);
+      $cardFields['billingState'] = CRM_Core_PseudoConstant::stateProvince($cardFields['billingState']);
     }
     return $cardFields;
   }
