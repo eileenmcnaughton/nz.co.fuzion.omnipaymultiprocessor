@@ -400,6 +400,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     else {
       $amount = (float) CRM_Utils_Rule::cleanMoney($params['amount']);
     }
+    if (!empty($params['currencyID'])) {
+      $amount = CRM_Utils_Money::format($amount, $params['currencyID'], NULL, TRUE);
+    }
+
+
     $creditCardOptions = array(
       'amount' => $amount,
       // Contribution page in 4.4 (confirmed Event online, 4.7) passes currencyID - not sure which passes currency (if any).
