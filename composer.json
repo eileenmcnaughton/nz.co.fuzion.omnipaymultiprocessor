@@ -39,6 +39,10 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-tests.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/mattwire/omnipay-sagepay.git"
         }
 
     ],
@@ -59,6 +63,7 @@
         "fuzion/omnipay-authorizenetstd": "dev-master",
         "fuzion/omnipay-mercanet": "dev-master",
         "pergo/omnipay-pergo": "dev-master",
+        "omnipay/sagepay": "dev-2.5.1-mjw",
         "guzzlehttp/guzzle": "^6.2@dev"
     },
     "require-dev":
