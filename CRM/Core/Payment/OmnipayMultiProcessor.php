@@ -334,10 +334,20 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
     }
 
-    // Compensate for some unreliability in calling function, especially from pre-Approval.
+    // billingCountry and billingState are numeric and in "_id" fields when submitted via a contribution confirm page
     if (empty($cardFields['billingCountry']) && isset($params['billing_country_id-' . $billingID])) {
       $cardFields['billingCountry'] = $params['billing_country_id-' . $billingID];
     }
+    if (is_numeric($cardFields['billingCountry'])) {
+      $cardFields['billingCountry'] = CRM_Core_PseudoConstant::countryIsoCode($cardFields['billingCountry']);
+    }
+    if (empty($cardFields['billingState']) && isset($params['billing_state_province_id-' . $billingID])) {
+      $cardFields['billingState'] = $params['billing_state_province_id-' . $billingID];
+    }
+    if (is_numeric($cardFields['billingState'])) {
+      $cardFields['billingState'] = CRM_Core_PseudoConstant::stateProvinceAbbreviation($cardFields['billingState']);
+    }
+
     if (empty($cardFields['email'])) {
       if (!empty($params['email-' . $billingID])) {
         $cardFields['email'] = $params['email-' . $billingID];
@@ -352,13 +362,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           }
         }
       }
-    }
-    //do we need these if clauses lines? in 4.5 contribution page we don't....
-    if (is_numeric($cardFields['billingCountry'])) {
-      $cardFields['billingCountry'] = CRM_Core_PseudoConstant::countryIsoCode($cardFields['billingCountry']);
-    }
-    if (is_numeric($cardFields['billingState'])) {
-      $cardFields['billingState'] = CRM_Core_PseudoConstant::stateProvince($cardFields['billingState']);
     }
     return $cardFields;
   }
