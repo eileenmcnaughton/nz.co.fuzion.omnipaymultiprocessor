@@ -778,7 +778,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         if (empty($redirectUrl)) {
           $redirectUrl = $this->getReturnFailUrl(CRM_Utils_Request::retrieve('qfKey', 'String'));
         }
-        if (!$redirectUrl && method_exists($response, 'invalid')) {
+        if ($redirectUrl && method_exists($response, 'invalid')) {
           $response->invalid($redirectUrl, $userMsg);
         }
         break;
@@ -793,7 +793,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         if (empty($redirectUrl)) {
           $redirectUrl = $this->getReturnFailUrl(CRM_Utils_Request::retrieve('qfKey', 'String'));
         }
-        if (!$redirectUrl && method_exists($response, 'error')) {
+        if ($redirectUrl && method_exists($response, 'error')) {
           $response->error($redirectUrl, $userMsg);
         }
         try {
@@ -809,7 +809,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         if (empty($redirectUrl)) {
           $redirectUrl = $this->getReturnSuccessUrl(CRM_Utils_Request::retrieve('qfKey', 'String'));
         }
-        if (method_exists($response, 'confirm')) {
+        if ($redirectUrl && method_exists($response, 'confirm')) {
           $output = $response->confirm($redirectUrl, $userMsg);
           if ($output) {
             echo $output;
