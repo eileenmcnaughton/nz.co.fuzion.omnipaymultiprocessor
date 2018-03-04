@@ -70,7 +70,7 @@ return array(
           'site_url' => '',
           'class_name' => 'Payment_OmnipayMultiProcessor',
           'billing_mode' => 4,
-          'payment_type' => 1,
+          'payment_type' => 3,
         ),
     ),
 );
