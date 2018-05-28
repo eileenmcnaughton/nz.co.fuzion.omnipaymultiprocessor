@@ -81,21 +81,6 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   }
 
   /**
-   * Get base url dependent on component.
-   *
-   * @return string|void
-   */
-  protected function getBaseReturnUrl() {
-    if ($this->_component == 'event') {
-      $baseURL = 'civicrm/event/register';
-    }
-    else {
-      $baseURL = 'civicrm/contribute/transact';
-    }
-    return $baseURL;
-  }
-
-  /**
    * Get URL to return the browser to on success.
    *
    * @param string $qfKey
@@ -137,51 +122,6 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
         TRUE, NULL, FALSE, TRUE
       );
     }
-  }
-
-  /**
-   * Get url to return to after cancelled or failed transaction.
-   *
-   * @param string $qfKey
-   * @param int $participantID
-   *
-   * @return string cancel url
-   */
-  public function getCancelUrl($qfKey, $participantID) {
-    if ($this->_component == 'event') {
-      return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
-          'reset' => 1,
-          'cc' => 'fail',
-          'participantId' => $participantID,
-        ),
-        TRUE, NULL, FALSE
-      );
-    }
-
-    return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
-        '_qf_Main_display' => 1,
-        'qfKey' => $qfKey,
-        'cancel' => 1,
-      ),
-      TRUE, NULL, FALSE
-    );
-  }
-
-  /**
-   * Get URl for when the back button is pressed.
-   *
-   * @param string $qfKey
-   *
-   * @return string
-   *   Url to return to the site (without having paid).
-   */
-  protected function getGoBackUrl($qfKey) {
-    return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
-        '_qf_Confirm_display' => 'true',
-        'qfKey' => $qfKey,
-      ),
-      TRUE, NULL, FALSE
-    );
   }
 
   /**
