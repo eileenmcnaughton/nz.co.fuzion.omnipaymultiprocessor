@@ -64,9 +64,9 @@ note - Mercanet does not support '-' characters in this prefix. Untested on othe
 ### Eway
 
 The gateways supported are:
-Rapid Direct - this is the onsite processor
-Rapid Shared - re-directs to an eway hosted page
-Rapid - transparent redirect, redirects to a form on your site that submits to eway
+* Rapid Direct - this is the onsite processor
+* Rapid Shared - re-directs to an eway hosted page
+* Rapid - transparent redirect, redirects to a form on your site that submits to eway
 
 Note that we always collect Country & Billing name details for
 the Shared & transparent redirect variants as it is necessary
