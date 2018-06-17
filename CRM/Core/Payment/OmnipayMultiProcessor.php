@@ -796,7 +796,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *  - success
    *  - fail
    */
-  protected function redirectOrExit($outcome, $response) {
+  protected function redirectOrExit($outcome, $response = NULL) {
     switch ($outcome) {
       case 'fail':
         $userMsg = ts('Your payment was not successful. Please try again');
@@ -809,12 +809,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
       case 'error':
         $userMsg = ts('The transaction was not processed. The message from the bank was : %1. Please try again', array(1 => $response->getMessage()));
-        if (method_exists($response, 'getInvalidFields') && ($invalidFields = $response->getInvalidFields()) != array()) {
+        if ($response && method_exists($response, 'getInvalidFields') && ($invalidFields = $response->getInvalidFields()) != array()) {
           $userMsg = ts('Invalid data entered in fields ' . implode(', ', $invalidFields));
         }
         CRM_Core_Session::setStatus($userMsg);
         $redirectUrl = $this->getStoredUrl('fail');
-        if (method_exists($response, 'error')) {
+        if ($response && method_exists($response, 'error')) {
           $response->error($redirectUrl, $userMsg);
         }
         try {
