@@ -642,6 +642,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->createGateway($params['processor_id']);
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
+    $response = NULL;
     try {
       if ($this->gateway->supportsAcceptNotification()) {
         $response = $this->gateway->acceptNotification($params)->send();
@@ -789,6 +790,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @param string $outcome
    *  - success
    *  - fail
+   * @param null|object $response
    */
   protected function redirectOrExit($outcome, $response = NULL) {
     switch ($outcome) {
