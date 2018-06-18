@@ -907,6 +907,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function doPreApproval(&$params) {
+    if (!empty($params['token'])) {
+      return ['pre_approval_parameters' => ['token' => $params['token']]];
+    }
     $this->_component = $params['component'];
     $this->ensurePaymentProcessorTypeIsSet();
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
