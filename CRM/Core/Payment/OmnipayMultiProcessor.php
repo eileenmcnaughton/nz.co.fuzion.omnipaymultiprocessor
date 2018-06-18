@@ -396,15 +396,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   private function getCreditCardOptions($params) {
-    // Contribution page in 4.4 passes amount - not sure which passes total_amount if any.
-    if (isset($params['total_amount'])) {
-      $amount = (float) CRM_Utils_Rule::cleanMoney($params['total_amount']);
-    }
-    else {
-      $amount = (float) CRM_Utils_Rule::cleanMoney($params['amount']);
-    }
     $creditCardOptions = array(
-      'amount' => $amount,
+      'amount' => $this->getAmount($params),
       // Contribution page in 4.4 (confirmed Event online, 4.7) passes currencyID - not sure which passes currency (if any).
       'currency' => strtoupper(!empty($params['currencyID']) ? $params['currencyID'] : $params['currency']),
       'description' => $this->getPaymentDescription($params),
