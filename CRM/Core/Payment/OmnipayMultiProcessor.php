@@ -985,6 +985,33 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           'pre_approval_parameters' => array('token' => $params['token'])
         );
       }
+      elseif ($response->isRedirect()) {
+
+        if ($response->getTransactionReference()) {
+          // For Paypal express with jsv4 we should just return the token.
+          // This is kinda tricky - in that it's not denoted on that class anywhere
+          // & as we integrate more we might need to refine this early return
+          // to be metadata based or to have some jsv4 specific paypal class.
+          return ['pre_approval_parameters' => array('token' => $response->getTransactionReference())];
+        }
+        /*
+         * This is what we expect to do but no current processors.
+        $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
+        // Unset $this->gateway before storing session to cache due to risk of
+        // Serialization of 'Closure' is not allowed error - issue #17
+        $this->gateway = NULL;
+        CRM_Core_Session::storeSessionObjects(FALSE);
+        if ($response->isTransparentRedirect()) {
+          $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
+              'payment_processor_id' => $this->_paymentProcessor['id'],
+              'post_submit_url' => $response->getRedirectURL(),
+              'contact_id' => $params['contactID'],
+            ));
+          CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/payment/details', array('key' => $params['qfKey'])));
+        }
+        $response->redirect();
+        */
+      }
       else {
         $this->purgeSensitiveDataFromSession();
         unset($params['credit_card_number']);
