@@ -414,6 +414,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (!empty($params['action'])) {
       $creditCardOptions['action'] = 'Purchase';
     }
+
+    // Add any passthrough fields in. This allows us to define fields in metadata
+    // and have them reach Omnipay with only a small amount of twisting ourselves in knots.
+    foreach ($this->getPaymentFormFieldsMetadata() as $field) {
+      if (!empty($field['is_pass_through']) && isset($params[$field['name']])) {
+        $creditCardOptions[$field['name']] = $params[$field['name']];
+      }
+    }
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
     return $creditCardOptions;
@@ -457,10 +465,32 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws CiviCRM_API3_Exception
    */
   public function getPaymentFormFields() {
+    $fields = $this->getProcessorTypeMetadata('payment_fields');
+    if ($fields !== FALSE) {
+      return $fields;
+    }
     if ($this->_paymentProcessor['billing_mode'] == 4 || $this->isTransparentRedirect()) {
       return array();
     }
     return $this->_paymentProcessor['payment_type'] == 1 ? $this->getCreditCardFormFields() : $this->getDirectDebitFormFields();
+  }
+
+
+  /**
+   * Return an array of all the details about the fields potentially required for payment fields.
+   *
+   * Only those determined by getPaymentFormFields will actually be assigned to the form
+   *
+   * @return array
+   *   field metadata
+   */
+  public function getPaymentFormFieldsMetadata() {
+    $fields = parent::getPaymentFormFieldsMetadata();
+    $additionalMetadata = $this->getProcessorTypeMetadata('payment_fields_metadata');
+    if ($additionalMetadata) {
+      $fields = array_merge($fields, $additionalMetadata);
+    }
+    return $fields;
   }
 
   /**
