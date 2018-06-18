@@ -7,7 +7,7 @@ namespace Omnipay\SecurePay\Message;
  */
 abstract class SecureXMLAbstractRequest extends AbstractRequest
 {
-    public $testEndpoint = 'https://test.securepay.com.au/xmlapi/payment';
+    public $testEndpoint = 'https://test.api.securepay.com.au/xmlapi/payment';
     public $liveEndpoint = 'https://api.securepay.com.au/xmlapi/payment';
 
     protected $requestType = 'Payment';

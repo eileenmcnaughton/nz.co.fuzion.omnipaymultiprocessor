@@ -18,6 +18,10 @@
         },
         {
             "type": "git",
+            "url":  "https://github.com/eileenmcnaughton/omnipay-paypal.git"
+        },
+        {
+            "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-nabtransact.git"
         },
         {
@@ -58,12 +62,11 @@
         "civicrm/omnipay-paypalstandard": "dev-master",
         "pointybeard/omnipay-nabtransact": "dev-transact",
         "fzaninotto/faker": "^1.6@dev",
-        "omnipay/authorizenet": "dev-master",
-        "omnipay/paymentexpress": "dev-master",
+        "omnipay/authorizenet": "2.6.x-dev",
+        "omnipay/paymentexpress": "2.x-dev",
         "fuzion/omnipay-authorizenetstd": "dev-master",
         "fuzion/omnipay-mercanet": "dev-master",
         "pergo/omnipay-pergo": "dev-master",
-        "omnipay/sagepay": "dev-2.5.1-mjw",
         "guzzlehttp/guzzle": "^6.2@dev"
     },
     "require-dev":

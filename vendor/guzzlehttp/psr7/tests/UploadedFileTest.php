@@ -204,7 +204,7 @@ class UploadedFileTest extends \PHPUnit_Framework_TestCase
 
         $this->cleanup[] = $to = tempnam(sys_get_temp_dir(), 'diac');
         $upload->moveTo($to);
-        $this->assertTrue(file_exists($to));
+        $this->assertFileExists($to);
 
         $this->setExpectedException('RuntimeException', 'moved');
         $upload->moveTo($to);

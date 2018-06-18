@@ -4,6 +4,7 @@
 * Fix `AppendStream::detach` to not close streams
 * Clarify exception message when stream is detached
 * Added a test for #129 behavior
+* Deprecated parsing folded header lines as per RFC 7230
 
 ## 1.4.2 - 2017-03-20
 

@@ -24,6 +24,6 @@
        "psr-4": { "Omnipay\\AuthorizeNetStd\\" : "src/" }
     },
     "require": {
-         "omnipay/authorizenet": "dev-master"
+         "omnipay/authorizenet": "2.6.x-dev"
     }
 }

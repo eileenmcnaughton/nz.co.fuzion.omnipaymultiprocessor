@@ -46,7 +46,7 @@ class DirectPostAuthorizeRequestTest extends TestCase
         $this->assertNull($response->getMessage());
         $this->assertNull($response->getCode());
 
-        $this->assertSame('https://api.securepay.com.au/live/directpost/authorise', $response->getRedirectUrl());
+        $this->assertSame('https://api.securepay.com.au/directpost/authorise', $response->getRedirectUrl());
         $this->assertSame('POST', $response->getRedirectMethod());
 
         $data = $response->getData();

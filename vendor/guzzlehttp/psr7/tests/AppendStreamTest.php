@@ -103,7 +103,7 @@ class AppendStreamTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($a->isWritable());
 
         $this->assertNull($s1->detach());
-        $this->assertTrue(is_resource($handle), 'resource is not closed when detaching');
+        $this->assertInternalType('resource', $handle, 'resource is not closed when detaching');
         fclose($handle);
     }
 

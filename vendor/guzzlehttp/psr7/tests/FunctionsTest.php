@@ -321,6 +321,34 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('GET_DATA', $request->getMethod());
     }
 
+    public function testParsesRequestMessagesWithFoldedHeadersOnHttp10()
+    {
+        $req = "PUT / HTTP/1.0\r\nFoo: Bar\r\n Bam\r\n\r\n";
+        $request = Psr7\parse_request($req);
+        $this->assertEquals('PUT', $request->getMethod());
+        $this->assertEquals('/', $request->getRequestTarget());
+        $this->assertEquals('Bar Bam', $request->getHeaderLine('Foo'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid header syntax: Obsolete line folding
+     */
+    public function testRequestParsingFailsWithFoldedHeadersOnHttp11()
+    {
+        Psr7\parse_response("GET_DATA / HTTP/1.1\r\nFoo: Bar\r\n Biz: Bam\r\n\r\n");
+    }
+
+    public function testParsesRequestMessagesWhenHeaderDelimiterIsOnlyALineFeed()
+    {
+        $req = "PUT / HTTP/1.0\nFoo: Bar\nBaz: Bam\n\n";
+        $request = Psr7\parse_request($req);
+        $this->assertEquals('PUT', $request->getMethod());
+        $this->assertEquals('/', $request->getRequestTarget());
+        $this->assertEquals('Bar', $request->getHeaderLine('Foo'));
+        $this->assertEquals('Bam', $request->getHeaderLine('Baz'));
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -351,6 +379,58 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('Bar', $response->getHeaderLine('Foo'));
         $this->assertSame('Bam, Qux', $response->getHeaderLine('Baz'));
         $this->assertSame('Test', (string) $response->getBody());
+    }
+
+    public function testParsesResponseWithLeadingDelimiter()
+    {
+        $res = "\r\nHTTP/1.0 200\r\nFoo: Bar\r\n\r\nTest";
+        $response = Psr7\parse_response($res);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('OK', $response->getReasonPhrase());
+        $this->assertSame('1.0', $response->getProtocolVersion());
+        $this->assertSame('Bar', $response->getHeaderLine('Foo'));
+        $this->assertSame('Test', (string) $response->getBody());
+    }
+
+    public function testParsesResponseWithFoldedHeadersOnHttp10()
+    {
+        $res = "HTTP/1.0 200\r\nFoo: Bar\r\n Bam\r\n\r\nTest";
+        $response = Psr7\parse_response($res);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('OK', $response->getReasonPhrase());
+        $this->assertSame('1.0', $response->getProtocolVersion());
+        $this->assertSame('Bar Bam', $response->getHeaderLine('Foo'));
+        $this->assertSame('Test', (string) $response->getBody());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid header syntax: Obsolete line folding
+     */
+    public function testResponseParsingFailsWithFoldedHeadersOnHttp11()
+    {
+        Psr7\parse_response("HTTP/1.1 200\r\nFoo: Bar\r\n Biz: Bam\r\nBaz: Qux\r\n\r\nTest");
+    }
+
+    public function testParsesResponseWhenHeaderDelimiterIsOnlyALineFeed()
+    {
+        $res = "HTTP/1.0 200\nFoo: Bar\nBaz: Bam\n\nTest\n\nOtherTest";
+        $response = Psr7\parse_response($res);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('OK', $response->getReasonPhrase());
+        $this->assertSame('1.0', $response->getProtocolVersion());
+        $this->assertSame('Bar', $response->getHeaderLine('Foo'));
+        $this->assertSame('Bam', $response->getHeaderLine('Baz'));
+        $this->assertSame("Test\n\nOtherTest", (string)$response->getBody());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid message: Missing header delimiter
+     */
+    public function testResponseParsingFailsWithoutHeaderDelimiter()
+    {
+        Psr7\parse_response("HTTP/1.0 200\r\nFoo: Bar\r\n Baz: Bam\r\nBaz: Qux\r\n");
     }
 
     /**
@@ -619,11 +699,11 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
     {
         $r1 = new Psr7\Request('GET', 'http://foo.com');
         $r2 = Psr7\modify_request($r1, []);
-        $this->assertTrue($r2 instanceof Psr7\Request);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Request', $r2);
 
         $r1 = new Psr7\ServerRequest('GET', 'http://foo.com');
         $r2 = Psr7\modify_request($r1, []);
-        $this->assertTrue($r2 instanceof ServerRequestInterface);
+        $this->assertInstanceOf('Psr\Http\Message\ServerRequestInterface', $r2);
     }
 
     public function testReturnsUriAsIsWhenNoChanges()
@@ -654,11 +734,23 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
     {
         $r1 = new Psr7\Request('GET', 'http://foo.com');
         $r2 = Psr7\modify_request($r1, ['remove_headers' => ['non-existent']]);
-        $this->assertTrue($r2 instanceof Psr7\Request);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Request', $r2);
 
         $r1 = new Psr7\ServerRequest('GET', 'http://foo.com');
         $r2 = Psr7\modify_request($r1, ['remove_headers' => ['non-existent']]);
-        $this->assertTrue($r2 instanceof ServerRequestInterface);
+        $this->assertInstanceOf('Psr\Http\Message\ServerRequestInterface', $r2);
+    }
+
+    public function testMessageBodySummaryWithSmallBody()
+    {
+        $message = new Psr7\Response(200, [], 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        $this->assertEquals('Lorem ipsum dolor sit amet, consectetur adipiscing elit.', Psr7\get_message_body_summary($message));
+    }
+
+    public function testMessageBodySummaryWithLargeBody()
+    {
+        $message = new Psr7\Response(200, [], 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+        $this->assertEquals('Lorem ipsu (truncated...)', Psr7\get_message_body_summary($message, 10));
     }
 }
 
