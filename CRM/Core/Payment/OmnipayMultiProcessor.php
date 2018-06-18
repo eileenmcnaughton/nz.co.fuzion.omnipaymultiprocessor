@@ -174,6 +174,39 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Paypal express replaces the submit button with it's own.
+   *
+   * @return bool
+   *   Should the form button by suppressed?
+   * @throws \Civi\Payment\Exception\PaymentProcessorException
+   */
+  public function isSuppressSubmitButtons() {
+    return $this->getProcessorTypeMetadata('suppress_submit_button');
+  }
+
+  /**
+   * Opportunity for the payment processor to override the entire form build.
+   *
+   * @param CRM_Core_Form $form
+   *
+   * @return bool
+   *   Should form building stop at this point?
+   * @throws \Civi\Payment\Exception\PaymentProcessorException
+   */
+  public function buildForm(&$form) {
+    $regions = (array) $this->getProcessorTypeMetadata('regions');
+    CRM_Core_Resources::singleton()->addVars('omnipay', array('paymentProcessorId' => $this->_paymentProcessor['id']));
+    foreach ($regions as $region => $additions) {
+      foreach ($additions as $addition) {
+        CRM_Core_Region::instance($region)->add(
+          $addition
+        );
+      }
+    }
+    return FALSE;
+  }
+
+  /**
    * Set fields on payment processor based on the labels.
    *
    * This is based on the payment_processor_type table & the values in the payment_processor table.
