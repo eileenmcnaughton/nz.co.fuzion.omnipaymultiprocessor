@@ -63,7 +63,7 @@ return array(
     'metadata' => [
       'suppress_submit_button' => 1,
       'supports_preapproval' => 1,
-      'payment_fields' => ['token', 'PayerID'],
+      'payment_fields' => ['payment_token', 'PayerID'],
       'payment_fields_metadata' => [
           'PayerID' => [
           'name' => 'PayerID',
@@ -134,7 +134,7 @@ return array(
             onAuthorize: function(data, actions) {
               document.getElementById('crm-submit-buttons').style.display = 'block';
               document.getElementById('PayerID').value = data['payerID'];
-              document.getElementById('token').value = data['paymentToken'];
+              document.getElementById('payment_token').value = data['paymentToken'];
               document.getElementById(formID).submit();
             }
 
