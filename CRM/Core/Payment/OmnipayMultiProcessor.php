@@ -841,8 +841,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * Store a payment token.
    *
-   * From 4.6 onwards the payment token table can store these tokens.
-   *
    * We don't want fails here to trigger a rollback to we set is_transactional to false.
    *
    * Note that we are 'always' setting the next sched contribution date here - but that
@@ -942,8 +940,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function doPreApproval(&$params) {
-    if (!empty($params['token'])) {
-      return ['pre_approval_parameters' => ['token' => $params['token']]];
+    if (!empty($params['payment_token'])) {
+      return ['pre_approval_parameters' => ['token' => $params['payment_token']]];
     }
     $this->_component = $params['component'];
     $this->ensurePaymentProcessorTypeIsSet();

@@ -74,6 +74,7 @@ return array(
           'attributes' => array(
             'size' => 10,
             'autocomplete' => 'off',
+            'id' => 'PayerID',
           ),
         ],
         /* This should not be required but we may need
@@ -93,53 +94,11 @@ return array(
         */
       ],
       'regions' => [
-        'page-header' => [['scriptUrl' => 'https://www.paypalobjects.com/api/checkout.js']],
-        'billing-block-post' => [
-          ['markup' => '<div id="paypal-button"></div>'],
-          ['script' =>
-          "
-        // https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/upgrade-integration/
-        // https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/add-paypal-button/
-        var formID = CRM.$('#billing-payment-block').closest('form').attr('id');
-
-        CRM.$.urlParam = function(name){
-          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-          if (results==null){
-           return null;
-          }
-          else{
-            return decodeURI(results[1]) || 0;
-          }
-        }
-        var environment = (CRM.$.urlParam('action') === 'preview' ? 'sandbox' : 'production');
-        console.log(environment);
-        
-        paypal.Button.render({
-            env: environment,
-            payment: function(data, actions) {
-
-              return new paypal.Promise(function(resolve, reject) {
-                 CRM.api3('PaymentProcessor', 'preapprove', {
-                   'payment_processor_id' : CRM.vars.omnipay.paymentProcessorId,
-                   'amount' : calculateTotalFee(),
-                 },
-                 ).done(function(result) {
-                   token = result['values'][0]['token'];
-                   resolve(token);
-                })
-                .fail(function(err)  { reject(err); });
-              });
-            },
-
-            onAuthorize: function(data, actions) {
-              document.getElementById('crm-submit-buttons').style.display = 'block';
-              document.getElementById('PayerID').value = data['payerID'];
-              document.getElementById('payment_token').value = data['paymentToken'];
-              document.getElementById(formID).submit();
-            }
-
-        }, '#paypal-button');
-    "]],
+        //'billing-block-post' => [],
+        'billing-block' => [
+          ['markup' => '<div id="paypal-button"></div>', 'name' => 'paypal_button', 'weight' => 400],
+          ['name' => 'paypal_script', 'weight' => 500, 'script' => file_get_contents(__DIR__ . '/omnipay_PaypalExpress.js')]
+         ],
     ],
     ],
   ),
