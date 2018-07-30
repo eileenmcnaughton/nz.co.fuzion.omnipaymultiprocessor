@@ -103,3 +103,7 @@ function omnipaymultiprocessor__versionAtLeast($version) {
   }
   return FALSE;
 }
+
+function omnipaymultiprocessor_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+  $params['payment_processor']['preapprove'] = ['make online contributions'];
+}
