@@ -29,4 +29,5 @@ function _civicrm_api3_payment_processor_preapprove_spec(&$params) {
   $params['payment_processor_id']['api.required'] = 1;
   $params['amount']['api.required'] = 1;
   $params['component']['api.default'] = 'contribute';
+  $params['component']['api.required'] = 'currency';
 }
