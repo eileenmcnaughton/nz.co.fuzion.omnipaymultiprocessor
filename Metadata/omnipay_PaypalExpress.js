@@ -3,21 +3,9 @@
 // https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/add-paypal-button/
 var formID = CRM.$('#billing-payment-block').closest('form').attr('id');
 
-CRM.$.urlParam = function(name) {
-  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-  if (results === null) {
-    return null;
-  }
-  else {
-    return decodeURI(results[1]) || 0;
-  }
-};
-
-var environment = (CRM.$.urlParam('action') === 'preview' ? 'sandbox' : 'production');
-
 renderPaypal = function() {
   paypal.Button.render({
-    env: environment,
+    env: (CRM.vars.omnipay.is_test ? 'sandbox' : 'production'),
     payment: function (data, actions) {
 
       return new paypal.Promise(function (resolve, reject) {
