@@ -2,6 +2,7 @@
 // https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/upgrade-integration/
 // https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/add-paypal-button/
 var formID = CRM.$('#billing-payment-block').closest('form').attr('id');
+var qfKey = CRM.$('#' + formID + ' [name=qfKey]').val();
 
 renderPaypal = function() {
   paypal.Button.render({
@@ -13,6 +14,8 @@ renderPaypal = function() {
             'payment_processor_id': CRM.vars.omnipay.paymentProcessorId,
             'amount': calculateTotalFee(),
             'currencyID' : CRM.vars.omnipay.currency,
+            // 'qf_key': qfKey,
+          'is_recur' : CRM.$('#is_recur').is(":checked")
           }
         ).done(function (result) {
           if (result['is_error'] === 1) {
