@@ -195,7 +195,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function buildForm(&$form) {
     $regions = (array) $this->getProcessorTypeMetadata('regions');
-    CRM_Core_Resources::singleton()->addVars('omnipay', array('paymentProcessorId' => $this->_paymentProcessor['id']));
+    CRM_Core_Resources::singleton()->addVars('omnipay', array('paymentProcessorId' => $this->_paymentProcessor['id'], 'currency' => $form->getCurrency()));
     foreach ($regions as $region => $additions) {
       foreach ($additions as $addition) {
         CRM_Core_Region::instance($region)->add(
@@ -455,6 +455,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $creditCardOptions[$field['name']] = $params[$field['name']];
       }
     }
+
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
     return $creditCardOptions;
