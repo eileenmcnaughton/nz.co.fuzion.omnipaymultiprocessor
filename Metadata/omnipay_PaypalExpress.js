@@ -23,7 +23,8 @@ renderPaypal = function() {
       return new paypal.Promise(function (resolve, reject) {
         CRM.api3('PaymentProcessor', 'preapprove', {
             'payment_processor_id': CRM.vars.omnipay.paymentProcessorId,
-            'amount': calculateTotalFee()
+            'amount': calculateTotalFee(),
+            'currencyID' : CRM.vars.omnipay.currency,
           }
         ).done(function (result) {
           if (result['is_error'] === 1) {
