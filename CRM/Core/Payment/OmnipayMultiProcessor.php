@@ -1067,8 +1067,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
   /**
    * Remove sensitive data from the session before it is stored.
-   *
-   * @return array
    */
   protected function purgeSensitiveDataFromSession() {
     foreach ($_SESSION as &$key) {
@@ -1089,7 +1087,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
     }
-    return array($key, $values);
   }
 
   /**
