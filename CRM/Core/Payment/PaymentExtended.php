@@ -210,6 +210,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
         $validParts[] = $params[$part];
       }
     }
+    if (empty($validParts) && !empty($params['is_recur'])) {
+      $validParts[] = ts('regular payment');
+    }
     return substr(implode('-', $validParts), 0, $length);
   }
 
