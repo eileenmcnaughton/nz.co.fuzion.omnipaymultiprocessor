@@ -77,7 +77,6 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     $this->_mode = $mode;
     $this->_is_test = ($mode == 'live') ? FALSE : TRUE;
     $this->_paymentProcessor = $paymentProcessor;
-    $this->_processorName = !empty($paymentProcessor['payment_processor_type']) ? $paymentProcessor['payment_processor_type'] : $paymentProcessor['name'];
   }
 
   /**
