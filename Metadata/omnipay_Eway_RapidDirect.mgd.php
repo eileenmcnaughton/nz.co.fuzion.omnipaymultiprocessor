@@ -45,6 +45,13 @@ return array(
     'metadata' => array(
       'is_transparent_redirect' => FALSE,
       'supports_preapproval' => TRUE,
+      'client_side_credentials' => ['signature'  => 'ewayKey'],
+      'regions' => [
+        'billing-block' => [
+          ['name' => 'eway_script', 'weight' => 500, 'script' => file_get_contents(__DIR__ . '/js/omnipay_Eway_RapidDirect.js')],
+          ['name' => 'eway_server_script', 'weight' => 1000, 'scriptUrl' => 'https://secure.ewaypayments.com/scripts/eCrypt.js'],
+        ],
+      ],
     ),
     'params' => array(
       'version' => 3,

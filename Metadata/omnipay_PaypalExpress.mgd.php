@@ -99,7 +99,7 @@ return array(
           ['markup' => '<div id="paypal-button"></div>', 'name' => 'paypal_button', 'weight' => 400],
           ['name' => 'paypal_script', 'weight' => 500, 'script' => file_get_contents(__DIR__ . '/omnipay_PaypalExpress.js')]
          ],
-    ],
+      ],
     ],
   ),
 );

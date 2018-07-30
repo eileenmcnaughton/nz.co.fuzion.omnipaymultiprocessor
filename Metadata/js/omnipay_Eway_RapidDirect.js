@@ -44,8 +44,8 @@ function isFieldEncrypted(field) {
 hideEncryptedFields(cj('#credit_card_number'));
 hideEncryptedFields(cj('#cvv2'));
 
-cj(CRM.eway.formSelector).submit(function() {
-    encryptField(cj('#credit_card_number'), CRM.eway.ewayKey);
-    encryptField(cj('#cvv2'), CRM.eway.ewayKey);
+CRM.$('#billing-payment-block').closest('form').submit(function() {
+    encryptField(cj('#credit_card_number'), CRM.vars.omnipay.ewayKey);
+    encryptField(cj('#cvv2'), CRM.vars.omnipay.ewayKey);
   }
 );

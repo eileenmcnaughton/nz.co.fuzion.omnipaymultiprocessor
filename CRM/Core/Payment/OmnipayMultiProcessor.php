@@ -174,10 +174,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function buildForm(&$form) {
     $regions = $this->getProcessorTypeMetadata('regions');
-    CRM_Core_Resources::singleton()->addVars('omnipay', [
+    $jsVariables = [
       'paymentProcessorId' => $this->_paymentProcessor['id'], 'currency' => $form->getCurrency(),
       'is_test' => $this->_is_test,
-    ]);
+    ];
+    $clientSideCredentials = $this->getProcessorTypeMetadata('client_side_credentials');
+    if ($clientSideCredentials) {
+      foreach ($clientSideCredentials as $key => $clientSideKey) {
+        $jsVariables[$clientSideKey] = $this->_paymentProcessor[$key];
+      }
+    }
+    CRM_Core_Resources::singleton()->addVars('omnipay', $jsVariables);
     if (is_array($regions)) {
       foreach ($regions as $region => $additions) {
         foreach ($additions as $addition) {
@@ -243,8 +250,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'id' => $this->_paymentProcessor['payment_processor_type_id'],
       'return' => $labelFields)
     );
+    $clientSideCredentials = $this->getProcessorTypeMetadata('client_side_credentials');
+
     foreach ($labelFields as $field => $label) {
-      $result[$this->camelFieldName($processorFields[$label])] = $this->_paymentProcessor[$field];
+      if (!isset($clientSideCredentials[$field])) {
+        $result[$this->camelFieldName($processorFields[$label])] = $this->_paymentProcessor[$field];
+      }
     }
     return $result;
   }
@@ -508,6 +519,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $additionalMetadata = $this->getProcessorTypeMetadata('payment_fields_metadata');
     if ($additionalMetadata) {
       $fields = array_merge($fields, $additionalMetadata);
+    }
+    if ($this->isClientSideEncrypted()) {
+      unset($fields['cvv2']['rules']);
     }
     return $fields;
   }
@@ -1145,6 +1159,40 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $parameters = Civi::$statics['Omnipay_Test_Config']['client'];
     };
     $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']), $parameters);
+  }
+
+  /**
+   * Default payment instrument validation.
+   *
+   * Implement the usual Luhn algorithm via a static function in the CRM_Core_Payment_Form if it's a credit card
+   * Not a static function, because I need to check for payment_type.
+   *
+   * @param array $values
+   * @param array $errors
+   */
+  public function validatePaymentInstrument($values, &$errors) {
+    if ($this->isClientSideEncrypted()) {
+      // Perhaps later we can do some form of encryption.
+    }
+    else {
+      parent::validatePaymentInstrument($values, $errors);
+    }
+  }
+
+  /**
+   * @return bool
+   */
+  protected function isClientSideEncrypted() {
+    $isClientSideEncrypted = FALSE;
+    $clientSideCredentials = $this->getProcessorTypeMetadata('client_side_credentials');
+    if ($clientSideCredentials) {
+      foreach (array_keys($clientSideCredentials) as $clientSideCredential) {
+        if (!empty($this->_paymentProcessor[$clientSideCredential])) {
+          $isClientSideEncrypted = TRUE;
+        }
+      }
+    }
+    return $isClientSideEncrypted;
   }
 
 }
