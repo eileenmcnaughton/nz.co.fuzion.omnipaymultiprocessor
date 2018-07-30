@@ -460,6 +460,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws CRM_Core_Exception
    */
   public function doTransferCheckout(&$params, $component = 'contribute') {
+    CRM_Core_Error::deprecatedFunctionWarning('doPayment');
     $this->doDirectPayment($params, $component);
     if (!empty($params['token'])) {
       // It is possible no redirect was required here.
