@@ -26,6 +26,7 @@
 */
 
   use Omnipay\Omnipay;
+  use Omnipay\Common\AbstractGateway;
   use Omnipay\Common\Exception\InvalidRequestException;
 
 /**
@@ -52,8 +53,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   );
 
   /**
-   * Omnipay gateway
-   * @var Omnipay\Common\AbstractGateway
+   * Omnipay gateway.
+   *
+   * @var AbstractGateway
    */
   protected $gateway;
 
@@ -1136,8 +1138,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Instantiate $this->gateWay.
    */
   protected function createGatewayObject() {
-    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']));
-
+    $parameters = NULL;
+    if (isset(Civi::$statics['Omnipay_Test_Config']['client'])) {
+      $parameters = Civi::$statics['Omnipay_Test_Config']['client'];
+    };
+    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']), $parameters);
   }
 
 }

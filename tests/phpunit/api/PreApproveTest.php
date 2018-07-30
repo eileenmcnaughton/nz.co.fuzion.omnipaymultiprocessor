@@ -4,6 +4,8 @@ use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 use Civi\Test\HeadlessInterface;
 use Civi\Test\HookInterface;
 use Civi\Test\TransactionalInterface;
+use Guzzle\Plugin\Mock\MockPlugin;
+use Guzzle\Http\Client as HttpClient;
 
 /**
  * FIXME - Add test description.
@@ -22,6 +24,11 @@ use Civi\Test\TransactionalInterface;
 class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
   use \Civi\Test\Api3TestTrait;
 
+  /**
+   * @var Guzzle\Http\Client
+   */
+  protected $httpClient;
+
   public function setUpHeadless() {
     // Civi\Test has many helpers, like install(), uninstall(), sql(), and sqlFile().
     // See: https://github.com/civicrm/org.civicrm.testapalooza/blob/master/civi-test.md
@@ -38,13 +45,64 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
     parent::tearDown();
   }
 
+  /**
+   * Test the preapproval function.
+   */
   public function testPreApprove() {
+
+    $this->setMockHttpResponse([
+        'TOKEN' => 'EC-654429990B3545832',
+        'TIMESTAMP' => '2018-07-30T07:11:48Z',
+        'CORRELATIONID' => '2893c8052cf1c',
+        'ACK' => 'Success',
+        'VERSION' => '119.0',
+        'BUILD' => '47733884',
+    ]);
+    Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Express',
     ]);
-    $this->callAPISuccess('PaymentProcessor', 'preapprove', [
+    $preApproval = $this->callAPISuccess('PaymentProcessor', 'preapprove', [
       'payment_processor_id' => $processor['id'],
+      'check_permissions' => TRUE,
+      'amount' => 10,
+      'qfKey' => 'blah',
+      'currency' => 'USD',
     ]);
+    $this->assertEquals('EC-654429990B3545832', $preApproval['values'][0]['token']);
+  }
+
+  /**
+   * @return \HttpClient
+   */
+  public function getHttpClient() {
+    if (null === $this->httpClient) {
+      $this->httpClient = new HttpClient;
+    }
+    return $this->httpClient;
+  }
+
+  /**
+   * Set a mock response from a mock file on the next client request.
+   *
+   * This method assumes that mock response files are located under the
+   * Mock/ subdirectory of the current class. A mock response is added to the next
+   * request sent by the client.
+   *
+   * An array of path can be provided and the next x number of client requests are
+   * mocked in the order of the array where x = the array length.
+   *
+   * @param array|string $paths Path to files within the Mock folder of the service
+   *
+   * @return MockPlugin returns the created mock plugin
+   */
+  public function setMockHttpResponse($body)
+  {
+    $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
+    $response = new \Guzzle\Http\Message\Response(200);
+    $response->setBody($body);
+    $plugin->addResponse($response);
+    $this->getHttpClient()->getEventDispatcher()->addSubscriber($plugin);
   }
 
 }
