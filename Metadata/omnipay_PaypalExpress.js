@@ -42,6 +42,7 @@ renderPaypal = function() {
     },
 
     onAuthorize: function (data, actions) {
+      document.getElementById('paypal-button').style.visibility = "hidden";
       document.getElementById('crm-submit-buttons').style.display = 'block';
       document.getElementById('PayerID').value = data['payerID'];
       document.getElementById('payment_token').value = data['paymentToken'];
