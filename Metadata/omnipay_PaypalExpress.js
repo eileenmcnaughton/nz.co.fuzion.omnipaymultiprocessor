@@ -14,8 +14,8 @@ renderPaypal = function() {
             'payment_processor_id': CRM.vars.omnipay.paymentProcessorId,
             'amount': calculateTotalFee(),
             'currencyID' : CRM.vars.omnipay.currency,
-            // 'qf_key': qfKey,
-          'is_recur' : CRM.$('#is_recur').is(":checked")
+             'qf_key': qfKey,
+             // 'is_recur' : CRM.$('#is_recur').is(":checked")
           }
         ).done(function (result) {
           if (result['is_error'] === 1) {
