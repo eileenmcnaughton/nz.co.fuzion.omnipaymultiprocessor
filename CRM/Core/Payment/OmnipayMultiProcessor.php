@@ -173,16 +173,18 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws \Civi\Payment\Exception\PaymentProcessorException
    */
   public function buildForm(&$form) {
-    $regions = (array) $this->getProcessorTypeMetadata('regions');
+    $regions = $this->getProcessorTypeMetadata('regions');
     CRM_Core_Resources::singleton()->addVars('omnipay', [
       'paymentProcessorId' => $this->_paymentProcessor['id'], 'currency' => $form->getCurrency(),
       'is_test' => $this->_is_test,
     ]);
-    foreach ($regions as $region => $additions) {
-      foreach ($additions as $addition) {
-        CRM_Core_Region::instance($region)->add(
-          $addition
-        );
+    if (is_array($regions)) {
+      foreach ($regions as $region => $additions) {
+        foreach ($additions as $addition) {
+          CRM_Core_Region::instance($region)->add(
+            $addition
+          );
+        }
       }
     }
     return FALSE;
