@@ -58,29 +58,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   protected $gateway;
 
   /**
-   * Express checkout code.
-   *
-   * Check PayPal documentation for more information
-   *
-   * @param array $params assoc array of input parameters for this transaction
-   *
-   * @return array
-   *   The result in an nice formatted array (or an error object)
-   */
-  public function setExpressCheckOut(&$params) {
-  }
-
-  /**
-   * Do the express checkout at paypal.
-   *
-   * Check PayPal documentation for more information
-   *
-   * @param array $params
-   */
-  public function doExpressCheckout(&$params) {
-  }
-
-  /**
    * Process payment with external gateway.
    *
    * @param array $params assoc array of input parameters for this transaction
