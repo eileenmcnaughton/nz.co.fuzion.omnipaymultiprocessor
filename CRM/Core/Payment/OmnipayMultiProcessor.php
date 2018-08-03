@@ -666,6 +666,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       $this->redirectOrExit('success', $response);
     }
+    // Unset gateway once we are done with it per https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor/issues/55
+    $this->gateway = NULL;
 
     if ($response->isSuccessful()) {
       try {
