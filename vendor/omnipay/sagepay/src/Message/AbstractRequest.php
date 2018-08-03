@@ -7,6 +7,7 @@ namespace Omnipay\SagePay\Message;
  * Base for Sage Pay Server and Sage Pay Direct.
  */
  use Omnipay\Common\Exception\InvalidRequestException;
+ use Omnipay\SagePay\Extend\Item as ExtendItem;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
@@ -332,6 +333,28 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 $value = '';
             }
         });
+        foreach ($data as $key => $value) {
+          switch ($key) {
+            case 'DeliveryAddress1':
+              $data[$key] = $data['BillingAddress1'];
+              break;
+            case 'DeliveryAddress2':
+              $data[$key] = $data['BillingAddress2'];
+              break;
+            case 'DeliveryCity':
+              $data[$key] = $data['BillingCity'];
+              break;
+            case 'DeliveryPostCode':
+              $data[$key] = $data['BillingPostCode'];
+              break;
+            case 'DeliveryState':
+              $data[$key] = $data['BillingState'];
+              break;
+            case 'DeliveryCountry':
+              $data[$key] = $data['BillingCountry'];
+              break;
+          }
+        }
 
         $httpResponse = $this
           ->httpClient
@@ -497,13 +520,18 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             if ($basketItem->getPrice() < 0) {
                 $cartHasDiscounts = true;
             } else {
-                $total = ($basketItem->getQuantity() * $basketItem->getPrice());
+                $vat = '0.00';
+                if ($basketItem instanceof ExtendItem) {
+                    $vat = $basketItem->getVat();
+                }
+
+                $total = ($basketItem->getQuantity() * ($basketItem->getPrice() + $vat));
                 $item = $xml->addChild('item');
                 $item->description = $this->filterItemName($basketItem->getName());
                 $item->addChild('quantity', $basketItem->getQuantity());
                 $item->addChild('unitNetAmount', $basketItem->getPrice());
-                $item->addChild('unitTaxAmount', '0.00');
-                $item->addChild('unitGrossAmount', $basketItem->getPrice());
+                $item->addChild('unitTaxAmount', $vat);
+                $item->addChild('unitGrossAmount', $basketItem->getPrice() + $vat);
                 $item->addChild('totalGrossAmount', $total);
             }
         }
@@ -543,21 +571,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $count = 0;
 
         foreach ($items as $basketItem) {
-            $lineTotal = ($basketItem->getQuantity() * $basketItem->getPrice());
+            $vat = '0.00';
+            if ($basketItem instanceof ExtendItem) {
+                $vat = $basketItem->getVat();
+            }
+
+            $lineTotal = ($basketItem->getQuantity() * ($basketItem->getPrice() + $vat));
 
             $description = $this->filterItemName($basketItem->getName());
 
             // Make sure there aren't any colons in the name
             // Perhaps ":" should be replaced with '-' or other symbol?
             $description = str_replace(':', ' ', $description);
-
             $result .= ':' . $description .    // Item name
                 ':' . $basketItem->getQuantity() . // Quantity
-                // Unit cost (without tax)
-                ':' . number_format($basketItem->getPrice(), 2, '.', '') .
-                ':0.00' .    // Item tax
-                // Item total
-                ':' . number_format($basketItem->getPrice(), 2, '.', '') .
+                ':' . number_format($basketItem->getPrice(), 2, '.', '') . // Unit cost (without tax)
+                ':' . $vat . // Item tax
+                ':' . number_format($basketItem->getPrice() + $vat, 2, '.', '') . // Item total
                 // As the getItemData() puts 0.00 into tax, same was done here
                 ':' . number_format($lineTotal, 2, '.', '');  // Line total
 

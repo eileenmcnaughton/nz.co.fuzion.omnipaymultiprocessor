@@ -222,6 +222,12 @@ class AuthorizeRequest extends AbstractRequest
         $data['PWD'] = $this->getPassword();
         $data['VENDOR'] = $this->getVendor();
         $data['PARTNER'] = $this->getPartner();
+        if ($this->getDescription()) {
+            $data['COMMENT1'] = $this->getDescription();
+        }
+        if ($this->getComment2()) {
+            $data['COMMENT2'] = $this->getComment2();
+        }
 
         return $data;
     }
@@ -233,6 +239,9 @@ class AuthorizeRequest extends AbstractRequest
 
         if ($this->getCardReference()) {
             $data['ORIGID'] = $this->getCardReference();
+            if ($this->getCard()) {
+                $data['CVV2'] = $this->getCard()->getCvv();
+            }
         } else {
             $this->validate('card');
             $this->getCard()->validate();
@@ -252,13 +261,13 @@ class AuthorizeRequest extends AbstractRequest
         $data['TENDER'] = 'C';
         $data['AMT'] = $this->getAmount();
         $data['CURRENCY'] = $this->getCurrency();
-        $data['COMMENT1'] = $this->getDescription();
-        $data['COMMENT2'] = $this->getComment2();
         $data['ORDERID'] = $this->getOrderId();
         $data['PONUM'] = $this->getPoNum();
 
-        $data['BILLTOEMAIL'] = $this->getCard()->getEmail();
-        $data['BILLTOPHONENUM'] = $this->getCard()->getBillingPhone();
+        if ($this->getCard()) {
+            $data['BILLTOEMAIL'] = $this->getCard()->getEmail();
+            $data['BILLTOPHONENUM'] = $this->getCard()->getBillingPhone();
+        }
 
         $items = $this->getItems();
         if (!empty($items)) {

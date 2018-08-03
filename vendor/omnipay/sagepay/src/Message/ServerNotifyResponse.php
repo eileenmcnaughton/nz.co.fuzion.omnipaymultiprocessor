@@ -31,18 +31,21 @@ class ServerNotifyResponse extends Response implements \Omnipay\Common\Message\N
      */
     protected $exit_on_response = true;
 
-  /**
-   * Confirm
-   *
-   * Notify Sage Pay you received the payment details and wish to confirm the payment.
-   *
-   * @param string $nextUrl
-   * @param string URL to forward the customer to.
-   *
-   * @throws \Omnipay\Common\Exception\InvalidResponseException
-   */
+    /**
+     * Confirm
+     *
+     * Notify Sage Pay you received the payment details and wish to confirm the payment.
+     *
+     * @param string URL to forward the customer to.
+     * @param string Optional human readable reasons for accepting the transaction.
+     */
     public function confirm($nextUrl, $detail = null)
     {
+        // If the signature is invalid, then do not allow the confirm.
+        if (! $this->isValid()) {
+            throw new InvalidResponseException('Cannot confirm an invalid notification');
+        }
+
         $this->sendResponse(static::RESPONSE_STATUS_OK, $nextUrl, $detail);
     }
 

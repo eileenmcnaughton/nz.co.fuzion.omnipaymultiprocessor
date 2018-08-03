@@ -75,13 +75,33 @@ class ProGatewayTest extends GatewayTestCase
     {
         $options = array(
             'amount' => '10.00',
-            'transactionReference' => 'abc123',
+            'cardReference' => 'abc123',
         );
 
         $this->setMockHttpResponse('PurchaseSuccess.txt');
 
         $response = $this->gateway->purchase($options)->send();
 
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('A10A6AE7042E', $response->getTransactionReference());
+    }
+
+    public function testReferencePurchaseWithCvvSuccess()
+    {
+        $options = array(
+            'amount' => '10.00',
+            'cardReference' => 'abc123',
+            'card' => new CreditCard(array(
+                'cvv' => '123',
+            )),
+        );
+
+        $this->setMockHttpResponse('PurchaseSuccess.txt');
+
+        $request = $this->gateway->purchase($options);
+        $response = $request->send();
+
+        $this->assertArrayHasKey('CVV2', $request->getData());
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('A10A6AE7042E', $response->getTransactionReference());
     }

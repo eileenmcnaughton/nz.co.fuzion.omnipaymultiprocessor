@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\FnStream;
 use GuzzleHttp\Psr7\NoSeekStream;
 use Psr\Http\Message\ServerRequestInterface;
 
-class FunctionsTest extends \PHPUnit_Framework_TestCase
+class FunctionsTest extends BaseTest
 {
     public function testCopiesToString()
     {
