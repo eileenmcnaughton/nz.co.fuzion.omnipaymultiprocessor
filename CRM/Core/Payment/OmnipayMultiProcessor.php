@@ -1148,6 +1148,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return string
    */
   protected function getMaskedCreditCardNumber(&$params) {
+    if (empty($params['credit_card_number'])) {
+      return '';
+    }
     $creditCardPan = '************' . substr($params['credit_card_number'], -4);
     return $creditCardPan;
   }
