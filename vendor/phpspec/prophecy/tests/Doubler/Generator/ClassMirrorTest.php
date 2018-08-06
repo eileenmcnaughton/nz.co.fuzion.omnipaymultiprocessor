@@ -405,6 +405,21 @@ class ClassMirrorTest extends TestCase
 
     /**
      * @test
+     * @requires PHP 7.1
+     */
+    public function it_doesnt_fail_on_array_nullable_parameter_with_not_null_default_value()
+    {
+        $mirror = new ClassMirror();
+
+        $classNode = $mirror->reflect(new \ReflectionClass('Fixtures\Prophecy\NullableArrayParameter'), array());
+        $method = $classNode->getMethod('iHaveNullableArrayParameterWithNotNullDefaultValue');
+        $arguments = $method->getArguments();
+        $this->assertSame('array', $arguments[0]->getTypeHint());
+        $this->assertTrue($arguments[0]->isNullable());
+    }
+
+    /**
+     * @test
      */
     public function it_doesnt_fail_to_typehint_nonexistent_RQCN()
     {
@@ -414,6 +429,25 @@ class ClassMirrorTest extends TestCase
         $method = $classNode->getMethod('iHaveAnEvenStrangerTypeHintedArg');
         $arguments = $method->getArguments();
         $this->assertEquals('I\Simply\Am\Not', $arguments[0]->getTypeHint());
+    }
+
+    /**
+     * @test
+     * @requires PHP 7.2
+     */
+    function it_doesnt_fail_when_method_is_extended_with_more_params()
+    {
+        $mirror = new ClassMirror();
+
+        $classNode = $mirror->reflect(
+            new \ReflectionClass('Fixtures\Prophecy\MethodWithAdditionalParam'),
+            array(new \ReflectionClass('Fixtures\Prophecy\Named'))
+        );
+        $method = $classNode->getMethod('getName');
+        $this->assertCount(1, $method->getArguments());
+
+        $method = $classNode->getMethod('methodWithoutTypeHints');
+        $this->assertCount(2, $method->getArguments());
     }
 
     /**
@@ -447,6 +481,7 @@ class ClassMirrorTest extends TestCase
         $parameter->isDefaultValueAvailable()->willReturn(true);
         $parameter->getDefaultValue()->willReturn(null);
         $parameter->isPassedByReference()->willReturn(false);
+        $parameter->allowsNull()->willReturn(true);
         $parameter->getClass()->willReturn($class);
         if (version_compare(PHP_VERSION, '5.6', '>=')) {
             $parameter->isVariadic()->willReturn(false);
