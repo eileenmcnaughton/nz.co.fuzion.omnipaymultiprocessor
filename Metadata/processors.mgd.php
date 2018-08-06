@@ -251,26 +251,4 @@ return array(
         'payment_type' => 1,
       ),
   ),
-  14 => array(
-    'name' => 'OmniPay - PayPal_Rest',
-    'entity' => 'payment_processor_type',
-    'params' =>
-      array(
-        'version' => 3,
-        'title' => 'OmniPay - PayPal Rest',
-        'name' => 'omnipay_PayPal_Rest',
-        'description' => 'PayPal_Rest Payment Processor',
-        'user_name_label' => 'clientId',
-        'password_label' => 'secret',
-        'class_name' => 'Payment_OmnipayMultiProcessor',
-        'url_site_default' => 'http://unused.com',
-        'url_api_default' => 'http://unused.com',
-        'url_recur_default' => 'http://unused.com',
-        'url_site_test_default' => 'http://unused.com',
-        'url_recur_test_default' => 'http://unused.com',
-        'url_api_test_default' => 'http://unused.com',
-        'billing_mode' => 4,
-        'payment_type' => 1,
-      ),
-  ),
 );
