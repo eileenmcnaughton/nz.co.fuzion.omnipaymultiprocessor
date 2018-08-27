@@ -14,7 +14,10 @@ renderPaypal = function() {
             'amount': calculateTotalFee(),
             'currencyID' : CRM.vars.omnipay.currency,
              'qf_key': qfKey,
-             'is_recur' : CRM.$('#is_recur').is(":checked")
+             'is_recur' : CRM.$('#is_recur').is(":checked"),
+             'installments' : CRM.$('#installments').val(),
+             'frequency_unit' : CRM.$('#frequency_unit').val(),
+             'frequency_interval' : CRM.$('#frequency_interval').val()
           }
         ).done(function (result) {
           if (result['is_error'] === 1) {
