@@ -423,7 +423,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array
    */
-  private function getCreditCardOptions($params) {
+  protected function getCreditCardOptions($params) {
     $creditCardOptions = array(
       'amount' => $this->getAmount($params),
       // Contribution page in 4.4 (confirmed Event online, 4.7) passes currencyID - not sure which passes currency (if any).
