@@ -955,7 +955,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
     try {
       if (!empty($params['is_recur'])) {
-        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Authorize'))))->send();
+        $response = $this->doPreApproveForRecurring($params);
       }
       else {
         $response = $this->gateway->authorize($this->getCreditCardOptions($params))
@@ -1203,6 +1203,18 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
     }
     return $isClientSideEncrypted;
+  }
+
+  /**
+   * Do preApproval for Recurring payment.
+   *
+   * @param array $params
+   * @return \Omnipay\Common\Message\ResponseInterface
+   */
+  protected function doPreApproveForRecurring($params) {
+    $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, ['action' => 'Authorize'])))
+      ->send();
+    return $response;
   }
 
 }
