@@ -25,9 +25,11 @@
  +--------------------------------------------------------------------+
 */
 
-  use Omnipay\Omnipay;
-  use Omnipay\Common\AbstractGateway;
-  use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Omnipay;
+use Omnipay\Common\AbstractGateway;
+use Omnipay\Common\Exception\InvalidRequestException;
+use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
+
 
 /**
  * Class CRM_Core_Payment_OmnipayMultiProcessor.
