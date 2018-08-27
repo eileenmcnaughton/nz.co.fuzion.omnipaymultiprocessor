@@ -58,6 +58,7 @@ return array(
       'url_api_test_default' => 'http://unused.com',
       'billing_mode' => 4,
       'payment_type' => 1,
+      'is_recur' => 1,
     ),
     'metadata' => [
       'suppress_submit_button' => 1,
