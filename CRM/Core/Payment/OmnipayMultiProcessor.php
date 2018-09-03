@@ -111,10 +111,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
             'payment_processor_id' => $this->_paymentProcessor['id'],
             'created_id' => CRM_Core_Session::getLoggedInContactID(),
             'email' => $params['email'],
-            'billing_first_name' => $params['billing_first_name'],
-            'billing_middle_name' => $params['billing_middle_name'],
-            'billing_last_name' => $params['billing_last_name'],
-            'expiry_date' => date("Y-m-t", strtotime($params['credit_card_exp_date']['Y'] . '-' . $params['credit_card_exp_date']['M'])),
+            'billing_first_name' => CRM_Utils_Array::value('billing_first_name', $params),
+            'billing_middle_name' => CRM_Utils_Array::value('billing_middle_name', $params),
+            'billing_last_name' => CRM_Utils_Array::value('billing_last_name', $params),
+            'expiry_date' => $this->getCreditCardExpiry($params),
             'masked_account_number' => $this->getMaskedCreditCardNumber($params),
             'ip_address' => CRM_Utils_System::ipAddress(),
           ));
@@ -428,8 +428,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   protected function getCreditCardOptions($params) {
     $creditCardOptions = array(
       'amount' => $this->getAmount($params),
-      // Contribution page in 4.4 (confirmed Event online, 4.7) passes currencyID - not sure which passes currency (if any).
-      'currency' => strtoupper(!empty($params['currencyID']) ? $params['currencyID'] : $params['currency']),
+      'currency' => $this->getCurrency($params),
       'description' => $this->getPaymentDescription($params),
       'transactionId' => $this->formatted_transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
@@ -1217,6 +1216,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, ['action' => 'Authorize'])))
       ->send();
     return $response;
+  }
+
+  /**
+   * @param $params
+   * @return false|string
+   */
+  protected function getCreditCardExpiry($params) {
+    if (empty($params['credit_card_exp_date'])) {
+      return FALSE;
+    }
+    return date("Y-m-t", strtotime($params['credit_card_exp_date']['Y'] . '-' . $params['credit_card_exp_date']['M']));
   }
 
 }
