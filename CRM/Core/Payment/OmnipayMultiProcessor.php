@@ -83,14 +83,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
     try {
       if (!empty($params['token'])) {
-        // If it is not recurring we will have succeeded in an Authorize so we should capture.
-        // The only recurring currently working with is_recur + pre-authorize is eWay rapid
-        // and, at least in that case, the createCreditCard call ignores any attempt to authorise.
-        // that is likely to be a pattern.
-        $action = CRM_Utils_Array::value('payment_action', $params, empty($params['is_recur']) ? 'completePurchase' : 'purchase');
-        $params['transactionReference'] = ($params['token']);
-        $response = $this->gateway->$action($this->getCreditCardOptions(array_merge($params, array('cardTransactionType' => 'continuous'))))
-          ->send();
+        $response = $this->doTokenPayment($params);
       }
       elseif (!empty($params['is_recur'])) {
         $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
@@ -1227,6 +1220,35 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       return FALSE;
     }
     return date("Y-m-t", strtotime($params['credit_card_exp_date']['Y'] . '-' . $params['credit_card_exp_date']['M']));
+  }
+
+  /**
+   * Do a token payment.
+   *
+   * We might have a token due to form tokenisation or because we are processing
+   * a repeat payment against a payment token (ie this would be the case with some recurring payments).
+   *
+   * Currently used by:
+   *
+   * Authorize.net - supports javascript tokenised payments
+   * Eway Rapid Shared WithClientSideEncryption - supports javascript tokenised payments
+   * Eway - all forms - support tokenised recurring payments
+   * Payment Express - all forms - support tokenised recurring payments
+   * PaypalRest - supports javascript tokenised payments.
+   *
+   * @param array $params
+   * @return array
+   */
+  protected function doTokenPayment(&$params) {
+    // If it is not recurring we will have succeeded in an Authorize so we should capture.
+    // The only recurring currently working with is_recur + pre-authorize is eWay rapid
+    // and, at least in that case, the createCreditCard call ignores any attempt to authorise.
+    // that is likely to be a pattern.
+    $action = CRM_Utils_Array::value('payment_action', $params, empty($params['is_recur']) ? 'completePurchase' : 'purchase');
+    $params['transactionReference'] = ($params['token']);
+    $response = $this->gateway->$action($this->getCreditCardOptions(array_merge($params, ['cardTransactionType' => 'continuous'])))
+      ->send();
+    return $response;
   }
 
 }
