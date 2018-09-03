@@ -957,8 +957,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       if ($response->isSuccessful()) {
         $params['trxn_id'] = $params['token'] = $response->getTransactionReference();
-        if (!empty($params['is_recur'])) {
-          $params['token'] = $response->getCardReference();
+        $cardReference =  $response->getCardReference();
+        if (!empty($params['is_recur']) && $cardReference) {
+          $params['token'] = $cardReference;
         }
 
         $creditCardPan = $this->getMaskedCreditCardNumber($params);
