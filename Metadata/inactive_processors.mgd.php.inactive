@@ -37,7 +37,7 @@
  * The record will be automatically inserted, updated, or deleted from the
  * database as appropriate. For more details, see "hook_civicrm_managed" at:
  * http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
- */
+ *
 return array(
   /*
    * Omnipay was enabled as a test- but it also requires a js script
@@ -62,26 +62,6 @@ return array(
           'is_active' => 0,
         ),
     ),
-  */
-  2 => array(
-    'name' => 'OmniPay - Paybox System',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - PayboxSystem',
-      'name' => 'omnipay_Paybox_System',
-      'description' => 'Omnipay Paybox Payment Processor',
-      'user_name_label' => 'Site',
-      'password_label' => 'Identifiant',
-      'signature_label' => 'Key',
-      'subject_label' => 'Rang',
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => 'https://dummyurl.com',
-      'url_api_default' => 'https://dummyurl.com',
-      'billing_mode' => 4,
-      'payment_type' => 1,
-    ),
-  ),
   /*3 =>
     array(
       'name' => 'OmniPay - Paybox Direct',
@@ -103,45 +83,7 @@ return array(
         ),
     ),
   */
-  4 => array(
-    'name' => 'OmniPay - GoPay',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - GoPay',
-      'name' => 'omnipay_Gopay',
-      'description' => 'Omnipay GoPay Payment Processor',
-      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
-      'user_name_label' => 'Go Id',
-      'password_label' => 'Secure Key',
-      'signature_label' => '',
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => 'unused',
-      'url_api_default' => 'unused',
-      'url_site_test_default' => 'unused',
-      'url_api_test_default' => 'unused',
-      'billing_mode' => 4,
-      'payment_type' => 1,
-    ),
-  ),
-  5 => array(
-    'name' => 'OmniPay - Mollie',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - Mollie',
-      'name' => 'omnipay_Mollie',
-      'description' => 'Omnipay Mollie Payment Processor',
-      'user_name_label' => 'apiKey',
-      'password_label' => 'unused',
-      'signature_label' => 'unused',
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => 'https://mollie.com',
-      'url_api_default' => 'https://mollie.com',
-      'billing_mode' => 4,
-      'payment_type' => 1,
-    ),
-  ),
+
   /*
 
   /*
@@ -182,32 +124,8 @@ return array(
         'payment_type' => 1,
       ),
   ),
-  */
 
-  7 => array(
-    'name' => 'OmniPay - NABTransact_Transact',
-    'entity' => 'payment_processor_type',
-    'params' => array(
-      'version' => 3,
-      'title' => 'OmniPay - NAB Transact',
-      'name' => 'omnipay_NABTransact_Transact',
-      'description' => 'Omnipay NAB Transact',
-      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
-      'user_name_label' => 'Merchant Id',
-      'password_label' => 'Password',
-      'signature_label' => '',
-      'class_name' => 'Payment_OmnipayMultiProcessor',
-      'url_site_default' => 'http://unused.com',
-      'url_api_default' => 'http://unused.com',
-      'url_recur_default' => 'http://unused.com',
-      'url_site_test_default' => 'http://unused.com',
-      'url_recur_test_default' => 'http://unused.com',
-      'url_api_test_default' => 'http://unused.com',
-      'billing_mode' => 1,
-      'payment_type' => 1,
-      'is_recur' => 0,
-    ),
-  ),
+
   12 =>
     array(
       'name' => 'OmniPay - PayPal_Standard',
@@ -252,3 +170,33 @@ return array(
       ),
   ),
 );
+return array(
+    array(
+      'name' => 'OmniPay - Pergo',
+      'entity' => 'payment_processor_type',
+      'params' => array(
+          'version' => 3,
+          'title' => 'OmniPay - Pergo Offsite',
+          'name' => 'omnipay_Pergo_Offsite',
+          'description' => 'Omnipay Pergo Payment Processor',
+          'user_name_label' => 'Biller Account Id',
+          'password_label' => 'Merchant Profile ID',
+          'signature_label' => 'Authentication Token',
+          'subject_label' => '',
+          'site_url' => '',
+          'class_name' => 'Payment_OmnipayMultiProcessor',
+          'billing_mode' => 4,
+          'payment_type' => 1,
+        ),
+        'metadata' => array(
+          'transparent_redirect' => array(
+            'fields' => array(
+              // place holder for more work on adding fields to transparent_redirect payment form.
+              // leave empty for only hidden fields.
+            ),
+            'billing_fields' => array(),
+          ),
+        ),
+    ),
+);
+    */

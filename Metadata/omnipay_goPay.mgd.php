@@ -38,32 +38,26 @@
  * database as appropriate. For more details, see "hook_civicrm_managed" at:
  * http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
  */
-return array(
-    array(
-      'name' => 'OmniPay - Pergo',
-      'entity' => 'payment_processor_type',
-      'params' => array(
-          'version' => 3,
-          'title' => 'OmniPay - Pergo Offsite',
-          'name' => 'omnipay_Pergo_Offsite',
-          'description' => 'Omnipay Pergo Payment Processor',
-          'user_name_label' => 'Biller Account Id',
-          'password_label' => 'Merchant Profile ID',
-          'signature_label' => 'Authentication Token',
-          'subject_label' => '',
-          'site_url' => '',
-          'class_name' => 'Payment_OmnipayMultiProcessor',
-          'billing_mode' => 4,
-          'payment_type' => 1,
-        ),
-        'metadata' => array(
-          'transparent_redirect' => array(
-            'fields' => array(
-              // place holder for more work on adding fields to transparent_redirect payment form.
-              // leave empty for only hidden fields.
-            ),
-            'billing_fields' => array(),
-          ),
-        ),
+return [
+  [
+    'name' => 'OmniPay - GoPay',
+    'entity' => 'payment_processor_type',
+    'params' => array(
+      'version' => 3,
+      'title' => 'OmniPay - GoPay',
+      'name' => 'omnipay_Gopay',
+      'description' => 'Omnipay GoPay Payment Processor',
+      // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
+      'user_name_label' => 'Go Id',
+      'password_label' => 'Secure Key',
+      'signature_label' => '',
+      'class_name' => 'Payment_OmnipayMultiProcessor',
+      'url_site_default' => 'unused',
+      'url_api_default' => 'unused',
+      'url_site_test_default' => 'unused',
+      'url_api_test_default' => 'unused',
+      'billing_mode' => 4,
+      'payment_type' => 1,
     ),
-);
+  ]
+];
