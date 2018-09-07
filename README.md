@@ -59,7 +59,7 @@ note - Mercanet does not support '-' characters in this prefix. Untested on othe
 
 * Update `composer.json` with the required Omnipay package for your payment processor
   and run composer update.
-* Edit `CRM/Core/Payment/processors.mgd.php`.
+* Add a new `mgd` file in the `Metadata` directory.
 
 ### Eway
 
