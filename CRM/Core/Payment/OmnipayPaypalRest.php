@@ -25,6 +25,8 @@
  +--------------------------------------------------------------------+
 */
 
+use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
+
 /**
  * Class CRM_Core_Payment_PaypalRest.
  *
