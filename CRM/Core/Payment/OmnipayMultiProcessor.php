@@ -29,6 +29,8 @@ use Omnipay\Omnipay;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Exception\InvalidRequestException;
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
+use Guzzle\Plugin\History\HistoryPlugin;
+use Guzzle\Service\Client;
 
 
 /**
@@ -1160,6 +1162,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected function createGatewayObject() {
     $parameters = NULL;
+    if (\Civi::settings()->get('omnipay_developer_mode')) {
+      $this->guzzleClient = new Client();
+      // Create a history plugin and attach it to the client
+      $this->history = new HistoryPlugin();
+      $this->guzzleClient->addSubscriber($this->history);
+      Civi::$statics['Omnipay_Test_Config'] = ['client' =>  $this->guzzleClient];
+    }
     if (isset(Civi::$statics['Omnipay_Test_Config']['client'])) {
       $parameters = Civi::$statics['Omnipay_Test_Config']['client'];
     };
@@ -1250,6 +1259,34 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $response = $this->gateway->$action($this->getCreditCardOptions(array_merge($params, ['cardTransactionType' => 'continuous'])))
       ->send();
     return $response;
+  }
+
+  /**
+   * Get the bodies of the requests sent via Guzzle.
+   *
+   * @return array
+   */
+  public function getRequestBodies() {
+    $transactions= $this->history->getAll();
+    $requests = [];
+    foreach ($transactions as $transaction) {
+      $requests[] = (string) $transaction['request'];
+    }
+    return $requests;
+  }
+
+  /**
+   * Get the bodies of the responses returned via Guzzle.
+   *
+   * @return array
+   */
+  public function getResponseBodies() {
+    $responses = [];
+    $transactions= $this->history->getAll();
+    foreach ($transactions as $transaction) {
+      $responses[] = (string) $transaction['response'];
+    }
+    return $responses;
   }
 
 }
