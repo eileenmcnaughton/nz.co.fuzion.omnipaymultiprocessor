@@ -35,10 +35,14 @@ renderPaypal = function() {
     },
 
     onAuthorize: function (data, actions) {
+      var paymentToken = data['billingToken'];
+      if (!paymentToken) {
+        paymentToken = data['paymentID'];
+      }
       document.getElementById('paypal-button').style.visibility = "hidden";
       document.getElementById('crm-submit-buttons').style.display = 'block';
       document.getElementById('PayerID').value = data['payerID'];
-      document.getElementById('payment_token').value = data['paymentID'];
+      document.getElementById('payment_token').value = paymentToken;
       document.getElementById(formID).submit();
     },
 
