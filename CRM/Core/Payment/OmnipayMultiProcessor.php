@@ -1285,7 +1285,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   protected function doTokenPayment(&$params) {
-    // If it is not recurring we will have succeeded in an Authorize so we should capture.
     // The only recurring currently working with is_recur + pre-authorize is eWay rapid
     // and, at least in that case, the createCreditCard call ignores any attempt to authorise.
     // that is likely to be a pattern.
