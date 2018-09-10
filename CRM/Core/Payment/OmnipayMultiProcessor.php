@@ -954,9 +954,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $response = $this->doPreApproveForRecurring($params);
       }
       else {
-        $response = $this->gateway->authorize($this->getCreditCardOptions($params))
+        // I looked at authorize rather than purchase but for both paypal it seems worse & for eway
+        // some complaint about double email.
+        $response = $this->gateway->purchase($this->getCreditCardOptions($params))
           ->send();
       }
+
       if ($response->isSuccessful()) {
         $params['trxn_id'] = $params['token'] = $response->getTransactionReference();
         $cardReference =  $response->getCardReference();
