@@ -63,9 +63,9 @@ return array(
     'metadata' => [
       'suppress_submit_button' => 1,
       'supports_preapproval' => 1,
-      'payment_fields' => ['payment_token', 'PayerID'],
+      'payment_fields' => ['payment_token', 'PayerID', 'post_authorize'],
       'payment_fields_metadata' => [
-          'PayerID' => [
+        'PayerID' => [
           'name' => 'PayerID',
           'htmlType' => 'hidden',
           'title' => ts('Payer ID'),
@@ -77,21 +77,18 @@ return array(
             'id' => 'PayerID',
           ),
         ],
-        /* This should not be required but we may need
-        // to set it to be 'is_pass_through' because
-        // the PaypalExpress class does not handle cardReference correctly.
-        'token' => [
-          'name' => 'token',
-          'htmlType' => 'text',
-          'title' => ts('Authorization token'),
+        'post_authorize' => [
+          'name' => 'post_authorize',
+          'htmlType' => 'hidden',
+          'title' => ts('post_authorize'),
           'is_required' => FALSE,
-         // 'is_pass_through' => TRUE,
+          'is_pass_through' => TRUE,
           'attributes' => array(
-            'size' => 10,
+            'size' => 4,
             'autocomplete' => 'off',
+            'post_authorize',
           ),
         ],
-        */
       ],
       'regions' => [
         //'billing-block-post' => [],

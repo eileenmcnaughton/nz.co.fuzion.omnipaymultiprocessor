@@ -35,14 +35,17 @@ renderPaypal = function() {
     },
 
     onAuthorize: function (data, actions) {
+      var isRecur = 1;
       var paymentToken = data['billingToken'];
       if (!paymentToken) {
         paymentToken = data['paymentID'];
+        isRecur = 0;
       }
       document.getElementById('paypal-button').style.visibility = "hidden";
       document.getElementById('crm-submit-buttons').style.display = 'block';
       document.getElementById('PayerID').value = data['payerID'];
       document.getElementById('payment_token').value = paymentToken;
+      document.getElementById('post_authorize').value = isRecur;
       document.getElementById(formID).submit();
     },
 

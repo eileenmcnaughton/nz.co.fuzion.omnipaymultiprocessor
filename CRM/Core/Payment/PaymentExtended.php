@@ -67,6 +67,28 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected $gateway;
 
   /**
+   * @var CRM_Utils_SystemLogger;
+   */
+  protected $log;
+
+  /**
+   * @return \CRM_Utils_SystemLogger
+   */
+  public function getLog() {
+    if (!$this->log) {
+      $this->setLog(new CRM_Utils_SystemLogger());
+    }
+    return $this->log;
+  }
+
+  /**
+   * @param \CRM_Utils_SystemLogger $log
+   */
+  public function setLog($log) {
+    $this->log = $log;
+  }
+
+  /**
    * Class Constructor.
    *
    * @param string $mode the mode of operation: live or test

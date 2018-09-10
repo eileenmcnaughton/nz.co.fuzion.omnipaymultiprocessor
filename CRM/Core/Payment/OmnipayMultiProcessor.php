@@ -981,6 +981,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $this->gateway = NULL;
         unset($params['credit_card_number']);
         unset($params['cvv2']);
+        $this->logHttpTraffic();
         return array(
           'pre_approval_parameters' => array('token' => $params['token'])
         );
@@ -1024,6 +1025,37 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $this->purgeSensitiveDataFromSession();
       // internal error, log exception and display a generic message to the customer
       $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
+    }
+  }
+
+  /**
+   * Function to action after pre-approval if supported
+   *
+   * @param array $params
+   *   Parameters from the form
+   *
+   * Action to do after pre-approval. e.g. PaypalRest returns from offsite &
+   * hits the billing plan url to confirm.
+   *
+   * @return array
+   */
+  public function doPostApproval(&$params) {}
+
+  /**
+   * Log http traffic for analysis - only in developer mode!
+   */
+  protected function logHttpTraffic() {
+    if (!\Civi::settings()->get('omnipay_developer_mode')) {
+      return;
+    }
+    $transactions= $this->history->getAll();
+    foreach ($transactions as $transaction) {
+      $this->getLog()->debug('omnipay_transaction_logging', [
+         'request' => (string) $transaction['request'],
+      ]);
+      $this->getLog()->debug('omnipay_transaction_logging', [
+        'response' => (string) $transaction['response'],
+      ]);
     }
   }
 
