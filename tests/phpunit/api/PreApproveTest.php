@@ -23,6 +23,7 @@ use Guzzle\Http\Client as HttpClient;
  */
 class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
   use \Civi\Test\Api3TestTrait;
+  use Guzzle3TestTrait;
 
   /**
    * @var Guzzle\Http\Client
@@ -48,15 +49,15 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
   /**
    * Test the preapproval function.
    */
-  public function testPreApprove() {
+  public function testPreApproveExpress() {
 
     $this->setMockHttpResponse([
-        'TOKEN' => 'EC-654429990B3545832',
-        'TIMESTAMP' => '2018-07-30T07:11:48Z',
-        'CORRELATIONID' => '2893c8052cf1c',
-        'ACK' => 'Success',
-        'VERSION' => '119.0',
-        'BUILD' => '47733884',
+      'TOKEN' => 'EC-654429990B3545832',
+      'TIMESTAMP' => '2018-07-30T07:11:48Z',
+      'CORRELATIONID' => '2893c8052cf1c',
+      'ACK' => 'Success',
+      'VERSION' => '119.0',
+      'BUILD' => '47733884',
     ]);
     Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
@@ -72,6 +73,71 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
     $this->assertEquals('EC-654429990B3545832', $preApproval['values'][0]['token']);
   }
 
+  /**
+   * Test the preapproval function.
+   */
+  public function testPreApproveRest() {
+
+    $this->setUpClientWithHistoryContainer();
+    Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->guzzleClient];
+    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
+      'payment_processor_type_id' => 'omnipay_PayPal_Rest',
+      'user_name' => 'AWzymvrczbgFT9CuhILzNXnXFyLXsxa8lacr_TJbOT4ytdRuaKnr73t1kOIdwbSTmnjTuajgKaiZCjqR',
+      'password' => 'EANpVE9liVxABP173oGLic1fhoK2gixGeVCrXjR4Q_dpO2FLMMTtyYSmhhe5IZDaQaPUsmc4Jkx7CQGy',
+      'is_test' => 1,
+    ]);
+    $preApproval = civicrm_api('PaymentProcessor', 'preapprove', [
+      'payment_processor_id' => $processor['id'],
+      'check_permissions' => TRUE,
+      'amount' => 10,
+      'qfKey' => 'blah',
+      'currency' => 'USD',
+      'is_recur' => TRUE,
+      'component' => 'contribute',
+      'installments' => 3,
+      'frequency_unit' => 'week',
+      'frequency_interval' => 3,
+      'version' => 3,
+      'is_test' => 1,
+      'email' => 'blah@example.org',
+    ]);
+    $outbound = $this->getRequestBodies();
+    $inbound = $this->getResponseBodies();
+
+    $this->assertEquals('EC-654429990B3545832', $preApproval['values'][0]['token']);
+  }
+
+  public function testFinishTokenPayment() {
+    $this->setUpClientWithHistoryContainer();
+    Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->guzzleClient];
+    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
+      'payment_processor_type_id' => 'omnipay_PayPal_Rest',
+      'user_name' => 'AWzymvrczbgFT9CuhILzNXnXFyLXsxa8lacr_TJbOT4ytdRuaKnr73t1kOIdwbSTmnjTuajgKaiZCjqR',
+      'password' => 'EANpVE9liVxABP173oGLic1fhoK2gixGeVCrXjR4Q_dpO2FLMMTtyYSmhhe5IZDaQaPUsmc4Jkx7CQGy',
+      'is_test' => 1,
+    ]);
+    $preApproval = civicrm_api('PaymentProcessor', 'pay', [
+      'payment_processor_id' => $processor['id'],
+      'check_permissions' => TRUE,
+      'amount' => 60,
+      'qfKey' => 'blah',
+      'currency' => 'USD',
+      'is_recur' => TRUE,
+      'component' => 'contribute',
+      'installments' => 3,
+      'frequency_unit' => 'week',
+      'frequency_interval' => 3,
+      'version' => 3,
+      'is_test' => 1,
+      'token' => 'BA-9RH77653MG862110M',
+    ]);
+    $outbound = $this->getRequestBodies();
+    $inbound = $this->getResponseBodies();
+$this->assertResponsesOk();
+    $this->assertEquals('EC-654429990B3545832', $preApproval['values'][0]['token']);
+
+  //
+    }
   /**
    * @return \HttpClient
    */

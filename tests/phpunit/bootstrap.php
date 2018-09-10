@@ -10,6 +10,8 @@ elseif (file_exists( __DIR__ . '/../../../../autoload.php')) {
   require_once __DIR__ . '/../../../../autoload.php';
 }
 
+require_once __DIR__ . '/Guzzle3TestTrait.php';
+
 eval(cv('php:boot --level=classloader', 'phpcode'));
 
 /**
