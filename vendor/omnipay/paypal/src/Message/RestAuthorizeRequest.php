@@ -315,18 +315,19 @@ class RestAuthorizeRequest extends AbstractRestRequest
    */
     public function validCardPresent()
     {
+        if (!$this->getCard() || !$this->getCard()->getNumber()) {
+            return false;
+        }
         try {
             $this->getCard()->validate();
-        }
-        catch (InvalidCreditCardException $e) {
-            if (stristr($e->getMessage(), 'parameter is required'))
-            {
-               return FALSE;
+        } catch (\Omnipay\Common\Exception\InvalidCreditCardException $e) {
+            if (stristr($e->getMessage(), 'parameter is required')) {
+                return false;
             } else {
                 throw $e;
             }
         }
-        return TRUE;
+        return true;
     }
 
     /**
