@@ -25,7 +25,7 @@ function civicrm_api3_payment_processor_postapprove($params) {
  *
  * @return array
  */
-function _civicrm_api3_payment_processor_preapprove_spec(&$params) {
+function _civicrm_api3_payment_processor_postapprove_spec(&$params) {
   $params['payment_processor_id']['api.required'] = 1;
   $params['amount']['api.required'] = 1;
   $params['component']['api.default'] = 'contribute';
