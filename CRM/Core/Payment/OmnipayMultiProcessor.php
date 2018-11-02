@@ -806,6 +806,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $redirectUrl = $this->getStoredUrl('fail');
         if (empty($redirectUrl)) {
           $redirectUrl = $this->getReturnFailUrl(CRM_Utils_Request::retrieve('qfKey', 'String'));
+
         }
         if ($redirectUrl && method_exists($response, 'error')) {
           $response->error($redirectUrl, $userMsg);
@@ -820,8 +821,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       case 'success':
         $userMsg = NULL;
         $redirectUrl = $this->getStoredUrl('success');
+        Civi::log()->debug('redirectURLstored: ' . $redirectUrl);
         if (empty($redirectUrl)) {
-          $redirectUrl = $this->getReturnSuccessUrl(CRM_Utils_Request::retrieve('qfKey', 'String'));
+          $redirectUrl = $this->getReturnSuccessUrl();
         }
         if ($redirectUrl && method_exists($response, 'confirm')) {
           $output = $response->confirm($redirectUrl, $userMsg);

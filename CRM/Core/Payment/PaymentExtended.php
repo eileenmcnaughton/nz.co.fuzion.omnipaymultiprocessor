@@ -107,42 +107,64 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param string $qfKey
    *
    * @return string
+   * @throws \CRM_Core_Exception
    */
-  protected function getReturnSuccessUrl($qfKey) {
+  protected function getReturnSuccessUrl($qfKey = NULL) {
     if (isset($this->successUrl)) {
-      return $this->successUrl;
+      $returnURL = $this->successUrl;
     }
-    return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
-        '_qf_ThankYou_display' => 1,
-        'qfKey' => $qfKey,
-      ),
-      TRUE, NULL, FALSE, TRUE
-    );
+    else {
+      $wfNode = CRM_Utils_Request::retrieve('wfNode', 'String');
+      $sid = CRM_Utils_Request::retrieve('sid', 'Integer');
+      $qfKey = CRM_Utils_Request::retrieve('qfKey', 'String');
+
+      if ($wfNode) {
+        // Drupal webform
+        $returnURL = CRM_Utils_System::url("{$wfNode}/done", ['sid' => $sid], TRUE, NULL, FALSE, TRUE);
+      }
+      else {
+        // Contribution / event
+        $returnURL = CRM_Utils_System::url($this->getBaseReturnUrl(), [
+          '_qf_ThankYou_display' => 1,
+          'qfKey' => $qfKey
+        ], TRUE, NULL, FALSE, TRUE);
+      }
+    }
+
+    Civi::log()->debug('getReturnSuccessUrl: ' . $returnURL);
+    return $returnURL;
   }
 
   /**
-   * @param $key
-   * @param null $participantID
-   * @param null $eventID
+   * @param string $key
+   * @param int $participantID
+   * @param int $eventID
+   *
    * @return string
+   * @throws \CRM_Core_Exception
    */
   protected function getReturnFailUrl($key, $participantID = NULL, $eventID = NULL) {
     if (isset($this->cancelUrl)) {
-      return $this->cancelUrl;
-    }
-    $test =  $this->_is_test ? '&action=preview' : '';
-    if ($this->_component == "event") {
-      return CRM_Utils_System::url('civicrm/event/register',
-        "reset=1&cc=fail&participantId={$participantID}&id={$eventID}{$test}&qfKey={$key}",
-        TRUE, NULL, FALSE, TRUE
-      );
+      $returnURL = $this->cancelUrl;
     }
     else {
-      return CRM_Utils_System::url('civicrm/contribute/transact',
-        "_qf_Main_display=1&cancel=1&qfKey={$key}{$test}",
-        TRUE, NULL, FALSE, TRUE
-      );
+      $wfNode = CRM_Utils_Request::retrieve('wfNode', 'String');
+      $qfKey = CRM_Utils_Request::retrieve('qfKey', 'String');
+      $url = ($this->_component == 'event') ? 'civicrm/event/register' : 'civicrm/contribute/transact';
+      $cancel = ($this->_component == 'event') ? '_qf_Register_display' : '_qf_Main_display';
+
+      // Default cancel
+      $returnURL = CRM_Utils_System::url($url, [
+        $cancel => 1,
+        'cancel' => 1,
+        'qfKey' => $qfKey
+      ], TRUE, NULL, FALSE, TRUE);
+      if ($wfNode) {
+        $returnURL = CRM_Utils_System::url("{$wfNode}", NULL, TRUE, NULL, FALSE, TRUE);
+      }
     }
+    Civi::log()->debug('getReturnFailUrl: ' . $returnURL);
+    return $returnURL;
   }
 
   /**
@@ -160,13 +182,29 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *    URL to notify outcome of transaction.
    */
   protected function getNotifyUrl($allowLocalHost = FALSE) {
+    // For redirect offsite payment processors we need either the qfKey or 'q' (for webform)
+    // to rebuild the redirect URL
+    // These are then passed back via getReturnSuccess/FailURL to the payment processor so we can redirect to the right ending page
+    $wfNode = CRM_Utils_Array::value('q', $_GET);
+    $qfKey = CRM_Utils_Request::retrieve('qfKey', 'String');
+    $query = NULL;
+    if ($qfKey) {
+      // If we have a qfKey we are not a webform
+      $query['qfKey'] = $qfKey;
+    }
+    elseif ($wfNode) {
+      // Otherwise assume we are.
+      $query['wfNode'] = $wfNode;
+    }
+
     $url = CRM_Utils_System::url(
       'civicrm/payment/ipn/' . $this->formatted_transaction_id . '/' . $this->_paymentProcessor['id'],
-      array('qfKey' => CRM_Utils_Request::retrieve('qfKey', 'String')),
+      $query,
       TRUE,
       NULL,
       FALSE
     );
+    Civi::log()->debug('getNotifyUrl: ' . $url);
     return $allowLocalHost ? $url : ((stristr($url, '.')) ? $url : '');
   }
 
