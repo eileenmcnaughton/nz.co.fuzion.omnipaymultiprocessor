@@ -541,7 +541,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   public function getTransparentDirectDisplayFields() {
     $fields = $this->getProcessorTypeMetadata('transparent_redirect');
     if (isset($fields['fields'])) {
-      return $fields['fields'];
+      $fields = $fields['fields'];
+      $coreFields = $this->getPaymentFormFieldsMetadata();
+      foreach ($fields as $fieldName => $field) {
+        if (isset($coreFields[$field['core_field_name']])) {
+          $fields[$fieldName] = array_merge($coreFields[$field['core_field_name']], $field);
+        }
+      }
+      return $fields;
     }
     return array();
   }
