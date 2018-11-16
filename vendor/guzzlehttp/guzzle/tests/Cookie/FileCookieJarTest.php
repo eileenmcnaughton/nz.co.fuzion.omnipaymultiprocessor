@@ -29,12 +29,12 @@ class FileCookieJarTest extends TestCase
     public function testLoadsFromFile()
     {
         $jar = new FileCookieJar($this->file);
-        $this->assertEquals([], $jar->getIterator()->getArrayCopy());
+        $this->assertSame([], $jar->getIterator()->getArrayCopy());
         unlink($this->file);
     }
 
     /**
-     * @dataProvider testPersistsToFileFileParameters
+     * @dataProvider providerPersistsToFileFileParameters
      */
     public function testPersistsToFile($testSaveSessionCookie = false)
     {
@@ -78,7 +78,7 @@ class FileCookieJarTest extends TestCase
         unlink($this->file);
     }
 
-    public function testPersistsToFileFileParameters()
+    public function providerPersistsToFileFileParameters()
     {
         return array(
             array(false),

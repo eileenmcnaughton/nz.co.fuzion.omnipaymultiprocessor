@@ -752,6 +752,55 @@ class FunctionsTest extends BaseTest
         $message = new Psr7\Response(200, [], 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
         $this->assertEquals('Lorem ipsu (truncated...)', Psr7\get_message_body_summary($message, 10));
     }
+
+    public function testModifyServerRequestWithUploadedFiles()
+    {
+        $request = new Psr7\ServerRequest('GET', 'http://example.com/bla');
+        $file = new Psr7\UploadedFile('Test', 100, \UPLOAD_ERR_OK);
+        $request = $request->withUploadedFiles([$file]);
+
+        /** @var Psr7\ServerRequest $modifiedRequest */
+        $modifiedRequest = Psr7\modify_request($request, ['set_headers' => ['foo' => 'bar']]);
+
+        $this->assertCount(1, $modifiedRequest->getUploadedFiles());
+
+        $files = $modifiedRequest->getUploadedFiles();
+        $this->assertInstanceOf('GuzzleHttp\Psr7\UploadedFile', $files[0]);
+    }
+
+    public function testModifyServerRequestWithCookies()
+    {
+        $request = (new Psr7\ServerRequest('GET', 'http://example.com/bla'))
+            ->withCookieParams(['name' => 'value']);
+
+        /** @var Psr7\ServerRequest $modifiedRequest */
+        $modifiedRequest = Psr7\modify_request($request, ['set_headers' => ['foo' => 'bar']]);
+
+        $this->assertEquals(['name' => 'value'], $modifiedRequest->getCookieParams());
+    }
+
+
+    public function testModifyServerRequestParsedBody()
+    {
+        $request = (new Psr7\ServerRequest('GET', 'http://example.com/bla'))
+            ->withParsedBody(['name' => 'value']);
+
+        /** @var Psr7\ServerRequest $modifiedRequest */
+        $modifiedRequest = Psr7\modify_request($request, ['set_headers' => ['foo' => 'bar']]);
+
+        $this->assertEquals(['name' => 'value'], $modifiedRequest->getParsedBody());
+    }
+
+    public function testModifyServerRequestQueryParams()
+    {
+        $request = (new Psr7\ServerRequest('GET', 'http://example.com/bla'))
+            ->withQueryParams(['name' => 'value']);
+
+        /** @var Psr7\ServerRequest $modifiedRequest */
+        $modifiedRequest = Psr7\modify_request($request, ['set_headers' => ['foo' => 'bar']]);
+
+        $this->assertEquals(['name' => 'value'], $modifiedRequest->getQueryParams());
+    }
 }
 
 class HasToString
