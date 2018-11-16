@@ -14,21 +14,12 @@ in 8 countries.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
-to your `composer.json` file:
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `league/omnipay` and `omnipay/eway` with Composer:
 
-```json
-{
-    "require": {
-        "omnipay/eway": "~2.0"
-    }
-}
 ```
+composer require league/omnipay omnipay/eway
 
-And run composer to update your dependencies:
-
-    $ curl -s http://getcomposer.org/installer | php
-    $ php composer.phar update
+```
 
 ## Basic Usage
 

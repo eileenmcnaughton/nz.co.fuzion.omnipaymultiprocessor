@@ -1,0 +1,10 @@
+HTTP/1.1 100 Continue
+Server: Apache/2.4.29 (Ubuntu)
+Date: Sat, 26 May 2018 07:25:31 GMT
+HTTP/1.1 200 OK
+Server: Apache/2.4.29 (Ubuntu)
+Date: Sat, 26 May 2018 07:25:31 GMT
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 929
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><NABTransactMessage><MessageInfo><messageID>a246d3d2ff1a75298ebe54f21fe887</messageID><messageTimestamp>20182605172441033000+600</messageTimestamp><apiVersion>xml-4.2</apiVersion></MessageInfo><RequestType>Payment</RequestType><MerchantInfo><merchantID>XYZ0010</merchantID></MerchantInfo><Status><statusCode>000</statusCode><statusDescription>Normal</statusDescription></Status><Payment><TxnList count="1"><Txn ID="1"><txnType>10</txnType><txnSource>23</txnSource><amount>1200</amount><currency>AUD</currency><purchaseOrderNo>ORDER-ZYX8789</purchaseOrderNo><approved>Yes</approved><responseCode>00</responseCode><responseText>Approved</responseText><settlementDate>20180526</settlementDate><txnID>800055</txnID><authID>711736</authID><CreditCardInfo><pan>444433...111</pan><expiryDate>12/18</expiryDate><cardType>6</cardType><cardDescription>Visa</cardDescription></CreditCardInfo></Txn></TxnList></Payment></NABTransactMessage>

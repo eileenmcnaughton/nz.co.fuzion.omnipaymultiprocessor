@@ -6,11 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
-    'Omnipay\\Tests\\' => array($vendorDir . '/omnipay/tests/src'),
-    'Omnipay\\Skrill\\' => array($vendorDir . '/alfaproject/omnipay-skrill/src'),
-    'Omnipay\\Common\\' => array($vendorDir . '/omnipay/common/src'),
-    'Mockery' => array($vendorDir . '/mockery/mockery/library'),
-    'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
-    'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
 );

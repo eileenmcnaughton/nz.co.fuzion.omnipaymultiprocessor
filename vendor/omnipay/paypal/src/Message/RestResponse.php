@@ -68,8 +68,5 @@ class RestResponse extends AbstractResponse
         if (isset($this->data['id'])) {
             return $this->data['id'];
         }
-        if (isset($this->data['token_id'])) {
-            return $this->data['token_id'];
-        }
     }
 }

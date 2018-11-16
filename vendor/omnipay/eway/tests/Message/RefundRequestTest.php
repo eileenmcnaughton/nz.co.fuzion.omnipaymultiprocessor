@@ -9,17 +9,17 @@ class RapidRefundRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RefundRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
             'transactionReference' => '87654321',
-        ));
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'partnerId' => '1234',
@@ -30,7 +30,7 @@ class RapidRefundRequestTest extends TestCase
             'currency' => 'AUD',
             'invoiceReference' => 'INV-123',
             'clientIp' => '127.0.0.1',
-            'card' => array(
+            'card' => [
                 'firstName' => 'Patrick',
                 'lastName' => 'Collison',
                 'shippingFirstName' => 'John',
@@ -39,8 +39,8 @@ class RapidRefundRequestTest extends TestCase
                 'shippingAddress2' => '123 Test Lane',
                 'shippingState' => 'NSW',
                 'shippingCountry' => 'AU',
-            ),
-        ));
+            ],
+        ]);
 
         $data = $this->request->getData();
 
@@ -62,7 +62,7 @@ class RapidRefundRequestTest extends TestCase
 
     public function testGetDataWithItems()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
@@ -71,16 +71,16 @@ class RapidRefundRequestTest extends TestCase
             'description' => 'new car',
             'currency' => 'AUD',
             'clientIp' => '127.0.0.1',
-            'card' => array(
+            'card' => [
                 'firstName' => 'Patrick',
                 'lastName' => 'Collison',
-            ),
-        ));
+            ],
+        ]);
 
-        $this->request->setItems(array(
-            array('name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10),
-            array('name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40),
-        ));
+        $this->request->setItems([
+            ['name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10],
+            ['name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40],
+        ]);
 
         $data = $this->request->getData();
 

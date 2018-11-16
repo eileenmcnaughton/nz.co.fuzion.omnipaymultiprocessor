@@ -10,56 +10,80 @@ use Omnipay\Common\Helper;
  */
 class SharedRepeatAuthorizeRequest extends AbstractRequest
 {
-    protected $action = 'REPEATDEFERRED';
-    protected $service = 'repeat';
+    public function getService()
+    {
+        return static::SERVICE_REPEAT;
+    }
+
+    public function getTxType()
+    {
+        return static::TXTYPE_REPEATDEFERRED;
+    }
 
     /**
      * @return array The message body data.
      */
     public function getData()
     {
+        $this->validate(
+            'relatedTransactionId',
+            'vpsTxId',
+            'securityKey',
+            'txAuthNo',
+            'currency',
+            'description'
+        );
+
         // API version and account details.
+
         $data = $this->getBaseData();
 
+        // If no explicit account type has been supplied (set and defaulted
+        // in getBaseData), then override the default.
+
+        if ($this->getAccountType() === null) {
+            // C – for repeat transactions
+            $data['AccountType'] = static::ACCOUNT_TYPE_C;
+        }
+
         // Merchant's unique reference to THIS new authorization or payment
+
         $data['VendorTxCode'] = $this->getTransactionId();
 
-        // Major currency units.
+        // Sent to the gateway as major currency units.
+
         $data['Amount'] = $this->getAmount();
         $data['Currency'] = $this->getCurrency();
 
         $data['Description'] = $this->getDescription();
 
-        // SagePay's unique reference for the PREVIOUS transaction
-        $data['RelatedVPSTxId'] = $this->getRelatedVPSTxId();
-        $data['RelatedVendorTxCode'] = $this->getRelatedVendorTxCode();
-        $data['RelatedSecurityKey'] = $this->getRelatedSecurityKey();
-        $data['RelatedTxAuthNo'] = $this->getRelatedTxAuthNo();
+        // Sage Pay's unique reference for the ORIGINAL transaction
+
+        $data['RelatedVendorTxCode'] = $this->getRelatedTransactionId();
+        $data['RelatedVPSTxId'] = $this->getVpsTxId();
+        $data['RelatedSecurityKey'] = $this->getSecurityKey();
+        $data['RelatedTxAuthNo'] = $this->getTxAuthNo();
 
         // Some details in the card can be changed for the repeat purchase.
+
         $card = $this->getCard();
 
         // If a card is provided, then assume all billing details are being updated.
-        // TODO: move this construct to a separate method, as it is used several times.
+
         if ($card) {
-            $data['BillingFirstnames'] = $card->getBillingFirstName();
-            $data['BillingSurname'] = $card->getBillingLastName();
-            $data['BillingAddress1'] = $card->getBillingAddress1();
-            $data['BillingAddress2'] = $card->getBillingAddress2();
-            $data['BillingCity'] = $card->getBillingCity();
-            $data['BillingPostCode'] = $card->getBillingPostcode();
-            $data['BillingState'] = $card->getBillingCountry() === 'US' ? $card->getBillingState() : '';
-            $data['BillingCountry'] = $card->getBillingCountry();
-            $data['BillingPhone'] = $card->getBillingPhone();
+            $data = $this->getBillingAddressData($data);
 
             // If the customer is present, then the CV2 can be supplied again for extra security.
+
             $cvv = $card->getCvv();
+
             if (isset($cvv) && $cvv != '') {
                 $data['CV2'] = $cvv;
             }
         }
 
-        // The documentation lists only BasketXML as supported for repeat transactions, and not Basklet.
+        // The documentation lists only BasketXML as supported for repeat transactions,
+        // and not the older CSV Basket.
         // CHECKME: is this a documentation error?
 
         $basketXML = $this->getItemData();
@@ -70,97 +94,75 @@ class SharedRepeatAuthorizeRequest extends AbstractRequest
         return $data;
     }
 
-    public function getDescription()
-    {
-        return $this->getParameter('description');
-    }
-
-    public function setDescription($value)
-    {
-        return $this->setParameter('description', $value);
-    }
-
-    /**
-     * This is a direct map to Omnipay\SagePay\Message\Response::getTransactionReference()
-     *
-     * @param string|array $jsonEncodedReference JSON-encoded reference to the original transaction
-     */
-    public function setTransactionReference($jsonEncodedReference)
-    {
-        if (is_string($jsonEncodedReference)) {
-            $unpackedReference = json_decode($jsonEncodedReference, true);
-        } elseif (is_array($jsonEncodedReference)) {
-            $unpackedReference = $jsonEncodedReference;
-        } else {
-            throw new InvalidRequestException('transactionReference must be an array or JSON array');
-        }
-
-        foreach ($unpackedReference as $parameter => $value) {
-            $methodName = 'setRelated'.$parameter;
-            if (method_exists($this, $methodName)) {
-                $this->$methodName($value);
-            }
-        }
-    }
-
-    /**
-     * @deprecated Use setTransactionReference()
-     */
-    public function setRelatedTransactionReference($jsonEncodedReference)
-    {
-        return $this->setTransactionReference($jsonEncodedReference);
-    }
+    // Everything below here is deprecated.
+    // Set the same parameters as used for void and capture.
 
     /**
      * The original transaction remote gateway ID.
+     * @deprec use setVpsTxId() or setRelatedTransactionReference() instead
      */
     protected function setRelatedVPSTxId($value)
     {
-        return $this->setParameter('relatedVPSTxId', $value);
+        return $this->setVpsTxId($value);
     }
 
+    /**
+     * @deprec use getVpsTxId() instead
+     */
     protected function getRelatedVPSTxId()
     {
-        return $this->getParameter('relatedVPSTxId');
+        return $this->getVpsTxId();
     }
 
     /**
      * The original transaction local ID (transactionId).
+     * @deprec use setRelatedTransactionId() or setRelatedTransactionReference() instead
      */
     protected function setRelatedVendorTxCode($value)
     {
-        return $this->setParameter('relatedVendorTxCode', $value);
+        return $this->setRelatedTransactionId($value);
     }
 
+    /**
+     * @deprec use getRelatedTransactionId() instead
+     */
     protected function getRelatedVendorTxCode()
     {
-        return $this->getParameter('relatedVendorTxCode');
+        return $this->getRelatedTransactionId();
     }
 
     /**
      * The original transaction random security key for hashing,
      * never exposed to end users.
+     * @deprec use setSecurityKey() or setRelatedTransactionReference() instead
      */
     protected function setRelatedSecurityKey($value)
     {
-        return $this->setParameter('relatedSecurityKey', $value);
+        return $this->setSecurityKey($value);
     }
 
+    /**
+     * @deprec use getSecurityKey() instead
+     */
     protected function getRelatedSecurityKey()
     {
-        return $this->getParameter('relatedSecurityKey');
+        return $this->getSecurityKey();
     }
 
     /**
      * The original transaction bank authorisation number.
+     * @deprec use setTxAuthNo() or setRelatedTransactionReference() instead
      */
     protected function setRelatedTxAuthNo($value)
     {
-        return $this->setParameter('relatedTxAuthNo', $value);
+        return $this->setTxAuthNo($value);
     }
 
+    /**
+     * @deprec use getTxAuthNo() instead
+     */
     protected function getRelatedTxAuthNo()
     {
-        return $this->getParameter('relatedTxAuthNo');
+        return $this->getTxAuthNo();
     }
 }

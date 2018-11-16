@@ -6,6 +6,7 @@ use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Sage Pay Server Complete Authorize Response
+ * DEPRECATED - use $gateway->notify()
  */
 class ServerCompleteAuthorizeResponse extends Response
 {
@@ -19,7 +20,7 @@ class ServerCompleteAuthorizeResponse extends Response
     {
         if (isset($this->data['TxAuthNo'])) {
             $reference = json_decode($this->getRequest()->getTransactionReference(), true);
-            $reference['VendorTxCode'] = $this->getRequest()->getTransactionId();
+            $reference['VendorTxCode'] = $this->getTransactionId();
             $reference['TxAuthNo'] = $this->data['TxAuthNo'];
 
             return json_encode($reference);

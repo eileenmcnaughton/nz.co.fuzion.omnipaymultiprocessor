@@ -6,15 +6,16 @@ namespace Omnipay\SagePay\Message;
  * Sage Pay Abstract Request.
  * Base for Sage Pay Server and Sage Pay Direct.
  */
- use Omnipay\Common\Exception\InvalidRequestException;
- use Omnipay\SagePay\Extend\Item as ExtendItem;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\SagePay\Extend\Item as ExtendItem;
+use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
+use Omnipay\SagePay\Traits\GatewayParamsTrait;
+use Omnipay\SagePay\ConstantsInterface;
+use Psr\Http\Message\ResponseInterface;
 
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
+abstract class AbstractRequest extends OmnipayAbstractRequest implements ConstantsInterface
 {
-    /**
-     * @var string The transaction type, used in the request body.
-     */
-    protected $action;
+    use GatewayParamsTrait;
 
     /**
      * @var string The service name, used in the endpoint URL.
@@ -27,93 +28,230 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $VPSProtocol = '3.00';
 
     /**
-     * Supported 3D Secure values for Apply3DSecure.
-     * 0: APPLY - If 3D-Secure checks are possible and rules allow,
-     *      perform the checks and apply the authorisation rules.
-     *      (default)
-     * 1: FORCE - Force 3D-Secure checks for this transaction if
-     *      possible and apply rules for authorisation.
-     * 2: NONE - Do not perform 3D-Secure checks for this
-     *      transaction and always authorise.
-     * 3: AUTH - Force 3D-Secure checks for this transaction if
-     *      possible but ALWAYS obtain an auth code, irrespective
-     *      of rule base.
-     *
-     * @var integer
-     */
-    const APPLY_3DSECURE_APPLY  = 0;
-    const APPLY_3DSECURE_FORCE  = 1;
-    const APPLY_3DSECURE_NONE   = 2;
-    const APPLY_3DSECURE_AUTH   = 3;
-
-    /**
-     * Supported AVS/CV2 values.
-     *
-     * DEFAULT will use the account settings for checks and applying of rules.
-     * FORCE_CHECKS will force checks to be made.
-     * NO_CHECKS will force no checks to be performed.
-     * NO_RULES will force no rules to be applied.
-     *
-     * @var integer
-     */
-    const APPLY_AVSCV2_DEFAULT      = 0;
-    const APPLY_AVSCV2_FORCE_CHECKS = 1;
-    const APPLY_AVSCV2_NO_CHECKS    = 2;
-    const APPLY_AVSCV2_NO_RULES     = 3;
-
-    /**
-     * Flag whether to store a cardReference or token for multiple use.
-     */
-    const STORE_TOKEN_YES   = 1;
-    const STORE_TOKEN_NO    = 0;
-
-    /**
-     * Flag whether to create a cardReference or token for the CC supplied.
-     */
-    const CREATE_TOKEN_YES   = 1;
-    const CREATE_TOKEN_NO    = 0;
-
-    /**
-     * Profile for Sage Pay Server hosted forms.
-     * - NORMAL for full page forms.
-     * - LOW for use in iframes.
-     */
-    const PROFILE_NORMAL    = 'NORMAL';
-    const PROFILE_LOW       = 'LOW';
-
-    /**
-     * The values for the AccountType field.
-     * E – for ecommerce transactions (default)
-     * M – for telephone (MOTO) transactions
-     * C – for repeat transactions
-     *
-     * @var string
-     */
-    const ACCOUNT_TYPE_E = 'E';
-    const ACCOUNT_TYPE_M = 'M';
-    const ACCOUNT_TYPE_C = 'C';
-
-    /**
      * @var string Endpoint base URLs.
      */
     protected $liveEndpoint = 'https://live.sagepay.com/gateway/service';
     protected $testEndpoint = 'https://test.sagepay.com/gateway/service';
 
     /**
-     * @return string The vendor name identified the account.
+     * Convenience method to switch iframe mode on or off.
+     * This sets the profile parameter.
+     *
+     * @param bool $value True to use an iframe profile for hosted forms.
+     * @return $this
      */
-    public function getVendor()
+    public function setIframe($value)
     {
-        return $this->getParameter('vendor');
+        $profile = ((bool)$value ? static::PROFILE_LOW : static::PROFILE_NORMAL);
+
+        return $this->setParameter('profile', $profile);
     }
 
     /**
-     * @param string $value The vendor name, as supplied in lower case.
-     * @return $this Provides a fluent inetrface.
+     * The name of the service used in the endpoint to send the message.
+     * For MANY services, the URL fragment will be the lower case version
+     * of the action.
+     *
+     * @return string Sage Pay endpoint service name.
      */
-    public function setVendor($value)
+    public function getService()
     {
-        return $this->setParameter('vendor', $value);
+        return strtolower($this->getTxType());
+    }
+
+    /**
+     * If it is used, i.e. needed for an enpoint, then it must be defined.
+     *
+     * @return string the transaction type.
+     * @throws InvalidRequestException
+     */
+    public function getTxType()
+    {
+        throw new InvalidRequestException('Transaction type not defined.');
+    }
+
+    /**
+     * Basic authorisation, transaction type and protocol version.
+     *
+     * @return Array
+     */
+    protected function getBaseData()
+    {
+        $data = array();
+
+        $data['VPSProtocol'] = $this->VPSProtocol;
+        $data['TxType'] = $this->getTxType();
+        $data['Vendor'] = $this->getVendor();
+        $data['AccountType'] = $this->getAccountType() ?: static::ACCOUNT_TYPE_E;
+
+        // TODO: move this to getDerivedLanguage()
+
+        if ($language = $this->getLanguage()) {
+            // Although documented as ISO639, the gateway expects
+            // the code to be upper case.
+
+            $language = strtoupper($language);
+
+            // If a locale has been passed in instead, then just take the first part.
+            // e.g. both "en" and "en-gb" becomes "EN".
+
+            list($language) = preg_split('/[-_]/', $language);
+
+            $data['Language'] = $language;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get either the billing or the shipping address from
+     * the card object, mapped to Sage Pay field names.
+     *
+     * @param string $type 'Billing' or 'Shipping'
+     * @return array
+     */
+    protected function getAddressData($type = 'Billing')
+    {
+        $card = $this->getCard();
+
+        // Mapping is Sage Pay name => Omnipay Name
+
+        $mapping = [
+            'Firstnames'    => 'FirstName',
+            'Surname'       => 'LastName',
+            'Address1'      => 'Address1',
+            'Address2'      => 'Address2',
+            'City'          => 'City',
+            'PostCode'      => 'Postcode',
+            'State'         => 'State',
+            'Country'       => 'Country',
+            'Phone'         => 'Phone',
+        ];
+
+        $data = [];
+
+        foreach ($mapping as $sagepayName => $omnipayName) {
+            $data[$sagepayName] = call_user_func([$card, 'get' . $type . $omnipayName]);
+        }
+
+        // The state must not be set for non-US countries.
+
+        if ($data['Country'] !== 'US') {
+            $data['State'] = '';
+        }
+
+        return $data;
+    }
+
+    /**
+     * Add the billing address details to the data.
+     *
+     * @param array $data
+     * @return array $data
+     */
+    protected function getBillingAddressData(array $data = [])
+    {
+        $address = $this->getAddressData('Billing');
+
+        foreach ($address as $name => $value) {
+            $data['Billing' . $name] = $value;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Add the delivery (shipping) address details to the data.
+     * Use the Billing address if the billingForShipping option is set.
+     *
+     * @param array $data
+     * @return array $data
+     */
+    protected function getDeliveryAddressData(array $data = [])
+    {
+        $address = $this->getAddressData(
+            (bool)$this->getBillingForShipping() ? 'Billing' : 'Shipping'
+        );
+
+        foreach ($address as $name => $value) {
+            $data['Delivery' . $name] = $value;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Send data to the remote gateway, parse the result into an array,
+     * then use that to instantiate the response object.
+     *
+     * @param  array
+     * @return Response The reponse object initialised with the data returned from the gateway.
+     */
+    public function sendData($data)
+    {
+        // Issue #20 no data values should be null.
+
+        array_walk($data, function (&$value) {
+            if (! isset($value)) {
+                $value = '';
+            }
+        });
+
+        $httpResponse = $this
+            ->httpClient
+            ->request(
+                'POST',
+                $this->getEndpoint(),
+                [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ],
+                http_build_query($data)
+            );
+
+        // We might want to check $httpResponse->getStatusCode()
+
+        $responseData = static::parseBodyData($httpResponse);
+
+        return $this->createResponse($responseData);
+    }
+
+    /**
+     * The payload consists of name=>value pairs, each on a separate line.
+     *
+     * @param ResponseInterface $httpResponse
+     * @return array
+     */
+    public static function parseBodyData(ResponseInterface $httpResponse)
+    {
+        $bodyText = (string)$httpResponse->getBody();
+
+        // Split the bodyText into lines.
+
+        $lines = preg_split('/[\n\r]+/', $bodyText);
+
+        $responseData = [];
+
+        foreach ($lines as $line) {
+            $line = explode('=', $line, 2);
+
+            if (! empty($line[0])) {
+                $responseData[trim($line[0])] = isset($line[1]) ? trim($line[1]) : '';
+            }
+        }
+
+        return $responseData;
+    }
+
+    /**
+     * @return string URL for the test or live gateway, as appropriate.
+     */
+    public function getEndpoint()
+    {
+        return sprintf(
+            '%s/%s.vsp',
+            $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint,
+            $this->getService()
+        );
     }
 
     /**
@@ -137,19 +275,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Convenience method to switch iframe mode on or off.
-     *
-     * @param bool $value True to use an iframe profile for hosted forms.
-     * @return $this
-     */
-    public function setIframe($value)
-    {
-        $profile = ((bool)$value ? static::PROFILE_LOW : static::PROFILE_NORMAL);
-
-        return $this->setParameter('profile', $profile);
-    }
-
-    /**
      * @return string The custom vendor data.
      */
     public function getVendorData()
@@ -168,247 +293,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * The name of the service used in the endpoint to send the message.
-     * For most services, the URL fragment will be the lower case version
-     * of the action.
-     *
-     * @return string Sage Oay endpoint service name.
-     */
-    public function getService()
-    {
-        return ($this->service ?: strtolower($this->action));
-    }
-
-    /**
-     * By default, the XML basket format will be used. This flag can be used to
-     * switch back to the older terminated-string format basket. Each basket
-     * format supports a different range of features, both in the basket itself
-     * and in the data collected and processed in the gateway backend.
-     *
-     * @param bool $value True to switch the old format basket.
-     * @return $this
-     */
-    public function setUseOldBasketFormat($value)
-    {
-        $value = (bool)$value;
-
-        return $this->setParameter('useOldBasketFormat', $value);
-    }
-
-    /**
-     * Returns the current basket format by indicating whether the older
-     * terminated-string format is being used.
-     *
-     * @return bool true for old format basket; false for newer XML format basket.
-     */
-    public function getUseOldBasketFormat()
-    {
-        return $this->getParameter('useOldBasketFormat');
-    }
-
-    /**
-     * @return string One of static::ACCOUNT_TYPE_*
-     */
-    public function getAccountType()
-    {
-        return $this->getParameter('accountType');
-    }
-
-    /**
-     * Set account type.
-     * Neither 'M' nor 'C' offer the 3D-Secure checks that the "E" customer
-     * experience offers.
-     *
-     * This is ignored for all PAYPAL transactions.
-     *
-     * @param string $value E: Use the e-commerce merchant account. (default)
-     *                      M: Use the mail/telephone order account. (if present)
-     *                      C: Use the continuous authority merchant account. (if present)
-     * @return $this
-     */
-    public function setAccountType($value)
-    {
-        return $this->setParameter('accountType', $value);
-    }
-
-    public function getReferrerId()
-    {
-        return $this->getParameter('referrerId');
-    }
-
-    /**
-     * Set the referrer ID for PAYMENT, DEFERRED and AUTHENTICATE transactions.
-     */
-    public function setReferrerId($value)
-    {
-        return $this->setParameter('referrerId', $value);
-    }
-
-    public function getApplyAVSCV2()
-    {
-        return $this->getParameter('applyAVSCV2');
-    }
-
-    /**
-     * Set the apply AVSCV2 checks.
-     * Values defined in APPLY_AVSCV2_* constant.
-     *
-     * @param  int $value 0: If AVS/CV2 enabled then check them. If rules apply, use rules. (default)
-     *                    1: Force AVS/CV2 checks even if not enabled for the account. If rules apply
-     *                       use rules.
-     *                    2: Force NO AVS/CV2 checks even if enabled on account.
-     *                    3: Force AVS/CV2 checks even if not enabled for account but DON'T apply any
-     *                       rules.
-     */
-    public function setApplyAVSCV2($value)
-    {
-        return $this->setParameter('applyAVSCV2', $value);
-    }
-
-    /**
-     * @return string Once of static::APPLY_3DSECURE_*
-     */
-    public function getApply3DSecure()
-    {
-        return $this->getParameter('apply3DSecure');
-    }
-
-    /**
-     * Whether or not to apply 3D secure authentication.
-     *
-     * This is ignored for PAYPAL, EUROPEAN PAYMENT transactions.
-     * Values defined in APPLY_3DSECURE_* constant.
-     *
-     * @param  int $value 0: If 3D-Secure checks are possible and rules allow, perform the
-     *                       checks and apply the authorisation rules. (default)
-     *                    1: Force 3D-Secure checks for this transaction if possible and
-     *                       apply rules for authorisation.
-     *                    2: Do not perform 3D-Secure checks for this transactios and always
-     *                       authorise.
-     *                    3: Force 3D-Secure checks for this transaction if possible but ALWAYS
-     *                       obtain an auth code, irrespective of rule base.
-     * @return $this
-     */
-    public function setApply3DSecure($value)
-    {
-        return $this->setParameter('apply3DSecure', $value);
-    }
-
-    public function getTxType()
-    {
-        if (isset($this->action)) {
-            return $this->action;
-        }
-    }
-
-    /**
-     * Basic authorisation, transaction type and protocol version.
-     *
-     * @return Array
-     */
-    protected function getBaseData()
-    {
-        $data = array();
-
-        $data['VPSProtocol'] = $this->VPSProtocol;
-        $data['TxType'] = $this->getTxType();
-        $data['Vendor'] = $this->getVendor();
-        $data['AccountType'] = $this->getAccountType() ?: static::ACCOUNT_TYPE_E;
-
-        return $data;
-    }
-
-    /**
-     * Send data to the remote gateway, parse the result into an array,
-     * then use that to instantiate the response object.
-     *
-     * @param  array
-     * @return Response The reponse object initialised with the data returned from the gateway.
-     */
-    public function sendData($data)
-    {
-        // Issue #20 no data values should be null.
-        array_walk($data, function (&$value) {
-            if (! isset($value)) {
-                $value = '';
-            }
-        });
-        foreach ($data as $key => $value) {
-          switch ($key) {
-            case 'DeliveryAddress1':
-              $data[$key] = $data['BillingAddress1'];
-              break;
-            case 'DeliveryAddress2':
-              $data[$key] = $data['BillingAddress2'];
-              break;
-            case 'DeliveryCity':
-              $data[$key] = $data['BillingCity'];
-              break;
-            case 'DeliveryPostCode':
-              $data[$key] = $data['BillingPostCode'];
-              break;
-            case 'DeliveryState':
-              $data[$key] = $data['BillingState'];
-              break;
-            case 'DeliveryCountry':
-              $data[$key] = $data['BillingCountry'];
-              break;
-          }
-        }
-
-        $httpResponse = $this
-          ->httpClient
-          ->post($this->getEndpoint(), null, $data)
-          ->send();
-
-        // The body is a string.
-        $body = $httpResponse->getBody();
-
-        // Split into lines.
-        $lines = preg_split('/[\n\r]+/', $body);
-
-        $response_data = array();
-
-        foreach ($lines as $line) {
-            $line = explode('=', $line, 2);
-            if (!empty($line[0])) {
-                $response_data[trim($line[0])] = isset($line[1]) ? trim($line[1]) : '';
-            }
-        }
-
-        return $this->createResponse($response_data);
-    }
-
-    /**
-     * @return string URL for the test or live gateway, as appropriate.
-     */
-    public function getEndpoint()
-    {
-        $service = $this->getService();
-
-        if ($this->getTestMode()) {
-            return $this->testEndpoint."/$service.vsp";
-        }
-
-        return $this->liveEndpoint."/$service.vsp";
-    }
-
-    /**
      * Use this flag to indicate you wish to have a token generated and stored in the Sage Pay
      * database and returned to you for future use.
-     * Values set in contants CREATE_TOKEN_*
+     * Values set in constants CREATE_TOKEN_*
      *
      * @param bool|int $createToken 0 = This will not create a token from the payment (default).
      * @return $this
      */
-    public function setCreateToken($createToken)
+    public function setCreateToken($value)
     {
-        $createToken = (bool)$createToken;
-
-        return $this->setParameter(
-            'createToken',
-            ($createToken ? static::CREATE_TOKEN_YES : static::CREATE_TOKEN_NO)
-        );
+        return $this->setParameter('createToken', $value);
     }
 
     /**
@@ -420,34 +314,134 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * An optional flag to indicate if you wish to continue to store the Token in the SagePay
-     * token database for future use.
-     * Values set in contants SET_TOKEN_*
-     *
-     * Note: this is just an override method. It is best to leave this unset, and
-     * use either setToken or setCardReference. This flag will then be set automatically.
-     *
-     * @param bool|int $storeToken  0 = The Token will be deleted from the SagePay database if
-     *                                  authorised by the bank.
-     *                              1 = Continue to store the Token in the SagePay database for future use.
-     * @return $this
+     * Alias for setCreateToken()
      */
-    public function setStoreToken($storeToken)
+    public function setCreateCard($value)
     {
-        $storeToken = (bool)$storeToken;
-
-        $this->setParameter(
-            'storeToken',
-            ($storeToken ? static::STORE_TOKEN_YES : static::STORE_TOKEN_NO)
-        );
+        return $this->setCreateToken($value);
     }
 
     /**
-     * @return int static::STORE_TOKEN_YES or static::STORE_TOKEN_NO
+     * Alias for getCreateToken()
+     */
+    public function getCreateCard()
+    {
+        return $this->getCreateToken();
+    }
+
+    /**
+     * An optional flag to indicate if you wish to continue to store the
+     * Token in the SagePay token database for future use.
+     * Values set in contants SET_TOKEN_*
+     *
+     * Note: this is just an override method. It is best to leave this unset,
+     * and use either setToken or setCardReference. This flag will then be
+     * set automatically.
+     *
+     * @param bool|int|null $value Will be cast to bool when used
+     * @return $this
+     */
+    public function setStoreToken($value)
+    {
+        return $this->setParameter('storeToken', $value);
+    }
+
+    /**
+     * @return bool|int|null
      */
     public function getStoreToken()
     {
         return $this->getParameter('storeToken');
+    }
+
+    /**
+     * @param string the original VPS transaction ID; used to capture/void
+     * @return $this
+     */
+    public function setVpsTxId($value)
+    {
+        return $this->setParameter('vpsTxId', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getVpsTxId()
+    {
+        return $this->getParameter('vpsTxId');
+    }
+
+    /**
+     * @param string the original SecurityKey; used to capture/void
+     * @return $this
+     */
+    public function setSecurityKey($value)
+    {
+        return $this->setParameter('securityKey', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSecurityKey()
+    {
+        return $this->getParameter('securityKey');
+    }
+
+    /**
+     * @param string the original txAuthNo; used to capture/void
+     * @return $this
+     */
+    public function setTxAuthNo($value)
+    {
+        return $this->setParameter('txAuthNo', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTxAuthNo()
+    {
+        return $this->getParameter('txAuthNo');
+    }
+
+    /**
+     * @param string the original txAuthNo; used to capture/void
+     * @return $this
+     */
+    public function setRelatedTransactionId($value)
+    {
+        return $this->setParameter('relatedTransactionId', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelatedTransactionId()
+    {
+        return $this->getParameter('relatedTransactionId');
+    }
+
+    /**
+     * @return int static::ALLOW_GIFT_AID_YES or static::ALLOW_GIFT_AID_NO
+     */
+    public function getAllowGiftAid()
+    {
+        return $this->getParameter('allowGiftAid');
+    }
+
+    /**
+     * This flag allows the gift aid acceptance box to appear for this transaction
+     * on the payment page. This only appears if your vendor account is Gift Aid enabled.
+     *
+     * Values defined in static::ALLOW_GIFT_AID_* constant.
+     *
+     * @param bool|int $allowGiftAid value that casts to boolean
+     * @return $this
+     */
+    public function setAllowGiftAid($value)
+    {
+        $this->setParameter('allowGiftAid', $value);
     }
 
     /**
@@ -473,6 +467,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $standardChars = '0-9a-zA-Z';
         $allowedSpecialChars = " +'/\\&:,.-{}";
+        $pattern = '`[^'.$standardChars.preg_quote($allowedSpecialChars, '/').']`';
+        $name = trim(substr(preg_replace($pattern, '', $name), 0, 100));
+
+        return $name;
+    }
+
+    /**
+     * Filters out any characters that SagePay does not support from the item name for
+     * the non-xml basket integration
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function filterNonXmlItemName($name)
+    {
+        $standardChars = '0-9a-zA-Z';
+        $allowedSpecialChars = " +'/\\,.-{};_@()^\"~$=!#?|[]";
         $pattern = '`[^'.$standardChars.preg_quote($allowedSpecialChars, '/').']`';
         $name = trim(substr(preg_replace($pattern, '', $name), 0, 100));
 
@@ -571,18 +582,25 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $count = 0;
 
         foreach ($items as $basketItem) {
+            $description = $this->filterNonXmlItemName($basketItem->getName());
             $vat = '0.00';
+
             if ($basketItem instanceof ExtendItem) {
                 $vat = $basketItem->getVat();
+
+                /**
+                 * Product Code is used for the Product Sage 50 Accounts Software Integration
+                 * It allows reconcile the transactions on your account within the financial software
+                 * by linking the product record to a specific transaction.
+                 * This is not available for BasketXML and only Basket Integration. See docs for more info.
+                 */
+                if (!is_null($basketItem->getProductCode())) {
+                    $description = '[' . $basketItem->getProductCode() . ']' . $description;
+                }
             }
 
             $lineTotal = ($basketItem->getQuantity() * ($basketItem->getPrice() + $vat));
 
-            $description = $this->filterItemName($basketItem->getName());
-
-            // Make sure there aren't any colons in the name
-            // Perhaps ":" should be replaced with '-' or other symbol?
-            $description = str_replace(':', ' ', $description);
             $result .= ':' . $description .    // Item name
                 ':' . $basketItem->getQuantity() . // Quantity
                 ':' . number_format($basketItem->getPrice(), 2, '.', '') . // Unit cost (without tax)
@@ -592,12 +610,42 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 ':' . number_format($lineTotal, 2, '.', '');  // Line total
 
             $count++;
-
         }
 
         // Prepend number of lines to the result string
         $result = $count . $result;
 
         return $result;
+    }
+
+    /**
+     * A JSON transactionReference passed in is split into its
+     * component parts.
+     *
+     * @param string $value original transactionReference in JSON format.
+     */
+    public function setTransactionReference($value)
+    {
+        $reference = json_decode($value, true);
+
+        if (json_last_error() === 0) {
+            if (isset($reference['VendorTxCode'])) {
+                $this->setRelatedTransactionId($reference['VendorTxCode']);
+            }
+
+            if (isset($reference['VPSTxId'])) {
+                $this->setVpsTxId($reference['VPSTxId']);
+            }
+
+            if (isset($reference['SecurityKey'])) {
+                $this->setSecurityKey($reference['SecurityKey']);
+            }
+
+            if (isset($reference['TxAuthNo'])) {
+                $this->setTxAuthNo($reference['TxAuthNo']);
+            }
+        }
+
+        return parent::setTransactionReference($value);
     }
 }

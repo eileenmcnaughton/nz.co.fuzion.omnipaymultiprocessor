@@ -18,6 +18,10 @@
             "email": "adrian@adrianmacneil.com"
         },
         {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
+        },
+        {
             "name": "Omnipay Contributors",
             "homepage": "https://github.com/thephpleague/omnipay-mollie/contributors"
         }
@@ -25,15 +29,29 @@
     "autoload": {
         "psr-4": { "Omnipay\\Mollie\\" : "src/" }
     },
+    "autoload-dev": {
+        "psr-4": { "Omnipay\\Mollie\\Test\\": "tests/" }
+    },
     "require": {
-        "omnipay/common": "~2.2"
+        "omnipay/common": "^3.0.1"
     },
     "require-dev": {
-        "omnipay/tests": "~2.0"
+        "omnipay/tests": "^3.1",
+        "squizlabs/php_codesniffer": "^3",
+        "phpro/grumphp": "^0.14",
+        "phpmd/phpmd": "^2",
+        "overtrue/phplint": "^1",
+        "jakub-onderka/php-parallel-lint": "^1"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "5.1.x-dev"
         }
-    }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 src/",
+        "fix-style": "phpcbf -p --standard=PSR2 src/"
+    },
+    "prefer-stable": true
 }

@@ -9,25 +9,25 @@ class RapidDirectPurchaseRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidDirectPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
             'transactionType' => 'Purchase',
-            'card' => array(
+            'card' => [
                 'firstName' => 'John',
                 'lastName' => 'Smith',
                 'number' => '4111111111111111',
                 'expiryMonth' => '12',
                 'expiryYear' => gmdate('Y') + rand(1, 5),
                 'cvv' => rand(100, 999),
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'partnerId' => '1234',
@@ -39,7 +39,7 @@ class RapidDirectPurchaseRequestTest extends TestCase
             'currency' => 'AUD',
             'invoiceReference' => 'INV-123',
             'clientIp' => '127.0.0.1',
-            'card' => array(
+            'card' => [
                 'firstName' => 'John',
                 'lastName' => 'Smith',
                 'shippingFirstName' => 'Bob',
@@ -55,8 +55,8 @@ class RapidDirectPurchaseRequestTest extends TestCase
                 'startMonth' => '01',
                 'startYear' => '13',
                 'issueNumber' => '1',
-            ),
-        ));
+            ],
+        ]);
 
         $data = $this->request->getData();
 
@@ -85,7 +85,7 @@ class RapidDirectPurchaseRequestTest extends TestCase
 
     public function testGetDataWithToken()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'transactionType' => 'MOTO',
@@ -95,7 +95,7 @@ class RapidDirectPurchaseRequestTest extends TestCase
             'currency' => 'AUD',
             'invoiceReference' => 'INV-123',
             'cardReference' => '87654321',
-        ));
+        ]);
 
         $data = $this->request->getData();
 
@@ -106,7 +106,7 @@ class RapidDirectPurchaseRequestTest extends TestCase
 
     public function testGetDataWithEncryption()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'partnerId' => '1234',
@@ -120,7 +120,7 @@ class RapidDirectPurchaseRequestTest extends TestCase
             'clientIp' => '127.0.0.1',
             'encryptedCardNumber' => 'eCrypted:YVe4GMLMSxF5m1nixtBvVlmaLDgjI+ZYM5GHuX1XjlbRTnhe/khA2csWblJDqaQE9S4BV+y4Xnf61GmRDNC9yLBVduGFuigHJ8rk360m580fYOiHy+OaZpgpRvHPw==',
             'encryptedCardCvv' => 'eCrypted:ZvEfRd1DHwJ7dYV59DZqoaCFujvK+26VKS9Tp3uGp5kVki8CHpy67WUaFqqDzjZ8C6e3+TUXtW6/rrXGYYIXMfbph4Uw+XyLja3MJzOGniULWJA5zt90wxRwpZeYGDNQ==',
-            'card' => array(
+            'card' => [
                 'firstName' => 'John',
                 'lastName' => 'Smith',
                 'shippingFirstName' => 'Bob',
@@ -134,8 +134,8 @@ class RapidDirectPurchaseRequestTest extends TestCase
                 'startMonth' => '01',
                 'startYear' => '13',
                 'issueNumber' => '1',
-            ),
-        ));
+            ],
+        ]);
 
         $data = $this->request->getData();
 
@@ -151,10 +151,9 @@ class RapidDirectPurchaseRequestTest extends TestCase
         $this->assertSame('1', $data['Customer']['CardDetails']['IssueNumber']);
     }
 
-
     public function testGetDataWithItems()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
@@ -163,20 +162,20 @@ class RapidDirectPurchaseRequestTest extends TestCase
             'description' => 'new car',
             'currency' => 'AUD',
             'clientIp' => '127.0.0.1',
-            'card' => array(
+            'card' => [
                 'firstName' => 'John',
                 'lastName' => 'Smith',
                 'number' => '4111111111111111',
                 'expiryMonth' => '12',
                 'expiryYear' => gmdate('Y') + rand(1, 5),
                 'cvv' => rand(100, 999),
-            ),
-        ));
+            ],
+        ]);
 
-        $this->request->setItems(array(
-            array('name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10),
-            array('name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40),
-        ));
+        $this->request->setItems([
+            ['name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10],
+            ['name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40],
+        ]);
 
         $data = $this->request->getData();
 

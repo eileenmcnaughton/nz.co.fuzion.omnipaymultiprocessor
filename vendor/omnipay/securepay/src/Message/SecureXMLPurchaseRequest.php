@@ -8,7 +8,7 @@ namespace Omnipay\SecurePay\Message;
 class SecureXMLPurchaseRequest extends SecureXMLAbstractRequest
 {
     protected $txnType = 0; // Standard Payment, as per Appendix A of documentation.
-    protected $requiredFields = array('amount', 'card', 'transactionId');
+    protected $requiredFields = ['amount', 'card', 'transactionId'];
 
     public function getData()
     {

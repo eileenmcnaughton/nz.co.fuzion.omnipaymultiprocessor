@@ -13,29 +13,29 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
 
     public function testGenerateResponseFingerprint()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'amount' => '465.18',
             'transactionPassword' => 'abc123',
-        ));
+        ]);
 
-        $data = array(
+        $data = [
             'timestamp' => '20130602102927',
             'merchant' => 'ABC0030',
             'refid' => '222',
             'summarycode' => '2',
-        );
+        ];
 
         $this->assertSame('0516a31bf96ad89c354266afb9bd4be43aaf853f', $this->request->generateResponseFingerprint($data));
     }
 
     public function testSuccess()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'amount' => '355.00',
             'transactionPassword' => 'abc123',
-        ));
+        ]);
 
-        $this->getHttpRequest()->query->replace(array(
+        $this->getHttpRequest()->query->replace([
             'timestamp' => '20130602112954',
             'callback_status_code' => '',
             'fingerprint' => 'd9b40fc6f841f41ef3475220fe6316406a5256ce',
@@ -48,7 +48,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
             'refid' => '226',
             'pan' => '444433...111',
             'summarycode' => '1',
-        ));
+        ]);
 
         $response = $this->request->send();
 
@@ -63,12 +63,12 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
 
     public function testFailure()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'amount' => '465.18',
             'transactionPassword' => 'abc123',
-        ));
+        ]);
 
-        $this->getHttpRequest()->query->replace(array(
+        $this->getHttpRequest()->query->replace([
             'timestamp' => '20130602102927',
             'callback_status_code' => '',
             'fingerprint' => '0516a31bf96ad89c354266afb9bd4be43aaf853f',
@@ -81,7 +81,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
             'refid' => '222',
             'pan' => '444433...111',
             'summarycode' => '2',
-        ));
+        ]);
 
         $response = $this->request->send();
 

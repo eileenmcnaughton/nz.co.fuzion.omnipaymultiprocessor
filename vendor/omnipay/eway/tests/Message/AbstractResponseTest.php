@@ -15,27 +15,27 @@ class AbstractResponseTest extends TestCase
 
     public function testIsSuccessful()
     {
-        $data = array('TransactionStatus' => true);
+        $data = ['TransactionStatus' => true];
         $request = $this->getMockRequest();
-        $this->response = m::mock('\Omnipay\Eway\Message\AbstractResponse', array($request, $data))->makePartial();
+        $this->response = m::mock('\Omnipay\Eway\Message\AbstractResponse', [$request, $data])->makePartial();
 
         $this->assertTrue($this->response->isSuccessful());
     }
 
     public function testGetMessage()
     {
-        $data = array('ResponseMessage' => 'A2000');
+        $data = ['ResponseMessage' => 'A2000'];
         $request = $this->getMockRequest();
-        $this->response = m::mock('\Omnipay\Eway\Message\AbstractResponse', array($request, $data))->makePartial();
+        $this->response = m::mock('\Omnipay\Eway\Message\AbstractResponse', [$request, $data])->makePartial();
 
         $this->assertSame('Transaction Approved', $this->response->getMessage());
     }
 
     public function testGetMessageMultiple()
     {
-        $data = array('ResponseMessage' => 'V6101,V6102');
+        $data = ['ResponseMessage' => 'V6101,V6102'];
         $request = $this->getMockRequest();
-        $this->response = m::mock('\Omnipay\Eway\Message\AbstractResponse', array($request, $data))->makePartial();
+        $this->response = m::mock('\Omnipay\Eway\Message\AbstractResponse', [$request, $data])->makePartial();
 
         $this->assertSame('Invalid EWAY_CARDEXPIRYMONTH, Invalid EWAY_CARDEXPIRYYEAR', $this->response->getMessage());
     }

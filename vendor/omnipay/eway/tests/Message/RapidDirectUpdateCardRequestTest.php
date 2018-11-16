@@ -9,11 +9,11 @@ class RapidDirectUpdateCardRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidDirectUpdateCardRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'cardReference' => '987654321',
-            'card' => array(
+            'card' => [
                 'title' => 'Mr.',
                 'firstName' => 'John',
                 'lastName' => 'Smith',
@@ -21,17 +21,17 @@ class RapidDirectUpdateCardRequestTest extends TestCase
                 'expiryMonth' => '12',
                 'expiryYear' => gmdate('Y') + rand(1, 5),
                 'cvv' => rand(100, 999),
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'cardReference' => '987654321',
-            'card' => array(
+            'card' => [
                 'title' => 'Mr.',
                 'firstName' => 'John',
                 'lastName' => 'Smith',
@@ -43,11 +43,11 @@ class RapidDirectUpdateCardRequestTest extends TestCase
                 'expiryMonth' => '12',
                 'expiryYear' => gmdate('Y') + rand(1, 5),
                 'cvv' => rand(100, 999),
-            ),
-        ));
+            ],
+        ]);
 
         $data = $this->request->getData();
-    
+
         $this->assertSame('UpdateTokenCustomer', $data['Method']);
         $this->assertSame('987654321', $data['Customer']['TokenCustomerID']);
         $this->assertSame(0, $data['Payment']['TotalAmount']);
@@ -59,7 +59,7 @@ class RapidDirectUpdateCardRequestTest extends TestCase
         $this->assertSame('4111111111111111', $data['Customer']['CardDetails']['Number']);
         $this->assertSame('12', $data['Customer']['CardDetails']['ExpiryMonth']);
     }
-    
+
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('RapidDirectUpdateCardRequestSuccess.txt');

@@ -1,0 +1,8 @@
+/.puli/
+/behat.yml
+/build/
+/composer.lock
+/phpspec.yml
+/phpunit.xml
+/puli.json
+/vendor/

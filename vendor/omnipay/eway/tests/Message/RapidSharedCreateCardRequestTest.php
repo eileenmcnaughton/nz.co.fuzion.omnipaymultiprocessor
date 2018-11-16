@@ -9,26 +9,26 @@ class RapidSharedCreateCardRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidSharedCreateCardRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'returnUrl' => 'https://www.example.com/return',
-        ));
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'returnUrl' => 'https://www.example.com/return',
-            'card' => array(
+            'card' => [
                 'title' => 'Mr',
                 'firstName' => 'Patrick',
                 'lastName' => 'Collison',
                 'country' => 'AU',
-            ),
-        ));
+            ],
+        ]);
 
         $data = $this->request->getData();
 

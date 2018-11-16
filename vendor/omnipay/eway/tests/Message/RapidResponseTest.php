@@ -8,7 +8,7 @@ class RapidResponseTest extends TestCase
 {
     public function testGetMessage()
     {
-        $data = array('ResponseMessage' => 'A2000');
+        $data = ['ResponseMessage' => 'A2000'];
         $response = new RapidResponse($this->getMockRequest(), $data);
 
         $this->assertSame('Transaction Approved', $response->getMessage());
@@ -16,7 +16,7 @@ class RapidResponseTest extends TestCase
 
     public function testGetMessageMultiple()
     {
-        $data = array('ResponseMessage' => 'V6101,V6102');
+        $data = ['ResponseMessage' => 'V6101,V6102'];
         $response = new RapidResponse($this->getMockRequest(), $data);
 
         $this->assertSame('Invalid EWAY_CARDEXPIRYMONTH, Invalid EWAY_CARDEXPIRYYEAR', $response->getMessage());

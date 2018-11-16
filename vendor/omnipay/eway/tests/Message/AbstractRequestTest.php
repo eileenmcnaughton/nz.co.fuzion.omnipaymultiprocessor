@@ -7,7 +7,6 @@ use Omnipay\Tests\TestCase;
 
 class AbstractRequestTest extends TestCase
 {
-
     public function setUp()
     {
         $this->request = m::mock('\Omnipay\Eway\Message\AbstractRequest')->makePartial();
@@ -52,10 +51,10 @@ class AbstractRequestTest extends TestCase
 
     public function testGetItemData()
     {
-        $this->request->setItems(array(
-            array('name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10),
-            array('name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40),
-        ));
+        $this->request->setItems([
+            ['name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10],
+            ['name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40],
+        ]);
 
         $data = $this->request->getItemData();
         $this->assertSame('Floppy Disk', $data[0]['SKU']);

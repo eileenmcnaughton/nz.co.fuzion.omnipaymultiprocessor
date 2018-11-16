@@ -56,15 +56,13 @@ class RefundRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, json_encode($data))
-            ->setAuth($this->getApiKey(), $this->getPassword())
-            ->send();
+        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), [], json_encode($data));
 
-        return $this->response = new RefundResponse($this, $httpResponse->json());
+        return $this->response = new RefundResponse($this, json_decode((string) $httpResponse->getBody(), true));
     }
 
     protected function getEndpoint()
     {
-        return $this->getEndpointBase().'/DirectRefund.json';
+        return $this->getEndpointBase() . '/DirectRefund.json';
     }
 }

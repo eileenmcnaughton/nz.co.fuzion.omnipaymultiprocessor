@@ -9,17 +9,17 @@ class RapidCaptureRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidCaptureRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
             'transactionReference' => '12345678',
-        ));
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
@@ -28,7 +28,7 @@ class RapidCaptureRequestTest extends TestCase
             'description' => 'new car',
             'transactionId' => '999',
             'invoiceReference' => 'INV-123',
-        ));
+        ]);
 
         $data = $this->request->getData();
 

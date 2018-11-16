@@ -13,7 +13,7 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
     {
         $this->validate('amount', 'returnUrl', 'card');
 
-        $data = array();
+        $data = [];
         $data['EPS_MERCHANT'] = $this->getMerchantId();
         $data['EPS_TXNTYPE'] = $this->txnType;
         $data['EPS_IP'] = $this->getClientIp();
@@ -33,17 +33,14 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
 
     public function generateFingerprint(array $data)
     {
-        $hash = implode(
-            '|',
-            array(
-                $data['EPS_MERCHANT'],
-                $this->getTransactionPassword(),
-                $data['EPS_TXNTYPE'],
-                $data['EPS_REFERENCEID'],
-                $data['EPS_AMOUNT'],
-                $data['EPS_TIMESTAMP'],
-            )
-        );
+        $hash = implode('|', [
+            $data['EPS_MERCHANT'],
+            $this->getTransactionPassword(),
+            $data['EPS_TXNTYPE'],
+            $data['EPS_REFERENCEID'],
+            $data['EPS_AMOUNT'],
+            $data['EPS_TIMESTAMP'],
+        ]);
 
         return sha1($hash);
     }
@@ -57,7 +54,7 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
     {
         $this->getCard()->validate();
 
-        $data = array();
+        $data = [];
         $data['EPS_CARDNUMBER'] = $this->getCard()->getNumber();
         $data['EPS_EXPIRYMONTH'] = $this->getCard()->getExpiryMonth();
         $data['EPS_EXPIRYYEAR'] = $this->getCard()->getExpiryYear();

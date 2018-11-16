@@ -10,20 +10,18 @@ class SecureXMLPurchaseRequestTest extends TestCase
     {
         $this->request = new SecureXMLPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
 
-        $this->request->initialize(
-            array(
-                'merchantId' => 'ABC0030',
-                'transactionPassword' => 'abc123',
-                'amount' => '12.00',
-                'transactionId' => '1234',
-                'card' => array(
-                    'number' => '4444333322221111',
-                    'expiryMonth' => '10',
-                    'expiryYear' => '2020',
-                    'cvv' => '123',
-                ),
-            )
-        );
+        $this->request->initialize([
+            'merchantId' => 'ABC0030',
+            'transactionPassword' => 'abc123',
+            'amount' => '12.00',
+            'transactionId' => '1234',
+            'card' => [
+                'number' => '4444333322221111',
+                'expiryMonth' => '12',
+                'expiryYear' => date('Y'),
+                'cvv' => '123',
+            ],
+        ]);
     }
 
     public function testSendSuccess()

@@ -56,11 +56,11 @@ class SecureXMLGateway extends AbstractGateway
 
     public function getDefaultParameters()
     {
-        return array(
+        return [
             'merchantId' => '',
             'transactionPassword' => '',
             'testMode' => false,
-        );
+        ];
     }
 
     public function getMerchantId()

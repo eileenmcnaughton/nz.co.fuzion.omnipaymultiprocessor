@@ -9,20 +9,20 @@ class RapidDirectVoidRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidDirectVoidRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
-            'transactionReference' => '4324324'
-        ));
+            'transactionReference' => '4324324',
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
-            'transactionReference' => '4324324'
-        ));
+            'transactionReference' => '4324324',
+        ]);
 
         $data = $this->request->getData();
 

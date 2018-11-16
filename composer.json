@@ -1,78 +1,22 @@
 {
-    "repositories": [
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-cybersource.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-paybox.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/sergej-koscejev/omnipay-gopay.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-paypalstandard.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-paypal.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-nabtransact.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-authorizenetstd.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-mercanet.git"
-        },
-        {
-          "type": "git",
-          "url":  "https://github.com/eileenmcnaughton/omnipay-eway.git"
-        },
-        {
-          "type": "git",
-          "url":  "https://github.com/eileenmcnaughton/omnipay-pergo.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/eileenmcnaughton/omnipay-tests.git"
-        },
-        {
-            "type": "git",
-            "url":  "https://github.com/mattwire/omnipay-sagepay.git"
-        }
-
-    ],
     "require":
     {
-        "omnipay/omnipay": "~2.0",
-        "omnipay/eway": "dev-master",
-        "dioscouri/omnipay-cybersource": "master",
-        "alfaproject/omnipay-skrill": "dev-master",
-        "omnipay/bitpay": "dev-master",
-        "fuzion/omnipay-paybox": "dev-master",
-        "sergej-koscejev/omnipay-gopay": "dev-master",
-        "civicrm/omnipay-paypalstandard": "dev-master",
-        "pointybeard/omnipay-nabtransact": "dev-transact",
-        "fzaninotto/faker": "^1.6@dev",
-        "omnipay/authorizenet": "2.6.x-dev",
-        "omnipay/paymentexpress": "2.x-dev",
-        "fuzion/omnipay-authorizenetstd": "dev-master",
-        "fuzion/omnipay-mercanet": "dev-master",
-        "pergo/omnipay-pergo": "dev-master",
-        "guzzlehttp/guzzle": "^6.2@dev"
+        "league/omnipay": "~3.0",
+        "psr/log": "^1.0@dev",
+        "omnipay/paypal": "^3.0@dev",
+        "omnipay/authorizenet": "^3.0@dev",
+        "omnipay/eway": "^3.0@dev",
+        "omnipay/mollie": "^5.1@dev",
+        "sudiptpa/omnipay-nabtransact": "^3.0@dev",
+        "omnipay/sagepay": "^3.0@dev",
+        "omnipay/securepay": "^3.0@dev",
+        "omnipay/stripe": "^3.0@dev",
+        "omnipay/worldpay": "^3.0@dev"
     },
-    "require-dev":
-    {
-        "omnipay/tests": "~2.0"
-    },
-    "minimum-stability": "dev"
-
+    "minimum-stability": "dev",
+    "config": {
+        "platform": {
+            "php": "7.1.0"
+        }
+    }
 }

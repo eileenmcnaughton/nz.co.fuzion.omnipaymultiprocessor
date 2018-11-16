@@ -1,0 +1,22 @@
+HTTP/1.1 100 Continue
+Server: Apache/2.4.29 (Ubuntu)
+Date: Sat, 26 May 2018 07:25:31 GMT
+HTTP/1.1 200 OK
+Server: Apache/2.4.29 (Ubuntu)
+Date: Sat, 26 May 2018 07:25:31 GMT
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 929
+
+<?xml version="1.0" encoding="UTF-8"?>
+<NABTransactMessage>
+<MessageInfo>
+<messageID>a246d3d2ff1a75298ebe54f21fe887</messageID>
+<messageTimestamp>20182605172441033000+600</messageTimestamp>
+<apiVersion>xml-4.2</apiVersion>
+</MessageInfo>
+<RequestType>Echo</RequestType>
+<Status>
+<statusCode>000</statusCode>
+<statusDescription>Normal</statusDescription>
+</Status>
+</NABTransactMessage>

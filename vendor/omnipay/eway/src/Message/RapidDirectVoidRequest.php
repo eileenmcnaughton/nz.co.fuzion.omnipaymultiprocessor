@@ -2,7 +2,7 @@
 /**
  * eWAY Rapid Void Request
  */
- 
+
 namespace Omnipay\Eway\Message;
 
 class RapidDirectVoidRequest extends AbstractRequest
@@ -11,27 +11,26 @@ class RapidDirectVoidRequest extends AbstractRequest
     {
         $this->validate('transactionReference');
 
-        $data = array();
+        $data = [];
         $data['TransactionId'] = $this->getTransactionReference();
-        
+
         return $data;
     }
 
     protected function getEndpoint()
     {
-        return $this->getEndpointBase().'/CancelAuthorisation';
+        return $this->getEndpointBase() . '/CancelAuthorisation';
     }
 
     public function sendData($data)
     {
-        // This request uses the REST endpoint and requires the JSON content type header
-        $httpResponse = $this->httpClient->post(
-            $this->getEndpoint(),
-            array('content-type' => 'application/json'),
-            json_encode($data)
-        )
-        ->setAuth($this->getApiKey(), $this->getPassword())
-        ->send();
-        return $this->response = new RapidResponse($this, $httpResponse->json());
+        $headers = [
+            'Authorization' => 'Basic ' . base64_encode($this->getApiKey() . ':' . $this->getPassword()),
+            'content-type' => 'application/json',
+        ];
+
+        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), $headers, json_encode($data));
+
+        return $this->response = new RapidResponse($this, json_decode((string) $httpResponse->getBody(), true));
     }
 }

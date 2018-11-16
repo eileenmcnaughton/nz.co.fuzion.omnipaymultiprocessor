@@ -15,12 +15,15 @@ class ServerAuthorizeRequestTest extends TestCase
         $this->request = new ServerAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
+                // Money in Omnipay 2.x format
                 'amount' => '12.00',
+                'currency' => 'GBP',
                 'transactionId' => '123',
                 'surchargeXml' => self::SURCHARGE_XML,
                 'card' => $this->getValidCard(),
                 'notifyUrl' => 'https://www.example.com/return',
                 'profile' => 'LOW',
+                'language' => 'en-gb',
             )
         );
     }
@@ -38,5 +41,8 @@ class ServerAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/return', $data['NotificationURL']);
         $this->assertSame('LOW', $data['Profile']);
         $this->assertSame(self::SURCHARGE_XML, $data['surchargeXml']);
+        $this->assertSame('12.00', $data['Amount']);
+        $this->assertSame('GBP', $data['Currency']);
+        $this->assertSame('EN', $data['Language']);
     }
 }

@@ -11,25 +11,11 @@ processing library for PHP 5.3+. This package implements Authorize.Net support f
 
 ## Installation
 
-**This is the legacy 2.6 branch for Omnipay version 2.x.
-For later Omnipay version support (currently 3.x) please see
-[the master branch](https://github.com/thephpleague/omnipay-authorizenet)**
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `league/omnipay` and `omnipay/authorizenet` with Composer:
 
-Omnipay is installed via [Composer](http://getcomposer.org/).
-To install, simply add it to your `composer.json` file:
-
-```json
-{
-    "require": {
-        "omnipay/authorizenet": "~2.0"
-    }
-}
 ```
-
-And run composer to update your dependencies:
-
-    $ curl -s http://getcomposer.org/installer | php
-    $ php composer.phar update
+composer require league/omnipay omnipay/authorizenet:"3.x@dev"
+```
 
 ## Basic Usage
 

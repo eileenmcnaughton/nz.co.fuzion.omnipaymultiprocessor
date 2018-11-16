@@ -16,11 +16,11 @@
   </urls>
   <releaseDate>2018-11-16</releaseDate>
   <version>3.0</version>
-  <develStage>stable</develStage>
+  <develStage>alpha</develStage>
   <compatibility>
     <ver>5.7</ver>
   </compatibility>
-  <comments>This module integrates the omnipay library with CiviCRM</comments>
+  <comments>This module integrates the omnipay library with CiviCRM. This release is for Omnipay 3.x and requires php 7.1. All new development will be here but 2.x series will continue to work.</comments>
   <civix>
     <namespace>CRM/Omnipaymultiprocessor</namespace>
   </civix>

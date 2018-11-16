@@ -6,6 +6,7 @@
 namespace Omnipay\Stripe\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Stripe Response.
@@ -22,7 +23,19 @@ class Response extends AbstractResponse
      * @var string URL
      */
     protected $requestId = null;
-    
+
+    /**
+     * @var array
+     */
+    protected $headers = [];
+
+    public function __construct(RequestInterface $request, $data, $headers = [])
+    {
+        $this->request = $request;
+        $this->data = json_decode($data, true);
+        $this->headers = $headers;
+    }
+
     /**
      * Is the transaction successful?
      *
@@ -42,8 +55,24 @@ class Response extends AbstractResponse
      */
     public function getChargeReference()
     {
-        if (isset($this->data['object']) && $this->data['object'] == 'charge') {
+        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
             return $this->data['id'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the outcome of a charge from the response
+     *
+     * @return array|null
+     */
+    public function getOutcome()
+    {
+        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
+            if (isset($this->data['outcome']) && !empty($this->data['outcome'])) {
+                return $this->data['outcome'];
+            }
         }
 
         return null;
@@ -97,6 +126,11 @@ class Response extends AbstractResponse
             return $this->data['id'];
         }
         if (isset($this->data['object']) && 'card' === $this->data['object']) {
+            if (!empty($this->data['customer'])) {
+                return $this->data['customer'];
+            }
+        }
+        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
             if (!empty($this->data['customer'])) {
                 return $this->data['customer'];
             }
@@ -293,6 +327,7 @@ class Response extends AbstractResponse
     public function getPlanId()
     {
         $plan = $this->getPlan();
+
         if ($plan && array_key_exists('id', $plan)) {
             return $plan['id'];
         }
@@ -347,20 +382,14 @@ class Response extends AbstractResponse
     }
     
     /**
-     * @return string
+     * @return string|null
      */
     public function getRequestId()
     {
-        return $this->requestId;
-    }
+        if (isset($this->headers['Request-Id'])) {
+            return $this->headers['Request-Id'][0];
+        }
 
-    /**
-     * Set request id
-     *
-     * @return AbstractRequest provides a fluent interface.
-     */
-    public function setRequestId($requestId)
-    {
-        $this->requestId = $requestId;
+        return null;
     }
 }

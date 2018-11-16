@@ -16,7 +16,7 @@ class DirectPostGatewayTest extends GatewayTestCase
 
     public function testAuthorize()
     {
-        $request = $this->gateway->authorize(array('amount' => '10.00'));
+        $request = $this->gateway->authorize(['amount' => '10.00']);
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostAuthorizeRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
@@ -24,7 +24,7 @@ class DirectPostGatewayTest extends GatewayTestCase
 
     public function testCompleteAuthorize()
     {
-        $request = $this->gateway->completeAuthorize(array('amount' => '10.00'));
+        $request = $this->gateway->completeAuthorize(['amount' => '10.00']);
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostCompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
@@ -32,7 +32,7 @@ class DirectPostGatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $request = $this->gateway->purchase(array('amount' => '10.00'));
+        $request = $this->gateway->purchase(['amount' => '10.00']);
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostPurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
@@ -40,7 +40,7 @@ class DirectPostGatewayTest extends GatewayTestCase
 
     public function testCompletePurchase()
     {
-        $request = $this->gateway->completePurchase(array('amount' => '10.00'));
+        $request = $this->gateway->completePurchase(['amount' => '10.00']);
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\DirectPostCompletePurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());

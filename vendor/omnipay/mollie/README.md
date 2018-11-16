@@ -7,25 +7,16 @@
 [![Total Downloads](https://poser.pugx.org/omnipay/mollie/d/total.png)](https://packagist.org/packages/omnipay/mollie)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements Mollie support for Omnipay.
+processing library for PHP. This package implements Mollie support for Omnipay.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
-to your `composer.json` file:
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `league/omnipay` and `omnipay/mollie` with Composer:
 
-```json
-{
-    "require": {
-        "omnipay/mollie": "~3.0"
-    }
-}
+```
+composer require league/omnipay omnipay/mollie
 ```
 
-And run composer to update your dependencies:
-
-    $ curl -s http://getcomposer.org/installer | php
-    $ php composer.phar update
 
 ## Basic Usage
 
@@ -35,6 +26,40 @@ The following gateways are provided by this package:
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
+
+### Basic purchase example
+
+```php
+$gateway = \Omnipay\Omnipay::create('Mollie');  
+$gateway->setApiKey('test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM');
+
+$response = $gateway->purchase(
+    [
+        "amount" => "10.00",
+        "currency" => "EUR",
+        "description" => "My first Payment",
+        "returnUrl" => "https://webshop.example.org/mollie-return.php"
+    ]
+)->send();
+
+// Process response
+if ($response->isSuccessful()) {
+
+    // Payment was successful
+    print_r($response);
+
+} elseif ($response->isRedirect()) {
+
+    // Redirect to offsite payment gateway
+    $response->redirect();
+
+} else {
+
+    // Payment failed
+    echo $response->getMessage();
+}
+```
+
 
 ## Support
 

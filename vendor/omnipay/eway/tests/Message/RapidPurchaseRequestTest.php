@@ -9,17 +9,17 @@ class RapidPurchaseRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
-        ));
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'partnerId' => '1234',
@@ -32,7 +32,7 @@ class RapidPurchaseRequestTest extends TestCase
             'invoiceReference' => 'INV-123',
             'clientIp' => '127.0.0.1',
             'returnUrl' => 'https://www.example.com/return',
-            'card' => array(
+            'card' => [
                 'firstName' => 'Patrick',
                 'lastName' => 'Collison',
                 'shippingFirstName' => 'John',
@@ -41,8 +41,8 @@ class RapidPurchaseRequestTest extends TestCase
                 'shippingAddress2' => '123 Test Lane',
                 'shippingState' => 'NSW',
                 'shippingCountry' => 'AU',
-            ),
-        ));
+            ],
+        ]);
 
         $data = $this->request->getData();
 
@@ -66,7 +66,7 @@ class RapidPurchaseRequestTest extends TestCase
 
     public function testGetDataWithItems()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
@@ -75,16 +75,16 @@ class RapidPurchaseRequestTest extends TestCase
             'currency' => 'AUD',
             'clientIp' => '127.0.0.1',
             'returnUrl' => 'https://www.example.com/return',
-            'card' => array(
+            'card' => [
                 'firstName' => 'Patrick',
                 'lastName' => 'Collison',
-            ),
-        ));
+            ],
+        ]);
 
-        $this->request->setItems(array(
-            array('name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10),
-            array('name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40),
-        ));
+        $this->request->setItems([
+            ['name' => 'Floppy Disk', 'description' => 'MS-DOS', 'quantity' => 2, 'price' => 10],
+            ['name' => 'CD-ROM', 'description' => 'Windows 95', 'quantity' => 1, 'price' => 40],
+        ]);
 
         $data = $this->request->getData();
 
@@ -108,7 +108,7 @@ class RapidPurchaseRequestTest extends TestCase
         $this->assertTrue($response->isRedirect());
         $this->assertSame('POST', $response->getRedirectMethod());
         $this->assertSame('https://secure-au.sandbox.ewaypayments.com/Process', $response->getRedirectUrl());
-        $this->assertSame(array('EWAY_ACCESSCODE' => 'F9802j0-O7sdVLnOcb_3IPryTxHDtKY8u_0pb10GbYq-Xjvbc-5Bc_LhI-oBIrTxTCjhOFn7Mq-CwpkLDja5-iu-Dr3DjVTr9u4yxSB5BckdbJqSA4WWydzDO0jnPWfBdKcWL'), $response->getRedirectData());
+        $this->assertSame(['EWAY_ACCESSCODE' => 'F9802j0-O7sdVLnOcb_3IPryTxHDtKY8u_0pb10GbYq-Xjvbc-5Bc_LhI-oBIrTxTCjhOFn7Mq-CwpkLDja5-iu-Dr3DjVTr9u4yxSB5BckdbJqSA4WWydzDO0jnPWfBdKcWL'], $response->getRedirectData());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertNull($response->getCode());

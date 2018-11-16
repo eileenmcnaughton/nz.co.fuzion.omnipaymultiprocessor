@@ -16,7 +16,7 @@ class SecureXMLGatewayTest extends GatewayTestCase
 
     public function testAuthorize()
     {
-        $request = $this->gateway->authorize(array('amount' => '10.00'));
+        $request = $this->gateway->authorize(['amount' => '10.00']);
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\SecureXMLAuthorizeRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
@@ -24,7 +24,7 @@ class SecureXMLGatewayTest extends GatewayTestCase
 
     public function testPurchase()
     {
-        $request = $this->gateway->purchase(array('amount' => '10.00'));
+        $request = $this->gateway->purchase(['amount' => '10.00']);
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\SecureXMLPurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
@@ -32,7 +32,7 @@ class SecureXMLGatewayTest extends GatewayTestCase
 
     public function testRefund()
     {
-        $request = $this->gateway->refund(array('amount' => '10.00', 'transactionId' => 'order12345'));
+        $request = $this->gateway->refund(['amount' => '10.00', 'transactionId' => 'order12345']);
 
         $this->assertInstanceOf('\Omnipay\SecurePay\Message\SecureXMLRefundRequest', $request);
         $this->assertSame('10.00', $request->getAmount());

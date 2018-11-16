@@ -1,0 +1,28 @@
+HTTP/1.1 100 Continue
+Server: Apache/2.4.29 (Ubuntu)
+Date: Sat, 26 May 2018 07:25:31 GMT
+HTTP/1.1 200 OK
+Server: Apache/2.4.29 (Ubuntu)
+Date: Sat, 26 May 2018 07:25:31 GMT
+Content-Type: text/xml;charset=ISO-8859-1
+Content-Length: 929
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SecurePayMessage>
+	<MessageInfo>
+		<messageID>5ef083567a7fe09111ecf709761f9d</messageID>
+		<messageTimestamp>20151704120553321000+600</messageTimestamp>
+		<apiVersion>xml-4.2</apiVersion>
+	</MessageInfo>
+	<RequestType>Payment</RequestType>
+	<MerchantInfo>
+		<merchantID>XYZ0040</merchantID>
+	</MerchantInfo>
+	<Status>
+		<statusCode>504</statusCode>
+		<statusDescription>Invalid merchant ABC0030</statusDescription>
+	</Status>
+	<Payment>
+		<TxnList count="0"/>
+	</Payment>
+</SecurePayMessage>

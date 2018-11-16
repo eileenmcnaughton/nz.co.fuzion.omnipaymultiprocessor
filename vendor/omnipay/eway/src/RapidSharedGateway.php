@@ -33,11 +33,11 @@ class RapidSharedGateway extends AbstractGateway
 
     public function getDefaultParameters()
     {
-        return array(
-            'apiKey'   => '',
+        return [
+            'apiKey' => '',
             'password' => '',
             'testMode' => false,
-        );
+        ];
     }
 
     public function getApiKey()
@@ -60,7 +60,7 @@ class RapidSharedGateway extends AbstractGateway
         return $this->setParameter('password', $value);
     }
 
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = [])
     {
         if (!empty($parameters['cardTransactionType']) && $parameters['cardTransactionType'] === 'continuous') {
             $gateway = Omnipay::create('Eway_RapidDirect');
@@ -72,22 +72,22 @@ class RapidSharedGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\Eway\Message\RapidSharedPurchaseRequest', $parameters);
     }
 
-    public function completePurchase(array $parameters = array())
+    public function completePurchase(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\Eway\Message\RapidCompletePurchaseRequest', $parameters);
     }
 
-    public function refund(array $parameters = array())
+    public function refund(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\Eway\Message\RefundRequest', $parameters);
     }
 
-    public function createCard(array $parameters = array())
+    public function createCard(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\Eway\Message\RapidSharedCreateCardRequest', $parameters);
     }
 
-    public function updateCard(array $parameters = array())
+    public function updateCard(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\Eway\Message\RapidSharedUpdateCardRequest', $parameters);
     }

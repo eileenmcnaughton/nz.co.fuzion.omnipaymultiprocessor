@@ -13,7 +13,7 @@ namespace Omnipay\SecurePay\Message;
 class SecureXMLAuthorizeRequest extends SecureXMLAbstractRequest
 {
     protected $txnType = 10; // Preauthorise, as per Appendix A of documentation.
-    protected $requiredFields = array('amount', 'card', 'transactionId');
+    protected $requiredFields = ['amount', 'card', 'transactionId'];
 
     public function getData()
     {

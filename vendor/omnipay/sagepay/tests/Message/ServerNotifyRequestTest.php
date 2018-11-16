@@ -5,16 +5,23 @@ namespace Omnipay\SagePay\Message;
 use Omnipay\Tests\TestCase;
 use Mockery as m;
 
+/**
+ *
+ */
+
 class ServerNotifyRequestTest extends TestCase
 {
     public function testServerNotifyResponseSuccess()
     {
         parent::setUp();
 
-        $this->request = new ServerNotifyRequest($this->getHttpClient(), $this->getHttpRequest());
+        // Mock up the server request with first, as ServerNotifyRequest
+        // only grabs the POST data once on instantiation.
 
-        $this->request->initialize(
-            array(
+        $this->getHttpRequest()->initialize(
+            [], // GET
+            [
+                'VendorTxCode' => '438791',
                 'Status' => 'OK',
                 'TxAuthNo' => '4255',
                 'VPSTxId' => '{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}',
@@ -32,79 +39,304 @@ class ServerNotifyRequestTest extends TestCase
                 'DeclineCode' => '00',
                 'ExpiryDate' => '0722',
                 'BankAuthCode' => '999777',
-            )
+                'VPSSignature' => '285765407193faa9b8e432e6b55f5849',
+            ] // POST
         );
 
-        //$this->getMockRequest()->shouldReceive('getTransactionReference')->once()->andReturn('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}');
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
 
-        //$this->assertSame('{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}', $this->request->getTransactionReference());
-        //$this->assertNull($this->request->getMessage());
+        // The security key will be null until we add it.
 
-        //$this->assertSame('0707', $this->request->getExpiryDate());
+        $this->assertSame(
+            '{"SecurityKey":null,"TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
+            $this->request->getTransactionReference()
+        );
 
-        // FIXME: disabled until I work out how yo initialise a server request (notify)
-        // object with data.
+        // Until we add the security key we saved, the signature check will
+        // be false.
 
-        $this->assertSame('DISABLED', 'DISABLED');
-    }
+        $this->assertFalse($this->request->isValid());
 
-    public function DISABLED_testServerNotifyResponseFailure()
-    {
-        $response = new ServerNotifyResponse($this->getMockRequest(), array('Status' => 'INVALID'));
-        $this->assertFalse($response->isSuccessful());
+        $this->request->setSecurityKey('JEUPDN1N7E');
 
-        $this->assertFalse($response->isRedirect());
+        // With the security key added, the signatue check will now be valid,
+        // i.e. an untampered inbound notification.
 
-        // The mocked request does not have getTransactionReference() or any of the other
-        // methods that this response uses, e.g. isValid() and getTransactionStatus()
-        // To test this thoroughly, we would use the non-mocked ServerNotifyRequest.
+        $this->assertTrue($this->request->isValid());
 
-        //$this->assertNull($response->getTransactionReference());
-        //$this->assertSame('FAILED', $response->getTransactionStatus());
+        // Now with security key.
+
+        $this->assertSame(
+            '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
+            $this->request->getTransactionReference()
+        );
+
+        $this->assertNull($this->request->getMessage());
+
+        $this->assertSame('0722', $this->request->getExpiryDate());
+
+        // The request can be "sent" and you just get back the same request,
+        // with all the same detgails.
+
+        $response = $this->request->send();
+
+        $this->assertSame(
+            '{"SecurityKey":"JEUPDN1N7E","TxAuthNo":"4255","VPSTxId":"{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}","VendorTxCode":"438791"}',
+            $response->getTransactionReference()
+        );
 
         $this->assertNull($response->getMessage());
+
+        $this->assertSame('0722', $response->getExpiryDate());
+
+        $this->assertSame($this->request, $response);
+
+        // Confirm will work if the signature is valid.
+
+        $this->expectOutputString(
+            "Status=OK\r\nRedirectUrl=https://www.example.com/\r\nStatusDetail=detail"
+        );
+        $this->request->confirm('https://www.example.com/', 'detail');
     }
 
-    public function DISABLED_testConfirm()
+    public function testServerNotifyRequestFailure()
     {
-        $response = m::mock('\Omnipay\SagePay\Message\ServerNotifyResponse', array('isValid' => 1))->makePartial();
-        $response->shouldReceive('sendResponse')->once()->with('OK', 'https://www.example.com/', 'detail');
+        $this->getHttpRequest()->initialize(
+            [], // GET
+            [
+                'VendorTxCode' => '438791',
+                'Status' => 'INVALID',
+            ]
+        );
 
-        $response->confirm('https://www.example.com/', 'detail');
-        //$response->sendResponse('OK', 'https://www.example.com/', 'detail');
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
+
+        // The transactino reference in Response and ServerNotifyTrait
+        // will return null if there is no transaction data provided
+        // by the gateway.
+
+        $this->assertNull($this->request->getTransactionReference());
+
+        $this->assertSame('failed', $this->request->getTransactionStatus());
+
+        $this->assertNull($this->request->getMessage());
     }
 
-    public function DISABLED_testError()
+    public function testError()
     {
-        $response = m::mock('\Omnipay\SagePay\Message\ServerNotifyResponse', array('isValid' => 1))->makePartial();
-        $response->shouldReceive('sendResponse')->once()->with('ERROR', 'https://www.example.com/', 'detail');
+        parent::setUp();
 
-        $response->error('https://www.example.com/', 'detail');
-        //$response->sendResponse('ERROR', 'https://www.example.com/', 'detail');
+        // Mock up the server request with first, as ServerNotifyRequest
+        // only grabs the POST data once on instantiation.
+
+        $this->getHttpRequest()->initialize(
+            [], // GET
+            [
+                'VendorTxCode' => '438791',
+                'Status' => 'OK',
+                'TxAuthNo' => '4255',
+                'VPSTxId' => '{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}',
+                'AVSCV2' => 'c',
+                'AddressResult' => 'd',
+                'PostCodeResult' => 'e',
+                'CV2Result' => 'f',
+                'GiftAid' => 'g',
+                '3DSecureStatus' => 'h',
+                'CAVV' => 'i',
+                'AddressStatus' => 'j',
+                'PayerStatus' => 'k',
+                'CardType' => 'l',
+                'Last4Digits' => '1234',
+                'DeclineCode' => '00',
+                'ExpiryDate' => '0722',
+                'BankAuthCode' => '999777',
+                'VPSSignature' => '285765407193faa9b8e432e6b55f5849',
+            ] // POST
+        );
+
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
+
+        $this->request->setSecurityKey('JEUPDN1N7E');
+
+        // This transaction is valid and the signature is okay, but we
+        // don't want to accept it for some internal reason.
+
+        $this->expectOutputString(
+            "Status=ERROR\r\nRedirectUrl=https://www.example.com/\r\nStatusDetail=detail"
+        );
+        $this->request->error('https://www.example.com/', 'detail');
     }
 
-    public function DISABLED_testInvalid()
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
+     */
+    public function testConfirmInvalidSignature()
     {
-        $response = m::mock('\Omnipay\SagePay\Message\ServerNotifyResponse', array('isValid' => 0))->makePartial();
-        $response->shouldReceive('sendResponse')->once()->with('INVALID', 'https://www.example.com/', 'detail');
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
 
-        $response->invalid('https://www.example.com/', 'detail');
-        //$response->sendResponse('INVALID', 'https://www.example.com/', 'detail');
+        // Since there is no valid signature, trying to confirm should
+        // throw an exception.
+
+        $this->request->confirm('https://www.example.com/', 'detail');
     }
 
-    public function DISABLED_testSendResponse()
+    /**
+     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
+     */
+    public function testErrorInvalidSignature()
     {
-        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse')->makePartial();
-        $response->shouldReceive('exitWith')->once()->with("Status=FOO\r\nRedirectUrl=https://www.example.com/");
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
 
-        $response->sendResponse('FOO', 'https://www.example.com/');
+        $this->request->error('https://www.example.com/', 'detail');
     }
 
-    public function DISABLED_testSendResponseDetail()
+    public function testInvalid()
     {
-        $response = m::mock('\Omnipay\SagePay\Message\ServerCompleteAuthorizeResponse')->makePartial();
-        $response->shouldReceive('exitWith')->once()->with("Status=FOO\r\nRedirectUrl=https://www.example.com/\r\nStatusDetail=Bar");
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
 
-        $response->sendResponse('FOO', 'https://www.example.com/', 'Bar');
+        $this->expectOutputString(
+            "Status=INVALID\r\nRedirectUrl=https://www.example.com/\r\nStatusDetail=detail"
+        );
+        $this->request->invalid('https://www.example.com/', 'detail');
+    }
+
+    /**
+     * sendRequest lets you return a raw message with no additinal
+     * checks on the validity of what was received.
+     */
+    public function testSendResponse()
+    {
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
+
+        $this->expectOutputString(
+            "Status=FOO\r\nRedirectUrl=https://www.example.com/"
+        );
+        $this->request->sendResponse('FOO', 'https://www.example.com/');
+    }
+
+    public function testSendResponseDetail()
+    {
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
+
+        $this->expectOutputString(
+            "Status=FOO\r\nRedirectUrl=https://www.example.com/\r\nStatusDetail=Bar"
+        );
+        $this->request->sendResponse('FOO', 'https://www.example.com/', 'Bar');
+    }
+
+    /**
+     * @dataProvider statusDataProvider
+     */
+    public function testTransactionStatusMapping($status, $txStatus)
+    {
+        parent::setUp();
+
+        $postData = [
+            'VendorTxCode' => '438791',
+            'Status' => $status,
+            'TxAuthNo' => '4255',
+            'VPSTxId' => '{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}',
+            'AVSCV2' => 'c',
+            'AddressResult' => 'd',
+            'PostCodeResult' => 'e',
+            'CV2Result' => 'f',
+            'GiftAid' => 'g',
+            '3DSecureStatus' => 'h',
+            'CAVV' => 'i',
+            'AddressStatus' => 'j',
+            'PayerStatus' => 'k',
+            'CardType' => 'l',
+            'Last4Digits' => '1234',
+            'DeclineCode' => '00',
+            'ExpiryDate' => '0722',
+            'BankAuthCode' => '999777',
+            'VPSSignature' => null,
+        ];
+
+        // First build a notification request without a signature.
+
+        $this->getHttpRequest()->initialize(
+            [], // GET
+            $postData
+        );
+
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
+
+        $this->request->setSecurityKey('JEUPDN1N7E');
+
+        // With an invalid signature the status will always be 'failed'.
+
+        $this->assertSame(
+            'failed',
+            $this->request->getTransactionStatus()
+        );
+
+        // Calculate what the signature should have been.
+
+        $postData['VPSSignature'] = $this->request->buildSignature();
+
+        // Then rebuild the same notification with the signature this time.
+
+        $this->getHttpRequest()->initialize(
+            [], // GET
+            $postData
+        );
+
+        $this->request = new ServerNotifyRequest(
+            $this->getHttpClient(),
+            $this->getHttpRequest()
+        );
+
+        $this->request->setSecurityKey('JEUPDN1N7E');
+
+        // Test the result again.
+
+        $this->assertSame(
+            $txStatus,
+            $this->request->getTransactionStatus()
+        );
+    }
+
+    public function statusDataProvider()
+    {
+        return [
+            ['OK', 'completed'],
+            ['OK REPEATED', 'completed'],
+            ['AUTHENTICATED', 'completed'],
+            ['REGISTERED', 'completed'],
+            //
+            ['PENDING', 'pending'],
+            //
+            ['REJECTED', 'failed'],
+            ['ABORT', 'failed'],
+            ['ERROR', 'failed'],
+        ];
     }
 }

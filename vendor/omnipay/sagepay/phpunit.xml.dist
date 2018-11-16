@@ -8,15 +8,13 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false">
+         syntaxCheck="false"
+         beStrictAboutTestsThatDoNotTestAnything="false">
     <testsuites>
         <testsuite name="Omnipay Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
-    <listeners>
-        <listener class="Mockery\Adapter\Phpunit\TestListener" file="vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php" />
-    </listeners>
     <filter>
         <whitelist>
             <directory>./src</directory>

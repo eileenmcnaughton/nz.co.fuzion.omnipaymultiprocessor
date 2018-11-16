@@ -9,13 +9,13 @@ class RapidCompletePurchaseRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidCompletePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
-        ));
-        $this->getHttpRequest()->query->replace(array(
+        ]);
+        $this->getHttpRequest()->query->replace([
             'AccessCode' => 'F9802j0-O7sdVLnOcb_3IPryTxHDtKY8u_0pb10GbYq-Xjvbc-5Bc_LhI-oBIrTxTCjhOFn7Mq-CwpkLDja5-iu-Dr3DjVTr9u4yxSB5BckdbJqSA4WWydzDO0jnPWfBdKcWL',
-        ));
+        ]);
     }
 
     public function testGetData()

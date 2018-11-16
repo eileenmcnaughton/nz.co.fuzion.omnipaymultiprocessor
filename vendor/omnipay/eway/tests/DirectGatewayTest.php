@@ -2,8 +2,8 @@
 
 namespace Omnipay\Eway;
 
-use Omnipay\Tests\GatewayTestCase;
 use Omnipay\Common\CreditCard;
+use Omnipay\Tests\GatewayTestCase;
 
 class DirectGatewayTest extends GatewayTestCase
 {
@@ -18,31 +18,31 @@ class DirectGatewayTest extends GatewayTestCase
 
         $card = new CreditCard($this->getValidCard());
 
-        $this->purchaseOptions = array(
+        $this->purchaseOptions = [
             'amount' => '10.00',
-            'card' => $card
-        );
+            'card' => $card,
+        ];
 
-        $this->captureOptions = array(
+        $this->captureOptions = [
             'amount' => '10.00',
-            'transactionId' => '10451614'
-        );
+            'transactionId' => '10451614',
+        ];
 
-        $this->refundOptions = array(
-        	'card' 				=> $card,
-            'amount' 			=> '10.00',
-            'transactionId' 	=> '10451628',
-            'refundPassword' 	=> 'Refund123'
-        );
+        $this->refundOptions = [
+            'card' => $card,
+            'amount' => '10.00',
+            'transactionId' => '10451628',
+            'refundPassword' => 'Refund123',
+        ];
 
-        $this->voidOptions = array(
-            'transactionId' 	=> '10451636'
-        );
+        $this->voidOptions = [
+            'transactionId' => '10451636',
+        ];
     }
 
     public function testAuthorizeSuccess()
     {
-    	$this->setMockHttpResponse('DirectAuthorizeSuccess.txt');
+        $this->setMockHttpResponse('DirectAuthorizeSuccess.txt');
 
         $request = $this->gateway->authorize($this->purchaseOptions);
 
@@ -58,9 +58,9 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testAuthorizeFailure()
     {
-    	$this->purchaseOptions['amount'] = '10.63';
+        $this->purchaseOptions['amount'] = '10.63';
 
-    	$this->setMockHttpResponse('DirectAuthorizeFailure.txt');
+        $this->setMockHttpResponse('DirectAuthorizeFailure.txt');
 
         $request = $this->gateway->authorize($this->purchaseOptions);
 
@@ -76,7 +76,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testCaptureSuccess()
     {
-    	$this->setMockHttpResponse('DirectCaptureSuccess.txt');
+        $this->setMockHttpResponse('DirectCaptureSuccess.txt');
 
         $request = $this->gateway->capture($this->captureOptions);
 
@@ -92,7 +92,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testCaptureFailure()
     {
-    	$this->setMockHttpResponse('DirectCaptureFailure.txt');
+        $this->setMockHttpResponse('DirectCaptureFailure.txt');
 
         $request = $this->gateway->capture($this->captureOptions);
 
@@ -107,7 +107,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-    	$this->setMockHttpResponse('DirectPurchaseSuccess.txt');
+        $this->setMockHttpResponse('DirectPurchaseSuccess.txt');
 
         $request = $this->gateway->purchase($this->purchaseOptions);
 
@@ -123,9 +123,9 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testPurchaseFailure()
     {
-    	$this->purchaseOptions['amount'] = '10.63';
+        $this->purchaseOptions['amount'] = '10.63';
 
-    	$this->setMockHttpResponse('DirectPurchaseFailure.txt');
+        $this->setMockHttpResponse('DirectPurchaseFailure.txt');
 
         $request = $this->gateway->purchase($this->purchaseOptions);
 
@@ -141,7 +141,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testRefundSuccess()
     {
-    	$this->setMockHttpResponse('DirectRefundSuccess.txt');
+        $this->setMockHttpResponse('DirectRefundSuccess.txt');
 
         $request = $this->gateway->refund($this->refundOptions);
 
@@ -157,7 +157,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testRefundFailure()
     {
-    	$this->setMockHttpResponse('DirectRefundFailure.txt');
+        $this->setMockHttpResponse('DirectRefundFailure.txt');
 
         $request = $this->gateway->refund($this->refundOptions);
 
@@ -172,7 +172,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testVoidSuccess()
     {
-    	$this->setMockHttpResponse('DirectVoidSuccess.txt');
+        $this->setMockHttpResponse('DirectVoidSuccess.txt');
 
         $request = $this->gateway->void($this->voidOptions);
 
@@ -188,7 +188,7 @@ class DirectGatewayTest extends GatewayTestCase
 
     public function testVoidFailure()
     {
-    	$this->setMockHttpResponse('DirectVoidFailure.txt');
+        $this->setMockHttpResponse('DirectVoidFailure.txt');
 
         $request = $this->gateway->void($this->voidOptions);
 

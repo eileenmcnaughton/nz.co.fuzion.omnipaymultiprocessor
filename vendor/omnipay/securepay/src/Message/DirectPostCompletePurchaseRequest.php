@@ -22,17 +22,14 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
 
     public function generateResponseFingerprint($data)
     {
-        $fields = implode(
-            '|',
-            array(
-                $data['merchant'],
-                $this->getTransactionPassword(),
-                $data['refid'],
-                $this->getAmount(),
-                $data['timestamp'],
-                $data['summarycode'],
-            )
-        );
+        $fields = implode('|', [
+            $data['merchant'],
+            $this->getTransactionPassword(),
+            $data['refid'],
+            $this->getAmount(),
+            $data['timestamp'],
+            $data['summarycode'],
+        ]);
 
         return sha1($fields);
     }

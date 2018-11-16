@@ -1,0 +1,45 @@
+{
+   "name":"sudiptpa/omnipay-nabtransact",
+   "type":"library",
+   "description":"National Australia Bank (NAB) Transact driver for the Omnipay payment processing library.",
+   "keywords":[
+      "gateway",
+      "merchant",
+      "omnipay",
+      "pay",
+      "payment",
+      "nabtransact"
+   ],
+   "homepage":"https://github.com/sudiptpa/nabtransact",
+   "license":"MIT",
+   "authors":[
+      {
+         "name":"Sujip Thapa",
+         "email":"sudiptpa@gmail.com"
+      }
+   ],
+   "autoload":{
+      "psr-4":{
+         "Omnipay\\NABTransact\\":"src/"
+      }
+   },
+   "require":{
+      "omnipay/common":"^3"
+   },
+   "require-dev":{
+      "omnipay/tests":"^3",
+      "squizlabs/php_codesniffer":"^3",
+      "phpro/grumphp":"^0.14.0"
+   },
+   "extra":{
+      "branch-alias":{
+         "dev-master":"3.0.x-dev"
+      }
+   },
+   "scripts":{
+      "test":"vendor/bin/phpunit",
+      "check-style":"phpcs -p --standard=PSR2 src/",
+      "fix-style":"phpcbf -p --standard=PSR2 src/"
+   },
+   "prefer-stable":true
+}

@@ -7,10 +7,12 @@ use Omnipay\Tests\TestCase;
 class DirectAuthorizeRequestTest extends TestCase
 {
     // VISA incurrs a surcharge of 2.5% when used.
-    const SURCHARGE_XML = '<surcharges><surcharge><paymentType>VISA</paymentType><percentage>2.50</percentage></surcharge></surcharges>';
+    const SURCHARGE_XML = '<surcharges><surcharge>'
+        . '<paymentType>VISA</paymentType><percentage>2.50</percentage>'
+        . '</surcharge></surcharges>';
 
     /**
-     * @var \Omnipay\Common\Message\AbstractRequest $request
+     * @var DirectAuthorizeRequest
      */
     protected $request;
 
@@ -21,11 +23,14 @@ class DirectAuthorizeRequestTest extends TestCase
         $this->request = new DirectAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
-                'amount' => '12.00',
+                // Money as Omnipay 3.x Money object, combining currency and amount
+                // Omnipay 3.0-RC2 no longer accepts a money object.
+                'amount' => '12.00', //Money::GBP(1200),
                 'currency' => 'GBP',
                 'transactionId' => '123',
                 'surchargeXml' => self::SURCHARGE_XML,
                 'card' => $this->getValidCard(),
+                'language' => 'EN',
             )
         );
     }
@@ -46,7 +51,9 @@ class DirectAuthorizeRequestTest extends TestCase
         // according to whether we are using a single-use token or a more
         // permanent cardReference.
 
-        $this->assertNull($data['CreateToken']);
+        $this->assertArrayNotHasKey('CreateToken', $data);
+
+        $this->assertSame('EN', $data['Language']);
     }
 
     public function testGetData()
@@ -57,6 +64,7 @@ class DirectAuthorizeRequestTest extends TestCase
         $this->request->setDescription('food');
         $this->request->setClientIp('127.0.0.1');
         $this->request->setReferrerId('3F7A4119-8671-464F-A091-9E59EB47B80C');
+        $this->request->setLanguage('EN');
         $this->request->setVendorData('Vendor secret codes');
         $this->request->setCardholderName('Mr E User');
         $this->request->setCreateToken(true);
@@ -71,7 +79,7 @@ class DirectAuthorizeRequestTest extends TestCase
         $this->assertSame('127.0.0.1', $data['ClientIPAddress']);
         $this->assertSame(2, $data['ApplyAVSCV2']);
         $this->assertSame(3, $data['Apply3DSecure']);
-        $this->assertSame('3F7A4119-8671-464F-A091-9E59EB47B80C', $data['ReferrerID']);
+        $this->assertSame('EN', $data['Language']);
         $this->assertSame('Vendor secret codes', $data['VendorData']);
         $this->assertSame('Mr E User', $data['CardHolder']);
         $this->assertSame(1, $data['CreateToken']);
@@ -316,9 +324,87 @@ class DirectAuthorizeRequestTest extends TestCase
         $this->assertContains($expected, $data['BasketXML'], 'Basket XML does not match the expected output');
     }
 
-    /**
-     * 
-     */
+    public function testNonXmlBasket()
+    {
+        $this->request->setUseOldBasketFormat(true);
+
+        $items = new \Omnipay\Common\ItemBag(array(
+            new \Omnipay\SagePay\Extend\Item(array(
+                'name' => "Pioneer NSDV99 DVD-Surround Sound System",
+                'quantity' => 3,
+                'price' => 4.35,
+            )),
+        ));
+
+        $this->request->setItems($items);
+        $data = $this->request->getData();
+
+        $this->assertArrayNotHasKey('BasketXML', $data);
+        $this->assertSame('1:Pioneer NSDV99 DVD-Surround Sound System:3:4.35::4.35:13.05', $data['Basket']);
+    }
+
+    public function testNonXmlBasketWithVat()
+    {
+        $this->request->setUseOldBasketFormat(true);
+
+        $items = new \Omnipay\Common\ItemBag(array(
+            new \Omnipay\SagePay\Extend\Item(array(
+                'name' => "Pioneer NSDV99 DVD-Surround Sound System",
+                'quantity' => 3,
+                'price' => 4.35,
+                'vat' => 2
+            )),
+        ));
+
+        $this->request->setItems($items);
+        $data = $this->request->getData();
+
+        $this->assertArrayHasKey('Basket', $data);
+        $this->assertArrayNotHasKey('BasketXML', $data);
+
+        $this->assertSame('1:Pioneer NSDV99 DVD-Surround Sound System:3:4.35:2:6.35:19.05', $data['Basket']);
+    }
+
+    public function testNonXmlBasketWithProductCode()
+    {
+        $this->request->setUseOldBasketFormat(true);
+
+        $items = new \Omnipay\Common\ItemBag(array(
+            new \Omnipay\SagePay\Extend\Item(array(
+                'name' => "Pioneer NSDV99 DVD-Surround Sound System",
+                'quantity' => 3,
+                'price' => 4.35,
+                'vat' => 2,
+                'productCode' => 'DVD-123'
+            )),
+        ));
+
+        $this->request->setItems($items);
+        $data = $this->request->getData();
+
+        $this->assertSame('1:[DVD-123]Pioneer NSDV99 DVD-Surround Sound System:3:4.35:2:6.35:19.05', $data['Basket']);
+    }
+
+    public function testNonXmlBasketWithSpecialAndNonSpecialCharacters()
+    {
+        $this->request->setUseOldBasketFormat(true);
+
+        $items = new \Omnipay\Common\ItemBag(array(
+            new \Omnipay\SagePay\Extend\Item(array(
+                // [] and ::: are reserved
+                'name' => "[SKU-ABC]Pioneer::: NSDV99 DVD-Surround Sound System .-{};_@()",
+                'quantity' => 3,
+                'price' => 4.35,
+                'vat' => 2,
+            )),
+        ));
+
+        $this->request->setItems($items);
+        $data = $this->request->getData();
+
+        $this->assertSame('1:[SKU-ABC]Pioneer NSDV99 DVD-Surround Sound System .-{};_@():3:4.35:2:6.35:19.05', $data['Basket']);
+    }
+
     public function testCreateTokenCanBeSetInRequest()
     {
         $this->request->setCreateToken(true);
@@ -329,13 +415,20 @@ class DirectAuthorizeRequestTest extends TestCase
 
     /**
      * @dataProvider tokenSetterProvider
+     *
+     * Now disabled for consistency of getters and setters.
+     * The token can be any value that can be cast to boolean,
+     * and is set to 0 or 1 only at time of use.
      */
     public function testCreateTokenCanOnlyBeOneOrZeroInRequest($parameter, $expectation)
     {
         $this->request->setCreateToken($parameter);
         $data = $this->request->getData();
 
-        $this->assertSame($expectation, $data['CreateToken']);
+        $this->assertSame(
+            $expectation,
+            isset($data['CreateToken']) ? $data['CreateToken'] : null
+        );
     }
 
     public function testExistingTokenCanBeSet()
@@ -347,7 +440,7 @@ class DirectAuthorizeRequestTest extends TestCase
         $this->assertSame($token, $data['Token']);
 
         // If using a "token" then it is assumed to be single-use by default.
-        $this->assertSame(0, $data['StoreToken']);
+        $this->assertSame(0, isset($data['StoreToken']) ? $data['StoreToken'] : 0);
     }
 
     public function testExistingCardReferenceCanBeSet()
@@ -382,7 +475,7 @@ class DirectAuthorizeRequestTest extends TestCase
         $this->request->setToken('{ABCDEF}');
         $this->request->setStoreToken(true);
         $data = $this->request->getData();
-        
+
         $this->assertSame(1, $data['StoreToken']);
     }
 
@@ -396,14 +489,16 @@ class DirectAuthorizeRequestTest extends TestCase
 
     /**
      * @dataProvider tokenSetterProvider
+     * No longer applies; the storeToken value is cast to bool on use.
      */
     public function testStoreTokenCanOnlyBeOneOrZeroIfSetInRequest($parameter, $expectation)
     {
         $this->request->setToken('{ABCDEF}');
+
         $this->request->setStoreToken($parameter);
         $data = $this->request->getData();
 
-        $this->assertSame($expectation, $data['StoreToken']);
+        $this->assertSame($expectation, isset($data['StoreToken']) ? $data['StoreToken'] : null);
     }
 
     public function tokenSetterProvider()
@@ -418,7 +513,7 @@ class DirectAuthorizeRequestTest extends TestCase
             array('0', 0),
             array(false, 0),
             array('', 0),
-            array(null, 0),
+            array(null, null),
             array(array(), 0)
         );
     }

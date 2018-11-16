@@ -9,24 +9,24 @@ class RapidDirectAuthorizeRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RapidDirectAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'amount' => '10.00',
-            'card' => array(
+            'card' => [
                 'firstName' => 'John',
                 'lastName' => 'Smith',
                 'number' => '4111111111111111',
                 'expiryMonth' => '12',
                 'expiryYear' => gmdate('Y') + rand(1, 5),
                 'cvv' => rand(100, 999),
-            ),
-        ));
+            ],
+        ]);
     }
 
     public function testGetData()
     {
-        $this->request->initialize(array(
+        $this->request->initialize([
             'apiKey' => 'my api key',
             'password' => 'secret',
             'partnerId' => '1234',
@@ -38,7 +38,7 @@ class RapidDirectAuthorizeRequestTest extends TestCase
             'currency' => 'AUD',
             'invoiceReference' => 'INV-123',
             'clientIp' => '127.0.0.1',
-            'card' => array(
+            'card' => [
                 'firstName' => 'John',
                 'lastName' => 'Smith',
                 'shippingFirstName' => 'Bob',
@@ -54,11 +54,11 @@ class RapidDirectAuthorizeRequestTest extends TestCase
                 'startMonth' => '01',
                 'startYear' => '13',
                 'issueNumber' => '1',
-            ),
-        ));
+            ],
+        ]);
 
         $data = $this->request->getData();
-    
+
         $this->assertSame('Authorise', $data['Method']);
         $this->assertSame('127.0.0.1', $data['CustomerIP']);
         $this->assertSame('1234', $data['PartnerID']);

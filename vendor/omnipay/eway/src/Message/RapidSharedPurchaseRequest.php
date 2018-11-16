@@ -33,7 +33,7 @@ class RapidSharedPurchaseRequest extends AbstractRequest
         $data['VerifyCustomerPhone'] = $this->getVerifyCustomerPhone();
         $data['VerifyCustomerEmail'] = $this->getVerifyCustomerEmail();
 
-        $data['Payment'] = array();
+        $data['Payment'] = [];
         $data['Payment']['TotalAmount'] = $this->getAmountInteger();
         $data['Payment']['InvoiceNumber'] = $this->getTransactionId();
         $data['Payment']['InvoiceDescription'] = $this->getDescription();
@@ -49,16 +49,18 @@ class RapidSharedPurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, json_encode($data))
-            ->setAuth($this->getApiKey(), $this->getPassword())
-            ->send();
+        $headers = [
+            'Authorization' => 'Basic ' . base64_encode($this->getApiKey() . ':' . $this->getPassword())
+        ];
 
-        return $this->response = new RapidSharedResponse($this, $httpResponse->json());
+        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), $headers, json_encode($data));
+
+        return $this->response = new RapidSharedResponse($this, json_decode((string) $httpResponse->getBody(), true));
     }
 
     protected function getEndpoint()
     {
-        return $this->getEndpointBase().'/CreateAccessCodeShared.json';
+        return $this->getEndpointBase() . '/CreateAccessCodeShared.json';
     }
 
     public function getCancelUrl()
