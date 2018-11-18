@@ -11,7 +11,12 @@
         "omnipay/sagepay": "^3.0@dev",
         "omnipay/securepay": "^3.0@dev",
         "omnipay/stripe": "^3.0@dev",
-        "omnipay/worldpay": "^3.0@dev"
+        "omnipay/worldpay": "^3.0@dev",
+        "omnipay/common": "^3.0@dev"
+    },
+    "require-dev": {
+        "omnipay/tests": "^3",
+        "php-http/mock-client": "^1"
     },
     "minimum-stability": "dev",
     "config": {

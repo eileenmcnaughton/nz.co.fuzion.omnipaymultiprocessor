@@ -1,0 +1,6 @@
+phpunit.xml
+build
+vendor
+coverage.clover
+/phpcs.xml
+/.phpcs-cache
