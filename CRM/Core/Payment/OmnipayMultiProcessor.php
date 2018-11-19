@@ -553,6 +553,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function getPaymentFormFieldsMetadata() {
     $fields = parent::getPaymentFormFieldsMetadata();
+    $fields['card_name'] = [
+      'htmlType' => 'text',
+      'name' => 'card_name',
+      'title' => ts('Card Name'),
+      'cc_field' => FALSE,
+      'is_required' => TRUE,
+      'contact_api' => 'display_name',
+    ];
     $additionalMetadata = $this->getProcessorTypeMetadata('payment_fields_metadata');
     if ($additionalMetadata) {
       $fields = array_merge($fields, $additionalMetadata);
