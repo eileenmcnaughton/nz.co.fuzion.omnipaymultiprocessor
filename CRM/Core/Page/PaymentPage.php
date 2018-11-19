@@ -22,6 +22,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
     $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
     $contactID = $formData['contact_id'];
 
+    /** @var \CRM_Core_Payment_OmnipayMultiProcessor $processor */
     $processor = Civi\Payment\System::singleton()->getByProcessor($paymentProcessor);
 
     $displayFields = $processor->getTransparentDirectDisplayFields();

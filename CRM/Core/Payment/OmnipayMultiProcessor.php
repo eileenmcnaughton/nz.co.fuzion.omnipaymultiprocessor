@@ -150,6 +150,68 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Get core CiviCRM payment fields.
+   *
+   * @return array
+   */
+  private function getCorePaymentFields() {
+    $creditCardType = array('' => ts('- select -')) + CRM_Contribute_PseudoConstant::creditCard();
+    return array(
+      'credit_card_number' => array(
+        'htmlType' => 'text',
+        'name' => 'credit_card_number',
+        'title' => ts('Card Number'),
+        'cc_field' => TRUE,
+        'attributes' => array(
+          'size' => 20,
+          'maxlength' => 20,
+          'autocomplete' => 'off',
+        ),
+        'is_required' => TRUE,
+      ),
+      'cvv2' => array(
+        'htmlType' => 'text',
+        'name' => 'cvv2',
+        'title' => ts('Security Code'),
+        'cc_field' => TRUE,
+        'attributes' => array(
+          'size' => 5,
+          'maxlength' => 5,
+          'autocomplete' => 'off',
+        ),
+        'is_required' => TRUE,
+      ),
+      'credit_card_exp_date' => array(
+        'htmlType' => 'date',
+        'name' => 'credit_card_exp_date',
+        'title' => ts('Expiration Date'),
+        'cc_field' => TRUE,
+        'attributes' => CRM_Core_SelectValues::date('creditCard'),
+        'is_required' => TRUE,
+        'month_field' => 'credit_card_exp_date_M',
+        'year_field' => 'credit_card_exp_date_Y',
+      ),
+
+      'credit_card_type' => array(
+        'htmlType' => 'select',
+        'name' => 'credit_card_type',
+        'title' => ts('Card Type'),
+        'cc_field' => TRUE,
+        'attributes' => $creditCardType,
+        'is_required' => FALSE,
+      ),
+      'card_name' => array(
+        'htmlType' => 'text',
+        'name' => 'card_name',
+        'title' => ts('Card Name'),
+        'cc_field' => FALSE,
+        'is_required' => TRUE,
+        'contact_api' => 'display_name',
+      )
+    );
+  }
+
+  /**
    * Paypal express replaces the submit button with it's own.
    *
    * @return bool
