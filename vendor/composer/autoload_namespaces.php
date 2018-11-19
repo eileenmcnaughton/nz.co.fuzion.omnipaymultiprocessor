@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Requests' => array($vendorDir . '/rmccue/requests/library'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Omnipay\\Tests\\' => array($vendorDir . '/omnipay/tests/src'),
     'Omnipay\\Skrill\\' => array($vendorDir . '/alfaproject/omnipay-skrill/src'),

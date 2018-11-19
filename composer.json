@@ -47,6 +47,11 @@
         {
             "type": "git",
             "url":  "https://github.com/mattwire/omnipay-sagepay.git"
+        },
+
+        {
+            "type": "git",
+            "url":  "https://github.com/razorpay/omnipay-razorpay.git"
         }
 
     ],
@@ -67,6 +72,7 @@
         "fuzion/omnipay-authorizenetstd": "dev-master",
         "fuzion/omnipay-mercanet": "dev-master",
         "pergo/omnipay-pergo": "dev-master",
+"razorpay/omnipay-razorpay":"dev-master",
         "guzzlehttp/guzzle": "^6.2@dev"
     },
     "require-dev":
