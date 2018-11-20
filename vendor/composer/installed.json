@@ -488,12 +488,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "9b2368b80a837957e83436c6a8c4cf509c46b3f9"
+            "reference": "dd9b713b984d88938289a17e6d2e562870ded791"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9b2368b80a837957e83436c6a8c4cf509c46b3f9",
-            "reference": "9b2368b80a837957e83436c6a8c4cf509c46b3f9",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/dd9b713b984d88938289a17e6d2e562870ded791",
+            "reference": "dd9b713b984d88938289a17e6d2e562870ded791",
             "shasum": ""
         },
         "require": {
@@ -509,7 +509,7 @@
         "suggest": {
             "psr/log": "Required for using the Log middleware"
         },
-        "time": "2018-11-18T23:12:32+00:00",
+        "time": "2018-11-19T14:12:01+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -608,12 +608,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/psr7.git",
-            "reference": "23e7d3812a82bdbff4a5cb8e4628bcc06eec5d68"
+            "reference": "18fa36860bbb2133b259233b9aaa0efb85277dd9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/psr7/zipball/23e7d3812a82bdbff4a5cb8e4628bcc06eec5d68",
-            "reference": "23e7d3812a82bdbff4a5cb8e4628bcc06eec5d68",
+            "url": "https://api.github.com/repos/guzzle/psr7/zipball/18fa36860bbb2133b259233b9aaa0efb85277dd9",
+            "reference": "18fa36860bbb2133b259233b9aaa0efb85277dd9",
             "shasum": ""
         },
         "require": {
@@ -627,7 +627,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
         },
-        "time": "2018-11-01T01:48:29+00:00",
+        "time": "2018-11-19T17:50:46+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3354,92 +3354,6 @@
         "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
         "keywords": [
             "tokenizer"
-        ]
-    },
-    {
-        "name": "phpunit/phpunit",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "4eb794168b7adf1362d128409cbbb8e394073b67"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4eb794168b7adf1362d128409cbbb8e394073b67",
-            "reference": "4eb794168b7adf1362d128409cbbb8e394073b67",
-            "shasum": ""
-        },
-        "require": {
-            "doctrine/instantiator": "^1.1",
-            "ext-dom": "*",
-            "ext-json": "*",
-            "ext-libxml": "*",
-            "ext-mbstring": "*",
-            "ext-xml": "*",
-            "myclabs/deep-copy": "^1.7",
-            "phar-io/manifest": "^1.0.2",
-            "phar-io/version": "^2.0",
-            "php": "^7.1",
-            "phpspec/prophecy": "^1.7",
-            "phpunit/php-code-coverage": "^6.0.7",
-            "phpunit/php-file-iterator": "^2.0.1",
-            "phpunit/php-text-template": "^1.2.1",
-            "phpunit/php-timer": "^2.0",
-            "sebastian/comparator": "^3.0",
-            "sebastian/diff": "^3.0",
-            "sebastian/environment": "^3.1 || ^4.0",
-            "sebastian/exporter": "^3.1",
-            "sebastian/global-state": "^2.0",
-            "sebastian/object-enumerator": "^3.0.3",
-            "sebastian/resource-operations": "^2.0",
-            "sebastian/version": "^2.0.1"
-        },
-        "conflict": {
-            "phpunit/phpunit-mock-objects": "*"
-        },
-        "require-dev": {
-            "ext-pdo": "*"
-        },
-        "suggest": {
-            "ext-soap": "*",
-            "ext-xdebug": "*",
-            "phpunit/php-invoker": "^2.0"
-        },
-        "time": "2018-11-18T07:20:15+00:00",
-        "bin": [
-            "phpunit"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "7.5-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de",
-                "role": "lead"
-            }
-        ],
-        "description": "The PHP Unit Testing framework.",
-        "homepage": "https://phpunit.de/",
-        "keywords": [
-            "phpunit",
-            "testing",
-            "xunit"
         ]
     },
     {
