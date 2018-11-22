@@ -1,6 +1,7 @@
 <?php
 
 require_once 'omnipaymultiprocessor.civix.php';
+use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 
 /**
  * Implementation of hook_civicrm_config
@@ -88,22 +89,23 @@ function omnipaymultiprocessor_civicrm_upgrade($op, CRM_Queue_Queue $queue = NUL
  * @param array $entities
  */
 function omnipaymultiprocessor_civicrm_managed(&$entities) {
-  return _omnipaymultiprocessor_civix_civicrm_managed($entities);
-}
-
-/**
- * @param $version
- *
- * @return bool
- */
-function omnipaymultiprocessor__versionAtLeast($version) {
-  $codeVersion = explode('.', CRM_Utils_System::version());
-  if (version_compare($codeVersion[0] . '.' . $codeVersion[1], $version) >= 0) {
-    return TRUE;
-  }
-  return FALSE;
+  _omnipaymultiprocessor_civix_civicrm_managed($entities);
 }
 
 function omnipaymultiprocessor_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
   $params['payment_processor']['preapprove'] = ['make online contributions'];
+}
+
+function omnipaymultiprocessor_civicrm_navigationMenu(&$menu) {
+  _omnipaymultiprocessor_civix_insert_navigation_menu($menu, 'Administer/System Settings', [
+    'label' => E::ts('Omnipay Developer Settings'),
+    'name' => 'omnpay-dev',
+    'url' => 'civicrm/settings/omnipay-dev',
+    'permission' => 'administer payment processors',
+
+  ]);
+}
+
+function omnipaymultiprocessor_civicrm_alterSettingsFolders(&$metaDataFolders) {
+  _omnipaymultiprocessor_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
