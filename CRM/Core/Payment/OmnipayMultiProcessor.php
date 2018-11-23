@@ -155,7 +155,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   private function getCorePaymentFields() {
-    $creditCardType = array('' => ts('- select -')) + CRM_Contribute_PseudoConstant::creditCard();
+    $creditCardType = array('' => E::ts('- select -')) + CRM_Contribute_PseudoConstant::creditCard();
     return array(
       'credit_card_number' => array(
         'htmlType' => 'text',
@@ -556,7 +556,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $fields['card_name'] = [
       'htmlType' => 'text',
       'name' => 'card_name',
-      'title' => ts('Card Name'),
+      'title' => E::ts('Card Name'),
       'cc_field' => FALSE,
       'is_required' => TRUE,
       'contact_api' => 'display_name',
@@ -849,7 +849,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   protected function redirectOrExit($outcome, $response = NULL) {
     switch ($outcome) {
       case 'fail':
-        $userMsg = ts('Your payment was not successful. Please try again');
+        $userMsg = E::ts('Your payment was not successful. Please try again');
         CRM_Core_Session::setStatus($userMsg);
         $redirectUrl = $this->getStoredUrl('fail');
         if (!$redirectUrl && method_exists($response, 'invalid')) {
@@ -858,9 +858,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         break;
 
       case 'error':
-        $userMsg = ts('The transaction was not processed. The message from the bank was : %1. Please try again', array(1 => $response->getMessage()));
+        $userMsg = E::ts('The transaction was not processed. The message from the bank was : %1. Please try again', array(1 => $response->getMessage()));
         if ($response && method_exists($response, 'getInvalidFields') && ($invalidFields = $response->getInvalidFields()) != array()) {
-          $userMsg = ts('Invalid data entered in fields ' . implode(', ', $invalidFields));
+          $userMsg = E::ts('Invalid data entered in fields ' . implode(', ', $invalidFields));
         }
         CRM_Core_Session::setStatus($userMsg);
         $redirectUrl = $this->getStoredUrl('fail');
