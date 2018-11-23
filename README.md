@@ -61,6 +61,9 @@ note - Mercanet does not support '-' characters in this prefix. Untested on othe
   and run composer update.
 * Add a new `mgd` file in the `Metadata` directory.
 
+## Developer help
+It is possible to log http requests and responses to the civicrm_system_log table using the omnipay_developer_mode setting. This is only appropriate for developers. Output is available on the omnilog report if extended reports are installed.
+
 ### Eway
 
 The gateways supported are:

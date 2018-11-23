@@ -29,8 +29,11 @@ use Omnipay\Omnipay;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Exception\InvalidRequestException;
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
-use Guzzle\Plugin\History\HistoryPlugin;
-use Guzzle\Service\Client;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\HandlerStack;
+use Omnipay\Common\Http\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as HttpPlugClient;
 
 
 /**
@@ -133,7 +136,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
             'post_submit_url' => $response->getRedirectURL(),
             'contact_id' => $params['contactID'],
           ));
-          CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/payment/details', array('key' => $params['qfKey'])));
+          $url = CRM_Utils_System::url('civicrm/payment/details', array('key' => $params['qfKey']));
+          $this->log('success_redirect', ['url' => $url]);
+          CRM_Utils_System::redirect($url);
         }
         $response->redirect();
       }
@@ -1037,7 +1042,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $this->gateway = NULL;
         unset($params['credit_card_number']);
         unset($params['cvv2']);
-        $this->logHttpTraffic();
+        $this->log('success', $params);
         return array(
           'pre_approval_parameters' => array('token' => $params['token'])
         );
@@ -1104,13 +1109,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (!\Civi::settings()->get('omnipay_developer_mode')) {
       return;
     }
-    $transactions= $this->history->getAll();
-    foreach ($transactions as $transaction) {
-      $this->getLog()->debug('omnipay_transaction_logging', [
-         'request' => (string) $transaction['request'],
+    foreach ($this->history as $transaction) {
+      $this->getLog()->debug('omnipay_http_request', [
+        'request' => (string) $transaction['request']->getBody(),
+        'method' => $transaction['request']->getMethod(),
+        'url' => $transaction['request']->getRequestTarget(),
+        'headers' => $transaction['request']->getHeaders(),
       ]);
-      $this->getLog()->debug('omnipay_transaction_logging', [
-        'response' => (string) $transaction['response'],
+      $this->getLog()->debug('omnipay_http_response', [
+        'response' => (string) $transaction['response']->getBody(),
       ]);
     }
   }
@@ -1254,11 +1261,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   protected function createGatewayObject() {
     $parameters = NULL;
     if (\Civi::settings()->get('omnipay_developer_mode')) {
-      $this->guzzleClient = new Client();
+
       // Create a history plugin and attach it to the client
-      $this->history = new HistoryPlugin();
-      $this->guzzleClient->addSubscriber($this->history);
-      Civi::$statics['Omnipay_Test_Config'] = ['client' =>  $this->guzzleClient];
+      $this->history = [];
+      $history = Middleware::history($this->history);
+      $stack = HandlerStack::create();
+      $stack->push($history);
+      $this->guzzleClient = HttpPlugClient::createWithConfig(['handler' => $stack]);
+      $this->client = new Client($this->guzzleClient);
+      Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->client];
     }
     if (isset(Civi::$statics['Omnipay_Test_Config']['client'])) {
       $parameters = Civi::$statics['Omnipay_Test_Config']['client'];
@@ -1377,6 +1388,19 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $responses[] = (string) $transaction['response'];
     }
     return $responses;
+  }
+
+  /**
+   * Log debugging data.
+   *
+   * @param $type
+   * @param $details
+   */
+  public function log($type, $details) {
+    if (\Civi::settings()->get('omnipay_developer_mode')) {
+      $this->getLog()->debug('omnipay_' . $type, $details);
+      $this->logHttpTraffic();
+    }
   }
 
 }
