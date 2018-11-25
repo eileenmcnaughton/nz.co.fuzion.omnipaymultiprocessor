@@ -12,6 +12,7 @@
         "omnipay/securepay": "^3.0@dev",
         "omnipay/stripe": "^3.0@dev",
         "omnipay/worldpay": "^3.0@dev",
+        "omnipay/paymentexpress": "^3.0@dev",
         "omnipay/common": "^3.0@dev"
     },
     "require-dev": {
