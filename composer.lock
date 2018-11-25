@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c69709779a88ad865eb0449b30fea5b",
+    "content-hash": "e0275149d19dd8834e0b21925dab7fb7",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -57,6 +57,61 @@
                 "stream_filter_register"
             ],
             "time": "2017-08-18T09:54:01+00:00"
+        },
+        {
+            "name": "dioscouri/omnipay-cybersource",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dioscouri/omnipay-cybersource.git",
+                "reference": "1f59de5d0eee27a3e021a61b7ad8e13b4afb7ea4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dioscouri/omnipay-cybersource/zipball/1f59de5d0eee27a3e021a61b7ad8e13b4afb7ea4",
+                "reference": "1f59de5d0eee27a3e021a61b7ad8e13b4afb7ea4",
+                "shasum": ""
+            },
+            "require": {
+                "omnipay/common": "~3.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~3.0",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Cybersource\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rafael Diaz-Tushman",
+                    "email": "rdiaztushman@dioscouri.com"
+                }
+            ],
+            "description": "Cybersource support for Omnipay payment processing library",
+            "homepage": "https://github.com/dioscouri/omnipay-cybersource",
+            "keywords": [
+                "cybersource",
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "purchase"
+            ],
+            "time": "2018-11-25T22:15:24+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3587,7 +3642,8 @@
         "omnipay/stripe": 20,
         "omnipay/worldpay": 20,
         "omnipay/paymentexpress": 20,
-        "omnipay/common": 20
+        "omnipay/common": 20,
+        "dioscouri/omnipay-cybersource": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

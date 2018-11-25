@@ -51,6 +51,7 @@ class ComposerStaticInit38d6042df1404e6e2dcf69bf864b511c
             'Omnipay\\NABTransact\\' => 20,
             'Omnipay\\Mollie\\' => 15,
             'Omnipay\\Eway\\' => 13,
+            'Omnipay\\Cybersource\\' => 20,
             'Omnipay\\Common\\' => 15,
             'Omnipay\\AuthorizeNet\\' => 21,
         ),
@@ -159,6 +160,10 @@ class ComposerStaticInit38d6042df1404e6e2dcf69bf864b511c
         'Omnipay\\Eway\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/eway/src',
+        ),
+        'Omnipay\\Cybersource\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dioscouri/omnipay-cybersource/src',
         ),
         'Omnipay\\Common\\' => 
         array (

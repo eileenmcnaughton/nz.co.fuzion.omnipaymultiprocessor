@@ -24,6 +24,7 @@ return array(
     'Omnipay\\NABTransact\\' => array($vendorDir . '/sudiptpa/omnipay-nabtransact/src'),
     'Omnipay\\Mollie\\' => array($vendorDir . '/omnipay/mollie/src'),
     'Omnipay\\Eway\\' => array($vendorDir . '/omnipay/eway/src'),
+    'Omnipay\\Cybersource\\' => array($vendorDir . '/dioscouri/omnipay-cybersource/src'),
     'Omnipay\\Common\\' => array($vendorDir . '/omnipay/common/src/Common'),
     'Omnipay\\AuthorizeNet\\' => array($vendorDir . '/omnipay/authorizenet/src'),
     'Money\\' => array($vendorDir . '/moneyphp/money/src'),
