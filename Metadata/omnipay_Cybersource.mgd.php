@@ -37,6 +37,7 @@ return array(
           ),
           'card_number' => array(
             'htmlType' => 'text',
+            'core_field_name' => 'credit_card_number',
             'title' => ts('Card Number'),
             'attributes' => array(
               'size' => 20,
@@ -53,6 +54,7 @@ return array(
           ),
           'card_cvn' => array(
             'htmlType' => 'text',
+            'core_field_name' => 'cvv2',
             'attributes' => array(
               'size' => 5,
               'maxlength' => 10,
