@@ -72,6 +72,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected $log;
 
   /**
+   * Array of http requests and responses when in developer mode.
+   *
+   * @var array
+   */
+  protected $history = [];
+
+  /**
    * @return \CRM_Utils_SystemLogger
    */
   public function getLog() {
@@ -279,7 +286,29 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     if (CRM_Core_Permission::check('administer payment processors')) {
       $userMessage = implode(',', $context);
     }
+    $this->logHttpTraffic();
     throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
+  }
+
+  /**
+   * Log http traffic for analysis - only in developer mode!
+   */
+  protected function logHttpTraffic() {
+    if (!\Civi::settings()->get('omnipay_developer_mode')) {
+      return;
+    }
+    foreach ($this->history as $transaction) {
+      $this->getLog()->debug('omnipay_http_request', [
+        'request' => (string) $transaction['request']->getBody(),
+        'method' => $transaction['request']->getMethod(),
+        'url' => $transaction['request']->getRequestTarget(),
+        'headers' => $transaction['request']->getHeaders(),
+      ]);
+      $this->getLog()->debug('omnipay_http_response', [
+        'response' => (string) $transaction['response']->getBody(),
+      ]);
+    }
+    $this->cleanupClassForSerialization();
   }
 
   /**
@@ -350,6 +379,23 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
           );
           return CRM_Utils_Array::value($paymentField['name'], $processor);
         }
+    }
+  }
+
+  /**
+   * Unset various objects that will fail to serialize when the form is stored to session.
+   *
+   * @param bool $isIncludeGateWay
+   *   Should we also unset the gateway.
+   *   (possibly the default here should be TRUE but we want to be sure we are not
+   *   unsetting it when it is still being used.)
+   */
+  protected function cleanupClassForSerialization($isIncludeGateWay = FALSE) {
+    $this->history = [];
+    $this->client = NULL;
+    $this->guzzleClient = NULL;
+    if ($isIncludeGateWay) {
+      $this->gateway = NULL;
     }
   }
 }

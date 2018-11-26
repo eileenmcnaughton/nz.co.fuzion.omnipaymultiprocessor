@@ -126,9 +126,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       elseif ($response->isRedirect()) {
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
-        // Unset $this->gateway before storing session to cache due to risk of
-        // Serialization of 'Closure' is not allowed error - issue #17
-        $this->gateway = NULL;
+        $this->cleanupClassForSerialization(TRUE);
         CRM_Core_Session::storeSessionObjects(FALSE);
         if ($response->isTransparentRedirect()) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
@@ -143,7 +141,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $response->redirect();
       }
       else {
-        //@todo - is $response->getCode supported by some / many processors?
         return $this->handleError('alert', 'failed processor transaction ' . $this->_paymentProcessor['payment_processor_type'], array($response->getCode() => $response->getMessage()));
       }
     }
@@ -1101,26 +1098,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   public function doPostApproval(&$params) {}
-
-  /**
-   * Log http traffic for analysis - only in developer mode!
-   */
-  protected function logHttpTraffic() {
-    if (!\Civi::settings()->get('omnipay_developer_mode')) {
-      return;
-    }
-    foreach ($this->history as $transaction) {
-      $this->getLog()->debug('omnipay_http_request', [
-        'request' => (string) $transaction['request']->getBody(),
-        'method' => $transaction['request']->getMethod(),
-        'url' => $transaction['request']->getRequestTarget(),
-        'headers' => $transaction['request']->getHeaders(),
-      ]);
-      $this->getLog()->debug('omnipay_http_response', [
-        'response' => (string) $transaction['response']->getBody(),
-      ]);
-    }
-  }
 
   /**
    * Get an array of the fields that can be edited on the recurring contribution.
