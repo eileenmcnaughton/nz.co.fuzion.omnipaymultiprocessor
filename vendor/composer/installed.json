@@ -2841,6 +2841,59 @@
         "description": "A polyfill for getallheaders."
     },
     {
+        "name": "razorpay/omnipay-razorpay",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-razorpay.git",
+            "reference": "3d2d12219451b35254cb9b476fe2a5815f0cf742"
+        },
+        "require": {
+            "omnipay/common": "~3.0"
+        },
+        "require-dev": {
+            "omnipay/tests": "~3.0",
+            "squizlabs/php_codesniffer": "^3"
+        },
+        "time": "2018-11-26T02:32:55+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Razorpay\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mayank Amencherla",
+                "email": "mayank.amencherla@razorpay.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Razorpay Omnipay 3.0 plugin for accepting payments",
+        "homepage": "https://razorpay.com",
+        "keywords": [
+            "india",
+            "netbanking",
+            "payment gateway",
+            "payments",
+            "razorpay",
+            "wallets"
+        ],
+        "support": {
+            "email": "support@razorpay.com"
+        }
+    },
+    {
         "name": "sebastian/code-unit-reverse-lookup",
         "version": "dev-master",
         "version_normalized": "9999999-dev",

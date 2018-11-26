@@ -19,6 +19,7 @@ return array(
     'Omnipay\\Stripe\\' => array($vendorDir . '/omnipay/stripe/src'),
     'Omnipay\\SecurePay\\' => array($vendorDir . '/omnipay/securepay/src'),
     'Omnipay\\SagePay\\' => array($vendorDir . '/omnipay/sagepay/src'),
+    'Omnipay\\Razorpay\\' => array($vendorDir . '/razorpay/omnipay-razorpay/src'),
     'Omnipay\\PaymentExpress\\' => array($vendorDir . '/omnipay/paymentexpress/src'),
     'Omnipay\\PayPal\\' => array($vendorDir . '/omnipay/paypal/src'),
     'Omnipay\\NABTransact\\' => array($vendorDir . '/sudiptpa/omnipay-nabtransact/src'),

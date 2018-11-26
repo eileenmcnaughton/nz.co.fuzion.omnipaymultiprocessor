@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee2f5297d880feb117a19e4e0d3fe74b",
+    "content-hash": "d2e96d69bd387691b93b326a07a6b009",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1645,6 +1645,57 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2016-02-11T07:05:27+00:00"
+        },
+        {
+            "name": "razorpay/omnipay-razorpay",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eileenmcnaughton/omnipay-razorpay.git",
+                "reference": "3d2d12219451b35254cb9b476fe2a5815f0cf742"
+            },
+            "require": {
+                "omnipay/common": "~3.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~3.0",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Razorpay\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mayank Amencherla",
+                    "email": "mayank.amencherla@razorpay.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Razorpay Omnipay 3.0 plugin for accepting payments",
+            "homepage": "https://razorpay.com",
+            "keywords": [
+                "india",
+                "netbanking",
+                "payment gateway",
+                "payments",
+                "razorpay",
+                "wallets"
+            ],
+            "support": {
+                "email": "support@razorpay.com"
+            },
+            "time": "2018-11-26T02:32:55+00:00"
         },
         {
             "name": "sudiptpa/omnipay-nabtransact",
@@ -3701,7 +3752,8 @@
         "omnipay/paymentexpress": 20,
         "omnipay/common": 20,
         "dioscouri/omnipay-cybersource": 20,
-        "fuzion/omnipay-mercanet": 20
+        "fuzion/omnipay-mercanet": 20,
+        "razorpay/omnipay-razorpay": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
