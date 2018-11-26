@@ -7,9 +7,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\Framework\Constraint;
 
-class ExceptionCode extends Constraint
+/**
+ * @since Class available since Release 3.6.6
+ */
+class PHPUnit_Framework_Constraint_ExceptionCode extends PHPUnit_Framework_Constraint
 {
     /**
      * @var int
@@ -22,7 +24,6 @@ class ExceptionCode extends Constraint
     public function __construct($expected)
     {
         parent::__construct();
-
         $this->expectedCode = $expected;
     }
 
@@ -30,7 +31,7 @@ class ExceptionCode extends Constraint
      * Evaluates the constraint for parameter $other. Returns true if the
      * constraint is met, false otherwise.
      *
-     * @param \Throwable $other
+     * @param Exception $other
      *
      * @return bool
      */
@@ -51,7 +52,7 @@ class ExceptionCode extends Constraint
      */
     protected function failureDescription($other)
     {
-        return \sprintf(
+        return sprintf(
             '%s is equal to expected exception code %s',
             $this->exporter->export($other->getCode()),
             $this->exporter->export($this->expectedCode)

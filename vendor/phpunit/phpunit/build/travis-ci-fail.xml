@@ -6,7 +6,7 @@
          verbose="true">
   <testsuites>
     <testsuite name="small">
-      <directory suffix=".phpt">../tests/fail</directory>
+      <directory suffix=".phpt">../tests/Fail</directory>
     </testsuite>
   </testsuites>
 

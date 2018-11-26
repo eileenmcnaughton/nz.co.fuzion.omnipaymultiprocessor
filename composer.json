@@ -34,7 +34,8 @@
         "razorpay/omnipay-razorpay": "^3.0@dev"
     },
     "require-dev": {
-        "omnipay/tests": "^3",
+        "phpunit/phpunit": "5.7",
+        "omnipay/tests": "^3.1@dev",
         "php-http/mock-client": "^1"
     },
     "minimum-stability": "dev",

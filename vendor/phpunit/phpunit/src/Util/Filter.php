@@ -7,30 +7,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\Util;
-
-use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\SyntheticError;
 
 /**
  * Utility class for code filtering.
+ *
+ * @since Class available since Release 2.0.0
  */
-class Filter
+class PHPUnit_Util_Filter
 {
     /**
      * Filters stack frames from PHPUnit classes.
      *
-     * @param \Throwable $e
-     * @param bool       $asString
+     * @param Exception $e
+     * @param bool      $asString
      *
-     * @return string|string[]
+     * @return string
      */
     public static function getFilteredStacktrace($e, $asString = true)
     {
         $prefix = false;
-        $script = \realpath($GLOBALS['_SERVER']['SCRIPT_NAME']);
+        $script = realpath($GLOBALS['_SERVER']['SCRIPT_NAME']);
 
-        if (\defined('__PHPUNIT_PHAR_ROOT__')) {
+        if (defined('__PHPUNIT_PHAR_ROOT__')) {
             $prefix = __PHPUNIT_PHAR_ROOT__;
         }
 
@@ -40,11 +38,11 @@ class Filter
             $filteredStacktrace = [];
         }
 
-        if ($e instanceof SyntheticError) {
+        if ($e instanceof PHPUnit_Framework_SyntheticError) {
             $eTrace = $e->getSyntheticTrace();
             $eFile  = $e->getSyntheticFile();
             $eLine  = $e->getSyntheticLine();
-        } elseif ($e instanceof Exception) {
+        } elseif ($e instanceof PHPUnit_Framework_Exception) {
             $eTrace = $e->getSerializableTrace();
             $eFile  = $e->getFile();
             $eLine  = $e->getLine();
@@ -58,24 +56,24 @@ class Filter
         }
 
         if (!self::frameExists($eTrace, $eFile, $eLine)) {
-            \array_unshift(
+            array_unshift(
                 $eTrace,
                 ['file' => $eFile, 'line' => $eLine]
             );
         }
 
-        $blacklist = new Blacklist;
+        $blacklist = new PHPUnit_Util_Blacklist;
 
         foreach ($eTrace as $frame) {
-            if (isset($frame['file']) && \is_file($frame['file']) &&
+            if (isset($frame['file']) && is_file($frame['file']) &&
                 !$blacklist->isBlacklisted($frame['file']) &&
-                ($prefix === false || \strpos($frame['file'], $prefix) !== 0) &&
+                ($prefix === false || strpos($frame['file'], $prefix) !== 0) &&
                 $frame['file'] !== $script) {
                 if ($asString === true) {
-                    $filteredStacktrace .= \sprintf(
+                    $filteredStacktrace .= sprintf(
                         "%s:%s\n",
                         $frame['file'],
-                        $frame['line'] ?? '?'
+                        isset($frame['line']) ? $frame['line'] : '?'
                     );
                 } else {
                     $filteredStacktrace[] = $frame;
@@ -92,6 +90,8 @@ class Filter
      * @param int    $line
      *
      * @return bool
+     *
+     * @since Method available since Release 3.3.2
      */
     private static function frameExists(array $trace, $file, $line)
     {

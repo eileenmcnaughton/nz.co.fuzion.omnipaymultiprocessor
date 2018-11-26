@@ -10,6 +10,8 @@
 
 /**
  * A class with a __toString() method.
+ *
+ * @since      Class available since Release 3.6.0
  */
 class ClassWithToString
 {

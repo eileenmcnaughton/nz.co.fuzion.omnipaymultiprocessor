@@ -7,12 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\Framework\Constraint;
 
 /**
  * Constraint that accepts false.
+ *
+ * @since Class available since Release 3.3.0
  */
-class IsFalse extends Constraint
+class PHPUnit_Framework_Constraint_IsFalse extends PHPUnit_Framework_Constraint
 {
     /**
      * Evaluates the constraint for parameter $other. Returns true if the

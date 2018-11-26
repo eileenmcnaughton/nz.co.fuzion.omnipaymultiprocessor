@@ -8,21 +8,19 @@
  * file that was distributed with this source code.
  */
 
-namespace PHPUnit\Framework;
-
-use Countable;
-
 /**
  * A Test can be run and collect its results.
+ *
+ * @since Interface available since Release 2.0.0
  */
-interface Test extends Countable
+interface PHPUnit_Framework_Test extends Countable
 {
     /**
      * Runs a test and collects its result in a TestResult instance.
      *
-     * @param TestResult $result
+     * @param PHPUnit_Framework_TestResult $result
      *
-     * @return TestResult
+     * @return PHPUnit_Framework_TestResult
      */
-    public function run(TestResult $result = null);
+    public function run(PHPUnit_Framework_TestResult $result = null);
 }

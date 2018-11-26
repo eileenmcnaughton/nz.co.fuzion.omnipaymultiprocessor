@@ -10,6 +10,8 @@
 
 /**
  * An author.
+ *
+ * @since      Class available since Release 3.6.0
  */
 class Author
 {
