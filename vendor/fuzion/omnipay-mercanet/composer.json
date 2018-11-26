@@ -1,0 +1,44 @@
+{
+  "name": "fuzion/omnipay-mercanet",
+  "type": "library",
+  "description": "Mercanet support for Omnipay payment processing library",
+  "keywords": [
+    "shell",
+    "gateway",
+    "merchant",
+    "omnipay",
+    "pay",
+    "payment",
+    "purchase",
+    "mercanet"
+  ],
+  "homepage": "https://github.com/eileenmcnaughton/omnipay-mercanet",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Eileen McNaughton",
+      "email": "eileen@fuzion.co.nz"
+    }
+  ],
+  "autoload": {
+    "psr-4": { "Omnipay\\Mercanet\\" : "src/" }
+  },
+    "require": {
+        "omnipay/common": "^3"
+    },
+    "require-dev": {
+        "omnipay/tests": "^3",
+        "squizlabs/php_codesniffer": "^3",
+        "phpro/grumphp": "^0.14.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "check-style": "phpcs -p --standard=PSR2 src/",
+        "fix-style": "phpcbf -p --standard=PSR2 src/"
+    }
+}

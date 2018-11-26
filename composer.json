@@ -14,7 +14,8 @@
         "omnipay/worldpay": "^3.0@dev",
         "omnipay/paymentexpress": "^3.0@dev",
         "omnipay/common": "^3.0@dev",
-        "dioscouri/omnipay-cybersource": "^3.0@dev"
+        "dioscouri/omnipay-cybersource": "^3.0@dev",
+        "fuzion/omnipay-mercanet": "^3.0@dev"
     },
     "require-dev": {
         "omnipay/tests": "^3",

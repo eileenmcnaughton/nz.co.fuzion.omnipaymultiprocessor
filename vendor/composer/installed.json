@@ -168,6 +168,65 @@
         ]
     },
     {
+        "name": "fuzion/omnipay-mercanet",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
+            "reference": "d3e14c4edb1eee7152e698159db70ec332a6a823"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/eileenmcnaughton/omnipay-mercanet/zipball/d3e14c4edb1eee7152e698159db70ec332a6a823",
+            "reference": "d3e14c4edb1eee7152e698159db70ec332a6a823",
+            "shasum": ""
+        },
+        "require": {
+            "omnipay/common": "^3"
+        },
+        "require-dev": {
+            "omnipay/tests": "^3",
+            "phpro/grumphp": "^0.14.0",
+            "squizlabs/php_codesniffer": "^3"
+        },
+        "time": "2018-11-26T01:35:48+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\Mercanet\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eileen McNaughton",
+                "email": "eileen@fuzion.co.nz"
+            }
+        ],
+        "description": "Mercanet support for Omnipay payment processing library",
+        "homepage": "https://github.com/eileenmcnaughton/omnipay-mercanet",
+        "keywords": [
+            "gateway",
+            "mercanet",
+            "merchant",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase",
+            "shell"
+        ]
+    },
+    {
         "name": "guzzlehttp/guzzle",
         "version": "dev-master",
         "version_normalized": "9999999-dev",

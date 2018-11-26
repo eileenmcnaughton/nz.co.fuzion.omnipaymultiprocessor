@@ -50,6 +50,7 @@ class ComposerStaticInit38d6042df1404e6e2dcf69bf864b511c
             'Omnipay\\PayPal\\' => 15,
             'Omnipay\\NABTransact\\' => 20,
             'Omnipay\\Mollie\\' => 15,
+            'Omnipay\\Mercanet\\' => 17,
             'Omnipay\\Eway\\' => 13,
             'Omnipay\\Cybersource\\' => 20,
             'Omnipay\\Common\\' => 15,
@@ -156,6 +157,10 @@ class ComposerStaticInit38d6042df1404e6e2dcf69bf864b511c
         'Omnipay\\Mollie\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/mollie/src',
+        ),
+        'Omnipay\\Mercanet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fuzion/omnipay-mercanet/src',
         ),
         'Omnipay\\Eway\\' => 
         array (
