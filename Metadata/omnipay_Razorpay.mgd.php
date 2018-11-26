@@ -45,11 +45,11 @@ return [
     'params' => array(
       'version' => 3,
       'title' => 'OmniPay - Razorpay',
-      'name' => 'omnipay_Razorpay',
+      'name' => 'omnipay_Razorpay_Checkout',
       'description' => 'Omnipay Razorpay',
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
-      'user_name_label' => 'key_id',
-      'password_label' => 'key_secret',
+      'user_name_label' => 'Key ID',
+      'password_label' => 'Key Secret',
       'signature_label' => '',
       'class_name' => 'Payment_OmnipayMultiProcessor',
       'url_site_default' => 'http://unused.com',
