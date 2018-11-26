@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2e96d69bd387691b93b326a07a6b009",
+    "content-hash": "a75dff8db2bd25df505be9e24f38f079",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -119,12 +119,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-mercanet.git",
-                "reference": "d3e14c4edb1eee7152e698159db70ec332a6a823"
+                "reference": "0c65a191ce909e2bc5e42fdaef1184cb88e4a0d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eileenmcnaughton/omnipay-mercanet/zipball/d3e14c4edb1eee7152e698159db70ec332a6a823",
-                "reference": "d3e14c4edb1eee7152e698159db70ec332a6a823",
+                "url": "https://api.github.com/repos/eileenmcnaughton/omnipay-mercanet/zipball/0c65a191ce909e2bc5e42fdaef1184cb88e4a0d6",
+                "reference": "0c65a191ce909e2bc5e42fdaef1184cb88e4a0d6",
                 "shasum": ""
             },
             "require": {
@@ -168,7 +168,7 @@
                 "purchase",
                 "shell"
             ],
-            "time": "2018-11-26T01:35:48+00:00"
+            "time": "2018-11-26T01:45:25+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -633,14 +633,8 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thephpleague/omnipay-eway.git",
-                "reference": "a2c5fb325e8293a970a9613f60efd5f6af590fc6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-eway/zipball/a2c5fb325e8293a970a9613f60efd5f6af590fc6",
-                "reference": "a2c5fb325e8293a970a9613f60efd5f6af590fc6",
-                "shasum": ""
+                "url": "https://github.com/eileenmcnaughton/omnipay-eway.git",
+                "reference": "724b023b15595e18d762fc17be18000a6214d73b"
             },
             "require": {
                 "omnipay/common": "^3"
@@ -661,7 +655,17 @@
                     "Omnipay\\Eway\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "check-style": [
+                    "phpcs -p --standard=PSR2 src/"
+                ],
+                "fix-style": [
+                    "phpcbf -p --standard=PSR2 src/"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -685,7 +689,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2018-09-03T06:57:27+00:00"
+            "time": "2018-11-26T04:47:29+00:00"
         },
         {
             "name": "omnipay/mollie",
@@ -822,14 +826,8 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thephpleague/omnipay-paypal.git",
-                "reference": "519db61b32ff0c1e56cbec94762b970ee9674f65"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-paypal/zipball/519db61b32ff0c1e56cbec94762b970ee9674f65",
-                "reference": "519db61b32ff0c1e56cbec94762b970ee9674f65",
-                "shasum": ""
+                "url": "https://github.com/eileenmcnaughton/omnipay-paypal.git",
+                "reference": "2842e3445fecc4617e7f0041c567d695f94a23a0"
             },
             "require": {
                 "omnipay/common": "^3"
@@ -850,7 +848,6 @@
                     "Omnipay\\PayPal\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -875,7 +872,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2018-05-15T10:35:58+00:00"
+            "time": "2018-11-26T07:44:16+00:00"
         },
         {
             "name": "omnipay/sagepay",
@@ -1652,13 +1649,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-razorpay.git",
-                "reference": "3d2d12219451b35254cb9b476fe2a5815f0cf742"
+                "reference": "c2fbae0f731d686aebca2f7fa275e584bc18e23b"
             },
             "require": {
-                "omnipay/common": "~3.0"
+                "omnipay/common": "^3"
             },
             "require-dev": {
-                "omnipay/tests": "~3.0",
+                "omnipay/tests": "^3",
+                "phpro/grumphp": "^0.14.0",
                 "squizlabs/php_codesniffer": "^3"
             },
             "type": "library",
@@ -1671,6 +1669,17 @@
                 "psr-4": {
                     "Omnipay\\Razorpay\\": "src/"
                 }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "check-style": [
+                    "phpcs -p --standard=PSR2 src/"
+                ],
+                "fix-style": [
+                    "phpcbf -p --standard=PSR2 src/"
+                ]
             },
             "license": [
                 "MIT"
@@ -1695,7 +1704,7 @@
             "support": {
                 "email": "support@razorpay.com"
             },
-            "time": "2018-11-26T02:32:55+00:00"
+            "time": "2018-11-26T05:49:36+00:00"
         },
         {
             "name": "sudiptpa/omnipay-nabtransact",

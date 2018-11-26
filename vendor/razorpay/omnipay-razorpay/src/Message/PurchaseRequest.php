@@ -4,16 +4,14 @@ namespace Omnipay\Razorpay\Message;
 
 use \Omnipay\Common\Message\AbstractRequest;
 
-
 /**
  * Razorpay Complete Purchase Request - Auto Capture on by default. For Off-Site payment.
  */
 class PurchaseRequest extends AbstractRequest
 {
-	public function getData()
-	{
-        if (!empty($this->getCard()))
-        {
+    public function getData()
+    {
+        if (!empty($this->getCard())) {
             $card = $this->getCard();
 
             $hmacKey = $this->getKeySecret();
@@ -58,9 +56,9 @@ class PurchaseRequest extends AbstractRequest
 
         // Default case
         return $this->getParameters();
-	}
+    }
 
-	// To send the data for our
+    // To send the data for our
     public function sendData($data)
     {
         return $this->createResponse($data);

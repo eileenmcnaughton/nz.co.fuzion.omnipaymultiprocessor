@@ -6,8 +6,7 @@ class CompletePurchaseResponse extends PurchaseResponse
 {
     public function isSuccessful()
     {
-        if (!empty($_POST['x_result']))
-        {
+        if (!empty($_POST['x_result'])) {
             $data = parent::getRedirectData();
 
             $hmacKey = $data['key_secret'];
@@ -16,7 +15,7 @@ class CompletePurchaseResponse extends PurchaseResponse
             $verifySignature = new Signature($hmacKey);
             $signature = $verifySignature->getSignature($_POST);
 
-            return $this->hash_equals($signature, $razorpaySignature);
+            return $this->hashEquals($signature, $razorpaySignature);
         }
 
         return false;
@@ -26,21 +25,18 @@ class CompletePurchaseResponse extends PurchaseResponse
      * Taken from https://stackoverflow.com/questions/10576827/secure-string-compare-function
      * under the MIT license
      */
-    protected function hash_equals($str1, $str2)
+    protected function hashEquals($str1, $str2)
     {
-        if (function_exists('hash_equals') === true)
-        {
+        if (function_exists('hash_equals') === true) {
             return hash_equals($str1, $str2);
         }
-        if (strlen($str1) !== strlen($str2))
-        {
+        if (strlen($str1) !== strlen($str2)) {
             return false;
         }
 
         $result = 0;
 
-        for ($i = 0; $i < strlen($str1); $i++)
-        {
+        for ($i = 0; $i < strlen($str1); $i++) {
             $result |= ord($str1) ^ ord($str2);
         }
 

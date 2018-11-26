@@ -74,3 +74,16 @@ The gateways supported are:
 Note that we always collect Country & Billing name details for
 the Shared & transparent redirect variants as it is necessary
 for recurring and simpler to always collect them.
+
+## Code overrides
+Currently upstream repos are overridden for the following reasons
+
+#####Paypal Rest
+
+[Overriden to support authorize with card param present but not card](https://github.com/thephpleague/omnipay-paypal/pull/218)
+
+#####Eway
+[Overridden to support client side encryption, upstream PR submitted](https://github.com/thephpleague/omnipay-eway/pull/29)
+
+#####Razorpay
+[Overridden to support Omnipay 3, upstream PR submitted](https://github.com/razorpay/omnipay-razorpay/pull/7)

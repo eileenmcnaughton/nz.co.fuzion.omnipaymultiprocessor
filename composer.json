@@ -3,7 +3,16 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-razorpay.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/eileenmcnaughton/omnipay-eway.git"
+        },
+        {
+            "type": "git",
+            "url":  "https://github.com/eileenmcnaughton/omnipay-paypal.git"
         }
+
     ],
     "require":
     {
