@@ -405,7 +405,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $basicMappings = array(
       'firstName' => 'billing_first_name',
       'lastName' => 'billing_last_name',
-      'currency' => 'currency',
       'email' => 'email',
       'billingAddress1' => 'billing_street_address-' . $billingID,
       'billingAddress2' => 'supplemental_address-' . $billingID,
