@@ -75,6 +75,21 @@ Note that we always collect Country & Billing name details for
 the Shared & transparent redirect variants as it is necessary
 for recurring and simpler to always collect them.
 
+##Paypal
+
+Omnipay supports the newer REST library. The Paypal Rest express flow is
+1) Paypal Express button presented on form
+2) On clicking the button the CiviCRM PaymentProcessor.preapprove
+api function is called
+3) This function authenticates the CiviCRM site with paypal (using the Omnipay authorize method)and negotiates a
+token for the transaction.
+4) This is returned to a paypal script (promise).
+5) The paypal script opens a popup for the user to approve the transaction
+6) pop up closes & user is returned to the page
+7) js is used to submit the form
+8) after the confirm page the doPayment function calls the payment method. The token
+is used to confirm the payment at that point.
+
 ## Code overrides
 Currently upstream repos are overridden for the following reasons
 

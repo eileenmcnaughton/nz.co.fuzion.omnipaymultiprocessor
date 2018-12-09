@@ -358,7 +358,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     else {
       // When does this miserable occurence still happen.
       // need to fix if it does!
-      $this->transaction_id = rand(0, 1000);
+      //$this->transaction_id = rand(0, 1000);
     }
     $this->formatted_transaction_id = $prefix . $this->transaction_id;
   }
