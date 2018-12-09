@@ -44,7 +44,7 @@ return [
     'entity' => 'payment_processor_type',
     'params' => array(
       'version' => 3,
-      'title' => 'OmniPay - Razorpay',
+      'title' => 'OmniPay - Razorpay (not confirmed as working)',
       'name' => 'omnipay_Razorpay_Checkout',
       'description' => 'Omnipay Razorpay',
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
@@ -61,6 +61,7 @@ return [
       'billing_mode' => 4,
       'payment_type' => 3,
       'is_recur' => 0,
+      'is_active' => 0,
     ),
   ]
 ];
