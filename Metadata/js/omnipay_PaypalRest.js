@@ -45,7 +45,6 @@ renderPaypal = function() {
       document.getElementById('crm-submit-buttons').style.display = 'block';
       document.getElementById('PayerID').value = data['payerID'];
       document.getElementById('payment_token').value = paymentToken;
-      document.getElementById('post_authorize').value = isRecur;
       document.getElementById(formID).submit();
     },
 

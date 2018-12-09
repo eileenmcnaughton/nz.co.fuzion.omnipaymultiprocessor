@@ -90,6 +90,9 @@ token for the transaction.
 8) after the confirm page the doPayment function calls the payment method. The token
 is used to confirm the payment at that point.
 
+Known issues
+1) load form is slow when changing processor
+
 ## Code overrides
 Currently upstream repos are overridden for the following reasons
 
