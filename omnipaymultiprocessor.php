@@ -65,22 +65,6 @@ function omnipaymultiprocessor_civicrm_disable() {
 }
 
 /**
- * Implementation of hook_civicrm_upgrade
- *
- * @param $op string, the type of operation being performed; 'check' or 'enqueue'
- * @param $queue CRM_Queue_Queue, (for 'enqueue') the modifiable list of pending up upgrade tasks
- *
- * @return mixed
- *   Based on op. for 'check', returns array(boolean) (TRUE if upgrades are pending)
- *                for 'enqueue', returns void
- */
-function omnipaymultiprocessor_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  //@todo fix me - when I grow up I want to be a proper upgrade hook (or possibly removed since there should be no new installs requiring this)
-  CRM_Core_DAO::executeQuery("UPDATE civicrm_menu SET is_public = 1 WHERE path = 'civicrm/payment/details'");
-  return _omnipaymultiprocessor_civix_civicrm_upgrade($op, $queue);
-}
-
-/**
  * Implements hook_civicrm_managed().
  *
  * Generate a list of entities to create/deactivate/delete when this module
