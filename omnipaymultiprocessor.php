@@ -40,21 +40,21 @@ function omnipaymultiprocessor_civicrm_install() {
     CHANGE COLUMN `signature` `signature` LONGTEXT NULL DEFAULT NULL;
   ");
   }
-  return _omnipaymultiprocessor_civix_civicrm_install();
+  _omnipaymultiprocessor_civix_civicrm_install();
 }
 
 /**
  * Implementation of hook_civicrm_uninstall
  */
 function omnipaymultiprocessor_civicrm_uninstall() {
-  return _omnipaymultiprocessor_civix_civicrm_uninstall();
+  _omnipaymultiprocessor_civix_civicrm_uninstall();
 }
 
 /**
  * Implementation of hook_civicrm_enable
  */
 function omnipaymultiprocessor_civicrm_enable() {
-  return _omnipaymultiprocessor_civix_civicrm_enable();
+  _omnipaymultiprocessor_civix_civicrm_enable();
 }
 
 /**
@@ -76,6 +76,12 @@ function omnipaymultiprocessor_civicrm_managed(&$entities) {
   _omnipaymultiprocessor_civix_civicrm_managed($entities);
 }
 
+/**
+ * @param string $entity
+ * @param string $action
+ * @param array $params
+ * @param array $permissions
+ */
 function omnipaymultiprocessor_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
   $params['payment_processor']['preapprove'] = ['make online contributions'];
 }
