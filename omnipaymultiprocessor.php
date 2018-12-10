@@ -99,3 +99,23 @@ function omnipaymultiprocessor_civicrm_navigationMenu(&$menu) {
 function omnipaymultiprocessor_civicrm_alterSettingsFolders(&$metaDataFolders) {
   _omnipaymultiprocessor_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
+
+function omnipaymultiprocessor_civicrm_preProcess($formName, &$form) {
+  if ($formName === 'CRM_Contribute_Form_Contribution_Main') {
+    if (!empty($form->_values['is_recur'])) {
+      $recurOptions = [
+        'is_recur_interval' =>  $form->_values['is_recur_interval'],
+        'frequency_unit' => $form->_values['recur_frequency_unit'],
+        'is_recur_installments' => $form->_values['is_recur_installments'],
+      ];
+
+      if (!$recurOptions['is_recur_interval']) {
+        $recurOptions['frequency_interval'] = 1;
+      }
+     CRM_Core_Resources::singleton()->addVars(
+        'omnipay', $recurOptions
+     );
+    }
+  }
+
+}

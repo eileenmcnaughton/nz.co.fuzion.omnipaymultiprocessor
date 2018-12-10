@@ -8,6 +8,10 @@ renderPaypal = function() {
   paypal.Button.render({
     env: (CRM.vars.omnipay.is_test ? 'sandbox' : 'production'),
     payment: function (data, actions) {
+
+      var frequencyInterval = CRM.$('#frequency_interval').val() ? CRM.$('#frequency_interval').val() : 1;
+      var frequencyUnit = CRM.$('#frequency_unit').val() ? CRM.$('#frequency_interval').val() : CRM.vars.omnipay.frequency_unit;
+
       return new paypal.Promise(function (resolve, reject) {
         CRM.api3('PaymentProcessor', 'preapprove', {
             'payment_processor_id': CRM.vars.omnipay.paymentProcessorId,
@@ -16,8 +20,8 @@ renderPaypal = function() {
              'qf_key': qfKey,
              'is_recur' : CRM.$('#is_recur').is(":checked"),
              'installments' : CRM.$('#installments').val(),
-             'frequency_unit' : CRM.$('#frequency_unit').val(),
-             'frequency_interval' : CRM.$('#frequency_interval').val()
+             'frequency_unit' : frequencyUnit,
+             'frequency_interval' : frequencyInterval
           }
         ).done(function (result) {
           if (result['is_error'] === 1) {
@@ -41,6 +45,7 @@ renderPaypal = function() {
         paymentToken = data['paymentID'];
         isRecur = 0;
       }
+
       document.getElementById('paypal-button').style.visibility = "hidden";
       document.getElementById('crm-submit-buttons').style.display = 'block';
       document.getElementById('PayerID').value = data['payerID'];
