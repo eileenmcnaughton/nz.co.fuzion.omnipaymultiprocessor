@@ -68,17 +68,10 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
   }
 
   /**
-   * Test the preapproval function.
+   * Test the pre-approval function.
    */
   public function testPreApproveRest() {
-    $this->getMockClient()->addResponse(new Response(200, [],
-      '{"scope":"https://api.paypal.com/v1/payments/.* https://uri.paypal.com/services/payments/refund https://uri.paypal.com/services/applications/webhooks https://uri.paypal.com/services/payments/payment/authcapture https://uri.paypal.com/payments/payouts https://api.paypal.com/v1/vault/credit-card/.* https://uri.paypal.com/services/disputes/read-seller https://uri.paypal.com/services/subscriptions https://uri.paypal.com/services/disputes/read-buyer https://api.paypal.com/v1/vault/credit-card openid https://uri.paypal.com/services/disputes/update-seller https://uri.paypal.com/services/payments/realtimepayment",
-"nonce":"2018-12-09T20:47:44ZQaSre3JCNsC4A1P6LyqcFe6PpK_MYEbOb6XuksJQibg",
-"access_token":"A21AAF9dQkpsPNdkg99j1d_DIls9Zz_afB60FJrSUJm0zELjghCcnOdzpLeP_Ywk0f0LgPIfBfOa-vqCiaxLu_fh0TJBV_-3g",
-"token_type":"Bearer",
-"app_id":"APP-80W284485P519543T",
-"expires_in":32400}'
-    ));
+    $this->addMockTokenResponse();
 
     $this->getMockClient()->addResponse(new Response(200, [], "{\"id\":\"PAY-79M30569TN7125128LQGYFLI\",\"intent\":\"sale\",\"state\":\"created\",\"payer\":{\"payment_method\":\"paypal\"},\"transactions\":[{\"amount\":{\"total\":\"10.00\",\"currency\":\"USD\"},\"description\":\"false\",\"invoice_number\":\"\",\"related_resources\":[]}],\"create_time\":\"2018-12-09T21:01:32Z\",\"links\":[{\"href\":\"https:\/\/api.sandbox.paypal.com\/v1\/payments\/payment\/PAY-79M30569TN7125128LQGYFLI\",\"rel\":\"self\",\"method\":\"GET\"},{\"href\":\"https:\/\/www.sandbox.paypal.com\/cgi-bin\/webscr?cmd=_express-checkout&token=EC-9T988732661526452\",\"rel\":\"approval_url\",\"method\":\"REDIRECT\"},{\"href\":\"https:\/\/api.sandbox.paypal.com\/v1\/payments\/payment\/PAY-79M30569TN7125128LQGYFLI\/execute\",\"rel\":\"execute\",\"method\":\"POST\"}]}"));
 
@@ -117,7 +110,27 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
     ], $response2['transactions']);
   }
 
-  public function testFinishTokenPayment() {
+  /**
+   * Test the pre-approval function for recurring transactions.
+   */
+  public function testPreApproveRestRecur() {
+    $this->addMockTokenResponse();
+    $response = [
+      'links' => [
+        [
+          'href' => 'https://www.sandbox.paypal.com/agreements/approve?ba_token=BA-246293876N953433E',
+          'rel' => 'approval_url',
+          'method' => 'POST',
+        ], [
+          'href' => 'https://api.sandbox.paypal.com/v1/billing-agreements/BA-246293876N953433E/agreements',
+          'rel' => 'self',
+          'method' => 'POST',
+        ],
+      ],
+      'token_id' => 'BA-246293876N953433E',
+    ];
+    $this->getMockClient()->addResponse(new Response(200, [], json_encode($response)));
+
     Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Rest',
@@ -125,7 +138,7 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
       'password' => 'EANpVE9liVxABP173oGLic1fhoK2gixGeVCrXjR4Q_dpO2FLMMTtyYSmhhe5IZDaQaPUsmc4Jkx7CQGy',
       'is_test' => 1,
     ]);
-    $preApproval = civicrm_api('PaymentProcessor', 'pay', [
+    $preApproval = civicrm_api('PaymentProcessor', 'preapprove', [
       'payment_processor_id' => $processor['id'],
       'check_permissions' => TRUE,
       'amount' => 60,
@@ -138,12 +151,34 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
       'frequency_interval' => 3,
       'version' => 3,
       'is_test' => 1,
-      'token' => 'BA-9RH77653MG862110M',
-    ]);
-    $outbound = $this->getRequestBodies();
-    //$this->assertEquals('EC-654429990B3545832', $preApproval['values'][0]['token']);
+    ])['values'][0];
+    $this->assertEquals('BA-246293876N953433E', $preApproval['token']);
 
-  //
+
+    $outbound = $this->getRequestBodies();
+    $mainRequest = json_decode($outbound[1], TRUE);
+    $this->assertEquals('regular payment', $mainRequest['description']);
+    $this->assertEquals(['payment_method' => 'PAYPAL'], $mainRequest['payer']);
+    $this->assertEquals('MERCHANT_INITIATED_BILLING', $mainRequest['plan']['type']);
+    $this->assertEquals('INSTANT', $mainRequest['plan']['merchant_preferences']['accepted_pymt_type']);
+    $this->assertEquals(FALSE, $mainRequest['plan']['merchant_preferences']['immutable_shipping_address']);
+    $this->assertEquals(TRUE, $mainRequest['plan']['merchant_preferences']['skip_shipping_address']);
+
+    $this->assertEquals([
+      0 => 'https://api.sandbox.paypal.com/v1/oauth2/token',
+      1 => 'https://api.sandbox.paypal.com/v1/billing-agreements/agreement-tokens',
+    ], $this->getRequestURLs());
     }
+
+  protected function addMockTokenResponse() {
+    $this->getMockClient()->addResponse(new Response(200, [],
+      '{"scope":"https://api.paypal.com/v1/payments/.* https://uri.paypal.com/services/payments/refund https://uri.paypal.com/services/applications/webhooks https://uri.paypal.com/services/payments/payment/authcapture https://uri.paypal.com/payments/payouts https://api.paypal.com/v1/vault/credit-card/.* https://uri.paypal.com/services/disputes/read-seller https://uri.paypal.com/services/subscriptions https://uri.paypal.com/services/disputes/read-buyer https://api.paypal.com/v1/vault/credit-card openid https://uri.paypal.com/services/disputes/update-seller https://uri.paypal.com/services/payments/realtimepayment",
+"nonce":"2018-12-09T20:47:44ZQaSre3JCNsC4A1P6LyqcFe6PpK_MYEbOb6XuksJQibg",
+"access_token":"A21AAF9dQkpsPNdkg99j1d_DIls9Zz_afB60FJrSUJm0zELjghCcnOdzpLeP_Ywk0f0LgPIfBfOa-vqCiaxLu_fh0TJBV_-3g",
+"token_type":"Bearer",
+"app_id":"APP-80W284485P519543T",
+"expires_in":32400}'
+    ));
+  }
 
 }

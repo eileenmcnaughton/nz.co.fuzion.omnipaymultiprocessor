@@ -86,8 +86,6 @@ class CRM_Core_Payment_OmnipayPaypalRest extends CRM_Core_Payment_OmnipayMultiPr
     // https://developer.paypal.com/docs/api/payments.billing-plans/v1/#definition-merchant_preferences
     /** @var \Omnipay\Paypal\Message\RestResponse $planResponse */
     $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), 'contribute'))->send();
-    $requests = $this->getRequestBodies();
-    $responese = $this->getResponseBodies();
     if (!$response->isSuccessful()) {
       throw new CRM_Core_Exception($response->getMessage());
     }
