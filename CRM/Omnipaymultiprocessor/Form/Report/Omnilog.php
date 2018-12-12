@@ -13,7 +13,7 @@ class CRM_Omnipaymultiprocessor_Form_Report_Omnilog extends CRM_Extendedreport_F
       'fields' => TRUE,
       'fields_defaults' => ['message', 'context', 'timestamp'],
       'order_bys' => TRUE,
-      'order_by_defaulys' => ['timestamp DESC'],
+      'order_by_defaulys' => ['id DESC'],
     ]);
     parent::__construct();
   }
@@ -25,7 +25,7 @@ class CRM_Omnipaymultiprocessor_Form_Report_Omnilog extends CRM_Extendedreport_F
         'title' => E::ts('System log ID'),
         'is_fields' => TRUE,
         'is_filters' => TRUE,
-        'is_order_bys' => FALSE,
+        'is_order_bys' => TRUE,
         'type' => CRM_Utils_Type::T_INT,
       ],
       'message' => [
