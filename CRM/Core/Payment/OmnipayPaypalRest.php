@@ -92,4 +92,26 @@ class CRM_Core_Payment_OmnipayPaypalRest extends CRM_Core_Payment_OmnipayMultiPr
     return $response;
   }
 
+  /**
+   * Function to action after pre-approval if supported
+   *
+   * @param array $params
+   *   Parameters from the form
+   *
+   * Action to do after pre-approval. e.g. PaypalRest returns from offsite &
+   * hits the billing plan url to confirm.
+   *
+   * @throws \CRM_Core_Exception
+   */
+  public function doPostApproval(&$params) {
+    $planResponse = $this->gateway->completeCreateCard(array(
+      'transactionReference' => $params['token'],
+      'state' => 'ACTIVE',
+    ))->send();
+    if (!$planResponse->isSuccessful()) {
+      throw new CRM_Core_Exception($planResponse->getMessage());
+    }
+    $params['token'] = $planResponse->getCardReference();
+  }
+
 }

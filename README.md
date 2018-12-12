@@ -93,13 +93,14 @@ is used to confirm the payment at that point.
 Known issues
 1) load form is slow when changing processor
 2) We need to validate the form data before submitting to paypal
+3) monthly pay needs testing.
 
 ## Code overrides
 Currently upstream repos are overridden for the following reasons
 
 #####Paypal Rest
 
-[Overriden to support authorize with card param present but not card](https://github.com/thephpleague/omnipay-paypal/pull/218)
+[Overriden to support authorize with card param present but not card](https://github.com/thephpleague/omnipay-paypal/pull/218) & [general jsv4 support](https://github.com/thephpleague/omnipay-paypal/pull/221)
 
 #####Eway
 [Overridden to support client side encryption, upstream PR submitted](https://github.com/thephpleague/omnipay-eway/pull/29)
