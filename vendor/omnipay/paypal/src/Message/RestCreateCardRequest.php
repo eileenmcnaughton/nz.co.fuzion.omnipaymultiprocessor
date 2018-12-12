@@ -72,6 +72,7 @@ class RestCreateCardRequest extends AbstractRestRequest
 {
     public function getData()
     {
+      if ($this->isCardPresent()) {
         $this->validate('card');
         $this->getCard()->validate();
 
@@ -99,12 +100,48 @@ class RestCreateCardRequest extends AbstractRestRequest
         if (!empty($line2)) {
             $data['billing_address']['line2'] = $line2;
         }
-
-        return $data;
+      }
+      else {
+        // We are creating a token to rebill a paypal account.
+        // this equates to the meaning of 'createCard' in other processors
+        // such as Stripe.
+        // https://developer.paypal.com/docs/limited-release/reference-transactions/#create-billing-agreement
+        $data = ["description" =>  $this->getDescription(),
+          "payer" => ["payment_method" => "PAYPAL"],
+          "plan"  =>
+            [
+              "type" =>  "MERCHANT_INITIATED_BILLING",
+              "merchant_preferences"  =>
+                [
+                  "return_url" => $this->getReturnUrl(),
+                  "cancel_url" => $this->getCancelUrl(),
+                  "notify_url"  =>  $this->getNotifyUrl(),
+                  "accepted_pymt_type" =>  "INSTANT",
+                  "skip_shipping_address" =>  true,
+                  "immutable_shipping_address"  =>  false,
+                ]
+            ]
+        ];
+      }
+      return $data;
     }
 
     protected function getEndpoint()
     {
-        return parent::getEndpoint() . '/vault/credit-cards';
+      if ($this->isCardPresent()) {
+         return parent::getEndpoint() . '/vault/credit-cards';
+      }
+      else {
+         return parent::getEndpoint() . '/billing-agreements/agreement-tokens';
+      }
     }
+
+    /**
+     * Is the card present (or are we dealing with a paypal account transaction)
+     */
+    protected function isCardPresent()
+    {
+      return $this->getCard()->getNumber();
+    }
+
 }

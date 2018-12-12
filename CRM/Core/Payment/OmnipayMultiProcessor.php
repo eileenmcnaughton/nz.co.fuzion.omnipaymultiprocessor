@@ -1019,7 +1019,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
       if ($response->isSuccessful()) {
         $params['trxn_id'] = $params['token'] = $response->getTransactionReference();
-        $cardReference =  $response->getCardReference();
+        $cardReference =  $response->getTransactionReference();
         if (!empty($params['is_recur']) && $cardReference) {
           $params['token'] = $cardReference;
         }
