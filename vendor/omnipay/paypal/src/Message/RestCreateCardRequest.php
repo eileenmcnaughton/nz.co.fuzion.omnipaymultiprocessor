@@ -72,68 +72,66 @@ class RestCreateCardRequest extends AbstractRestRequest
 {
     public function getData()
     {
-      if ($this->isCardPresent()) {
-        $this->validate('card');
-        $this->getCard()->validate();
+        if ($this->isCardPresent()) {
+            $this->validate('card');
+            $this->getCard()->validate();
 
-        $data = array(
-            'number' => $this->getCard()->getNumber(),
-            'type' => $this->getCard()->getBrand(),
-            'expire_month' => $this->getCard()->getExpiryMonth(),
-            'expire_year' => $this->getCard()->getExpiryYear(),
-            'cvv2' => $this->getCard()->getCvv(),
-            'first_name' => $this->getCard()->getFirstName(),
-            'last_name' => $this->getCard()->getLastName(),
-            'billing_address' => array(
-                'line1' => $this->getCard()->getAddress1(),
-                //'line2' => $this->getCard()->getAddress2(),
-                'city' => $this->getCard()->getCity(),
-                'state' => $this->getCard()->getState(),
-                'postal_code' => $this->getCard()->getPostcode(),
-                'country_code' => strtoupper($this->getCard()->getCountry()),
-            )
-        );
+            $data = array(
+                'number' => $this->getCard()->getNumber(),
+                'type' => $this->getCard()->getBrand(),
+                'expire_month' => $this->getCard()->getExpiryMonth(),
+                'expire_year' => $this->getCard()->getExpiryYear(),
+                'cvv2' => $this->getCard()->getCvv(),
+                'first_name' => $this->getCard()->getFirstName(),
+                'last_name' => $this->getCard()->getLastName(),
+                'billing_address' => array(
+                    'line1' => $this->getCard()->getAddress1(),
+                    //'line2' => $this->getCard()->getAddress2(),
+                    'city' => $this->getCard()->getCity(),
+                    'state' => $this->getCard()->getState(),
+                    'postal_code' => $this->getCard()->getPostcode(),
+                    'country_code' => strtoupper($this->getCard()->getCountry()),
+                )
+            );
 
-        // There's currently a quirk with the REST API that requires line2 to be
-        // non-empty if it's present. Jul 14, 2014
-        $line2 = $this->getCard()->getAddress2();
-        if (!empty($line2)) {
-            $data['billing_address']['line2'] = $line2;
-        }
-      }
-      else {
-        // We are creating a token to rebill a paypal account.
-        // this equates to the meaning of 'createCard' in other processors
-        // such as Stripe.
-        // https://developer.paypal.com/docs/limited-release/reference-transactions/#create-billing-agreement
-        $data = ["description" =>  $this->getDescription(),
-          "payer" => ["payment_method" => "PAYPAL"],
-          "plan"  =>
-            [
-              "type" =>  "MERCHANT_INITIATED_BILLING",
-              "merchant_preferences"  =>
+            // There's currently a quirk with the REST API that requires line2 to be
+            // non-empty if it's present. Jul 14, 2014
+            $line2 = $this->getCard()->getAddress2();
+            if (!empty($line2)) {
+                $data['billing_address']['line2'] = $line2;
+            }
+        } else {
+            // We are creating a token to rebill a paypal account.
+            // this equates to the meaning of 'createCard' in other processors
+            // such as Stripe.
+            // https://developer.paypal.com/docs/limited-release/reference-transactions/#create-billing-agreement
+            $data = ["description" =>  $this->getDescription(),
+              "payer" => ["payment_method" => "PAYPAL"],
+              "plan"  =>
                 [
-                  "return_url" => $this->getReturnUrl(),
-                  "cancel_url" => $this->getCancelUrl(),
-                  "notify_url"  =>  $this->getNotifyUrl(),
-                  "accepted_pymt_type" =>  "INSTANT",
-                  "skip_shipping_address" =>  true,
-                  "immutable_shipping_address"  =>  false,
+                  "type" =>  "MERCHANT_INITIATED_BILLING",
+                  "merchant_preferences"  =>
+                    [
+                      "return_url" => $this->getReturnUrl(),
+                      "cancel_url" => $this->getCancelUrl(),
+                      "notify_url"  =>  $this->getNotifyUrl(),
+                      "accepted_pymt_type" =>  "INSTANT",
+                      "skip_shipping_address" =>  true,
+                      "immutable_shipping_address"  =>  false,
+                    ]
                 ]
-            ]
-        ];
-      }
-      return $data;
+            ];
+        }
+        return $data;
     }
 
     protected function getEndpoint()
     {
-      if ($this->isCardPresent()) {
-         return parent::getEndpoint() . '/vault/credit-cards';
-      }
-      else {
-         return parent::getEndpoint() . '/billing-agreements/agreement-tokens';
-      }
+        if ($this->isCardPresent()) {
+            return parent::getEndpoint() . '/vault/credit-cards';
+        } else {
+            return parent::getEndpoint() . '/billing-agreements/agreement-tokens';
+        }
     }
 
     /**
@@ -141,7 +139,6 @@ class RestCreateCardRequest extends AbstractRestRequest
      */
     protected function isCardPresent()
     {
-      return $this->getCard()->getNumber();
+        return $this->getCard()->getNumber();
     }
-
 }
