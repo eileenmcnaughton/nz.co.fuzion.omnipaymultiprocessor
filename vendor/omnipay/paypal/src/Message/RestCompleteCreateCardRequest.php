@@ -6,7 +6,7 @@
 namespace Omnipay\PayPal\Message;
 
 /**
- * PayPal REST Complete Subscription Request
+ * PayPal REST Complete Create Card Request
  *
  * Use this call to create a billing agreement after the buyer approves it.
  *
@@ -96,22 +96,22 @@ namespace Omnipay\PayPal\Message;
  */
 class RestCompleteCreateCardRequest extends AbstractRestRequest
 {
-  public function getData()
-  {
-      $this->validate('transactionReference');
+    public function getData()
+    {
+        $this->validate('transactionReference');
 
-      return ['token_id' => $this->getTransactionReference()];
-  }
+        return ['token_id' => $this->getTransactionReference()];
+    }
 
-  /**
-   * Get transaction endpoint.
-   *
-   * Subscriptions are executed using the /billing-agreements resource.
-   *
-   * @return string
-   */
-  protected function getEndpoint()
-  {
-     return parent::getEndpoint() . '/billing-agreements/agreements';
-  }
+    /**
+     * Get transaction endpoint.
+     *
+     * Subscriptions are executed using the /billing-agreements resource.
+     *
+     * @return string
+     */
+    protected function getEndpoint()
+    {
+        return parent::getEndpoint() . '/billing-agreements/agreements';
+    }
 }
