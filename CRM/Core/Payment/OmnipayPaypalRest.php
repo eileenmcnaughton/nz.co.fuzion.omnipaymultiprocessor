@@ -39,27 +39,6 @@ use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 class CRM_Core_Payment_OmnipayPaypalRest extends CRM_Core_Payment_OmnipayMultiProcessor {
 
   /**
-   * @param array $params
-   * @return \Omnipay\Common\Message\ResponseInterface
-   *
-   * @throws \CRM_Core_Exception
-   */
-  protected function doPreApproveForRecurring($params) {
-    $currency = $this->getCurrency($params);
-    if (!$currency) {
-      throw new CRM_Core_Exception(ts('No currency specified'));
-    }
-
-    // https://developer.paypal.com/docs/api/payments.billing-plans/v1/#definition-merchant_preferences
-    /** @var \Omnipay\Paypal\Message\RestResponse $planResponse */
-    $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), 'contribute'))->send();
-    if (!$response->isSuccessful()) {
-      throw new CRM_Core_Exception($response->getMessage());
-    }
-    return $response;
-  }
-
-  /**
    * Function to action after pre-approval if supported
    *
    * @param array $params
