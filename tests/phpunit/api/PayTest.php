@@ -69,7 +69,7 @@ class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterfa
       'password' => 'def',
       'is_test' => 1,
     ]);
-    $this->callAPISuccess('PaymentProcessor', 'pay', [
+    $result = $this->callAPISuccess('PaymentProcessor', 'pay', [
       'payment_processor_id' => $processor['id'],
       'check_permissions' => TRUE,
       'amount' => 10,
@@ -84,6 +84,7 @@ class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterfa
       'contactID' => $contact['id'],
       'contributionRecurID' => 4,
     ])['values'][0];
+    $this->assertEquals('B-2L159413TW638025H', $result['token']);
 
     $outbound = $this->getRequestBodies();
 

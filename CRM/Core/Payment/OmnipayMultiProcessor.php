@@ -1328,14 +1328,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   protected function doTokenPayment(&$params) {
-    // The only recurring currently working with is_recur + pre-authorize is eWay rapid
-    // and, at least in that case, the createCreditCard call ignores any attempt to authorise.
+    $this->doPostApproval($params);
+    // and, at least with Way rapid, the createCreditCard call ignores any attempt to authorise.
     // that is likely to be a pattern.
     $action = CRM_Utils_Array::value('payment_action', $params, empty($params['is_recur']) ? 'completePurchase' : 'purchase');
     $params['transactionReference'] = ($params['token']);
     $response = $this->gateway->$action($this->getCreditCardOptions(array_merge($params, ['cardTransactionType' => 'continuous'])))
       ->send();
+    $this->logHttpTraffic();
     return $response;
+
+
   }
 
   /**
