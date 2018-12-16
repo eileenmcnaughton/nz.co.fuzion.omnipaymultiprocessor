@@ -180,13 +180,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   /**
    * Store the URL for browser redirection in the session for use upon return.
    *
-   * @param string $qfKey
    * @param int $participantID
    * @param int $eventID
    */
-  protected function storeReturnUrls($qfKey, $participantID = NULL, $eventID = NULL) {
-    CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($qfKey));
-    CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($qfKey, $participantID, $eventID));
+  protected function storeReturnUrls($participantID = NULL, $eventID = NULL) {
+    CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($this->getQfKey()));
+    CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID));
   }
 
   /**

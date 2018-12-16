@@ -67,6 +67,29 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   protected $gateway;
 
   /**
+   * Quickform key.
+   *
+   * This value references the user session if being used within a session.
+   *
+   * @var string
+   */
+  protected $qfKey;
+
+  /**
+   * @return string
+   */
+  public function getQfKey() {
+    return $this->qfKey;
+  }
+
+  /**
+   * @param string $qfKey
+   */
+  public function setQfKey($qfKey) {
+    $this->qfKey = $qfKey;
+  }
+
+  /**
    * Process payment with external gateway.
    *
    * @param array $params assoc array of input parameters for this transaction
@@ -78,12 +101,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *   The result in an nice formatted array (or an error object)
    */
   public function doPayment(&$params, $component = 'contribute') {
-    $this->_component = strtolower($component);
-    $this->ensurePaymentProcessorTypeIsSet();
-    $this->createGatewayObject();
-    $this->setProcessorFields();
-    $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
-    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
+    $params['component'] = strtolower($component);
+    $this->initialize($params);
     $this->saveBillingAddressIfRequired($params);
 
     try {
@@ -91,7 +110,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $response = $this->doTokenPayment($params);
       }
       elseif (!empty($params['is_recur'])) {
-        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $component))->send();
+        $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $this->_component))->send();
       }
       else {
         $response = $this->gateway->purchase($this->getCreditCardOptions($params))
@@ -149,6 +168,21 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       //@todo - looks like invalid credit card numbers are winding up here too - we could handle separately by capturing that exception type - what is good fraud practice?
       return $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
     }
+  }
+
+  /**
+   * Initialize class variables.
+   *
+   * @param array $params
+   */
+  protected function initialize(&$params) {
+    $this->_component = $params['component'];
+    $this->setQfKey(CRM_Utils_Array::value('qfKey', $params));
+    $this->ensurePaymentProcessorTypeIsSet();
+    $this->createGatewayObject();
+    $this->setProcessorFields();
+    $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
+    $this->storeReturnUrls(CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
   }
 
   /**
@@ -491,7 +525,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'transactionId' => $this->formatted_transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getNotifyUrl(TRUE),
-      'cancelUrl' => $this->getCancelUrl($params['qfKey'], CRM_Utils_Array::value('participantID', $params)),
+      'cancelUrl' => $this->getCancelUrl($this->getQfKey(), CRM_Utils_Array::value('participantID', $params)),
       'notifyUrl' => $this->getNotifyUrl(),
       'card' => $this->getCreditCardObjectParams($params),
       'cardReference' => CRM_Utils_Array::value('token', $params),
@@ -998,12 +1032,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (!empty($params['payment_token'])) {
       return ['pre_approval_parameters' => ['token' => $params['payment_token']]];
     }
-    $this->_component = $params['component'];
-    $this->ensurePaymentProcessorTypeIsSet();
-    $this->createGatewayObject();
-    $this->setProcessorFields();
-    $this->setTransactionID(CRM_Utils_Array::value('contributionID', $params));
-    $this->storeReturnUrls($params['qfKey'], CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
+    $this->initialize($params);
     $this->saveBillingAddressIfRequired($params);
 
     try {
