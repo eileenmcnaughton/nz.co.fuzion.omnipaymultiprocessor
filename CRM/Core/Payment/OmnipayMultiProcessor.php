@@ -1123,9 +1123,23 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Action to do after pre-approval. e.g. PaypalRest returns from offsite &
    * hits the billing plan url to confirm.
    *
-   * @return array
+   * @throws \CRM_Core_Exception
    */
-  public function doPostApproval(&$params) {}
+  public function doPostApproval(&$params) {
+    if (!method_exists($this->gateway, 'completeCreateCard')
+      || !empty($params['contributionID'])) {
+      return;
+    }
+
+    $planResponse = $this->gateway->completeCreateCard(array(
+      'transactionReference' => $params['token'],
+      -'state' => 'ACTIVE',
+     ))->send();
+    if (!$planResponse->isSuccessful()) {
+      throw new CRM_Core_Exception($planResponse->getMessage());
+      }
+    $params['token'] = $planResponse->getCardReference();
+}
 
   /**
    * Get an array of the fields that can be edited on the recurring contribution.
