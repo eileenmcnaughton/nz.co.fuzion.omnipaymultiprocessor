@@ -49,7 +49,7 @@ return array(
       'description' => 'PayPal Express (Rest) Payment Processor',
       'user_name_label' => 'clientId',
       'password_label' => 'secret',
-      'class_name' => 'Payment_OmnipayPaypalRest',
+      'class_name' => 'Payment_OmnipayMultiProcessor',
       'url_site_default' => 'http://unused.com',
       'url_api_default' => 'http://unused.com',
       'url_recur_default' => 'http://unused.com',
