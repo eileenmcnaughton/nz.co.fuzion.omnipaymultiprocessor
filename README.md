@@ -97,7 +97,11 @@ is used to confirm the payment at that point.
 
 Known issues
 1) load form is slow when changing processor
-2) We need to validate the form data before submitting to paypal
+2) We need to validate the form data before submitting to paypal.
+3) description needs work
+4) bn code not being passed
+5) Think more about permissions on api calls
+
 
 ## Code overrides
 Currently upstream repos are overridden for the following reasons

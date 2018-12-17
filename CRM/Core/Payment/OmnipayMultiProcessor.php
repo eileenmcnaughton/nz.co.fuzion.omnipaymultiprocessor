@@ -1123,11 +1123,25 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Action to do after pre-approval. e.g. PaypalRest returns from offsite &
    * hits the billing plan url to confirm.
    *
+   * This is a fairly immature concept - PaypalRest requires that the token
+   * be authorized by us after it is authorized by the user.
+   *
+   * The flow is
+   *   - user clicks paypal button
+   *   - our doPreapprove is called - we get a token from paypal
+   *   - we return the token to the paypal js script
+   *   - the paypal js script launches a pop up where the user enters their approval
+   *   - on close we get call paypal to complete the payment
+   *   - for recurring payments this requires 2 calls - one to complete the recurring authorisation
+   *   and one to process a payment against it.
+   *
+   * This happens before the payment
+   * is processed but after they have submitted the form to us.
+   *
    * @throws \CRM_Core_Exception
    */
-  public function doPostApproval(&$params) {
-    if (!method_exists($this->gateway, 'completeCreateCard')
-      || !empty($params['contributionID'])) {
+  public function doRecurPostApproval(&$params) {
+    if (!$this->getProcessorTypeMetadata('post_recur_action') === 'completeCreateCard') {
       return;
     }
 
@@ -1378,7 +1392,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    */
   protected function doTokenPayment(&$params) {
-    $this->doPostApproval($params);
+    if (!empty($params['is_recur'])) {
+      $this->doRecurPostApproval($params);
+    }
     // and, at least with Way rapid, the createCreditCard call ignores any attempt to authorise.
     // that is likely to be a pattern.
     $action = CRM_Utils_Array::value('payment_action', $params, empty($params['is_recur']) ? 'completePurchase' : 'purchase');
