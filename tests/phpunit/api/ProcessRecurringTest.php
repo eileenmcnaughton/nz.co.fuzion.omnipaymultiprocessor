@@ -47,8 +47,8 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
 
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Rest',
-      'user_name' => 'AWzymvrczbgFT9CuhILzNXnXFyLXsxa8lacr_TJbOT4ytdRuaKnr73t1kOIdwbSTmnjTuajgKaiZCjqR',
-      'password' => 'EANpVE9liVxABP173oGLic1fhoK2gixGeVCrXjR4Q_dpO2FLMMTtyYSmhhe5IZDaQaPUsmc4Jkx7CQGy',
+      'user_name' => 'ABC',
+      'password' => 'DEF',
       'is_test' => 1,
       'is_active' => 1,
     ]);
@@ -63,6 +63,7 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
       'next_sched_contribution_date' => 'today',
       'contact_id' => $contact['id'],
       'frequency_interval' => 1,
+      'frequency_unit' => 'month',
       'amount' => 10,
       'contribution_status_id' => 'Pending',
       'is_test' => TRUE,
@@ -77,10 +78,12 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
       'is_test' => TRUE,
       'contribution_recur_id' => $contributionRecur['id'],
       'payment_processor_id' => $processor['id'],
+      'receive_date' => '1 month ago',
     ]);
+    $this->callAPISuccess('ContributionRecur', 'create', ['id' => $contributionRecur['id'], 'next_sched_contribution_date' => 'today']);
 
     $result = $this->callAPISuccess('Job', 'process_recurring', [])['values'];
-    $this->assertEquals(1, count($result['success']));
+    $this->assertEquals(1, count($result['success']), print_r($result, 1));
 
     $outbound = $this->getRequestBodies();
     $paymentRequest = json_decode($outbound[1], TRUE);
@@ -99,7 +102,7 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
       'options' => ['sort' => 'receive_date DESC']
     ]);
     $this->assertEquals(2, $contributions['count']);
-    $this->assertEquals($paymentRequest['transactions'][0]['invoice_number'], key($contributions['values']));
+    $this->assertEquals($paymentRequest['transactions'][0]['invoice_number'], reset($contributions['values'])['id'], print_r($paymentRequest, 1) . print_r($this->callAPISuccess('Contribution', 'get', ['is_test' => ''])));
   }
 
   public function getRequestBody() {
