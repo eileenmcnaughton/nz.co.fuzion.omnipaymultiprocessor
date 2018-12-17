@@ -1123,11 +1123,20 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Action to do after pre-approval. e.g. PaypalRest returns from offsite &
    * hits the billing plan url to confirm.
    *
+   * This is a fairly immature concept - we know that PaypalRest requires that the token
+   * be authorized by us after it is authorized by the user. This happens before the payment
+   * is processed but after they have submitted the form to us.
+   * The post_authorize is added via metadata to the form - we could make it more nuanced,
+   * bearing in mind it IS a field that users can influence the content of as it currently
+   * exists - in later versions.
+   *
    * @throws \CRM_Core_Exception
    */
   public function doPostApproval(&$params) {
     if (!method_exists($this->gateway, 'completeCreateCard')
-      || !empty($params['contributionID'])) {
+      || empty($params['post_authorize'])
+      || empty($params['is_recur'])
+    ) {
       return;
     }
 

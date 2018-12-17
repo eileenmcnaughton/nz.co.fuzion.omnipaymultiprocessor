@@ -83,6 +83,7 @@ class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterfa
       'token' => 'BA-193582913B4363822',
       'contactID' => $contact['id'],
       'contributionRecurID' => 4,
+      'post_authorize' => 'post_authorize',
     ])['values'][0];
     $this->assertEquals('B-2L159413TW638025H', $result['token']);
 
