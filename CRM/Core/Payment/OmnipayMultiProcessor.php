@@ -117,6 +117,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           ->send();
       }
       if ($response->isSuccessful()) {
+        $this->cleanupClassForSerialization(TRUE);
+
         if (method_exists($response, 'getCardReference') && $response->getCardReference()) {
           $params['token'] = $response->getCardReference();
         }
