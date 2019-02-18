@@ -135,7 +135,7 @@ class RapidDirectGateway extends AbstractGateway
      */
     public function purchase(array $parameters = [])
     {
-        if (isset($parameters['card']['number']) && substr($parameters['card']['number'], 0, 9) ===  'eCrypted:') {
+        if (is_array($parameters['card']) && isset($parameters['card']['number']) && substr($parameters['card']['number'], 0, 9) ===  'eCrypted:') {
             $parameters['encryptedCardNumber'] = $parameters['card']['number'];
         }
         return $this->createRequest('\Omnipay\Eway\Message\RapidDirectPurchaseRequest', $parameters);
