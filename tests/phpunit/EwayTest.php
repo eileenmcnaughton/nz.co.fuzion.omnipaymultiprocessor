@@ -24,6 +24,13 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
   use HttpClientTestTrait;
   use EwayRapidDirectTestTrait;
 
+  /**
+   * Parameters to use for submitting.
+   *
+   * @var array
+   */
+  protected $submitParams = [];
+
   public function setUpHeadless() {
     // Civi\Test has many helpers, like install(), uninstall(), sql(), and sqlFile().
     // See: https://github.com/civicrm/org.civicrm.testapalooza/blob/master/civi-test.md
@@ -51,12 +58,72 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
     $this->assertEquals('text', $fields['EWAY_CARDCVN']['htmlType']);
   }
 
-
+  /**
+   * Test submitting a contribution page for a single payment.
+   */
   public function testSubmitContributionPage() {
     $this->addMockTokenResponse();
     Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
 
     $processor = $this->createTestProcessor('Eway_RapidDirect');
+    $this->createContributionPage($processor);
+
+    $this->callAPISuccess('contribution_page', 'submit', $this->submitParams);
+    $outbound = $this->getRequestBodies();
+
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['payment_processor_id' => $processor['id'], 'contribution_status_id' => 'Completed']);
+
+    $invoiceDescription = substr($contribution['contact_id'] . '-' . $contribution['id'] . '-Help Support CiviCRM!', 0, 24);
+
+    $this->assertEquals('{"DeviceID":"https:\/\/github.com\/adrianmacneil\/omnipay","CustomerIP":"127.0.0.1","PartnerID":null,"ShippingMethod":null,"Customer":{"Title":null,"FirstName":"","LastName":"","CompanyName":"","Street1":"","Street2":"","City":"","State":"","PostalCode":"","Country":"","Email":"anthony_anderson@civicrm.org","Phone":"","CardDetails":{"Name":"","ExpiryMonth":"09","ExpiryYear":"30","CVN":234,"Number":"41111111111111111"}},"ShippingAddress":{"FirstName":"","LastName":"","Street1":null,"Street2":null,"City":null,"State":null,"Country":"","PostalCode":null,"Phone":null},"TransactionType":"Purchase","Payment":{"TotalAmount":10000,"InvoiceNumber":"' . $contribution['id'] . '","InvoiceDescription":"' . $invoiceDescription . '","CurrencyCode":"USD","InvoiceReference":null},"Method":"ProcessPayment"}',
+      $outbound[0]);
+
+  }
+
+  /**
+   * Test submitting a contribution page for a single payment.
+   */
+  public function testSubmitContributionPageEncrypted() {
+    $this->addMockTokenResponse();
+    Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
+
+    $processor = $this->createTestProcessor('Eway_RapidDirect');
+    $this->createContributionPage($processor, TRUE);
+
+    $this->callAPISuccess('contribution_page', 'submit', $this->submitParams);
+    $outbound = $this->getRequestBodies();
+
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['payment_processor_id' => $processor['id'], 'contribution_status_id' => 'Completed']);
+
+    $invoiceDescription = substr($contribution['contact_id'] . '-' . $contribution['id'] . '-Help Support CiviCRM!', 0, 24);
+
+    $this->assertEquals($this->getRequest($contribution, $invoiceDescription),
+      $outbound[0]);
+
+  }
+
+  /**
+   * @return array|int
+   */
+  protected function createTestProcessor($type) {
+    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
+      'payment_processor_type_id' => 'omnipay_' . $type,
+      'user_name' => 'abd',
+      'password' => 'def',
+      'is_test' => 1,
+    ]);
+    return $processor;
+  }
+
+  /**
+   * @param $processor
+   * @param bool $isEncrypted
+   *
+   * @return array
+   */
+  protected function createContributionPage($processor, $isEncrypted = FALSE) {
+    $processorID = $processor['id'];
+
     $contributionPageParams = [
       'title' => 'Help Support CiviCRM!',
       'financial_type_id' => 1,
@@ -74,48 +141,66 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
       'amount_block_is_active' => 1,
       'currency' => 'USD',
       'is_billing_required' => 0,
-      'payment_processor' => [$processor['id']],
+      'payment_processor' => $processorID,
     ];
     $contributionPageResult = $this->callAPISuccess('contribution_page', 'create', $contributionPageParams);
 
     // submit form values
-    $priceSet = $this->callAPISuccess('price_set', 'getsingle', array('name' => 'default_contribution_amount'));
-    $params = array(
+    $priceSet = $this->callAPISuccess('price_set', 'getsingle', ['name' => 'default_contribution_amount']);
+
+    $this->submitParams = [
       'id' => $contributionPageResult['id'],
       'email-5' => 'anthony_anderson@civicrm.org',
-      'payment_processor_id' => $processor['id'],
+      'payment_processor_id' => $processorID,
       'amount' => 100.00,
       'tax_amount' => '',
       'currencyID' => 'AUD',
       'is_quick_config' => 1,
       'description' => 'Online Contribution: Help Support CiviCRM!',
       'price_set_id' => $priceSet['id'],
-      'credit_card_number' => '41111111111111111',
+      'credit_card_number' => $this->getCardNumber($isEncrypted),
       'credit_card_exp_date' => ['M' => 9, 'Y' => 2030],
-      'cvv2' => 234,
-    );
-    $this->callAPISuccess('contribution_page', 'submit', $params);
-    $outbound = $this->getRequestBodies();
-
-    $contribution = $this->callAPISuccessGetSingle('Contribution', ['payment_processor_id' => $processor['id'], 'contribution_status_id' => 'Completed']);
-
-    $invoiceDescription = substr($contribution['contact_id'] . '-' . $contribution['id'] . '-Help Support CiviCRM!', 0, 24);
-
-    $this->assertEquals('{"DeviceID":"https:\/\/github.com\/adrianmacneil\/omnipay","CustomerIP":"127.0.0.1","PartnerID":null,"ShippingMethod":null,"Customer":{"Title":null,"FirstName":"","LastName":"","CompanyName":"","Street1":"","Street2":"","City":"","State":"","PostalCode":"","Country":"","Email":"anthony_anderson@civicrm.org","Phone":"","CardDetails":{"Name":"","ExpiryMonth":"09","ExpiryYear":"30","CVN":234,"Number":"41111111111111111"}},"ShippingAddress":{"FirstName":"","LastName":"","Street1":null,"Street2":null,"City":null,"State":null,"Country":"","PostalCode":null,"Phone":null},"TransactionType":"Purchase","Payment":{"TotalAmount":10000,"InvoiceNumber":"' . $contribution['id'] . '","InvoiceDescription":"' . $invoiceDescription . '","CurrencyCode":"USD","InvoiceReference":null},"Method":"ProcessPayment"}',
-      $outbound[0]);
-
+      'cvv2' =>$this->getCvv($isEncrypted),
+    ];
+    return [$contributionPageResult, $priceSet];
   }
 
   /**
-   * @return array|int
+   * @param $isEncrypted
+   *
+   * @return int
    */
-  protected function createTestProcessor($type) {
-    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
-      'payment_processor_type_id' => 'omnipay_' . $type,
-      'user_name' => 'abd',
-      'password' => 'def',
-      'is_test' => 1,
-    ]);
-    return $processor;
+  protected function getCardNumber($isEncrypted) {
+    if (!$isEncrypted) {
+      return '41111111111111111';
+    }
+    return 'eCrypted:ifA9U09ajEn++sMKdlWstGzIhA9Y7eqTFLzbNa5albBgL16iYQU7cKa0VHBrBUtBE1tmSFG9K7rlxhUFWIpO+OY36M1eI+cY2wSNbPBKUcdrkjFvdcLQTkSvqrfucKXXrM8T4Fcp5zpJoko8EICOcuWQIklT5Z0Ft2oUy6xYDvmSa2m+dywleZBSuLrxeYf+BKTVDCU+UMJsk70MqS3AgByOW5sFBLvhwbfDdxp8eWcAq4cPw7tTos3NobcndSSy2S1DhKrx6dlDVxPSLla0VGe2jDoopulDjTlub1E5dpvdCVFd2tv36A1YGvKI1To1RUyEk91+HzFoA==';
+  }
+
+  protected function getCvv($isEncrypted) {
+    if (!$isEncrypted) {
+      return 234;
+    }
+    return "eCrypted:JqwlzOpX3mbaPNjoVWRtXmG4emlEPl8gossAHXBPgwcOBmqfJyWWYInaIATQYDG8dOSlReJNhA2h4lairQL1KIrJG1IaaTwbQVIx+P2PozfLAvmM1wmXkoHHpV8bSEJ4zqkNlX2bSkkh+V9iF6GKb4WEzCqFJbaJ5MXfp+mSRzvojfgvixV7rIUghRSCNe8+PYkvO4iJkhL5D3YFiEvJDvsRbHaD2NFJgK3be12Tp2hIyLAHKvN8hIiMnVqA+dBC03Y9ji20u9gU5KB2REWb6QsXoRuIESbqWESgxasJhbCfa4ov2F2RpLtb01dhAfipM2HZeGVHhmvhxTRpa0+w==";
+  }
+
+  /**
+   * @param $contribution
+   * @param $invoiceDescription
+   * @return string
+   */
+  protected function getRequest($contribution, $invoiceDescription) {
+    $cvvString = $this->getCvv(TRUE);
+    if (!is_numeric($cvvString)) {
+      $cvvString = '"' . addslashes($cvvString) . '"';
+    }
+    else {
+      $cvvString = $cvvString;
+    }
+    $response = '{"DeviceID":"https:\/\/github.com\/adrianmacneil\/omnipay","CustomerIP":"127.0.0.1","PartnerID":null,"ShippingMethod":null,"Customer":{"Title":null,"FirstName":"","LastName":"","CompanyName":"","Street1":"","Street2":"","City":"","State":"","PostalCode":"","Country":"","Email":"anthony_anderson@civicrm.org","Phone":"","CardDetails":{"Name":"","ExpiryMonth":"09","ExpiryYear":"30","CVN":'
+      . $cvvString . ',"Number":"'
+      . $this->getCardNumber(TRUE)
+      . '"}},"ShippingAddress":{"FirstName":"","LastName":"","Street1":null,"Street2":null,"City":null,"State":null,"Country":"","PostalCode":null,"Phone":null},"TransactionType":"Purchase","Payment":{"TotalAmount":10000,"InvoiceNumber":"' . $contribution['id'] . '","InvoiceDescription":"' . $invoiceDescription . '","CurrencyCode":"USD","InvoiceReference":null},"Method":"ProcessPayment"}';
+    return $response;
   }
 }
