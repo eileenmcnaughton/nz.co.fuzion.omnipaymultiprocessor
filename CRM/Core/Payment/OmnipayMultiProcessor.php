@@ -1388,8 +1388,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       ->send();
     $this->logHttpTraffic();
     return $response;
-
-
   }
 
   /**
