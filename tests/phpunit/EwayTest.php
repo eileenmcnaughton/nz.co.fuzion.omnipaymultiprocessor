@@ -22,6 +22,7 @@ use Civi\Test\TransactionalInterface;
 class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
   use \Civi\Test\Api3TestTrait;
   use HttpClientTestTrait;
+  use EwayRapidDirectTestTrait;
 
   public function setUpHeadless() {
     // Civi\Test has many helpers, like install(), uninstall(), sql(), and sqlFile().
@@ -40,14 +41,9 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
   }
 
   public function testTransparentDirectDisplayFields() {
-    /*var $processor*/
-    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
-      'payment_processor_type_id' => 'omnipay_Eway_Rapid',
-      'user_name' => 'abd',
-      'password' => 'def',
-      'is_test' => 1,
-    ]);
+    $processor = $this->createTestProcessor('Eway_Rapid');
     $processorObject = \Civi\Payment\System::singleton()->getById($processor['id']);
+    /*var CRM_Core_Payment_OmnipayMultiProcessor $processorObject*/
     $fields = $processorObject->getTransparentDirectDisplayFields();
     $this->assertEquals('text', $fields['EWAY_CARDNAME']['htmlType']);
     $this->assertEquals('text', $fields['EWAY_CARDNUMBER']['htmlType']);
@@ -56,4 +52,70 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
   }
 
 
+  public function testSubmitContributionPage() {
+    $this->addMockTokenResponse();
+    Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
+
+    $processor = $this->createTestProcessor('Eway_RapidDirect');
+    $contributionPageParams = [
+      'title' => 'Help Support CiviCRM!',
+      'financial_type_id' => 1,
+      'is_monetary' => TRUE,
+      'is_pay_later' => 1,
+      'is_quick_config' => TRUE,
+      'pay_later_text' => 'I will send payment by check',
+      'pay_later_receipt' => 'This is a pay later reciept',
+      'is_allow_other_amount' => 1,
+      'min_amount' => 10.00,
+      'max_amount' => 10000.00,
+      'goal_amount' => 100000.00,
+      'is_email_receipt' => 1,
+      'is_active' => 1,
+      'amount_block_is_active' => 1,
+      'currency' => 'USD',
+      'is_billing_required' => 0,
+      'payment_processor' => [$processor['id']],
+    ];
+    $contributionPageResult = $this->callAPISuccess('contribution_page', 'create', $contributionPageParams);
+
+    // submit form values
+    $priceSet = $this->callAPISuccess('price_set', 'getsingle', array('name' => 'default_contribution_amount'));
+    $params = array(
+      'id' => $contributionPageResult['id'],
+      'email-5' => 'anthony_anderson@civicrm.org',
+      'payment_processor_id' => $processor['id'],
+      'amount' => 100.00,
+      'tax_amount' => '',
+      'currencyID' => 'AUD',
+      'is_quick_config' => 1,
+      'description' => 'Online Contribution: Help Support CiviCRM!',
+      'price_set_id' => $priceSet['id'],
+      'credit_card_number' => '41111111111111111',
+      'credit_card_exp_date' => ['M' => 9, 'Y' => 2030],
+      'cvv2' => 234,
+    );
+    $this->callAPISuccess('contribution_page', 'submit', $params);
+    $outbound = $this->getRequestBodies();
+
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['payment_processor_id' => $processor['id'], 'contribution_status_id' => 'Completed']);
+
+    $invoiceDescription = substr($contribution['contact_id'] . '-' . $contribution['id'] . '-Help Support CiviCRM!', 0, 24);
+
+    $this->assertEquals('{"DeviceID":"https:\/\/github.com\/adrianmacneil\/omnipay","CustomerIP":"127.0.0.1","PartnerID":null,"ShippingMethod":null,"Customer":{"Title":null,"FirstName":"","LastName":"","CompanyName":"","Street1":"","Street2":"","City":"","State":"","PostalCode":"","Country":"","Email":"anthony_anderson@civicrm.org","Phone":"","CardDetails":{"Name":"","ExpiryMonth":"09","ExpiryYear":"30","CVN":234,"Number":"41111111111111111"}},"ShippingAddress":{"FirstName":"","LastName":"","Street1":null,"Street2":null,"City":null,"State":null,"Country":"","PostalCode":null,"Phone":null},"TransactionType":"Purchase","Payment":{"TotalAmount":10000,"InvoiceNumber":"' . $contribution['id'] . '","InvoiceDescription":"' . $invoiceDescription . '","CurrencyCode":"USD","InvoiceReference":null},"Method":"ProcessPayment"}',
+      $outbound[0]);
+
+  }
+
+  /**
+   * @return array|int
+   */
+  protected function createTestProcessor($type) {
+    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
+      'payment_processor_type_id' => 'omnipay_' . $type,
+      'user_name' => 'abd',
+      'password' => 'def',
+      'is_test' => 1,
+    ]);
+    return $processor;
+  }
 }
