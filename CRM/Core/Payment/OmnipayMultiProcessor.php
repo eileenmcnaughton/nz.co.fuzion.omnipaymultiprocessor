@@ -1133,7 +1133,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
     $planResponse = $this->gateway->completeCreateCard(array(
       'transactionReference' => $params['token'],
-      -'state' => 'ACTIVE',
+      'state' => 'ACTIVE',
      ))->send();
     if (!$planResponse->isSuccessful()) {
       throw new CRM_Core_Exception($planResponse->getMessage());
