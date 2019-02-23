@@ -336,6 +336,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   function getProcessorFields() {
     $labelFields = $result = array();
+
+    $result = $this->getProcessorTypeMetadata('gateway_params');
+
     foreach ($this->_configurationFields as $configField) {
       if (!empty($this->_paymentProcessor[$configField])) {
         $labelFields[$configField] = "{$configField}_label";

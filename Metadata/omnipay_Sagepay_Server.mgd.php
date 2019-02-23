@@ -57,6 +57,7 @@ return array(
           ),
         ),
         'ipn_processing_delay' => 0,
+        'gateway_params' => ['billingForShipping' => 1],
       ),
       'params' =>
         array(
