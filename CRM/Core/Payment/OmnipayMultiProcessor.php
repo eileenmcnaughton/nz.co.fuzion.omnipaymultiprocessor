@@ -144,6 +144,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
+        // Save the transaction reference (security key) before redirecting
+        $params['trxn_id'] = $response->getTransactionReference();
+        civicrm_api3('Contribution', 'create', $params);
+
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
         CRM_Core_Session::storeSessionObjects(FALSE);
@@ -732,7 +736,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $response = NULL;
     try {
       if ($this->gateway->supportsAcceptNotification()) {
-        $response = $this->gateway->acceptNotification($params)->send();
+        $response = $this->gateway->acceptNotification($params);
+
+        $transactionId = $response->getTransactionId();
+        $transactionReference = civicrm_api3('Contribution', 'getvalue', ['id' => $transactionId, 'return' => 'trxn_id']);
+        // Alternatively, if you did not save the `securityKey` as a distinct field,
+        // then use the `transactionReference` you saved.
+        // The `transactionReference` for this driver will be a compound JSON string
+        // with the `securityKey` as an integral part of it, so the driver can use it
+        // directly.
+        $response->setTransactionReference($transactionReference);
       }
       else {
         $response = $this->gateway->completePurchase($params)->send();
