@@ -5,13 +5,13 @@ namespace DeepCopyTest\Filter\Doctrine;
 use DeepCopy\Filter\Doctrine\DoctrineCollectionFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase;
 use stdClass;
 
 /**
  * @covers \DeepCopy\Filter\Doctrine\DoctrineCollectionFilter
  */
-class DoctrineCollectionFilterTest extends TestCase
+class DoctrineCollectionFilterTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_copies_the_object_property_array_collection()
     {
@@ -30,7 +30,7 @@ class DoctrineCollectionFilterTest extends TestCase
             }
         );
 
-        $this->assertInstanceOf(Collection::class, $object->foo);
+        $this->assertTrue($object->foo instanceof Collection);
         $this->assertNotSame($oldCollection, $object->foo);
         $this->assertCount(1, $object->foo);
 

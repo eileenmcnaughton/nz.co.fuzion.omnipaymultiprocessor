@@ -197,6 +197,8 @@ class Stream implements StreamInterface
 
     public function seek($offset, $whence = SEEK_SET)
     {
+        $whence = (int) $whence;
+        
         if (!isset($this->stream)) {
             throw new \RuntimeException('Stream is detached');
         }

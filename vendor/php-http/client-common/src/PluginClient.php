@@ -8,6 +8,7 @@ use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Client\Promise\HttpFulfilledPromise;
 use Http\Client\Promise\HttpRejectedPromise;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,9 +41,9 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     private $options;
 
     /**
-     * @param HttpClient|HttpAsyncClient $client
-     * @param Plugin[]                   $plugins
-     * @param array                      $options {
+     * @param HttpClient|HttpAsyncClient|ClientInterface $client
+     * @param Plugin[]                                   $plugins
+     * @param array                                      $options {
      *
      *     @var int      $max_restarts
      *     @var Plugin[] $debug_plugins an array of plugins that are injected between each normal plugin
@@ -54,7 +55,7 @@ final class PluginClient implements HttpClient, HttpAsyncClient
     {
         if ($client instanceof HttpAsyncClient) {
             $this->client = $client;
-        } elseif ($client instanceof HttpClient) {
+        } elseif ($client instanceof HttpClient || $client instanceof ClientInterface) {
             $this->client = new EmulatedHttpAsyncClient($client);
         } else {
             throw new \RuntimeException('Client must be an instance of Http\\Client\\HttpClient or Http\\Client\\HttpAsyncClient');

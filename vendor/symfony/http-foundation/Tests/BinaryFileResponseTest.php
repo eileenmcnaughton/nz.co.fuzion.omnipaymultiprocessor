@@ -69,17 +69,6 @@ class BinaryFileResponseTest extends ResponseTestCase
         $this->assertSame('attachment; filename="f__.html"; filename*=utf-8\'\'f%C3%B6%C3%B6.html', $response->headers->get('Content-Disposition'));
     }
 
-    public function testSetContentDispositionGeneratesSafeFallbackFilenameForWronglyEncodedFilename()
-    {
-        $response = new BinaryFileResponse(__FILE__);
-
-        $iso88591EncodedFilename = utf8_decode('föö.html');
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $iso88591EncodedFilename);
-
-        // the parameter filename* is invalid in this case (rawurldecode('f%F6%F6') does not provide a UTF-8 string but an ISO-8859-1 encoded one)
-        $this->assertSame('attachment; filename="f__.html"; filename*=utf-8\'\'f%F6%F6.html', $response->headers->get('Content-Disposition'));
-    }
-
     /**
      * @dataProvider provideRanges
      */
@@ -206,19 +195,6 @@ class BinaryFileResponseTest extends ResponseTestCase
             array('bytes=20-10'),
             array('bytes=50-40'),
         );
-    }
-
-    public function testUnpreparedResponseSendsFullFile()
-    {
-        $response = BinaryFileResponse::create(__DIR__.'/File/Fixtures/test.gif', 200);
-
-        $data = file_get_contents(__DIR__.'/File/Fixtures/test.gif');
-
-        $this->expectOutputString($data);
-        $response = clone $response;
-        $response->sendContent();
-
-        $this->assertEquals(200, $response->getStatusCode());
     }
 
     /**

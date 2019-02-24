@@ -4,6 +4,7 @@ namespace Http\Discovery;
 
 use Http\Discovery\Exception\ClassInstantiationFailedException;
 use Http\Discovery\Exception\DiscoveryFailedException;
+use Http\Discovery\Exception\NoCandidateFoundException;
 use Http\Discovery\Exception\StrategyUnavailableException;
 
 /**
@@ -23,6 +24,7 @@ abstract class ClassDiscovery
     private static $strategies = [
         Strategy\PuliBetaStrategy::class,
         Strategy\CommonClassesStrategy::class,
+        Strategy\CommonPsr17ClassesStrategy::class,
     ];
 
     /**
@@ -70,6 +72,8 @@ abstract class ClassDiscovery
 
                 return $candidate['class'];
             }
+
+            $exceptions[] = new NoCandidateFoundException($strategy, $candidates);
         }
 
         throw DiscoveryFailedException::create($exceptions);
@@ -162,19 +166,22 @@ abstract class ClassDiscovery
         if (is_string($condition)) {
             // Should be extended for functions, extensions???
             return self::safeClassExists($condition);
-        } elseif (is_callable($condition)) {
-            return $condition();
-        } elseif (is_bool($condition)) {
+        }
+        if (is_callable($condition)) {
+            return (bool) $condition();
+        }
+        if (is_bool($condition)) {
             return $condition;
-        } elseif (is_array($condition)) {
-            $evaluatedCondition = true;
-
-            // Immediately stop execution if the condition is false
-            for ($i = 0; $i < count($condition) && false !== $evaluatedCondition; ++$i) {
-                $evaluatedCondition &= static::evaluateCondition($condition[$i]);
+        }
+        if (is_array($condition)) {
+            foreach ($condition as $c) {
+                if (false === static::evaluateCondition($c)) {
+                    // Immediately stop execution if the condition is false
+                    return false;
+                }
             }
 
-            return $evaluatedCondition;
+            return true;
         }
 
         return false;
