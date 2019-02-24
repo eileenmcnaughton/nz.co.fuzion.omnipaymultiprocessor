@@ -3,13 +3,13 @@
 namespace DeepCopyTest\Filter;
 
 use DeepCopy\Filter\KeepFilter;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase;
 use stdClass;
 
 /**
  * @covers \DeepCopy\Filter\KeepFilter
  */
-class KeepFilterTest extends TestCase
+class KeepFilterTest extends PHPUnit_Framework_TestCase
 {
     public function test_it_does_not_change_the_filtered_object_property()
     {

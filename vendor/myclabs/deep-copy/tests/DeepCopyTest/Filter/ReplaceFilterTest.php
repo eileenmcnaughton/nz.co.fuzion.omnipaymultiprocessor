@@ -3,13 +3,13 @@
 namespace DeepCopyTest\Filter;
 
 use DeepCopy\Filter\ReplaceFilter;
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase;
 use stdClass;
 
 /**
  * @covers \DeepCopy\Filter\ReplaceFilter
  */
-class ReplaceFilterTest extends TestCase
+class ReplaceFilterTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideCallbacks

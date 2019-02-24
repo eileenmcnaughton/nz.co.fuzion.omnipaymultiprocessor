@@ -10,9 +10,6 @@ php:
   - 7.3
   - hhvm
 
-sudo: false
-dist: trusty
-
 cache:
   directories:
     - vendor

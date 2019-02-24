@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.3.0 - 2019-02-21
+
+### Added
+
+- Conditional mock functionality
+
+## 1.2.0 - 2019-01-19
+
+### Added
+
+- Support for HTTPlug 2.0.
+- Support for php-http/client-common 2.0.
+
 ## 1.1.0 - 2018-01-08
 
 ### Added

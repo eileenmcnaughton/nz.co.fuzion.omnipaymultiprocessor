@@ -27,6 +27,10 @@ final class Currency implements \JsonSerializable
             throw new \InvalidArgumentException('Currency code should be string');
         }
 
+        if ($code === '') {
+            throw new \InvalidArgumentException('Currency code should not be empty string');
+        }
+
         $this->code = $code;
     }
 
@@ -69,7 +73,7 @@ final class Currency implements \JsonSerializable
      */
     public function __toString()
     {
-        return $this->getCode();
+        return $this->code;
     }
 
     /**

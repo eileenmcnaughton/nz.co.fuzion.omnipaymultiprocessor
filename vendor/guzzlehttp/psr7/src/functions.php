@@ -637,6 +637,7 @@ function mimetype_from_filename($filename)
 function mimetype_from_extension($extension)
 {
     static $mimetypes = [
+        '3gp' => 'video/3gpp',
         '7z' => 'application/x-7z-compressed',
         'aac' => 'audio/x-aac',
         'ai' => 'application/postscript',
@@ -723,6 +724,7 @@ function mimetype_from_extension($extension)
         'txt' => 'text/plain',
         'wav' => 'audio/x-wav',
         'webm' => 'video/webm',
+        'webp' => 'image/webp',
         'wma' => 'audio/x-ms-wma',
         'wmv' => 'video/x-ms-wmv',
         'woff' => 'application/x-font-woff',
@@ -852,11 +854,16 @@ function get_message_body_summary(MessageInterface $message, $truncateAt = 120)
 {
     $body = $message->getBody();
 
-    if (!$body->isSeekable()) {
+    if (!$body->isSeekable() || !$body->isReadable()) {
         return null;
     }
 
     $size = $body->getSize();
+
+    if ($size === 0) {
+        return null;
+    }
+
     $summary = $body->read($truncateAt);
     $body->rewind();
 

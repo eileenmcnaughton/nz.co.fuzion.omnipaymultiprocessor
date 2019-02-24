@@ -3,31 +3,39 @@
 namespace Http\Mock;
 
 use Http\Client\Common\HttpAsyncClientEmulator;
+use Http\Client\Common\VersionBridgeClient;
 use Http\Client\Exception;
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 use Http\Discovery\MessageFactoryDiscovery;
+use Http\Message\RequestMatcher;
 use Http\Message\ResponseFactory;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * HTTP client mock.
+ * An implementation of the HTTP client that is useful for automated tests.
  *
- * This mock is most useful in tests. It does not send requests but stores them
- * for later retrieval. Additionally, you can set an exception to test
- * exception handling.
+ * This mock does not send requests but stores them for later retrieval.
+ * You can configure the mock with responses to return and/or exceptions to throw.
  *
  * @author David de Boer <david@ddeboer.nl>
  */
 class Client implements HttpClient, HttpAsyncClient
 {
     use HttpAsyncClientEmulator;
+    use VersionBridgeClient;
 
     /**
      * @var ResponseFactory
      */
     private $responseFactory;
+
+    /**
+     * @var array
+     */
+    private $conditionalResults = [];
 
     /**
      * @var RequestInterface[]
@@ -54,9 +62,6 @@ class Client implements HttpClient, HttpAsyncClient
      */
     private $defaultException;
 
-    /**
-     * @param ResponseFactory|null $responseFactory
-     */
     public function __construct(ResponseFactory $responseFactory = null)
     {
         $this->responseFactory = $responseFactory ?: MessageFactoryDiscovery::find();
@@ -65,9 +70,25 @@ class Client implements HttpClient, HttpAsyncClient
     /**
      * {@inheritdoc}
      */
-    public function sendRequest(RequestInterface $request)
+    public function doSendRequest(RequestInterface $request)
     {
         $this->requests[] = $request;
+
+        foreach ($this->conditionalResults as $result) {
+            /**
+             * @var RequestMatcher
+             */
+            $matcher = $result['matcher'];
+
+            /**
+             * @var callable
+             */
+            $callable = $result['callable'];
+
+            if ($matcher->matches($request)) {
+                return $callable($request);
+            }
+        }
 
         if (count($this->exceptions) > 0) {
             throw array_shift($this->exceptions);
@@ -90,12 +111,53 @@ class Client implements HttpClient, HttpAsyncClient
     }
 
     /**
-     * Adds an exception that will be thrown.
+     * Adds an exception to be thrown or response to be returned if the request
+     * matcher matches.
      *
-     * @param \Exception $exception
+     * For more complex logic, pass a callable as $result. The method is given
+     * the request and MUST either return a ResponseInterface or throw an
+     * exception that implements the PSR-18 / HTTPlug exception interface.
+     *
+     * @param ResponseInterface|Exception|ClientExceptionInterface|callable $result
+     */
+    public function on(RequestMatcher $requestMatcher, $result)
+    {
+        $callable = null;
+
+        switch (true) {
+            case is_callable($result):
+                $callable = $result;
+
+                break;
+            case $result instanceof ResponseInterface:
+                $callable = function () use ($result) {
+                    return $result;
+                };
+
+                break;
+            case $result instanceof \Exception:
+                $callable = function () use ($result) {
+                    throw $result;
+                };
+
+                break;
+            default:
+                throw new \InvalidArgumentException('Result must be either a response, an exception, or a callable');
+        }
+        $this->conditionalResults[] = [
+            'matcher' => $requestMatcher,
+            'callable' => $callable,
+        ];
+    }
+
+    /**
+     * Adds an exception that will be thrown.
      */
     public function addException(\Exception $exception)
     {
+        if (!$exception instanceof Exception) {
+            @trigger_error('Clients may only throw exceptions of type '.Exception::class.'. Setting an exception of class '.get_class($exception).' will not be possible anymore in the future', E_USER_DEPRECATED);
+        }
         $this->exceptions[] = $exception;
     }
 
@@ -103,18 +165,17 @@ class Client implements HttpClient, HttpAsyncClient
      * Sets the default exception to throw when the list of added exceptions and responses is exhausted.
      *
      * If both a default exception and a default response are set, the exception will be thrown.
-     *
-     * @param \Exception|null $defaultException
      */
     public function setDefaultException(\Exception $defaultException = null)
     {
+        if (!$defaultException instanceof Exception) {
+            @trigger_error('Clients may only throw exceptions of type '.Exception::class.'. Setting an exception of class '.get_class($defaultException).' will not be possible anymore in the future', E_USER_DEPRECATED);
+        }
         $this->defaultException = $defaultException;
     }
 
     /**
-     * Adds a response that will be returned.
-     *
-     * @param ResponseInterface $response
+     * Adds a response that will be returned in first in first out order.
      */
     public function addResponse(ResponseInterface $response)
     {
@@ -123,8 +184,6 @@ class Client implements HttpClient, HttpAsyncClient
 
     /**
      * Sets the default response to be returned when the list of added exceptions and responses is exhausted.
-     *
-     * @param ResponseInterface|null $defaultResponse
      */
     public function setDefaultResponse(ResponseInterface $defaultResponse = null)
     {
@@ -141,11 +200,17 @@ class Client implements HttpClient, HttpAsyncClient
         return $this->requests;
     }
 
-    /**
-     * @return RequestInterface|false
-     */
     public function getLastRequest()
     {
         return end($this->requests);
+    }
+
+    public function reset()
+    {
+        $this->responses = [];
+        $this->exceptions = [];
+        $this->requests = [];
+        $this->setDefaultException();
+        $this->setDefaultResponse();
     }
 }
