@@ -11,7 +11,7 @@
 function civicrm_api3_job_process_recurring($params) {
   $omnipayProcessors = civicrm_api3('PaymentProcessor', 'get', array('class_name' => 'Payment_OmnipayMultiProcessor'));
   $recurringPayments = civicrm_api3('ContributionRecur', 'get', array(
-    'next_sched_contribution_date' => 'today',
+    'next_sched_contribution_date' => ['BETWEEN' => ['today', 'tomorrow']],
     'payment_processor_id' => array('IN' => array_keys($omnipayProcessors['values'])),
     'contribution_status_id' => array('IN' => array('In Progress', 'Pending', 'Overdue')),
     'options' => array('limit' => 0),
