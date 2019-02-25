@@ -57,6 +57,12 @@ return array(
           ),
         ),
         'ipn_processing_delay' => 0,
+        'gateway_params' => ['billingForShipping' => 1],
+        'regions' => [
+          'billing-block' => [
+            ['name' => 'sagepay_script', 'weight' => 500, 'script' => file_get_contents(__DIR__ . '/js/omnipay_SagepayServer.js')],
+          ],
+        ],
       ),
       'params' =>
         array(
