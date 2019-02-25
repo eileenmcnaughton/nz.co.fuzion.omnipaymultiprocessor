@@ -160,7 +160,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * a patch for CRM-15978.
    *
    * @param bool $allowLocalHost
-   *   When True f there is no '.' in it we assume that we are dealing with localhost or
+   *   When True if there is no '.' in it we assume that we are dealing with localhost or
    *   similar and it is unreachable from the web & hence invalid.
    *
    * @return string
