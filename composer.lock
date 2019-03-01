@@ -837,7 +837,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paypal.git",
-                "reference": "baf5aa0e30161bff92b53695f6fef5c980454411"
+                "reference": "06c1fbaccd251fffb72da9cfb11874c9b683214d"
             },
             "require": {
                 "omnipay/common": "^3"
@@ -882,7 +882,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2018-12-17T01:24:50+00:00"
+            "time": "2019-03-01T03:36:49+00:00"
         },
         {
             "name": "omnipay/sagepay",
