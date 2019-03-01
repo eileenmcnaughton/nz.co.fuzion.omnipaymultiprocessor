@@ -381,6 +381,19 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     }
   }
 
+
+  /**
+   * Implement http://php.net/manual/en/class.serializable.php
+   *
+   * Removes unserializable elements when the class is serialised.
+   *
+   * @return string
+   */
+  public function serialize() {
+    $this->cleanupClassForSerialization(TRUE);
+    return serialize($this);
+  }
+
   /**
    * Unset various objects that will fail to serialize when the form is stored to session.
    *
