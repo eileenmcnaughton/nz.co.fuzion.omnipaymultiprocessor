@@ -89,7 +89,7 @@ class RestResponse extends AbstractResponse
 
     public function isPaypalApproval()
     {
-        if (!isset($this->data['payer']['payment_method'])) {
+        if (!isset($this->data['payer']['payment_method']) || !isset($this->data['funding_instruments'])) {
             return false;
         }
         return ($this->data['payer']['payment_method'] === 'paypal');
