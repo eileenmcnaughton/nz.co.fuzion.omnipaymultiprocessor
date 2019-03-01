@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 17:47:06 GMT
+Server: Apache
+Content-Length: 178
+Content-Type: text/html; charset=UTF-8
+
+response=3&responsetext=Invalid Customer Vault Id REFID:3150033421&authcode=&transactionid=&avsresponse=&cvvresponse=&orderid=&type=&response_code=300&customer_vault_id=000000000

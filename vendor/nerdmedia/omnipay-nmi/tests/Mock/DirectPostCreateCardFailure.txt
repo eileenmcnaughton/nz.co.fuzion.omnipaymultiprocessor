@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 17:32:18 GMT
+Server: Apache
+Content-Length: 151
+Content-Type: text/html; charset=UTF-8
+
+response=3&responsetext=Invalid Credit Card Number REFID:3150032552&authcode=&transactionid=&avsresponse=&cvvresponse=&orderid=&type=&response_code=300

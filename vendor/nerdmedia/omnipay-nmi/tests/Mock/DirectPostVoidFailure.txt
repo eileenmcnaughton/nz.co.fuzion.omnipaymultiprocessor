@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 00:34:58 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 188
+Connection: close
+Server:
+
+response=3&responsetext=Only transactions pending settlement can be voided REFID:143498494&authcode=&transactionid=2577708057&avsresponse=&cvvresponse=&orderid=&type=void&response_code=300

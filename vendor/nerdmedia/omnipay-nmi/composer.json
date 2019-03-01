@@ -1,0 +1,36 @@
+{
+    "name": "nerdmedia/omnipay-nmi",
+    "type": "library",
+    "description": "NMI (Network Merchants Inc.) driver for the Omnipay PHP payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "purchase",
+        "nmi",
+        "durango",
+        "network",
+        "inc"
+    ],
+    "homepage": "https://github.com/nerdmedia/omnipay-nmi",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Steve Bazemore",
+            "email": "steve@nerdmedia.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\NMI\\" : "src/" }
+    },
+    "require": {
+        "league/omnipay": "^3"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    }
+}

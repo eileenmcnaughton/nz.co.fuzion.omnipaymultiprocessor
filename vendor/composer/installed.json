@@ -721,6 +721,55 @@
         ]
     },
     {
+        "name": "nerdmedia/omnipay-nmi",
+        "version": "3.04",
+        "version_normalized": "3.04.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nerdmedia/omnipay-nmi.git",
+            "reference": "0d8ae95698b586fbd35b69bee5230853007d6aa7"
+        },
+        "require": {
+            "league/omnipay": "^3"
+        },
+        "time": "2018-12-05T20:04:47+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Omnipay\\NMI\\": "src/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Steve Bazemore",
+                "email": "steve@nerdmedia.com"
+            }
+        ],
+        "description": "NMI (Network Merchants Inc.) driver for the Omnipay PHP payment processing library",
+        "homepage": "https://github.com/nerdmedia/omnipay-nmi",
+        "keywords": [
+            "durango",
+            "gateway",
+            "inc",
+            "merchant",
+            "network",
+            "nmi",
+            "omnipay",
+            "pay",
+            "payment",
+            "purchase"
+        ]
+    },
+    {
         "name": "omnipay/authorizenet",
         "version": "3.2.0",
         "version_normalized": "3.2.0.0",
