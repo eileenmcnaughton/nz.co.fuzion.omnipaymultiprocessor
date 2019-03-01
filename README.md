@@ -64,6 +64,11 @@ note - Mercanet does not support '-' characters in this prefix. Untested on othe
 ## Developer help
 It is possible to log http requests and responses to the civicrm_system_log table using the omnipay_developer_mode setting. This is only appropriate for developers. Output is available on the omnilog report if extended reports are installed.
 
+## Site test mode
+It is possible to set the omnipay_test_mode to put all transactions for Omnipay into
+test mode. In this case you can use your test credentials on the live processor
+and all transactions will be sent to your processor's sandbox site.
+
 ### Eway
 
 The gateways supported are:
