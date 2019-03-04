@@ -159,4 +159,17 @@ trait HttpClientTestTrait {
     return $uris ;
   }
 
+  /**
+   * Get the bodies of the requests sent via Guzzle.
+   *
+   * @return array
+   */
+  protected function getRequestHeaders() {
+    $headers = [];
+    foreach ($this->mockClient->getRequests() as $request) {
+      $headers[] = $request->getHeaders();
+    }
+    return $headers;
+  }
+
 }

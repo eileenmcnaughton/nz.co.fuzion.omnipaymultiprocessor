@@ -96,11 +96,10 @@ token for the transaction.
 is used to confirm the payment at that point.
 
 Known issues
-1) load form is slow when changing processor
+1) load form is slow when changing processor - oddly same thing not slow on webform - why? We are loading Contribution_Main... slowly?
 2) We need to validate the form data before submitting to paypal.
 3) description needs work
-4) bn code not being passed
-5) Think more about permissions on api calls
+4) Think more about permissions on api calls
 
 
 ## Code overrides
