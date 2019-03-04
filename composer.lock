@@ -176,12 +176,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "6c50a6299b2465053d317bd32845ede91db62393"
+                "reference": "fa745406c2f48210693ba05f11280a1473037b2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/6c50a6299b2465053d317bd32845ede91db62393",
-                "reference": "6c50a6299b2465053d317bd32845ede91db62393",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/fa745406c2f48210693ba05f11280a1473037b2f",
+                "reference": "fa745406c2f48210693ba05f11280a1473037b2f",
                 "shasum": ""
             },
             "require": {
@@ -234,7 +234,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-01-14T15:11:47+00:00"
+            "time": "2019-02-26T17:21:14+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -837,7 +837,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paypal.git",
-                "reference": "06c1fbaccd251fffb72da9cfb11874c9b683214d"
+                "reference": "2ded7ec93d932143626d761afd0487eef8e01594"
             },
             "require": {
                 "omnipay/common": "^3"
@@ -882,7 +882,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2019-03-01T03:36:49+00:00"
+            "time": "2019-03-04T06:48:24+00:00"
         },
         {
             "name": "omnipay/sagepay",
@@ -1679,12 +1679,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sudiptpa/omnipay-nabtransact.git",
-                "reference": "f88da07271431610f1ac657c07c42e8ae45bf159"
+                "reference": "89097e328c8509757ccba8a734cfc869f51b1d75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sudiptpa/omnipay-nabtransact/zipball/f88da07271431610f1ac657c07c42e8ae45bf159",
-                "reference": "f88da07271431610f1ac657c07c42e8ae45bf159",
+                "url": "https://api.github.com/repos/sudiptpa/omnipay-nabtransact/zipball/89097e328c8509757ccba8a734cfc869f51b1d75",
+                "reference": "89097e328c8509757ccba8a734cfc869f51b1d75",
                 "shasum": ""
             },
             "require": {
@@ -1726,7 +1726,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2018-05-26T08:18:14+00:00"
+            "time": "2019-02-15T18:40:06+00:00"
         },
         {
             "name": "symfony/http-foundation",

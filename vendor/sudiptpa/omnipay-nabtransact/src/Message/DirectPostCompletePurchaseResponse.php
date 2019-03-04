@@ -10,7 +10,7 @@ use Omnipay\Common\Message\AbstractResponse;
 class DirectPostCompletePurchaseResponse extends AbstractResponse
 {
     /**
-     * @return mixed
+     * @return bool
      */
     public function isSuccessful()
     {
@@ -23,7 +23,7 @@ class DirectPostCompletePurchaseResponse extends AbstractResponse
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMessage()
     {
@@ -33,7 +33,7 @@ class DirectPostCompletePurchaseResponse extends AbstractResponse
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCode()
     {
@@ -43,7 +43,7 @@ class DirectPostCompletePurchaseResponse extends AbstractResponse
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTransactionReference()
     {

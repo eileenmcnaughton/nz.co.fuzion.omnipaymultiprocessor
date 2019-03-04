@@ -18,7 +18,7 @@ class SecureXMLEchoTestRequest extends SecureXMLAbstractRequest
     protected $requestType = 'Echo';
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getData()
     {

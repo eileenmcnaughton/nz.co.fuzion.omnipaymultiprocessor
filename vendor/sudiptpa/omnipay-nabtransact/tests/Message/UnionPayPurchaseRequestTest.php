@@ -22,10 +22,9 @@ class UnionPayPurchaseRequestTest extends TestCase
     public function testFingerprint()
     {
         $data = $this->request->getData();
-        $data['EPS_TIMESTAMP'] = '20161125123332';
+        $data['EPS_TIMESTAMP'] = '20190215173250';
 
-        $this->assertSame('36e686feef0ec7a53d5b6289707bc47e4bb83c95',
-            $this->request->generateFingerprint($data));
+        $this->assertSame('9c0c1edb9036239fc61a9a277af5b69f608a1b99808c9173c34463c362a16076', $this->request->generateFingerprint($data));
     }
 
     public function testPurchase()

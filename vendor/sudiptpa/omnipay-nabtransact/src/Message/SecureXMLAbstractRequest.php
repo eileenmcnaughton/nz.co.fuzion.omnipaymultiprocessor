@@ -25,7 +25,7 @@ abstract class SecureXMLAbstractRequest extends AbstractRequest
     protected $requestType = 'Payment';
 
     /**
-     * @var mixed
+     * @var string
      */
     protected $txnType;
 

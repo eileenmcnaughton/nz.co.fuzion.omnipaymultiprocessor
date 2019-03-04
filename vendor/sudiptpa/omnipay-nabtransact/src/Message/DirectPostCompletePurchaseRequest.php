@@ -10,7 +10,7 @@ use Omnipay\Common\Exception\InvalidRequestException;
 class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
 {
     /**
-     * @return mixed
+     * @return array|Exception
      */
     public function getData()
     {
@@ -28,7 +28,7 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
      */
     public function generateResponseFingerprint($data)
     {
-        $fields = implode('|', [
+        $hash = implode('|', [
             $data['merchant'],
             $this->getTransactionPassword(),
             $data['refid'],
@@ -37,13 +37,13 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
             $data['summarycode'],
         ]);
 
-        return sha1($fields);
+        return hash_hmac('sha256', $hash, true);
     }
 
     /**
      * @param $data
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\DirectPostCompletePurchaseResponse
      */
     public function sendData($data)
     {

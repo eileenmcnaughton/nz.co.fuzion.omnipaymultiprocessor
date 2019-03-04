@@ -24,7 +24,7 @@ class SecureXMLGateway extends AbstractGateway
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMerchantId()
     {
@@ -33,8 +33,6 @@ class SecureXMLGateway extends AbstractGateway
 
     /**
      * @param $value
-     *
-     * @return mixed
      */
     public function setMerchantId($value)
     {
@@ -42,7 +40,7 @@ class SecureXMLGateway extends AbstractGateway
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTransactionPassword()
     {
@@ -51,8 +49,6 @@ class SecureXMLGateway extends AbstractGateway
 
     /**
      * @param $value
-     *
-     * @return mixed
      */
     public function setTransactionPassword($value)
     {
@@ -62,7 +58,7 @@ class SecureXMLGateway extends AbstractGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\SecureXMLAuthorizeRequest
      */
     public function authorize(array $parameters = [])
     {
@@ -72,7 +68,7 @@ class SecureXMLGateway extends AbstractGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\SecureXMLCaptureRequest
      */
     public function capture(array $parameters = [])
     {
@@ -82,7 +78,7 @@ class SecureXMLGateway extends AbstractGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\SecureXMLPurchaseRequest
      */
     public function purchase(array $parameters = [])
     {
@@ -92,7 +88,7 @@ class SecureXMLGateway extends AbstractGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\SecureXMLRefundRequest
      */
     public function refund(array $parameters = [])
     {
@@ -102,7 +98,7 @@ class SecureXMLGateway extends AbstractGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\SecureXMLEchoTestRequest
      */
     public function echoTest(array $parameters = [])
     {

@@ -12,7 +12,7 @@ use Omnipay\Common\Message\RequestInterface;
 class DirectPostAuthorizeResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
-     * @var mixed
+     * @var string
      */
     protected $redirectUrl;
 
@@ -39,7 +39,7 @@ class DirectPostAuthorizeResponse extends AbstractResponse implements RedirectRe
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRedirectUrl()
     {
@@ -52,7 +52,7 @@ class DirectPostAuthorizeResponse extends AbstractResponse implements RedirectRe
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getRedirectData()
     {

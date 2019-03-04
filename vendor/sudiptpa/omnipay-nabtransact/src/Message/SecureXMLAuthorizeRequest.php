@@ -23,7 +23,7 @@ class SecureXMLAuthorizeRequest extends SecureXMLAbstractRequest
     protected $requiredFields = ['amount', 'card', 'transactionId'];
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getData()
     {

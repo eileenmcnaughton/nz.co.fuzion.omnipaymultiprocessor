@@ -19,14 +19,14 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
         ]);
 
         $data = [
-            'timestamp'   => '20161125123332',
+            'timestamp'   => '20190215173250',
             'merchant'    => 'XYZ0010',
             'refid'       => '222',
             'summarycode' => '2',
         ];
 
         $this->assertSame(
-            '79200d1df5dc3f914a90ce476fdef317d224629f',
+            '3cdf9934588f2fa4b00df5adb36aec486befdaecdbb3de4c2515d00e05391101',
             $this->request->generateResponseFingerprint($data)
         );
     }
@@ -40,15 +40,15 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
         ]);
 
         $this->getHttpRequest()->query->replace([
-            'timestamp'            => '20161125130241',
+            'timestamp'            => '20190215173250',
             'callback_status_code' => '-1',
-            'fingerprint'          => 'e30eb8381bc41201fbdf54a021d8228a3fbb6a6f',
+            'fingerprint'          => 'd319e8852e94972f8ef3f330884a0f5db85c6341fd367d6823a99e9b93d917c0',
             'txnid'                => '271337',
             'merchant'             => 'XYZ0010',
             'restext'              => 'Approved',
             'rescode'              => '00',
-            'expirydate'           => '20161126',
-            'settdate'             => '20161126',
+            'expirydate'           => '20190215',
+            'settdate'             => '20190215',
             'refid'                => 'ORDER-ZYX8',
             'pan'                  => '444433...111',
             'summarycode'          => '1',
@@ -73,15 +73,15 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
         ]);
 
         $this->getHttpRequest()->query->replace([
-            'timestamp'            => '20161126051715',
+            'timestamp'            => '20190215173250',
             'callback_status_code' => '404',
-            'fingerprint'          => 'cd75e2ef38cf63a2fa390024539acc7691eebc1d',
+            'fingerprint'          => 'af490d2635a7ebe8e97313fbea61924a51f4b4d095e2cf7a2a81f8fc3f5ca919',
             'txnid'                => '274279',
             'merchant'             => 'XYZ0010',
             'restext'              => 'Customer Dispute',
             'rescode'              => '18',
             'expirydate'           => '102030',
-            'settdate'             => '20161126',
+            'settdate'             => '20190215',
             'refid'                => 'ORDER-ZYX8',
             'pan'                  => '444433...111',
             'summarycode'          => '2',

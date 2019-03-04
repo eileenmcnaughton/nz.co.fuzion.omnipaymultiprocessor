@@ -1,11 +1,7 @@
-HTTP/1.1 100 Continue
-Server: Apache/2.4.29 (Ubuntu)
-Date: Sat, 26 May 2018 07:25:31 GMT
 HTTP/1.1 200 OK
 Server: Apache/2.4.29 (Ubuntu)
-Date: Sat, 26 May 2018 07:25:31 GMT
-Content-Type: text/xml;charset=ISO-8859-1
-Content-Length: 929
+Date: Fri, 15 Feb 2019 18:25:47 GMT
+Content-Type: text/html;charset=UTF-8
 
 <?xml version="1.0" encoding="UTF-8"?>
 <SecurePayMessage>
