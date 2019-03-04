@@ -39,7 +39,7 @@ class UnionPayPurchaseResponse extends AbstractResponse implements RedirectRespo
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRedirectUrl()
     {
@@ -52,7 +52,7 @@ class UnionPayPurchaseResponse extends AbstractResponse implements RedirectRespo
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getRedirectData()
     {

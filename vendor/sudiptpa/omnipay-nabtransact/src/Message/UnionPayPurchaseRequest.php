@@ -13,7 +13,7 @@ class UnionPayPurchaseRequest extends DirectPostAbstractRequest
     public $txnType = '0';
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getData()
     {
@@ -29,7 +29,7 @@ class UnionPayPurchaseRequest extends DirectPostAbstractRequest
     /**
      * @param $data
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\UnionPayPurchaseResponse
      */
     public function sendData($data)
     {

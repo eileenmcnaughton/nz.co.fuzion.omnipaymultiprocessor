@@ -27,10 +27,9 @@ class DirectPostPurchaseRequestTest extends TestCase
     public function testFingerprint()
     {
         $data = $this->request->getData();
-        $data['EPS_TIMESTAMP'] = '20161125123332';
+        $data['EPS_TIMESTAMP'] = '20190215173250';
 
-        $this->assertSame('cbb64e71e360dba6337f22a00bdf0d0b89a7a568',
-            $this->request->generateFingerprint($data));
+        $this->assertSame('607a5371820b6c07a1233b7ab140f7a1990e1a9a446840fb11586ccf50d7482d', $this->request->generateFingerprint($data));
     }
 
     public function testSend()

@@ -13,7 +13,7 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
     public $txnType = '1';
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getData()
     {
@@ -29,7 +29,7 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
     /**
      * @param $data
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\DirectPostAuthorizeResponse
      */
     public function sendData($data)
     {
@@ -37,7 +37,7 @@ class DirectPostAuthorizeRequest extends DirectPostAbstractRequest
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     protected function getCardData()
     {

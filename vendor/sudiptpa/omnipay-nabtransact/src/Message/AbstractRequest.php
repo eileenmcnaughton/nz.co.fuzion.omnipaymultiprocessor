@@ -8,17 +8,17 @@ namespace Omnipay\NABTransact\Message;
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     /**
-     * @var mixed
+     * @var string
      */
     public $testEndpoint;
 
     /**
-     * @var mixed
+     * @var string
      */
     public $liveEndpoint;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMerchantId()
     {
@@ -27,8 +27,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param $value
-     *
-     * @return mixed
      */
     public function setMerchantId($value)
     {
@@ -36,7 +34,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTransactionPassword()
     {
@@ -45,8 +43,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param $value
-     *
-     * @return mixed
      */
     public function setTransactionPassword($value)
     {
@@ -54,7 +50,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEndpoint()
     {

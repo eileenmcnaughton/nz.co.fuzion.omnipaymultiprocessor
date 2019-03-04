@@ -18,7 +18,7 @@ class HostedPaymentPurchaseRequest extends AbstractRequest
     public $testEndpoint = 'https://transact.nab.com.au/live/hpp/payment';
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getData()
     {
@@ -45,7 +45,7 @@ class HostedPaymentPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMerchantId()
     {
@@ -53,7 +53,7 @@ class HostedPaymentPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPaymentAlertEmail()
     {
@@ -61,7 +61,7 @@ class HostedPaymentPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getReturnUrlText()
     {
@@ -70,8 +70,6 @@ class HostedPaymentPurchaseRequest extends AbstractRequest
 
     /**
      * @param $data
-     *
-     * @return mixed
      */
     public function sendData($data)
     {
@@ -80,8 +78,6 @@ class HostedPaymentPurchaseRequest extends AbstractRequest
 
     /**
      * @param $value
-     *
-     * @return mixed
      */
     public function setPaymentAlertEmail($value)
     {
@@ -90,8 +86,6 @@ class HostedPaymentPurchaseRequest extends AbstractRequest
 
     /**
      * @param $value
-     *
-     * @return mixed
      */
     public function setReturnUrlText($value)
     {

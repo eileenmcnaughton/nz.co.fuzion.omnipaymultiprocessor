@@ -31,11 +31,11 @@ abstract class DirectPostAbstractRequest extends AbstractRequest
             $data['EPS_TIMESTAMP'],
         ]);
 
-        return sha1($hash);
+        return hash_hmac('sha256', $hash, true);
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getBaseData()
     {

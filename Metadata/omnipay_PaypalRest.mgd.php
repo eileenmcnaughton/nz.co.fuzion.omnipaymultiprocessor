@@ -64,6 +64,7 @@ return array(
       'suppress_submit_button' => 1,
       'supports_preapproval' => 1,
       'payment_fields' => ['payment_token', 'PayerID', 'post_authorize'],
+      'pass_through_fields' => ['referrerCode' => 'CiviCRM_SP'],
       'payment_fields_metadata' => [
         'PayerID' => [
           'name' => 'PayerID',

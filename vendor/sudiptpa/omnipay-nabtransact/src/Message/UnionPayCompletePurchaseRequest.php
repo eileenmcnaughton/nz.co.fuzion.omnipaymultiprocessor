@@ -10,7 +10,7 @@ class UnionPayCompletePurchaseRequest extends DirectPostCompletePurchaseRequest
     /**
      * @param $data
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\UnionPayCompletePurchaseResponse
      */
     public function sendData($data)
     {

@@ -102,6 +102,14 @@ class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterfa
       'invoice_number' => '',
     ]], $response3['transactions']);
 
+    $headers = $this->getRequestHeaders();
+    foreach ($headers as $index => $header) {
+      if ($index === 0) {
+        continue;
+      }
+      $this->assertEquals(['CiviCRM_SP'], $header['PayPal-Partner-Attribution-Id']);
+    }
+
   }
 
   protected function addMockTokenResponse() {

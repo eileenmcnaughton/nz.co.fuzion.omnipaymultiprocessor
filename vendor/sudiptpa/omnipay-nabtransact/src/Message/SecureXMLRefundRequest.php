@@ -23,7 +23,7 @@ class SecureXMLRefundRequest extends SecureXMLAbstractRequest
     protected $requiredFields = ['amount', 'transactionId', 'transactionReference'];
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getData()
     {

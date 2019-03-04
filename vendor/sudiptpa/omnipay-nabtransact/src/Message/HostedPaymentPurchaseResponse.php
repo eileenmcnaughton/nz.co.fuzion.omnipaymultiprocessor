@@ -12,7 +12,7 @@ use Omnipay\Common\Message\RequestInterface;
 class HostedPaymentPurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
-     * @var mixed
+     * @var string
      */
     protected $redirectUrl;
 
@@ -28,7 +28,7 @@ class HostedPaymentPurchaseResponse extends AbstractResponse implements Redirect
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getRedirectData()
     {
@@ -41,7 +41,7 @@ class HostedPaymentPurchaseResponse extends AbstractResponse implements Redirect
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRedirectUrl()
     {

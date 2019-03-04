@@ -12,7 +12,7 @@ class HostedPaymentGateway extends AbstractGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\HostedPaymentCompletePurchaseRequest
      */
     public function completePurchase(array $parameters = [])
     {
@@ -20,7 +20,7 @@ class HostedPaymentGateway extends AbstractGateway
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMerchantId()
     {
@@ -35,7 +35,7 @@ class HostedPaymentGateway extends AbstractGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\HostedPaymentPurchaseRequest
      */
     public function purchase(array $parameters = [])
     {
@@ -44,8 +44,6 @@ class HostedPaymentGateway extends AbstractGateway
 
     /**
      * @param $value
-     *
-     * @return mixed
      */
     public function setMerchantId($value)
     {

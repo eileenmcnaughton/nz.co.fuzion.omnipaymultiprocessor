@@ -9,13 +9,13 @@ class UnionPayGateway extends DirectPostGateway
 {
     public function getName()
     {
-        return 'NABTransact UnionPay';
+        return 'NAB Transact UnionPay';
     }
 
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\UnionPayPurchaseRequest
      */
     public function purchase(array $parameters = [])
     {
@@ -25,7 +25,7 @@ class UnionPayGateway extends DirectPostGateway
     /**
      * @param array $parameters
      *
-     * @return mixed
+     * @return \Omnipay\NABTransact\Message\UnionPayCompletePurchaseRequest
      */
     public function completePurchase(array $parameters = [])
     {

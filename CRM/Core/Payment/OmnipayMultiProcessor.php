@@ -543,6 +543,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $creditCardOptions[$field['name']] = $params[$field['name']];
       }
     }
+    $passThroughFields = $this->getProcessorTypeMetadata('pass_through_fields');
+    if ($passThroughFields) {
+      $creditCardOptions = array_merge($creditCardOptions, $passThroughFields);
+    }
 
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));

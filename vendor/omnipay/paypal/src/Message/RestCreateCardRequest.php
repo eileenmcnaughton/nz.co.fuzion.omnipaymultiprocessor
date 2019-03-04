@@ -122,6 +122,7 @@ class RestCreateCardRequest extends AbstractRestRequest
                 ]
             ];
         }
+
         return $data;
     }
 
