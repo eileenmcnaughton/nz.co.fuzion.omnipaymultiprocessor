@@ -1076,7 +1076,7 @@
         "source": {
             "type": "git",
             "url": "https://github.com/eileenmcnaughton/omnipay-paypal.git",
-            "reference": "2ded7ec93d932143626d761afd0487eef8e01594"
+            "reference": "e6357965937d9a60c293ace9e7707597b54a973e"
         },
         "require": {
             "omnipay/common": "^3"
@@ -1086,7 +1086,7 @@
             "phpro/grumphp": "^0.14",
             "squizlabs/php_codesniffer": "^3"
         },
-        "time": "2019-03-04T06:45:57+00:00",
+        "time": "2018-12-17T01:24:50+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
