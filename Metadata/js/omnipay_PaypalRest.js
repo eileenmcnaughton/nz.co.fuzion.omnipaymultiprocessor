@@ -13,15 +13,19 @@ renderPaypal = function() {
       var frequencyUnit = CRM.$('#frequency_unit').val() ? CRM.$('#frequency_interval').val() : CRM.vars.omnipay.frequency_unit;
 
       return new paypal.Promise(function (resolve, reject) {
+        var paymentAmount = calculateTotalFee();
+        var isRecur = CRM.$('#is_recur').is(":checked");
+        var recurText = isRecur ? ' recurring' : '';
         CRM.api3('PaymentProcessor', 'preapprove', {
             'payment_processor_id': CRM.vars.omnipay.paymentProcessorId,
-            'amount': calculateTotalFee(),
+            'amount': paymentAmount,
             'currencyID' : CRM.vars.omnipay.currency,
              'qf_key': qfKey,
-             'is_recur' : CRM.$('#is_recur').is(":checked"),
+             'is_recur' : isRecur,
              'installments' : CRM.$('#installments').val(),
              'frequency_unit' : frequencyUnit,
-             'frequency_interval' : frequencyInterval
+             'frequency_interval' : frequencyInterval,
+             'description' : CRM.vars.omnipay.title + ' ' + CRM.formatMoney(paymentAmount) + recurText
           }
         ).done(function (result) {
           if (result['is_error'] === 1) {

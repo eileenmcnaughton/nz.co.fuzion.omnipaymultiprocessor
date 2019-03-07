@@ -25,6 +25,8 @@
  +--------------------------------------------------------------------+
 */
 
+use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
+
 /**
  * Class CRM_Core_PaymentExtended
  * This class holds all the things that really belong in the parent class but we don't want to update into core right now
@@ -238,7 +240,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       }
     }
     if (empty($validParts) && !empty($params['is_recur'])) {
-      $validParts[] = ts('regular payment');
+      $validParts[] = E::ts('Regular payment');
     }
     return substr(implode('-', $validParts), 0, $length);
   }
