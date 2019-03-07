@@ -1021,6 +1021,30 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Does this processor support cancelling recurring contributions through code.
+   *
+   * If the processor returns true it must be possible to take action from within CiviCRM
+   * that will result in no further payments being processed.
+   *
+   * @return bool
+   */
+  protected function supportsCancelRecurring() {
+    return TRUE;
+  }
+
+  /**
+   * Does this processor support changing the amount for recurring contributions through code.
+   *
+   * If the processor returns true then it must be possible to update the amount from within CiviCRM
+   * that will be updated at the payment processor.
+   *
+   * @return bool
+   */
+  public function supportsEditRecurringContribution() {
+    return TRUE;
+  }
+
+  /**
    * Function to action pre-approval if supported
    *
    * @param array $params
