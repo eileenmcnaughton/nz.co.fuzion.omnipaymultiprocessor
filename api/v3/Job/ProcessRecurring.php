@@ -52,6 +52,7 @@ function civicrm_api3_job_process_recurring($params) {
       civicrm_api3('Contribution', 'completetransaction', array(
         'id' => $pending['id'],
         'trxn_id' => $payment['trxn_id'],
+        'payment_processor_id' => $paymentProcessorID,
       ));
       $result['success']['ids'] = $recurringPayment['id'];
 
