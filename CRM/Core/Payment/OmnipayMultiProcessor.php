@@ -186,6 +186,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Get data that needs to be passed through to the processor.
+   *
+   * @return array
+   */
+  protected function getProcessorPassThroughFields() {
+    $passThroughFields = $this->getProcessorTypeMetadata('pass_through_fields');
+    return $passThroughFields ? $passThroughFields : [];
+  }
+
+  /**
    * Get core CiviCRM payment fields.
    *
    * @return array
@@ -543,10 +553,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $creditCardOptions[$field['name']] = $params[$field['name']];
       }
     }
-    $passThroughFields = $this->getProcessorTypeMetadata('pass_through_fields');
-    if ($passThroughFields) {
-      $creditCardOptions = array_merge($creditCardOptions, $passThroughFields);
-    }
+    $creditCardOptions = array_merge($creditCardOptions, $this->getProcessorPassThroughFields());
 
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
     $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
@@ -1173,9 +1180,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       return;
     }
 
-    $planResponse = $this->gateway->completeCreateCard(array(
+    $planResponse = $this->gateway->completeCreateCard(array_merge($this->getProcessorPassThroughFields(), [
       'transactionReference' => $params['token'],
-     ))->send();
+     ]))->send();
     if (!$planResponse->isSuccessful()) {
       throw new CRM_Core_Exception($planResponse->getMessage());
       }
