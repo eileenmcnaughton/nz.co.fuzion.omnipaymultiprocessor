@@ -62,19 +62,21 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
      */
     protected $payerId = null;
 
-    protected $referrerCode = 'CiviCRM_SP';
+    protected $referrerCode;
 
     /**
      * @return string
      */
-    public function getReferrerCode() {
+    public function getReferrerCode()
+    {
         return $this->referrerCode;
     }
 
     /**
      * @param string $referrerCode
      */
-    public function setReferrerCode($referrerCode) {
+    public function setReferrerCode($referrerCode)
+    {
         $this->referrerCode = $referrerCode;
     }
 
