@@ -158,7 +158,7 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
 
     $outbound = $this->getRequestBodies();
     $mainRequest = json_decode($outbound[1], TRUE);
-    $this->assertEquals('regular payment', $mainRequest['description']);
+    $this->assertEquals('Regular payment', $mainRequest['description']);
     $this->assertEquals(['payment_method' => 'PAYPAL'], $mainRequest['payer']);
     $this->assertEquals('MERCHANT_INITIATED_BILLING', $mainRequest['plan']['type']);
     $this->assertEquals('INSTANT', $mainRequest['plan']['merchant_preferences']['accepted_pymt_type']);
