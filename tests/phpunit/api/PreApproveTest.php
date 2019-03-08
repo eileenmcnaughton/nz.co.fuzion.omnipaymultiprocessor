@@ -42,33 +42,6 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
   }
 
   /**
-   * Test the preapproval function.
-   */
-  public function testPreApproveExpress() {
-
-    $this->setMockHttpResponseToArray([
-      'TOKEN' => 'EC-654429990B3545832',
-      'TIMESTAMP' => '2018-07-30T07:11:48Z',
-      'CORRELATIONID' => '2893c8052cf1c',
-      'ACK' => 'Success',
-      'VERSION' => '119.0',
-      'BUILD' => '47733884',
-    ]);
-    Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
-    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
-      'payment_processor_type_id' => 'omnipay_PayPal_Express',
-    ]);
-    $preApproval = $this->callAPISuccess('PaymentProcessor', 'preapprove', [
-      'payment_processor_id' => $processor['id'],
-      'check_permissions' => TRUE,
-      'amount' => 10,
-      'qfKey' => 'blah',
-      'currency' => 'USD',
-    ]);
-    $this->assertEquals('EC-654429990B3545832', $preApproval['values'][0]['token']);
-  }
-
-  /**
    * Test the pre-approval function.
    */
   public function testPreApproveRest() {
