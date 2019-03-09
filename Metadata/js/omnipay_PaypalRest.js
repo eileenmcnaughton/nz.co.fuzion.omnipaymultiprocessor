@@ -50,7 +50,7 @@ renderPaypal = function() {
         isRecur = 0;
       }
 
-      document.getElementById('paypal-button').style.visibility = "hidden";
+      document.getElementById('paypal-button-container').style.visibility = "hidden";
       document.getElementById('crm-submit-buttons').style.display = 'block';
       document.getElementById('PayerID').value = data['payerID'];
       document.getElementById('payment_token').value = paymentToken;
@@ -62,7 +62,7 @@ renderPaypal = function() {
       alert('Site is not correctly configured to process payments');
     }
 
-  }, '#paypal-button');
+  }, '#paypal-button-container');
 };
 
 if (typeof paypal === "undefined") {

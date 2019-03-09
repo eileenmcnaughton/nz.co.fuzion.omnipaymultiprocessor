@@ -94,7 +94,7 @@ return array(
       'regions' => [
         //'billing-block-post' => [],
         'billing-block' => [
-          ['markup' => '<div id="paypal-button"></div>', 'name' => 'paypal_button', 'weight' => 400],
+          ['markup' => '<div id="paypal-button-container" class="crm-paypal-buttons"></div>', 'name' => 'paypal_button', 'weight' => 400],
           ['name' => 'paypal_script', 'weight' => 500, 'script' => file_get_contents(__DIR__ . '/js/omnipay_PaypalRest.js')]
          ],
       ],
