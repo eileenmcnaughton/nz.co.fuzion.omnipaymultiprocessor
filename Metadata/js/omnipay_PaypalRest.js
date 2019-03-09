@@ -7,6 +7,8 @@ var qfKey = CRM.$('#' + formID + ' [name=qfKey]').val();
 renderPaypal = function() {
   paypal.Button.render({
     env: (CRM.vars.omnipay.is_test ? 'sandbox' : 'production'),
+    style: {layout: 'vertical', 'size': 'responsive'},
+    funding: {disallowed: [paypal.FUNDING.CREDIT]},
     payment: function (data, actions) {
 
       var frequencyInterval = CRM.$('#frequency_interval').val() ? CRM.$('#frequency_interval').val() : 1;
