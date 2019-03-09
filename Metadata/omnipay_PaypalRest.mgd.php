@@ -40,13 +40,13 @@
  */
 return array(
   array(
-    'name' => 'OmniPay - PayPal_Rest',
+    'name' => 'PayPal Checkout',
     'entity' => 'payment_processor_type',
     'params' => array(
       'version' => 3,
-      'title' => 'OmniPay - PayPal Rest',
+      'title' => 'PayPal Checkout',
       'name' => 'omnipay_PayPal_Rest',
-      'description' => 'PayPal Express (Rest) Payment Processor',
+      'description' => 'PayPal Checkout Payment Processor',
       'user_name_label' => 'clientId',
       'password_label' => 'secret',
       'class_name' => 'Payment_OmnipayMultiProcessor',
