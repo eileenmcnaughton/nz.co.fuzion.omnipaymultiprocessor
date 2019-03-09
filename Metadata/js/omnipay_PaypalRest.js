@@ -7,6 +7,8 @@ var qfKey = CRM.$('#' + formID + ' [name=qfKey]').val();
 renderPaypal = function() {
   paypal.Button.render({
     env: (CRM.vars.omnipay.is_test ? 'sandbox' : 'production'),
+    style: {layout: 'vertical', 'size': 'responsive'},
+    funding: {disallowed: [paypal.FUNDING.CREDIT]},
     payment: function (data, actions) {
 
       var frequencyInterval = CRM.$('#frequency_interval').val() ? CRM.$('#frequency_interval').val() : 1;
@@ -50,7 +52,7 @@ renderPaypal = function() {
         isRecur = 0;
       }
 
-      document.getElementById('paypal-button').style.visibility = "hidden";
+      document.getElementById('paypal-button-container').style.visibility = "hidden";
       document.getElementById('crm-submit-buttons').style.display = 'block';
       document.getElementById('PayerID').value = data['payerID'];
       document.getElementById('payment_token').value = paymentToken;
@@ -62,7 +64,7 @@ renderPaypal = function() {
       alert('Site is not correctly configured to process payments');
     }
 
-  }, '#paypal-button');
+  }, '#paypal-button-container');
 };
 
 if (typeof paypal === "undefined") {
