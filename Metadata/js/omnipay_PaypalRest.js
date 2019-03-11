@@ -18,6 +18,8 @@ renderPaypal = function() {
         var paymentAmount = calculateTotalFee();
         var isRecur = CRM.$('#is_recur').is(":checked");
         var recurText = isRecur ? ' recurring' : '';
+        var validate = CRM.vars.omnipay.validate;
+
         CRM.api3('PaymentProcessor', 'preapprove', {
             'payment_processor_id': CRM.vars.omnipay.paymentProcessorId,
             'amount': paymentAmount,
@@ -27,7 +29,8 @@ renderPaypal = function() {
              'installments' : CRM.$('#installments').val(),
              'frequency_unit' : frequencyUnit,
              'frequency_interval' : frequencyInterval,
-             'description' : CRM.vars.omnipay.title + ' ' + CRM.formatMoney(paymentAmount) + recurText
+             'description' : CRM.vars.omnipay.title + ' ' + CRM.formatMoney(paymentAmount) + recurText,
+             'validate' : validate,
           }
         ).done(function (result) {
           if (result['is_error'] === 1) {
