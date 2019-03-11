@@ -1,6 +1,6 @@
 The Paypal Checkout integration adds Paypal buttons to your page which launch an authorization popup
 
-![profile](../docs/PaypalCheckout/paypal_checkout.gif)
+![profile](../docs/PaypalCheckout/paypal_checkout.png)
 
 ##Advantages of Paypal checkout
 
