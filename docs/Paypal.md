@@ -2,7 +2,7 @@ The Paypal Checkout integration adds Paypal buttons to your page which launch an
 
 ![profile](../docs/PaypalCheckout/paypal_checkout.png)
 
-##Advantages of Paypal checkout
+## Advantages of Paypal checkout
 
 1) No PCI exposure - users can pay by credit card but the credit card is
 never entered on a form anywhere directly on your site
@@ -21,6 +21,7 @@ To get started you need CiviCRM 5.13+, the Omnipay extension (you can install th
 1) Log in to https://developer.paypal.com and click the Applications tab.
 
 1) On the https://developer.paypal.com/webapps/developer/applications/myapps click Create App.
+![profile](../docs/PaypalCheckout/create_app.png)
 
 3) On the Create New App page, provide an app name.
 
