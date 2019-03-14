@@ -65,6 +65,7 @@ return array(
       'supports_preapproval' => 1,
       'payment_fields' => ['payment_token', 'PayerID', 'post_authorize'],
       'pass_through_fields' => ['referrerCode' => 'CiviCRM_SP'],
+      'client_side_credentials' => ['user_name'  => 'client_id'],
       'payment_fields_metadata' => [
         'PayerID' => [
           'name' => 'PayerID',

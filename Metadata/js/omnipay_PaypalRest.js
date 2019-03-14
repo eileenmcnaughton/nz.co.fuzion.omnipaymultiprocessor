@@ -5,11 +5,9 @@ var formID = CRM.$('#billing-payment-block').closest('form').attr('id');
 var qfKey = CRM.$('#' + formID + ' [name=qfKey]').val();
 
 renderPaypal = function() {
-  paypal.Button.render({
+  paypal.Buttons.render({
     env: (CRM.vars.omnipay.is_test ? 'sandbox' : 'production'),
-    style: {layout: 'vertical', 'size': 'responsive'},
-    funding: {disallowed: [paypal.FUNDING.CREDIT]},
-    payment: function (data, actions) {
+    createOrder: function (data, actions) {
 
       var frequencyInterval = CRM.$('#frequency_interval').val() ? CRM.$('#frequency_interval').val() : 1;
       var frequencyUnit = CRM.$('#frequency_unit').val() ? CRM.$('#frequency_interval').val() : CRM.vars.omnipay.frequency_unit;
@@ -47,7 +45,7 @@ renderPaypal = function() {
       });
     },
 
-    onAuthorize: function (data, actions) {
+    onApprove: function (data, actions) {
       var isRecur = 1;
       var paymentToken = data['billingToken'];
       if (!paymentToken) {
@@ -71,12 +69,22 @@ renderPaypal = function() {
 };
 
 if (typeof paypal === "undefined") {
-  CRM.$.getScript('https://www.paypalobjects.com/api/checkout.js', function() {
+
+  var paypalScriptURL = 'https://paypal.com/sdk/js?client-id=' + CRM.vars.omnipay.client_id + '&currency=' + CRM.vars.omnipay.currency + '&intent=order&commit=false&vault=true';
+
+  CRM.$.ajax({
+    url: paypalScriptURL,
+    dataType: "script",
+    cache: true,
+    complete: (function(script, textStatus) {
+      console.log(script);
       renderPaypal();
+    })
   });
 }
 else {
   renderPaypal();
+
 }
 
 
