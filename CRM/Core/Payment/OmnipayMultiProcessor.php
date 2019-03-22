@@ -315,7 +315,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     try {
       foreach ($fields as $name => $value) {
         $fn = "set{$name}";
-        $this->gateway->$fn($value);
+        if (method_exists($this->gateway, $fn)) {
+          $this->gateway->$fn($value);
+        }
       }
       if (\Civi::settings()->get('omnipay_test_mode')) {
         $this->_is_test = TRUE;
@@ -356,12 +358,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'id' => $this->_paymentProcessor['payment_processor_type_id'],
       'return' => $labelFields)
     );
-    $clientSideCredentials = $this->getProcessorTypeMetadata('client_side_credentials');
 
     foreach ($labelFields as $field => $label) {
-      if (!isset($clientSideCredentials[$field])) {
-        $result[$this->camelFieldName($processorFields[$label])] = $this->_paymentProcessor[$field];
-      }
+      $result[$this->camelFieldName($processorFields[$label])] = $this->_paymentProcessor[$field];
     }
     return $result;
   }
