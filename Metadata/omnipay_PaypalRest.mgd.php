@@ -64,7 +64,12 @@ return array(
       'suppress_submit_button' => 1,
       'supports_preapproval' => 1,
       'payment_fields' => ['payment_token', 'PayerID', 'post_authorize'],
-      'pass_through_fields' => ['referrerCode' => 'CiviCRM_SP'],
+      'pass_through_fields' => [
+        'referrerCode' => 'CiviCRM_SP',
+        'returnUrl' => 'https://www.paypal.com/checkoutnow/error',
+        'cancel_url' => 'https://www.paypal.com/checkoutnow/error',
+      ],
+      'client_side_credentials' => ['user_name'  => 'client_id'],
       'payment_fields_metadata' => [
         'PayerID' => [
           'name' => 'PayerID',
