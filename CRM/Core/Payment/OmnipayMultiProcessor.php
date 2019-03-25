@@ -1065,6 +1065,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     return TRUE;
   }
 
+  protected function cancelSubscription() {
+    // We take no action here - the key thing is that the contribution_recur record is updated.
+  }
+
   /**
    * Does this processor support changing the amount for recurring contributions through code.
    *
