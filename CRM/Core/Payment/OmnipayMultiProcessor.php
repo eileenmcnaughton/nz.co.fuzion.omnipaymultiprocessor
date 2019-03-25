@@ -39,7 +39,7 @@ use Http\Adapter\Guzzle6\Client as HttpPlugClient;
 /**
  * Class CRM_Core_Payment_OmnipayMultiProcessor.
  */
-class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExtended {
+class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExtended implements serializable {
 
   /**
    * For code clarity declare is_test as a boolean.
@@ -58,6 +58,32 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     'signature',
     'subject',
   );
+
+  /**
+   * Serialize, first removing gateway
+   *
+   * https://www.php.net/manual/en/class.serializable.php
+   *
+   * @return string
+   */
+  public function serialize() {
+    $this->cleanupClassForSerialization(TRUE);
+    return serialize(get_object_vars($this));
+  }
+
+  /**
+   * Unserialize
+   *
+   * https://www.php.net/manual/en/class.serializable.php
+   *
+   * @param string $data
+   */
+  public function unserialize($data) {
+    $values = unserialize($data);
+    foreach ($values as $key=>$value) {
+      $this->$key = $value;
+    }
+  }
 
   /**
    * Omnipay gateway.
