@@ -83,7 +83,7 @@ function omnipaymultiprocessor_civicrm_managed(&$entities) {
  * @param array $permissions
  */
 function omnipaymultiprocessor_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
-  $params['payment_processor']['preapprove'] = ['make online contributions'];
+  $permissions['payment_processor']['preapprove'] = ['make online contributions'];
 }
 
 function omnipaymultiprocessor_civicrm_navigationMenu(&$menu) {
