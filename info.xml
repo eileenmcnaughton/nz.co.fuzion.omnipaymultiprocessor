@@ -14,11 +14,11 @@
     <url desc="Support">http://forum.civicrm.org</url>
     <url desc="Licensing">http://civicrm.org/licensing</url>
   </urls>
-  <releaseDate>2018-11-16</releaseDate>
-  <version>3.0</version>
-  <develStage>alpha</develStage>
+  <releaseDate>2019-03-27</releaseDate>
+  <version>3.1</version>
+  <develStage>stable</develStage>
   <compatibility>
-    <ver>5.7</ver>
+    <ver>5.13</ver>
   </compatibility>
   <comments>This module integrates the omnipay library with CiviCRM. This release is for Omnipay 3.x and requires php 7.1. All new development will be here but 2.x series will continue to work.</comments>
   <civix>
