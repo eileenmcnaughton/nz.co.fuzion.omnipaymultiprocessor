@@ -61,8 +61,7 @@ return array(
       // DO NOT CHANGE: Labels are used as Omnipay gateway properties.
       'user_name_label' => 'Api Key',
       'password_label' => 'Password',
-      // When ready we need to add signature_label & figure out how to pass through to tpl.
-      //'signature_label' => 'Public Key (if wishing to use Client Encryption - recommended)',
+      'signature_label' => 'Public Key (if wishing to use Client Encryption - recommended)',
       'class_name' => 'Payment_OmnipayMultiProcessor',
       'url_site_default' => 'http://unused.com',
       'url_api_default' => 'http://unused.com',
