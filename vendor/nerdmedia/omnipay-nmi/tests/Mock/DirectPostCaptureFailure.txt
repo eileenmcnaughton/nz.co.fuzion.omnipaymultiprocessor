@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 00:25:28 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 200
+Connection: close
+Server:
+
+response=3&responsetext=A capture requires that the existing transaction be an AUTH REFID:143498124&authcode=&transactionid=2577708057&avsresponse=&cvvresponse=&orderid=&type=capture&response_code=300

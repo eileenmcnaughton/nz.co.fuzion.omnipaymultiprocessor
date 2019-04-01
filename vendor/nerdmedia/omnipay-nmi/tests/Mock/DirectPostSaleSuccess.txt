@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 00:19:43 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 136
+Connection: close
+Server:
+
+response=1&responsetext=SUCCESS&authcode=123456&transactionid=2577715564&avsresponse=&cvvresponse=M&orderid=&type=sale&response_code=100

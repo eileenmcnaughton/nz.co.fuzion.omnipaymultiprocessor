@@ -51,6 +51,7 @@ class ComposerStaticInit7c7bccbe7d16fd96ad45f827acd06a81
             'Omnipay\\Razorpay\\' => 17,
             'Omnipay\\PaymentExpress\\' => 23,
             'Omnipay\\PayPal\\' => 15,
+            'Omnipay\\NMI\\' => 12,
             'Omnipay\\NABTransact\\' => 20,
             'Omnipay\\Mollie\\' => 15,
             'Omnipay\\Mercanet\\' => 17,
@@ -164,6 +165,10 @@ class ComposerStaticInit7c7bccbe7d16fd96ad45f827acd06a81
         'Omnipay\\PayPal\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/paypal/src',
+        ),
+        'Omnipay\\NMI\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nerdmedia/omnipay-nmi/src',
         ),
         'Omnipay\\NABTransact\\' => 
         array (

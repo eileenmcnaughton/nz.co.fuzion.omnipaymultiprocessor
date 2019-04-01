@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "086a2f642f40ad919e31d302d118d303",
+    "content-hash": "8ae90ec5c284dfa92264ed103a22c966",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -491,6 +491,53 @@
                 "vo"
             ],
             "time": "2019-02-07T18:01:35+00:00"
+        },
+        {
+            "name": "nerdmedia/omnipay-nmi",
+            "version": "3.04",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nerdmedia/omnipay-nmi.git",
+                "reference": "0d8ae95698b586fbd35b69bee5230853007d6aa7"
+            },
+            "require": {
+                "league/omnipay": "^3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\NMI\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Bazemore",
+                    "email": "steve@nerdmedia.com"
+                }
+            ],
+            "description": "NMI (Network Merchants Inc.) driver for the Omnipay PHP payment processing library",
+            "homepage": "https://github.com/nerdmedia/omnipay-nmi",
+            "keywords": [
+                "durango",
+                "gateway",
+                "inc",
+                "merchant",
+                "network",
+                "nmi",
+                "omnipay",
+                "pay",
+                "payment",
+                "purchase"
+            ],
+            "time": "2018-12-05T20:04:47+00:00"
         },
         {
             "name": "omnipay/authorizenet",
@@ -3591,6 +3638,7 @@
         "dioscouri/omnipay-cybersource": 20,
         "fuzion/omnipay-mercanet": 20,
         "razorpay/omnipay-razorpay": 20,
+        "nerdmedia/omnipay-nmi": 20,
         "omnipay/tests": 20
     },
     "prefer-stable": false,

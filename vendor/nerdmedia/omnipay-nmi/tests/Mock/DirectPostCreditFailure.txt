@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 00:42:13 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 144
+Connection: close
+Server:
+
+response=3&responsetext=Invalid amount REFID:143498834&authcode=&transactionid=&avsresponse=&cvvresponse=&orderid=&type=credit&response_code=300

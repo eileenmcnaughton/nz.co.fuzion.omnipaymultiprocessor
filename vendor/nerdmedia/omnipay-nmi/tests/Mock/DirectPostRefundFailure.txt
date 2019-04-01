@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 00:39:14 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 182
+Connection: close
+Server:
+
+response=3&responsetext=Refund amount may not exceed the transaction balance REFID:143498703&authcode=&transactionid=&avsresponse=&cvvresponse=&orderid=&type=refund&response_code=300

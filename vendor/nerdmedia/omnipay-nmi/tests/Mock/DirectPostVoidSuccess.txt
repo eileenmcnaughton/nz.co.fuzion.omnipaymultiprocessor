@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 00:33:05 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 155
+Connection: close
+Server:
+
+response=1&responsetext=Transaction Void Successful&authcode=123456&transactionid=2577708057&avsresponse=&cvvresponse=&orderid=&type=void&response_code=100

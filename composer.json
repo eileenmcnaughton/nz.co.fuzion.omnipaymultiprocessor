@@ -11,6 +11,10 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-paypal.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/nerdmedia/omnipay-nmi.git"
         }
 
     ],
@@ -31,7 +35,8 @@
         "omnipay/common": "^3.0@dev",
         "dioscouri/omnipay-cybersource": "^3.0@dev",
         "fuzion/omnipay-mercanet": "^3.0@dev",
-        "razorpay/omnipay-razorpay": "^3.0@dev"
+        "razorpay/omnipay-razorpay": "^3.0@dev",
+        "nerdmedia/omnipay-nmi": "^3.0@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "5.7",

@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Wed, 11 Feb 2015 00:13:31 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 130
+Connection: close
+Server:
+
+response=2&responsetext=DECLINE&authcode=&transactionid=2577711599&avsresponse=&cvvresponse=M&orderid=&type=auth&response_code=200
