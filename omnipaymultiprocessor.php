@@ -86,6 +86,16 @@ function omnipaymultiprocessor_civicrm_alterAPIPermissions($entity, $action, &$p
   $permissions['payment_processor']['preapprove'] = ['make online contributions'];
 }
 
+/**
+ * Implements hook_alterMenu().
+ *
+ * @param array $items
+ */
+function omnipaymultiprocessor_civicrm_alterMenu(&$items) {
+  $items['civicrm/ajax/rest']['page_callback'] = ['CRM_Utils_RestPreapprove', 'ajax'];
+  $items['civicrm/ajax/rest']['access_arguments'][0][] = 'make online contributions';
+}
+
 function omnipaymultiprocessor_civicrm_navigationMenu(&$menu) {
   _omnipaymultiprocessor_civix_insert_navigation_menu($menu, 'Administer/System Settings', [
     'label' => E::ts('Omnipay Developer Settings'),
