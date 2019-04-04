@@ -14,8 +14,8 @@
     <url desc="Support">http://forum.civicrm.org</url>
     <url desc="Licensing">http://civicrm.org/licensing</url>
   </urls>
-  <releaseDate>2019-03-27</releaseDate>
-  <version>3.1</version>
+  <releaseDate>2019-04-04</releaseDate>
+  <version>3.2</version>
   <develStage>stable</develStage>
   <compatibility>
     <ver>5.13</ver>
