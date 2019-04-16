@@ -18,8 +18,8 @@ function civicrm_api3_payment_processor_getmissing($params) {
   $params['lazy_logging']  = $lazyLogging;
   $missing = array();
   $contributionStatuses = civicrm_api3('Contribution', 'getoptions', array('field' => 'contribution_status_id'));
-  $contributionStatusFilter = empty($params['contribution_status_id']) ? NULL : $contributionStatuses['values'][$params['contribution_status_id']];
-  $first = TRUE;
+  $contributionStatusFilter = empty($params['contribution_status_id']) ? null : $contributionStatuses['values'][$params['contribution_status_id']];
+  $first = true;
   foreach ($result['values'] as $payment) {
     if ($contributionStatusFilter && $payment['contribution_status_id'] != $contributionStatusFilter) {
       continue;
@@ -28,7 +28,7 @@ function civicrm_api3_payment_processor_getmissing($params) {
       if ($params['is_recur'] && empty($payment['recur_processor_reference'])) {
         continue;
       }
-      if (($params['is_recur'] === FALSE || $params['is_recur'] === 0) && !empty($payment['recur_processor_reference'])) {
+      if (($params['is_recur'] === false || $params['is_recur'] === 0) && !empty($payment['recur_processor_reference'])) {
         continue;
       }
     }
@@ -41,7 +41,7 @@ function civicrm_api3_payment_processor_getmissing($params) {
         $payment['payment_processor_id'] = $params['payment_processor_id'];
         if ($first) {
           echo implode('|', array_keys($payment)) . "\n";
-          $first = FALSE;
+          $first = false;
         }
         echo implode('|', $payment) . "\n";
       }

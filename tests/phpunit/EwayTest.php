@@ -88,7 +88,7 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
     Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
 
     $processor = $this->createTestProcessor('Eway_RapidDirect');
-    $this->createContributionPage($processor, TRUE);
+    $this->createContributionPage($processor, true);
 
     $this->callAPISuccess('contribution_page', 'submit', $this->submitParams);
     $outbound = $this->getRequestBodies();
@@ -121,15 +121,15 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
    *
    * @return array
    */
-  protected function createContributionPage($processor, $isEncrypted = FALSE) {
+  protected function createContributionPage($processor, $isEncrypted = false) {
     $processorID = $processor['id'];
 
     $contributionPageParams = [
       'title' => 'Help Support CiviCRM!',
       'financial_type_id' => 1,
-      'is_monetary' => TRUE,
+      'is_monetary' => true,
       'is_pay_later' => 1,
-      'is_quick_config' => TRUE,
+      'is_quick_config' => true,
       'pay_later_text' => 'I will send payment by check',
       'pay_later_receipt' => 'This is a pay later reciept',
       'is_allow_other_amount' => 1,
@@ -190,7 +190,7 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
    * @return string
    */
   protected function getRequest($contribution, $invoiceDescription) {
-    $cvvString = $this->getCvv(TRUE);
+    $cvvString = $this->getCvv(true);
     if (!is_numeric($cvvString)) {
       $cvvString = '"' . addslashes($cvvString) . '"';
     }
@@ -199,7 +199,7 @@ class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface,
     }
     $response = '{"DeviceID":"https:\/\/github.com\/adrianmacneil\/omnipay","CustomerIP":"127.0.0.1","PartnerID":null,"ShippingMethod":null,"Customer":{"Title":null,"FirstName":"","LastName":"","CompanyName":"","Street1":"","Street2":"","City":"","State":"","PostalCode":"","Country":"","Email":"anthony_anderson@civicrm.org","Phone":"","CardDetails":{"Name":"","ExpiryMonth":"09","ExpiryYear":"30","CVN":'
       . $cvvString . ',"Number":"'
-      . $this->getCardNumber(TRUE)
+      . $this->getCardNumber(true)
       . '"}},"ShippingAddress":{"FirstName":"","LastName":"","Street1":null,"Street2":null,"City":null,"State":null,"Country":"","PostalCode":null,"Phone":null},"TransactionType":"Purchase","Payment":{"TotalAmount":10000,"InvoiceNumber":"' . $contribution['id'] . '","InvoiceDescription":"' . $invoiceDescription . '","CurrencyCode":"USD","InvoiceReference":null},"Method":"ProcessPayment"}';
     return $response;
   }

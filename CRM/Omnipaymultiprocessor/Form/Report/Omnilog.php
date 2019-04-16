@@ -10,9 +10,9 @@ class CRM_Omnipaymultiprocessor_Form_Report_Omnilog extends CRM_Extendedreport_F
       throw new CRM_Core_Exception(E::ts('Report only accessible with administer Payment Processors permission, may contain credentials'));
     }
     $this->_columns = $this->getColumns('SystemLog', [
-      'fields' => TRUE,
+      'fields' => true,
       'fields_defaults' => ['message', 'context', 'timestamp'],
-      'order_bys' => TRUE,
+      'order_bys' => true,
       'order_by_defaulys' => ['id DESC'],
     ]);
     parent::__construct();
@@ -23,46 +23,46 @@ class CRM_Omnipaymultiprocessor_Form_Report_Omnilog extends CRM_Extendedreport_F
       'id' => [
         'name' => 'id',
         'title' => E::ts('System log ID'),
-        'is_fields' => TRUE,
-        'is_filters' => TRUE,
-        'is_order_bys' => TRUE,
+        'is_fields' => true,
+        'is_filters' => true,
+        'is_order_bys' => true,
         'type' => CRM_Utils_Type::T_INT,
       ],
       'message' => [
         'name' => 'message',
         'title' => E::ts('Message'),
-        'is_fields' => TRUE,
-        'is_filters' => TRUE,
-        'is_order_bys' => FALSE,
+        'is_fields' => true,
+        'is_filters' => true,
+        'is_order_bys' => false,
         'type' => CRM_Utils_Type::T_STRING,
       ],
       'context' => [
         'name' => 'context',
         'title' => E::ts('Detail'),
-        'is_fields' => TRUE,
-        'is_filters' => TRUE,
-        'is_order_bys' => FALSE,
+        'is_fields' => true,
+        'is_filters' => true,
+        'is_order_bys' => false,
         'type' => CRM_Utils_Type::T_STRING,
         'alter_display' => 'alterDisplayDecodeJson',
       ],
       'level' => [
         'name' => 'level',
         'title' => E::ts('Level'),
-        'is_fields' => TRUE,
-        'is_filters' => TRUE,
-        'is_order_bys' => TRUE,
+        'is_fields' => true,
+        'is_filters' => true,
+        'is_order_bys' => true,
         'type' => CRM_Utils_Type::T_STRING,
       ],
       'timestamp' => [
         'name' => 'timestamp',
         'title' => E::ts('Timestamp'),
-        'is_fields' => TRUE,
-        'is_filters' => TRUE,
-        'is_order_bys' => TRUE,
+        'is_fields' => true,
+        'is_filters' => true,
+        'is_order_bys' => true,
         'type' => CRM_Utils_Type::T_TIMESTAMP,
       ],
     ];
-    return $this->buildColumns($specs, 'civicrm_system_log', 'CRM_Core_DAO_SystemLog', NULL, $this->getDefaultsFromOptions($options), $options);
+    return $this->buildColumns($specs, 'civicrm_system_log', 'CRM_Core_DAO_SystemLog', null, $this->getDefaultsFromOptions($options), $options);
   }
 
   protected function alterDisplayDecodeJson($value) {

@@ -19,8 +19,8 @@ return array(
           'title' => 'Payment Type',
           'name' => 'payment_type',
           'description' => 'Payment Processor Payment type (configured on processor)',
-          'is_reserved' => TRUE,
-          'is_active' => TRUE,
+          'is_reserved' => true,
+          'is_active' => true,
         ),
     ),
   1 =>
@@ -34,8 +34,8 @@ return array(
           'label' => 'Credit Card',
           'value' => 1,
           'name' => 'credit_card',
-          'is_reserved' => TRUE,
-          'is_active' => TRUE,
+          'is_reserved' => true,
+          'is_active' => true,
         ),
     ),
   2 =>
@@ -49,8 +49,8 @@ return array(
           'label' => 'Direct Debit',
           'value' => 2,
           'name' => 'direct_debit',
-          'is_reserved' => TRUE,
-          'is_active' => TRUE,
+          'is_reserved' => true,
+          'is_active' => true,
         ),
     ),
   3 =>
@@ -64,8 +64,8 @@ return array(
           'label' => 'Credit Card',
           'value' => 3,
           'name' => 'credit_card_off_site_post',
-          'is_reserved' => TRUE,
-          'is_active' => TRUE,
+          'is_reserved' => true,
+          'is_active' => true,
         ),
     ),
 );

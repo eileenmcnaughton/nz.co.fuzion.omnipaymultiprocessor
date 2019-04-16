@@ -19,7 +19,7 @@ class CRM_Utils_RestPreapprove extends CRM_Utils_REST {
     $entity = str_replace('_', '', strtolower(CRM_Utils_Array::value('entity', $_REQUEST)));
     if (($action !== 'preapprove' || $entity !== 'paymentprocessor') && !CRM_Core_Permission::check(['access CiviCRM', 'access AJAX API'])) {
       CRM_Utils_System::permissionDenied();
-      return NULL;
+      return null;
     }
     return CRM_Utils_REST::ajax();
   }

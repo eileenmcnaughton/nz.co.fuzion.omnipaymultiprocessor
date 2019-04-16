@@ -60,7 +60,7 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
     ]);
     $preApproval = $this->callAPISuccess('PaymentProcessor', 'preapprove', [
       'payment_processor_id' => $processor['id'],
-      'check_permissions' => TRUE,
+      'check_permissions' => true,
       'amount' => 10,
       'qfKey' => 'blah',
       'currency' => 'USD',
@@ -73,7 +73,7 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
     $outbound = $this->getRequestBodies();
 
     $this->assertEquals('grant_type=client_credentials', $outbound[0]);
-    $response2 = json_decode($outbound[1], TRUE);
+    $response2 = json_decode($outbound[1], true);
     $this->assertEquals('sale', $response2['intent']);
     $this->assertEquals('paypal', $response2['payer']['payment_method']);
     $this->assertEquals([[
@@ -114,11 +114,11 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
     ]);
     $preApproval = civicrm_api('PaymentProcessor', 'preapprove', [
       'payment_processor_id' => $processor['id'],
-      'check_permissions' => TRUE,
+      'check_permissions' => true,
       'amount' => 60,
       'qfKey' => 'blah',
       'currency' => 'USD',
-      'is_recur' => TRUE,
+      'is_recur' => true,
       'component' => 'contribute',
       'installments' => 3,
       'frequency_unit' => 'week',
@@ -130,13 +130,13 @@ class api_PreApproveTest extends \PHPUnit_Framework_TestCase implements Headless
 
 
     $outbound = $this->getRequestBodies();
-    $mainRequest = json_decode($outbound[1], TRUE);
+    $mainRequest = json_decode($outbound[1], true);
     $this->assertEquals('Regular payment', $mainRequest['description']);
     $this->assertEquals(['payment_method' => 'PAYPAL'], $mainRequest['payer']);
     $this->assertEquals('MERCHANT_INITIATED_BILLING', $mainRequest['plan']['type']);
     $this->assertEquals('INSTANT', $mainRequest['plan']['merchant_preferences']['accepted_pymt_type']);
-    $this->assertEquals(FALSE, $mainRequest['plan']['merchant_preferences']['immutable_shipping_address']);
-    $this->assertEquals(TRUE, $mainRequest['plan']['merchant_preferences']['skip_shipping_address']);
+    $this->assertEquals(false, $mainRequest['plan']['merchant_preferences']['immutable_shipping_address']);
+    $this->assertEquals(true, $mainRequest['plan']['merchant_preferences']['skip_shipping_address']);
 
     $this->assertEquals([
       0 => 'https://api.sandbox.paypal.com/v1/oauth2/token',

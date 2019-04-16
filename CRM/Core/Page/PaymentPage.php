@@ -17,7 +17,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
    * @throws \CiviCRM_API3_Exception
    */
   public function run() {
-    $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, TRUE));
+    $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, true));
     $paymentProcessorID = $formData['payment_processor_id'];
     $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
     $contactID = $formData['contact_id'];
@@ -52,7 +52,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
    * @return array
    */
   protected function getTransparentRedirectFormData($key) {
-    return json_decode(CRM_Core_Session::singleton()->get("transparent_redirect_data" . $key), TRUE);
+    return json_decode(CRM_Core_Session::singleton()->get("transparent_redirect_data" . $key), true);
   }
 
   /**

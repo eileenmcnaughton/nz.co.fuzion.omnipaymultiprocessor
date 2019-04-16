@@ -36,7 +36,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * For code clarity declare is_test as a boolean
    * @var bool
    */
-  protected $_is_test = FALSE;
+  protected $_is_test = false;
 
   /**
    * Component - event or contribute
@@ -106,7 +106,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    */
   public function __construct($mode, &$paymentProcessor) {
     $this->_mode = $mode;
-    $this->_is_test = ($mode == 'live') ? FALSE : TRUE;
+    $this->_is_test = ($mode == 'live') ? false : true;
     $this->_paymentProcessor = $paymentProcessor;
   }
 
@@ -125,7 +125,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
         '_qf_ThankYou_display' => 1,
         'qfKey' => $qfKey,
       ),
-      TRUE, NULL, FALSE, TRUE
+      true, null, false, true
     );
   }
 
@@ -135,7 +135,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param null $eventID
    * @return string
    */
-  protected function getReturnFailUrl($key, $participantID = NULL, $eventID = NULL) {
+  protected function getReturnFailUrl($key, $participantID = null, $eventID = null) {
     if (isset($this->cancelUrl)) {
       return $this->cancelUrl;
     }
@@ -143,13 +143,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     if ($this->_component == "event") {
       return CRM_Utils_System::url('civicrm/event/register',
         "reset=1&cc=fail&participantId={$participantID}&id={$eventID}{$test}&qfKey={$key}",
-        TRUE, NULL, FALSE, TRUE
+        true, null, false, true
       );
     }
     else {
       return CRM_Utils_System::url('civicrm/contribute/transact',
         "_qf_Main_display=1&cancel=1&qfKey={$key}{$test}",
-        TRUE, NULL, FALSE, TRUE
+        true, null, false, true
       );
     }
   }
@@ -168,13 +168,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return string
    *    URL to notify outcome of transaction.
    */
-  protected function getNotifyUrl($allowLocalHost = FALSE) {
+  protected function getNotifyUrl($allowLocalHost = false) {
     $url = CRM_Utils_System::url(
       'civicrm/payment/ipn/' . $this->formatted_transaction_id . '/' . $this->_paymentProcessor['id'],
-      NULL,
-      TRUE,
-      NULL,
-      FALSE
+      null,
+      true,
+      null,
+      false
     );
     return $allowLocalHost ? $url : ((stristr($url, '.')) ? $url : '');
   }
@@ -185,7 +185,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param int $participantID
    * @param int $eventID
    */
-  protected function storeReturnUrls($participantID = NULL, $eventID = NULL) {
+  protected function storeReturnUrls($participantID = null, $eventID = null) {
     CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($this->getQfKey()));
     CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID));
   }
@@ -276,10 +276,10 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return mixed
    * @throws \Civi\Payment\Exception\PaymentProcessorException
    */
-  protected function handleError($level, $message, $context, $errorCode = 9001, $userMessage = NULL) {
+  protected function handleError($level, $message, $context, $errorCode = 9001, $userMessage = null) {
     // Reset gateway to NULL so don't cache it. The size of the object or closures within it could
     // cause problems when serializing & saving.
-    $this->gateway = NULL;
+    $this->gateway = null;
     Civi::log()->log($level, $message, (array) $context);
     $log = new CRM_Utils_SystemLogger();
     $log->log($level, $message, (array) $context);
@@ -392,7 +392,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return string
    */
   public function serialize() {
-    $this->cleanupClassForSerialization(TRUE);
+    $this->cleanupClassForSerialization(true);
     return serialize($this);
   }
 
@@ -404,12 +404,12 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *   (possibly the default here should be TRUE but we want to be sure we are not
    *   unsetting it when it is still being used.)
    */
-  protected function cleanupClassForSerialization($isIncludeGateWay = FALSE) {
+  protected function cleanupClassForSerialization($isIncludeGateWay = false) {
     $this->history = [];
-    $this->client = NULL;
-    $this->guzzleClient = NULL;
+    $this->client = null;
+    $this->guzzleClient = null;
     if ($isIncludeGateWay) {
-      $this->gateway = NULL;
+      $this->gateway = null;
     }
   }
 }

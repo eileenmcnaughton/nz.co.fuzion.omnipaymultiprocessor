@@ -75,8 +75,8 @@ return array(
           'name' => 'PayerID',
           'htmlType' => 'hidden',
           'title' => ts('Payer ID'),
-          'is_required' => FALSE,
-          'is_pass_through' => TRUE,
+          'is_required' => false,
+          'is_pass_through' => true,
           'attributes' => array(
             'size' => 10,
             'autocomplete' => 'off',
@@ -87,8 +87,8 @@ return array(
           'name' => 'post_authorize',
           'htmlType' => 'hidden',
           'title' => ts('post_authorize'),
-          'is_required' => FALSE,
-          'is_pass_through' => TRUE,
+          'is_required' => false,
+          'is_pass_through' => true,
           'attributes' => array(
             'size' => 4,
             'autocomplete' => 'off',

@@ -43,8 +43,8 @@ return array(
     'name' => 'OmniPay - Eway_RapidDirect',
     'entity' => 'payment_processor_type',
     'metadata' => array(
-      'is_transparent_redirect' => FALSE,
-      'supports_preapproval' => TRUE,
+      'is_transparent_redirect' => false,
+      'supports_preapproval' => true,
       'client_side_credentials' => ['signature'  => 'ewayKey'],
       'regions' => [
         'billing-block' => [

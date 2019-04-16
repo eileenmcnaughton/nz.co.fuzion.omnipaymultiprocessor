@@ -71,7 +71,7 @@ class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterfa
     ]);
     $result = $this->callAPISuccess('PaymentProcessor', 'pay', [
       'payment_processor_id' => $processor['id'],
-      'check_permissions' => TRUE,
+      'check_permissions' => true,
       'amount' => 10,
       'qfKey' => 'blah',
       'currency' => 'USD',
@@ -89,10 +89,10 @@ class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterfa
     $outbound = $this->getRequestBodies();
 
     $this->assertEquals('grant_type=client_credentials', $outbound[0]);
-    $response2 = json_decode($outbound[1], TRUE);
+    $response2 = json_decode($outbound[1], true);
     $this->assertEquals('BA-193582913B4363822', $response2['token_id']);
 
-    $response3 = json_decode($outbound[2], TRUE);
+    $response3 = json_decode($outbound[2], true);
     $this->assertEquals('sale', $response3['intent']);
     $this->assertEquals('paypal', $response3['payer']['payment_method']);
     $this->assertEquals('B-2L159413TW638025H', $response3['payer']['funding_instruments'][0]['billing']['billing_agreement_id']);

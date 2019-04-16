@@ -66,7 +66,7 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
       'frequency_unit' => 'month',
       'amount' => 10,
       'contribution_status_id' => 'Pending',
-      'is_test' => TRUE,
+      'is_test' => true,
       'payment_token_id' => $paymentToken['id'],
     ]);
 
@@ -75,7 +75,7 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
       'contact_id' => $contact['id'],
       'financial_type_id' => 'Donation',
       'contribution_status_id' => 'Completed',
-      'is_test' => TRUE,
+      'is_test' => true,
       'contribution_recur_id' => $contributionRecur['id'],
       'payment_processor_id' => $processor['id'],
       'receive_date' => '1 month ago',
@@ -86,7 +86,7 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
     $this->assertEquals(1, count($result['success']), print_r($result, 1));
 
     $outbound = $this->getRequestBodies();
-    $paymentRequest = json_decode($outbound[1], TRUE);
+    $paymentRequest = json_decode($outbound[1], true);
     $this->assertEquals('grant_type=client_credentials', $outbound[0]);
     $this->assertEquals('sale', $paymentRequest['intent']);
     $this->assertEquals('paypal', $paymentRequest['payer']['payment_method']);
@@ -98,7 +98,7 @@ class api_ProcessRecurringTest extends \PHPUnit_Framework_TestCase implements He
     $this->assertEquals(0, $contributionRecur['failure_count']);
     $contributions = $this->callAPISuccess('Contribution', 'get', [
       'contribution_recur_id' => $contributionRecur['id'],
-      'is_test' => TRUE,
+      'is_test' => true,
       'options' => ['sort' => 'receive_date DESC']
     ]);
     $this->assertEquals(2, $contributions['count']);

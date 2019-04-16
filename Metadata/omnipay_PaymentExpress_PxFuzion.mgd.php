@@ -43,7 +43,7 @@ return array(
     'name' => 'OmniPay - Payment Express PxFusion',
     'entity' => 'payment_processor_type',
     'metadata' => array(
-      'is_transparent_redirect' => FALSE,
+      'is_transparent_redirect' => false,
       'transparent_redirect' => array(
         'fields' => array(
           'CardHolderName' => array('core_field_name' => 'card_name'),

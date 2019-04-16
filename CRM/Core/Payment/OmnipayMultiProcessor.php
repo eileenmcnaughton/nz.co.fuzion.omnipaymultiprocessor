@@ -46,7 +46,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @var bool
    */
-  protected $_is_test = FALSE;
+  protected $_is_test = false;
 
   /**
    * names of fields in payment processor table that relate to configuration of the processor instance
@@ -67,7 +67,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return string
    */
   public function serialize() {
-    $this->cleanupClassForSerialization(TRUE);
+    $this->cleanupClassForSerialization(true);
     return serialize(get_object_vars($this));
   }
 
@@ -171,8 +171,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       elseif ($response->isRedirect()) {
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
-        $this->cleanupClassForSerialization(TRUE);
-        CRM_Core_Session::storeSessionObjects(FALSE);
+        $this->cleanupClassForSerialization(true);
+        CRM_Core_Session::storeSessionObjects(false);
         if ($response->isTransparentRedirect()) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
             'payment_processor_id' => $this->_paymentProcessor['id'],
@@ -233,33 +233,33 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'htmlType' => 'text',
         'name' => 'credit_card_number',
         'title' => ts('Card Number'),
-        'cc_field' => TRUE,
+        'cc_field' => true,
         'attributes' => array(
           'size' => 20,
           'maxlength' => 20,
           'autocomplete' => 'off',
         ),
-        'is_required' => TRUE,
+        'is_required' => true,
       ),
       'cvv2' => array(
         'htmlType' => 'text',
         'name' => 'cvv2',
         'title' => ts('Security Code'),
-        'cc_field' => TRUE,
+        'cc_field' => true,
         'attributes' => array(
           'size' => 5,
           'maxlength' => 5,
           'autocomplete' => 'off',
         ),
-        'is_required' => TRUE,
+        'is_required' => true,
       ),
       'credit_card_exp_date' => array(
         'htmlType' => 'date',
         'name' => 'credit_card_exp_date',
         'title' => ts('Expiration Date'),
-        'cc_field' => TRUE,
+        'cc_field' => true,
         'attributes' => CRM_Core_SelectValues::date('creditCard'),
-        'is_required' => TRUE,
+        'is_required' => true,
         'month_field' => 'credit_card_exp_date_M',
         'year_field' => 'credit_card_exp_date_Y',
       ),
@@ -268,16 +268,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'htmlType' => 'select',
         'name' => 'credit_card_type',
         'title' => ts('Card Type'),
-        'cc_field' => TRUE,
+        'cc_field' => true,
         'attributes' => $creditCardType,
-        'is_required' => FALSE,
+        'is_required' => false,
       ),
       'card_name' => array(
         'htmlType' => 'text',
         'name' => 'card_name',
         'title' => ts('Card Name'),
-        'cc_field' => FALSE,
-        'is_required' => TRUE,
+        'cc_field' => false,
+        'is_required' => true,
         'contact_api' => 'display_name',
       )
     );
@@ -326,7 +326,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
     }
-    return FALSE;
+    return false;
   }
 
   /**
@@ -346,7 +346,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
       if (\Civi::settings()->get('omnipay_test_mode')) {
-        $this->_is_test = TRUE;
+        $this->_is_test = true;
       }
       if (in_array('testMode', array_keys($this->gateway->getDefaultParameters()))) {
         if (method_exists($this->gateway, 'setDeveloperMode')) {
@@ -560,7 +560,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'description' => $this->getPaymentDescription($params),
       'transactionId' => $this->formatted_transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
-      'returnUrl' => $this->getNotifyUrl(TRUE),
+      'returnUrl' => $this->getNotifyUrl(true),
       'cancelUrl' => $this->getCancelUrl($this->getQfKey(), CRM_Utils_Array::value('participantID', $params)),
       'notifyUrl' => $this->getNotifyUrl(),
       'card' => $this->getCreditCardObjectParams($params),
@@ -605,7 +605,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function getPaymentFormFields() {
     $fields = $this->getProcessorTypeMetadata('payment_fields');
-    if ($fields !== FALSE) {
+    if ($fields !== false) {
       return $fields;
     }
     if ($this->_paymentProcessor['billing_mode'] == 4 || $this->isTransparentRedirect()) {
@@ -629,8 +629,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'htmlType' => 'text',
       'name' => 'card_name',
       'title' => E::ts('Card Name'),
-      'cc_field' => FALSE,
-      'is_required' => TRUE,
+      'cc_field' => false,
+      'is_required' => true,
       'contact_api' => 'display_name',
     ];
     $additionalMetadata = $this->getProcessorTypeMetadata('payment_fields_metadata');
@@ -702,7 +702,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array
    */
-  public function getBillingAddressFields($billingLocationID = NULL) {
+  public function getBillingAddressFields($billingLocationID = null) {
     $fields = $this->getProcessorTypeMetadata('fields');
     if (isset ($fields['billing_fields'])) {
       return $fields['billing_fields'];
@@ -766,7 +766,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->createGateway($params['processor_id']);
     $originalRequest = $_REQUEST;
     $_REQUEST = $params;
-    $response = NULL;
+    $response = null;
     try {
       if ($this->gateway->supportsAcceptNotification()) {
         $response = $this->gateway->acceptNotification($params)->send();
@@ -791,7 +791,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $this->redirectOrExit('success', $response);
     }
     // Unset gateway once we are done with it per https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor/issues/55
-    $this->gateway = NULL;
+    $this->gateway = null;
 
     if ($response->isSuccessful()) {
       try {
@@ -808,7 +808,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
             'payment_processor_id' => $params['processor_id'],
           ));
         }
-        if (!empty($contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != FALSE) {
+        if (!empty($contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != false) {
           $this->storePaymentToken($params, $contribution, $tokenReference);
         }
       }
@@ -855,7 +855,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected function getLock() {
     $mysqlVersion = CRM_Core_DAO::singleValueQuery('SELECT VERSION()');
-    if (stripos($mysqlVersion, 'mariadb') === FALSE
+    if (stripos($mysqlVersion, 'mariadb') === false
       && version_compare($mysqlVersion, '5.7.5', '>=')
     ) {
       $lock = Civi::lockManager()->acquire('data.contribute.contribution.' . $this->transaction_id);
@@ -869,7 +869,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       // So far the best way of telling the difference is the session.
       sleep($delay);
     }
-    return TRUE;
+    return true;
   }
 
   public function queryPaymentPlans($params) {
@@ -899,7 +899,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $processor = civicrm_api3('payment_processor', 'getsingle', array('id' => $params['processor_id']));
     $responder = new CRM_Core_Payment_OmnipayMultiProcessor('live', $processor);
     $responder->processPaymentNotification($params);
-    return TRUE;
+    return true;
   }
 
   /**
@@ -918,7 +918,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *  - fail
    * @param null|object $response
    */
-  protected function redirectOrExit($outcome, $response = NULL) {
+  protected function redirectOrExit($outcome, $response = null) {
     switch ($outcome) {
       case 'fail':
         $userMsg = E::ts('Your payment was not successful. Please try again');
@@ -947,7 +947,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
         break;
       case 'success':
-        $userMsg = NULL;
+        $userMsg = null;
         $redirectUrl = $this->getStoredUrl('success');
         if (!$redirectUrl && method_exists($response, 'confirm')) {
           $output = $response->confirm($redirectUrl, $userMsg);
@@ -958,7 +958,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         break;
     }
 
-    if ($redirectUrl != FALSE) {
+    if ($redirectUrl != false) {
       CRM_Utils_System::redirect($redirectUrl);
     }
     CRM_Utils_System::civiExit();
@@ -984,14 +984,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'contact_id' => $contribution['contact_id'],
       'payment_processor_id' => $params['processor_id'],
       'token' => $tokenReference,
-      'is_transactional' => FALSE,
+      'is_transactional' => false,
       'created_id' => (CRM_Core_Session::singleton()->getLoggedInContactID() ? : $contribution['contact_id']),
     ));
     $contributionRecur = civicrm_api3('ContributionRecur', 'getsingle', array('id' => $contributionRecurID));
     civicrm_api3('contribution_recur', 'create', array(
       'id' => $contributionRecurID,
       'payment_token_id' => $token['id'],
-      'is_transactional' => FALSE,
+      'is_transactional' => false,
       'next_sched_contribution_date' => CRM_Utils_Date::isoToMysql(
         date('Y-m-d 00:00:00', strtotime('+' . $contributionRecur['frequency_interval'] . ' ' . $contributionRecur['frequency_unit']))
       ),
@@ -1031,7 +1031,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'option_group_id' => 'payment_type'
     ));
     if ($paymentType['name'] == 'credit_card_off_site_post') {
-      return TRUE;
+      return true;
     }
   }
 
@@ -1062,7 +1062,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   protected function supportsCancelRecurring() {
-    return TRUE;
+    return true;
   }
 
   protected function cancelSubscription() {
@@ -1078,7 +1078,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   public function supportsEditRecurringContribution() {
-    return TRUE;
+    return true;
   }
 
   /**
@@ -1129,7 +1129,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
             }
           }
         }
-        $this->gateway = NULL;
+        $this->gateway = null;
         unset($params['credit_card_number']);
         unset($params['cvv2']);
         $this->log('success', $params);
@@ -1337,7 +1337,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
     }
-    return FALSE;
+    return false;
   }
 
   /**
@@ -1356,7 +1356,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Instantiate $this->gateWay.
    */
   protected function createGatewayObject() {
-    $parameters = NULL;
+    $parameters = null;
     if (\Civi::settings()->get('omnipay_developer_mode')) {
 
       // Create a history plugin and attach it to the client
@@ -1396,12 +1396,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   protected function isClientSideEncrypted() {
-    $isClientSideEncrypted = FALSE;
+    $isClientSideEncrypted = false;
     $clientSideCredentials = $this->getProcessorTypeMetadata('client_side_credentials');
     if ($clientSideCredentials) {
       foreach (array_keys($clientSideCredentials) as $clientSideCredential) {
         if (!empty($this->_paymentProcessor[$clientSideCredential])) {
-          $isClientSideEncrypted = TRUE;
+          $isClientSideEncrypted = true;
         }
       }
     }
@@ -1434,7 +1434,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected function getCreditCardExpiry($params) {
     if (empty($params['credit_card_exp_date'])) {
-      return FALSE;
+      return false;
     }
     return date("Y-m-t", strtotime($params['credit_card_exp_date']['Y'] . '-' . $params['credit_card_exp_date']['M']));
   }
