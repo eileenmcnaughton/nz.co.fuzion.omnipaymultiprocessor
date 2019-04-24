@@ -6,16 +6,16 @@ This extension provides support for multiple payment processors in CiviCRM.
 
 The following payment processors are supported:
 
-* [Cybersource](../docs/Cybersource.md)
-* Paybox System
-* GoPay
-* Mollie
-* Payment Express - PXPay, PxFusion
-* NAB Transact
-* Eway RapidDirect, Rapid & Shared
-* PayPal - Standard, Pro, REST & Express
 * Authorize AIM
+* [Cybersource](../docs/Cybersource.md)
+* Eway RapidDirect, Rapid & Shared
+* GoPay
 * Mercanet
+* Mollie
+* NAB Transact
+* Paybox System
+* Payment Express - PXPay, PxFusion
+* PayPal - Standard, Pro, REST & Express
 
 ## Configuration
 
