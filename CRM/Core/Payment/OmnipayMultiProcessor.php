@@ -1065,7 +1065,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     return TRUE;
   }
 
-  protected function cancelSubscription() {
+  public function cancelSubscription() {
     // We take no action here - the key thing is that the contribution_recur record is updated.
   }
 
