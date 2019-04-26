@@ -1463,7 +1463,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     // and, at least with Way rapid, the createCreditCard call ignores any attempt to authorise.
     // that is likely to be a pattern.
     $action = CRM_Utils_Array::value('payment_action', $params, 'purchase');
-    if (method_exists($this->gateway, 'completePurchase') && !isset($params['payment_action']) && !empty($params['is_recur'])) {
+    if (method_exists($this->gateway, 'completePurchase') && !isset($params['payment_action']) && empty($params['is_recur'])) {
       $action = 'completePurchase';
     }
 
