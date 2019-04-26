@@ -42,10 +42,11 @@ function civicrm_api3_job_process_recurring($params) {
         'contributionID' => $pending['id'],
         'contactID' => $originalContribution['contact_id'],
         'description' => ts('Repeat payment, original was ' . $originalContribution['id']),
-        'token' => civicrm_api3('PaymentToken', 'getvalue', array(
+        'token' => civicrm_api3('PaymentToken', 'getvalue', [
           'id' => $recurringPayment['payment_token_id'],
           'return' => 'token',
-        )),
+        ]),
+        'payment_action' => 'purchase',
       ));
       $payment = reset($payment['values']);
 
