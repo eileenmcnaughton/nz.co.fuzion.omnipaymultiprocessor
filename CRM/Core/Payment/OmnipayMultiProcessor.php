@@ -1463,7 +1463,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     // and, at least with Way rapid, the createCreditCard call ignores any attempt to authorise.
     // that is likely to be a pattern.
     $action = CRM_Utils_Array::value('payment_action', $params, 'purchase');
-    if (method_exists($this->gateway, 'completePurchase') && !isset($params['payment_action']) && !empty($params['is_recur'])) {
+    // This is a bit tricky. With Paypal there are 2 flows
+    // 1) you get a token from paypal checkout but there is no recurring - this token needs to be 'completed'
+    // 2) you have a recurring payment token that we can bill against. However, is_recur is not
+    // currently we are using a bit of black magic & setting payment_action in the
+    // ProcessRecurring function  - that has test coverage.
+    // Perhaps we need to set a one-time-token field or incomplete_token field in the first flow?
+    // @todo - revisit.
+    if (method_exists($this->gateway, 'completePurchase') && !isset($params['payment_action']) && empty($params['is_recur'])) {
       $action = 'completePurchase';
     }
 
