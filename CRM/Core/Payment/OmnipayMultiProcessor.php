@@ -127,6 +127,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *   The result in an nice formatted array (or an error object)
    */
   public function doPayment(&$params, $component = 'contribute') {
+    // If we have a $0 amount, skip call to processor and set payment_status to Completed.
+    if ($params['amount'] == 0) {
+      return [
+        'payment_status_id' => array_search('Completed', CRM_Contribute_BAO_Contribution::buildOptions('contribution_status_id', 'validate')),
+      ];
+    }
     $params['component'] = strtolower($component);
     $this->initialize($params);
     $this->saveBillingAddressIfRequired($params);
