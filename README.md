@@ -15,7 +15,7 @@ The following payment processors are supported:
 * NAB Transact
 * Paybox System
 * Payment Express - PXPay, PxFusion
-* PayPal - Standard, Pro, REST & Express
+* [PayPal Checkout](https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor/blob/master/docs/Paypal.md)
 
 ## Configuration
 
