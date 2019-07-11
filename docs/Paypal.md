@@ -14,6 +14,18 @@ user would themselves update their paypal credit card and there would be no foll
 (This is particularly the case when the user pays more than one organization with paypal or
 frequently uses it)
 
+## Venmo
+Venmo should appear automatically if the [prerequisites are met](https://help.venmo.com/hc/en-us/articles/115010455987-Getting-Started-Purchasing-with-Venmo).
+
+
+In short, the following prerequisites should be met before Venmo button is visible:
+
+    Venmo is available only in production
+    Using live account
+    Both buyer and seller should be in US
+    Available on Mobile
+    In order to see the Venmo button, the buyer has to have the Venmo app and the Venmo cookie dropped on their browser.
+
 ## Getting started
 To get started you need CiviCRM 5.13+, the Omnipay extension (you can install this from 'Add Extensions' on your extensions page), a clientId and a secret key. The process for getting these is a little confusing as you need to 'create an app' on their developer site - however these stackexchange instructions seem to work pretty well
 
