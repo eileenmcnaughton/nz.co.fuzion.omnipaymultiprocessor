@@ -43,12 +43,12 @@ To get started you need CiviCRM 5.13+, the Omnipay extension (you can install th
 
 
 ## Setting up recurring
-Once you have a client id & secret key you need to request that Paypal enable reference transactions. Paypal advise the best process is to contact your account manager. If
-you don't have an account manager email their support
+Once you have a client id & secret key you need to request that Paypal enable reference transactions. If you have an Account Manager (AM), you should contact your account manager.  If you do not have an AM then it could take a little longer time to get it enabled.  You need [file an MTS ticket](https://www.paypal-techsupport.com/s/?language=en_US) for a non-managed account. You should request that Reference Transactions be enabled.
 
 Once a recurring payment has been paid the payments are processed from your site's scheduled jobs. You can edit the recurring payment profile and change the date, frequency, 
 amount etc through the normal edit recurring payment scheme and these will be 
 respected by the scheduled job.
+
 
 
 
