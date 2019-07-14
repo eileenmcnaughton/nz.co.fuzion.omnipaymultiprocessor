@@ -27,19 +27,16 @@ In short, the following prerequisites should be met before Venmo button is visib
     In order to see the Venmo button, the buyer has to have the Venmo app and the Venmo cookie dropped on their browser.
 
 ## Getting started
-To get started you need CiviCRM 5.13+, the Omnipay extension (you can install this from 'Add Extensions' on your extensions page), a clientId and a secret key. The process for getting these is a little confusing as you need to 'create an app' on their developer site - however these stackexchange instructions seem to work pretty well
+To get started you need CiviCRM 5.13+, the Omnipay extension (you can install this from 'Add Extensions' on your extensions page), a clientId and a secret key. For information on how to set these up go to   https://developer.paypal.com/docs/api/overview/#get-credentials.
 
+Note that when it says log into dashboard there is actually a link at the top right hand corner which is what it refers to.
+(../docs/PaypalCheckout/papal-login.png)
 
-1) Log in to https://developer.paypal.com and click the Applications tab.
+When you go to https://developer.paypal.com/webapps/developer/applications/myapps  andclick Create App.
+![profile](../docs/PaypalCheckout/create_app.png) you can give it any name - the name doesn't matter
 
-1) On the https://developer.paypal.com/webapps/developer/applications/myapps click Create App.
-![profile](../docs/PaypalCheckout/create_app.png)
-
-3) On the Create New App page, provide an app name.
-
-4) Click Create App, and then review the information displayed about your app (as described below)
-
-5) Now you will get client id and secret key
+Once you have credentials you can add a payment processor as normal (Administer->CiviContribute->Payment Processors and choose add processor). Enter the credentials into this screen 
+(../docs/PaypalCheckout/paypal_addprocessor.png)
 
 
 ## Setting up recurring
