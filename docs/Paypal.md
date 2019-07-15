@@ -30,13 +30,13 @@ In short, the following prerequisites should be met before Venmo button is visib
 To get started you need CiviCRM 5.13+, the Omnipay extension (you can install this from 'Add Extensions' on your extensions page), a clientId and a secret key. For information on how to set these up go to   https://developer.paypal.com/docs/api/overview/#get-credentials.
 
 Note that when it says log into dashboard there is actually a link at the top right hand corner which is what it refers to.
-(../docs/PaypalCheckout/papal-login.png)
+![login](../docs/PaypalCheckout/papal-login.png)
 
 When you go to https://developer.paypal.com/webapps/developer/applications/myapps  andclick Create App.
 ![profile](../docs/PaypalCheckout/create_app.png) you can give it any name - the name doesn't matter
 
 Once you have credentials you can add a payment processor as normal (Administer->CiviContribute->Payment Processors and choose add processor). Enter the credentials into this screen 
-(../docs/PaypalCheckout/paypal_addprocessor.png)
+![add processor](../docs/PaypalCheckout/paypal_addprocessor.png)
 
 
 ## Setting up recurring
