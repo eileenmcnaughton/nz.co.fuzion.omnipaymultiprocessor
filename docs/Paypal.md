@@ -32,8 +32,10 @@ To get started you need CiviCRM 5.13+, the Omnipay extension (you can install th
 Note that when it says log into dashboard there is actually a link at the top right hand corner which is what it refers to.
 ![login](../docs/PaypalCheckout/papal-login.png)
 
-When you go to https://developer.paypal.com/webapps/developer/applications/myapps  andclick Create App.
-![profile](../docs/PaypalCheckout/create_app.png) you can give it any name - the name doesn't matter
+You will be directed to [create an app](https://developer.paypal.com/webapps/developer/applications/myapps). The screen is per below.
+You can give the app any name - the name doesn't matter
+
+![profile](../docs/PaypalCheckout/create_app.png) 
 
 Once you have credentials you can add a payment processor as normal (Administer->CiviContribute->Payment Processors and choose add processor). Enter the credentials into this screen 
 ![add processor](../docs/PaypalCheckout/paypal_addprocessor.png)
