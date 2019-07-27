@@ -102,7 +102,6 @@ function omnipaymultiprocessor_civicrm_alterSettingsFolders(&$metaDataFolders) {
 function omnipaymultiprocessor_civicrm_preProcess($formName, &$form) {
   if ($formName === 'CRM_Contribute_Form_Contribution_Main') {
     $form->assign('isJsValidate', TRUE);
-    CRM_Core_Resources::singleton()->addVars('form', ['suppressAlerts' => 1]);
     if (!empty($form->_values['is_recur'])) {
       $recurOptions = [
         'is_recur_interval' =>  $form->_values['is_recur_interval'],
