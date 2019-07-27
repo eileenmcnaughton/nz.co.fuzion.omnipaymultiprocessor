@@ -5,6 +5,27 @@
 
   function renderPaypal() {
     paypal.Buttons({
+
+
+        onInit: function(data, actions) {
+          // Set up the buttons.
+          if (form.valid()) {
+            actions.enable()
+          }
+          else {
+            actions.disable();
+          }
+
+          form.on('blur keyup change', 'input', function (event) {
+            if (form.valid()) {
+              actions.enable()
+            }
+            else {
+              actions.disable();
+            }
+          });
+        },
+
         createBillingAgreement: function (data, actions) {
 
           var frequencyInterval = $('#frequency_interval').val() || 1;
@@ -65,7 +86,7 @@
   }
 
   var paypalScriptURL = 'https://www.paypal.com/sdk/js?client-id=' + CRM.vars.omnipay.client_id + '&currency=' + CRM.vars.omnipay.currency + '&commit=false&vault=true';
-  CRM.loadScript(paypalScriptURL, false)
-    .done(renderPaypal);
+  CRM.loadScript(paypalScriptURL, false).done(renderPaypal);
+
 
 })(CRM.$);
