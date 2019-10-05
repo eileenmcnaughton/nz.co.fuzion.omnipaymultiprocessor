@@ -11,6 +11,10 @@
         {
             "type": "git",
             "url":  "https://github.com/eileenmcnaughton/omnipay-paypal.git"
+        },
+        {
+            "type": "vcs",
+            "url":  "https://github.com/adixon/omnipay-beanstream.git"
         }
 
     ],
@@ -32,7 +36,8 @@
         "dioscouri/omnipay-cybersource": "^3.0@dev",
         "fuzion/omnipay-mercanet": "^3.0@dev",
         "razorpay/omnipay-razorpay": "^3.0@dev",
-        "clue/stream-filter": "^1.4.1"
+        "clue/stream-filter": "^1.4.1",
+        "lemonstand/omnipay-beanstream": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "5.7",
