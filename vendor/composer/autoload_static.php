@@ -57,6 +57,7 @@ class ComposerStaticInit7c7bccbe7d16fd96ad45f827acd06a81
             'Omnipay\\Eway\\' => 13,
             'Omnipay\\Cybersource\\' => 20,
             'Omnipay\\Common\\' => 15,
+            'Omnipay\\Beanstream\\' => 19,
             'Omnipay\\AuthorizeNet\\' => 21,
         ),
         'M' => 
@@ -188,6 +189,10 @@ class ComposerStaticInit7c7bccbe7d16fd96ad45f827acd06a81
         'Omnipay\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/common/src/Common',
+        ),
+        'Omnipay\\Beanstream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lemonstand/omnipay-beanstream/src',
         ),
         'Omnipay\\AuthorizeNet\\' => 
         array (

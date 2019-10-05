@@ -30,6 +30,7 @@ return array(
     'Omnipay\\Eway\\' => array($vendorDir . '/omnipay/eway/src'),
     'Omnipay\\Cybersource\\' => array($vendorDir . '/dioscouri/omnipay-cybersource/src'),
     'Omnipay\\Common\\' => array($vendorDir . '/omnipay/common/src/Common'),
+    'Omnipay\\Beanstream\\' => array($vendorDir . '/lemonstand/omnipay-beanstream/src'),
     'Omnipay\\AuthorizeNet\\' => array($vendorDir . '/omnipay/authorizenet/src'),
     'Money\\' => array($vendorDir . '/moneyphp/money/src'),
     'Http\\Promise\\' => array($vendorDir . '/php-http/promise/src'),

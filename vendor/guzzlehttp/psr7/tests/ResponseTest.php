@@ -162,6 +162,12 @@ class ResponseTest extends BaseTest
         $this->assertSame(['Bam'], $r2->getHeader('baz'));
     }
 
+    public function testNumericHeaderValue()
+    {
+        $r = (new Response())->withHeader('Api-Version', 1);
+        $this->assertSame(['Api-Version' => ['1']], $r->getHeaders());
+    }
+
     public function testWithHeaderAsArray()
     {
         $r = new Response(200, ['Foo' => 'Bar']);
@@ -237,6 +243,49 @@ class ResponseTest extends BaseTest
         $this->assertSame($r, $r->withoutHeader('foo'));
     }
 
+    public function testPassNumericHeaderNameInConstructor()
+    {
+        $r = new Response(200, ['Location' => 'foo', '123' => 'bar']);
+        $this->assertSame('bar', $r->getHeaderLine('123'));
+    }
+
+    /**
+     * @dataProvider invalidHeaderProvider
+     */
+    public function testConstructResponseInvalidHeader($header, $headerValue, $expectedMessage)
+    {
+        $this->expectException('InvalidArgumentException', $expectedMessage);
+        new Response(200, [$header => $headerValue]);
+    }
+
+    public function invalidHeaderProvider()
+    {
+        return [
+            ['foo', [], 'Header value can not be an empty array.'],
+            ['', '', 'Header name can not be empty.'],
+            ['foo', new \stdClass(), 'Header value must be scalar or null but stdClass provided.'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidWithHeaderProvider
+     */
+    public function testWithInvalidHeader($header, $headerValue, $expectedMessage)
+    {
+        $r = new Response();
+        $this->expectException('InvalidArgumentException', $expectedMessage);
+        $r->withHeader($header, $headerValue);
+    }
+
+    public function invalidWithHeaderProvider()
+    {
+        return array_merge($this->invalidHeaderProvider(), [
+            [[], 'foo', 'Header name must be a string but array provided.'],
+            [false, 'foo', 'Header name must be a string but boolean provided.'],
+            [new \stdClass(), 'foo', 'Header name must be a string but stdClass provided.'],
+        ]);
+    }
+
     public function testHeaderValuesAreTrimmed()
     {
         $r1 = new Response(200, ['OWS' => " \t \tFoo\t \t "]);
@@ -251,22 +300,62 @@ class ResponseTest extends BaseTest
     }
 
     /**
-     * @dataProvider responseInitializedWithNonIntegerStatusCodeProvider
+     * @dataProvider nonIntegerStatusCodeProvider
      * @param mixed $invalidValues
      */
-    public function testResponseInitializedWithNonIntegerStatusCodeProvider($invalidValues)
+    public function testConstructResponseWithNonIntegerStatusCode($invalidValues)
     {
         $this->expectException('InvalidArgumentException', 'Status code must be an integer value.');
         new Response($invalidValues);
     }
 
-    public function responseInitializedWithNonIntegerStatusCodeProvider()
+    /**
+     * @dataProvider nonIntegerStatusCodeProvider
+     * @param mixed $invalidValues
+     */
+    public function testResponseChangeStatusCodeWithNonInteger($invalidValues)
+    {
+        $response = new Response();
+        $this->expectException('InvalidArgumentException', 'Status code must be an integer value.');
+        $response->withStatus($invalidValues);
+    }
+
+    public function nonIntegerStatusCodeProvider()
     {
         return [
             ['whatever'],
             ['1.01'],
             [1.01],
             [new \stdClass()],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidStatusCodeRangeProvider
+     * @param mixed $invalidValues
+     */
+    public function testConstructResponseWithInvalidRangeStatusCode($invalidValues)
+    {
+        $this->expectException('InvalidArgumentException', 'Status code must be an integer value between 1xx and 5xx.');
+        new Response($invalidValues);
+    }
+
+    /**
+     * @dataProvider invalidStatusCodeRangeProvider
+     * @param mixed $invalidValues
+     */
+    public function testResponseChangeStatusCodeWithWithInvalidRange($invalidValues)
+    {
+        $response = new Response();
+        $this->expectException('InvalidArgumentException', 'Status code must be an integer value between 1xx and 5xx.');
+        $response->withStatus($invalidValues);
+    }
+
+    public function invalidStatusCodeRangeProvider()
+    {
+        return [
+            [600],
+            [99],
         ];
     }
 }

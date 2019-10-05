@@ -1,7 +1,5 @@
 language: php
 
-sudo: false
-
 branches:
   only:
     - master
@@ -14,31 +12,40 @@ matrix:
   include:
     - php: 5.3
       dist: precise
-    - php: 7.1
-      env: COVERAGE=yes
     - php: 5.4
+      dist: trusty
     - php: 5.5
+      dist: trusty
     - php: 5.6
     - php: 7.0
-    - php: hhvm
-    - php: nightly
     - php: 7.1
-      env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
     - php: 7.2
     - php: 7.3
+      env:
+       - COVERAGE=yes
+       - ANALYSIS=yes
+    - php: 7.4snapshot
+    - php: hhvm-3.30
+    - php: nightly
   allow_failures:
-    - php: hhvm
+    - php: 7.4snapshot
+    - php: hhvm-3.30
     - php: nightly
   fast_finish: true
 
 before_install:
-  - if [[ $TRAVIS_PHP_VERSION != hhvm && $TRAVIS_PHP_VERSION != 7.3 && $COVERAGE != yes ]]; then phpenv config-rm xdebug.ini; fi;
+  - if [[ $COVERAGE != yes ]]; then phpenv config-rm xdebug.ini || true; fi;
 
 install:
-  - composer update $COMPOSER_FLAGS --prefer-dist --no-interaction
+  - if [[ $TRAVIS_PHP_VERSION = hhvm-3.30 ]]; then composer require phpunit/phpunit:4.8.36 --dev; fi
+  - export COMPOSER_FLAGS="--prefer-dist --no-interaction"
+  - if [[ $TRAVIS_PHP_VERSION = nightly ]]; then export COMPOSER_FLAGS="$COMOPSER_FLAGS --ignore-platform-reqs"; fi
+  - composer update $COMPOSER_FLAGS
 
 script:
-  - if [[ $COVERAGE = yes ]]; then vendor/bin/phpunit --verbose --coverage-clover=coverage.clover; else vendor/bin/phpunit --verbose; fi
+  - if [[ $COVERAGE = yes ]]; then vendor/bin/phpunit --coverage-clover=coverage.clover; else vendor/bin/phpunit; fi
+  - if [[ $ANALYSIS = yes ]]; then composer i --working-dir=ci && ci/vendor/bin/psalm; fi
+
 
 after_script:
   - if [[ $COVERAGE = yes ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

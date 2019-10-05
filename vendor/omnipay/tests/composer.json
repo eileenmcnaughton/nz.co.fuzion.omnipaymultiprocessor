@@ -24,7 +24,7 @@
     },
     "require": {
         "php-http/mock-client": "^1.1",
-        "php-http/guzzle6-adapter": "^1.1.1",
+        "php-http/guzzle6-adapter": "^1.1.1|^2",
         "mockery/mockery": "^1",
         "phpunit/phpunit": "^5.7|^6"
     },

@@ -452,6 +452,25 @@ class ExpectationTest extends MockeryTestCase
         Mockery::close();
     }
 
+    public function testExpectsSomeOfArgumentsMatchRealArguments()
+    {
+        $this->mock->shouldReceive('foo')->withSomeOfArgs(1, 3, 5)->times(4);
+        $this->mock->foo(1, 2, 3, 4, 5);
+        $this->mock->foo(1, 3, 5, 2, 4);
+        $this->mock->foo(1, 'foo', 3, 'bar', 5);
+        $this->mock->foo(1, 3, 5);
+        $this->mock->shouldReceive('foo')->withSomeOfArgs('foo')->times(2);
+        $this->mock->foo('foo', 'bar');
+        $this->mock->foo('bar', 'foo');
+    }
+
+    public function testExpectsSomeOfArgumentsGivenArgsDoNotMatchRealArgsAndThrowNoMatchingException()
+    {
+        $this->mock->shouldReceive('foo')->withSomeOfArgs(1, 3, 5);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
+        $this->mock->foo(1, 2, 4, 5);
+    }
+
     public function testExpectsAnyArguments()
     {
         $this->mock->shouldReceive('foo')->withAnyArgs();
@@ -1257,14 +1276,14 @@ class ExpectationTest extends MockeryTestCase
 
     public function testRealConstraintMatchesArgument()
     {
-        $this->mock->shouldReceive('foo')->with(Mockery::type('real'))->once();
+        $this->mock->shouldReceive('foo')->with(Mockery::type('float'))->once();
         $this->mock->foo(2.25);
     }
 
     public function testRealConstraintNonMatchingCase()
     {
         $this->mock->shouldReceive('foo')->times(3);
-        $this->mock->shouldReceive('foo')->with(1, Mockery::type('real'))->never();
+        $this->mock->shouldReceive('foo')->with(1, Mockery::type('float'))->never();
         $this->mock->foo();
         $this->mock->foo(1);
         $this->mock->foo(1, 2, 3);
@@ -1272,7 +1291,7 @@ class ExpectationTest extends MockeryTestCase
 
     public function testRealConstraintThrowsExceptionWhenConstraintUnmatched()
     {
-        $this->mock->shouldReceive('foo')->with(Mockery::type('real'));
+        $this->mock->shouldReceive('foo')->with(Mockery::type('float'));
         $this->expectException(\Mockery\Exception::class);
         $this->mock->foo('f');
         Mockery::close();
@@ -1874,6 +1893,13 @@ class ExpectationTest extends MockeryTestCase
         $this->assertEquals('bar', $mock->foo());
     }
 
+    public function testPassthruCallMagic()
+    {
+        $mock = mock('Mockery_Magic');
+        $mock->shouldReceive('theAnswer')->once()->passthru();
+        $this->assertSame(42, $mock->theAnswer());
+    }
+
     public function testShouldIgnoreMissingExpectationBasedOnArgs()
     {
         $mock = mock("MyService2")->shouldIgnoreMissing();
@@ -1923,8 +1949,8 @@ class ExpectationTest extends MockeryTestCase
     {
         $this->mock->shouldReceive('foo')->once()->andReturn('green');
         $this->mock->shouldReceive('foo')->andReturn('blue');
-        $this->assertEquals($this->mock->foo(), 'green');
-        $this->assertEquals($this->mock->foo(), 'blue');
+        $this->assertEquals('green', $this->mock->foo());
+        $this->assertEquals('blue', $this->mock->foo());
     }
 
     public function testTimesExpectationForbidsFloatNumbers()
@@ -2105,5 +2131,13 @@ class MockeryTest_Foo
 {
     public function foo()
     {
+    }
+}
+
+class Mockery_Magic
+{
+    public function __call($method, $args)
+    {
+        return 42;
     }
 }

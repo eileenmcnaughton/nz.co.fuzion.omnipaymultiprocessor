@@ -1,0 +1,43 @@
+HTTP/1.1 200 OK
+Access-Control-Allow-Headers: accept, origin, content-type
+Access-Control-Allow-Origin: *
+Cache-Control: no-cache
+Content-Length: 477
+Content-Type: application/json; charset=utf-8
+Date: Thu, 24 Mar 2016 18:04:30 GMT
+Expires: -1
+Pragma: no-cache
+Server: Microsoft-IIS/8.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+
+{
+    "id": "1000001",
+    "approved": "1",
+    "message_id": "1",
+    "message": "Approved",
+    "auth_code": "TEST",
+    "created": "2016-03-24T11:04:30",
+    "order_number": "1",
+    "type": "P",
+    "payment_method": "CC",
+    "card": {
+        "card_type": "VI",
+        "last_four": "1234",
+        "cvd_match": 0,
+        "address_match": 0,
+        "postal_result": 0
+    },
+    "links": [
+        {
+            "rel": "void",
+            "href": "https://www.beanstream.com/api/v1/payments/1000001/void",
+            "method": "POST"
+        },
+        {
+            "rel": "return",
+            "href": "https://www.beanstream.com/api/v1/payments/1000001/returns",
+            "method": "POST"
+        }
+    ]
+}
