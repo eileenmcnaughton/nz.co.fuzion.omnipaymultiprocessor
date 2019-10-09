@@ -12,7 +12,7 @@ return array (
     array (
       'version' => 3,
       'name' => 'ProcessRecurring',
-      'description' => 'Process recurring payments',
+      'description' => 'Process Omnipay recurring payments',
       'run_frequency' => 'Hourly',
       'api_entity' => 'Job',
       'api_action' => 'process_recurring',
