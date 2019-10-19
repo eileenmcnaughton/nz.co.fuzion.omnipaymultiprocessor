@@ -1,0 +1,39 @@
+{
+    "name": "lemonstand/omnipay-beanstream",
+    "type": "library",
+    "description": "Beanstream driver for the Omnipay payment processing library",
+    "keywords": [
+        "beanstream",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "payments"
+    ],
+    "homepage": "https://github.com/lemonstand/omnipay-beanstream",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LemonStand",
+            "email": "andy@lemonstand.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Beanstream\\" : "src/" }
+    },
+    "require": {
+        "php": "^5.6|^7",
+        "omnipay/common": "^3",
+        "php-http/guzzle6-adapter": "^1.1"
+    },
+    "require-dev": {
+        "omnipay/tests": "^3.1"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    },
+    "prefer-stable": true
+}

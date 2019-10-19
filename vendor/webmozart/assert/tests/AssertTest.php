@@ -16,7 +16,6 @@ use ArrayObject;
 use Exception;
 use Error;
 use LogicException;
-use PHPUnit_Framework_TestCase;
 use RuntimeException;
 use stdClass;
 use Webmozart\Assert\Assert;
@@ -26,7 +25,7 @@ use Webmozart\Assert\Assert;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class AssertTest extends PHPUnit_Framework_TestCase
+class AssertTest extends BaseTestCase
 {
     private static $resource;
 
@@ -207,11 +206,41 @@ class AssertTest extends PHPUnit_Framework_TestCase
             array('contains', array('abcd', 'cd'), true),
             array('contains', array('abcd', 'de'), false),
             array('contains', array('', 'de'), false),
+            array('contains', array('äþçð', 'äþ'), true),
+            array('contains', array('äþçð', 'þç'), true),
+            array('contains', array('äþçð', 'çð'), true),
+            array('contains', array('äþçð', 'ðé'), false),
+            array('contains', array('', 'ðé'), false),
+            array('contains', array('あいうえ', 'あい'), true),
+            array('contains', array('あいうえ', 'いう'), true),
+            array('contains', array('あいうえ', 'うえ'), true),
+            array('contains', array('あいうえ', 'えお'), false),
+            array('contains', array('', 'えお'), false),
+            array('contains', array('😄😑☹️', '😄'), true),
+            array('contains', array('😄😑☹️', '😑'), true),
+            array('contains', array('😄😑☹️', '☹️'), true),
+            array('contains', array('😄😑☹️', '😄☹️'), false),
+            array('contains', array('', '😑'), false),
             array('notContains', array('abcd', 'ab'), false),
             array('notContains', array('abcd', 'bc'), false),
             array('notContains', array('abcd', 'cd'), false),
             array('notContains', array('abcd', 'de'), true),
             array('notContains', array('', 'de'), true),
+            array('notContains', array('äþçð', 'äþ'), false),
+            array('notContains', array('äþçð', 'þç'), false),
+            array('notContains', array('äþçð', 'çð'), false),
+            array('notContains', array('äþçð', 'ðé'), true),
+            array('notContains', array('', 'ðé'), true),
+            array('notContains', array('あいうえ', 'あい'), false),
+            array('notContains', array('あいうえ', 'いう'), false),
+            array('notContains', array('あいうえ', 'うえ'), false),
+            array('notContains', array('あいうえ', 'えお'), true),
+            array('notContains', array('', 'えお'), true),
+            array('notContains', array('😄😑☹️', '😄'), false),
+            array('notContains', array('😄😑☹️', '😑'), false),
+            array('notContains', array('😄😑☹️', '☹️'), false),
+            array('notContains', array('😄😑☹️', '😄☹️'), true),
+            array('notContains', array('', '😑'), true),
             array('notWhitespaceOnly', array('abc'), true),
             array('notWhitespaceOnly', array('123'), true),
             array('notWhitespaceOnly', array(' abc '), true),
@@ -225,18 +254,46 @@ class AssertTest extends PHPUnit_Framework_TestCase
             array('startsWith', array('abcd', 'ab'), true),
             array('startsWith', array('abcd', 'bc'), false),
             array('startsWith', array('', 'bc'), false),
+            array('startsWith', array('äþçð', 'äþ'), true),
+            array('startsWith', array('äþçð', 'þç'), false),
+            array('startsWith', array('', 'þç'), false),
+            array('startsWith', array('あいうえ', 'あい'), true),
+            array('startsWith', array('あいうえ', 'いう'), false),
+            array('startsWith', array('', 'いう'), false),
+            array('startsWith', array('😄😑☹️', '😄'), true),
+            array('startsWith', array('😄😑☹️', '😑'), false),
+            array('startsWith', array('', '😑'), false),
             array('startsWithLetter', array('abcd'), true),
+            array('startsWithLetter', array('a'), true),
+            array('startsWithLetter', array('a1'), true),
             array('startsWithLetter', array('1abcd'), false),
+            array('startsWithLetter', array('1'), false),
             array('startsWithLetter', array(''), false),
             array('endsWith', array('abcd', 'cd'), true),
             array('endsWith', array('abcd', 'bc'), false),
             array('endsWith', array('', 'bc'), false),
+            array('endsWith', array('äþçð', 'çð'), true),
+            array('endsWith', array('äþçð', 'þç'), false),
+            array('endsWith', array('', 'þç'), false),
+            array('endsWith', array('あいうえ', 'うえ'), true),
+            array('endsWith', array('あいうえ', 'いう'), false),
+            array('endsWith', array('', 'いう'), false),
+            array('endsWith', array('😄😑☹️', '☹️'), true),
+            array('endsWith', array('😄😑☹️', '😑'), false),
+            array('endsWith', array('', '😑'), false),
             array('regex', array('abcd', '~^ab~'), true),
             array('regex', array('abcd', '~^bc~'), false),
             array('regex', array('', '~^bc~'), false),
             array('notRegex', array('abcd', '{^ab}'), false),
             array('notRegex', array('abcd', '{^bc}'), true),
             array('notRegex', array('', '{^bc}'), true),
+            array('unicodeLetters', array('abcd'), true),
+            array('unicodeLetters', array('ᴁڅਘธブ乶'), true),
+            array('unicodeLetters', array('ȁȄ'), true),
+            array('unicodeLetters', array('ȁ1Ȅ'), false),
+            array('unicodeLetters', array('©'), false),
+            array('unicodeLetters', array('🙁'), false),
+            array('unicodeLetters', array(''), false),
             array('alpha', array('abcd'), true),
             array('alpha', array('ab1cd'), false),
             array('alpha', array(''), false),
@@ -260,18 +317,27 @@ class AssertTest extends PHPUnit_Framework_TestCase
             array('length', array('äbcd', 4), true, true),
             array('length', array('äbc', 4), false, true),
             array('length', array('äbcde', 4), false, true),
+            array('length', array('あbcd', 4), true, true), // 'HIRAGANA LETTER A' (U+3042)
+            array('length', array('あbc', 4), false, true),
+            array('length', array('あbcde', 4), false, true),
             array('minLength', array('abcd', 4), true),
             array('minLength', array('abcde', 4), true),
             array('minLength', array('abc', 4), false),
             array('minLength', array('äbcd', 4), true, true),
             array('minLength', array('äbcde', 4), true, true),
             array('minLength', array('äbc', 4), false, true),
+            array('minLength', array('あbcd', 4), true, true),
+            array('minLength', array('あbcde', 4), true, true),
+            array('minLength', array('あbc', 4), false, true),
             array('maxLength', array('abcd', 4), true),
             array('maxLength', array('abc', 4), true),
             array('maxLength', array('abcde', 4), false),
             array('maxLength', array('äbcd', 4), true, true),
             array('maxLength', array('äbc', 4), true, true),
             array('maxLength', array('äbcde', 4), false, true),
+            array('maxLength', array('あbcd', 4), true, true),
+            array('maxLength', array('あbc', 4), true, true),
+            array('maxLength', array('あbcde', 4), false, true),
             array('lengthBetween', array('abcd', 3, 5), true),
             array('lengthBetween', array('abc', 3, 5), true),
             array('lengthBetween', array('abcde', 3, 5), true),
@@ -282,6 +348,11 @@ class AssertTest extends PHPUnit_Framework_TestCase
             array('lengthBetween', array('äbcde', 3, 5), true, true),
             array('lengthBetween', array('äb', 3, 5), false, true),
             array('lengthBetween', array('äbcdef', 3, 5), false, true),
+            array('lengthBetween', array('あbcd', 3, 5), true, true),
+            array('lengthBetween', array('あbc', 3, 5), true, true),
+            array('lengthBetween', array('あbcde', 3, 5), true, true),
+            array('lengthBetween', array('あb', 3, 5), false, true),
+            array('lengthBetween', array('あbcdef', 3, 5), false, true),
             array('fileExists', array(__FILE__), true),
             array('fileExists', array(__DIR__), true),
             array('fileExists', array(__DIR__.'/foobar'), false),
@@ -294,7 +365,7 @@ class AssertTest extends PHPUnit_Framework_TestCase
             // no tests for readable()/writable() for now
             array('classExists', array(__CLASS__), true),
             array('classExists', array(__NAMESPACE__.'\Foobar'), false),
-            array('subclassOf', array(__CLASS__, 'PHPUnit_Framework_TestCase'), true),
+            array('subclassOf', array(__CLASS__, 'Webmozart\Assert\Tests\BaseTestCase'), true),
             array('subclassOf', array(__CLASS__, 'stdClass'), false),
             array('interfaceExists', array('\Countable'), true),
             array('interfaceExists', array(__CLASS__), false),
@@ -335,17 +406,23 @@ class AssertTest extends PHPUnit_Framework_TestCase
             array('maxCount', array(array(0, 1), 2), true),
             array('maxCount', array(array(0), 2), true),
             array('countBetween', array(array(0, 1, 2), 4, 5), false),
+            array('countBetween', array(array(0, 1, 2), 3, 5), true),
             array('countBetween', array(array(0, 1, 2), 1, 2), false),
             array('countBetween', array(array(0, 1, 2), 2, 5), true),
+            array('countBetween', array(array(0, 1, 2), 2, 3), true),
             array('isList', array(array(1, 2, 3)), true),
             array('isList', array(array()), false),
             array('isList', array(array(0 => 1, 2 => 3)), false),
             array('isList', array(array('key' => 1, 'foo' => 2)), false),
+            array('isList', array(true), false),
+            array('isList', array(false), false),
             array('isMap', array(array('key' => 1, 'foo' => 2)), true),
             array('isMap', array(array()), false),
             array('isMap', array(array(1, 2, 3)), false),
             array('isMap', array(array(0 => 1, 2 => 3)), false),
             array('uuid', array('00000000-0000-0000-0000-000000000000'), true),
+            array('uuid', array('urn:ff6f8cb0-c57d-21e1-9b21-0800200c9a66'), true),
+            array('uuid', array('uuid:{ff6f8cb0-c57d-21e1-9b21-0800200c9a66}'), true),
             array('uuid', array('ff6f8cb0-c57d-21e1-9b21-0800200c9a66'), true),
             array('uuid', array('ff6f8cb0-c57d-11e1-9b21-0800200c9a66'), true),
             array('uuid', array('ff6f8cb0-c57d-31e1-9b21-0800200c9a66'), true),
@@ -399,6 +476,13 @@ class AssertTest extends PHPUnit_Framework_TestCase
             array('ipv6', array(array()), false),
             array('ipv6', array(null), false),
             array('ipv6', array(false), false),
+            array('email', array('foo'), false),
+            array('email', array(123), false),
+            array('email', array('foo.com'), false),
+            array('email', array('foo@bar.com'), true),
+            array('uniqueValues', array(array('qwerty', 'qwerty')), false),
+            array('uniqueValues', array(array('asdfg', 'qwerty')), true),
+            array('uniqueValues', array(array(123, '123')), false),
         );
     }
 
@@ -432,6 +516,7 @@ class AssertTest extends PHPUnit_Framework_TestCase
         }
 
         call_user_func_array(array('Webmozart\Assert\Assert', $method), $args);
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -453,6 +538,7 @@ class AssertTest extends PHPUnit_Framework_TestCase
         }
 
         call_user_func_array(array('Webmozart\Assert\Assert', 'nullOr'.ucfirst($method)), $args);
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -461,6 +547,7 @@ class AssertTest extends PHPUnit_Framework_TestCase
     public function testNullOrAcceptsNull($method)
     {
         call_user_func(array('Webmozart\Assert\Assert', 'nullOr'.ucfirst($method)), null);
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -485,6 +572,7 @@ class AssertTest extends PHPUnit_Framework_TestCase
         array_unshift($args, array($arg));
 
         call_user_func_array(array('Webmozart\Assert\Assert', 'all'.ucfirst($method)), $args);
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -509,6 +597,7 @@ class AssertTest extends PHPUnit_Framework_TestCase
         array_unshift($args, new ArrayIterator(array($arg)));
 
         call_user_func_array(array('Webmozart\Assert\Assert', 'all'.ucfirst($method)), $args);
+        $this->addToAssertionCount(1);
     }
 
     public function getStringConversions()
@@ -542,6 +631,13 @@ class AssertTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('\InvalidArgumentException', $exceptionMessage);
 
         call_user_func_array(array('Webmozart\Assert\Assert', $method), $args);
+    }
+
+    public function testAnUnkownMethodThrowsABadMethodCall()
+    {
+        $this->setExpectedException('\BadMethodCallException');
+
+        Assert::nonExistentMethod();
     }
 }
 

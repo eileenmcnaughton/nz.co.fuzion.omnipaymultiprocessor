@@ -34,8 +34,9 @@ Table of Contents
          * [Server Notification Handler](#server-notification-handler)
       * [Sage Pay Form Methods](#sage-pay-form-methods)
          * [Form Authorize](#form-authorize)
+         * [Form completeAuthorise](#form-completeauthorise)
          * [Form Purchase](#form-purchase)
-      * [Sage Pay Shared Methods (Direct and Server)](#sage-pay-shared-methods-for-both-direct-and-server)
+      * [Sage Pay Shared Methods (Direct and Server)](#sage-pay-shared-methods-direct-and-server)
          * [Repeat Authorize/Purchase](#repeat-authorizepurchase)
          * [Capture](#capture)
          * [Delete Card](#delete-card)
@@ -310,7 +311,7 @@ $creditCard = new CreditCard([
 * The country must be a two-character ISO 3166 code.
 * The state will be a two-character ISO code, and is mandatory if the country is "US".
 * The state will be ignored if the country is not "US".
-* Adddress2 is optional, but all other fields are mandatory.
+* Address2 is optional, but all other fields are mandatory.
 * The postcode is optional for Republic of Ireland "IE",
   though *some* banks insist it is present and valid.
 * This gateway lives on an extended ASCII ISO 8859-1 back end.
@@ -598,15 +599,19 @@ The `$nextUrl` is where you want Sage Pay to send the user to next.
 It will often be the same URL whether the transaction was approved or not,
 since the result will be safely saved in the database.
 
-The `confirm()`, `error()` and `reject()` methods will all exit the
+The `confirm()`, `error()` and `reject()` methods will all echo the expected
+return payload and expect your application to return a HTTP Status `200`
+without adding any further content.
+
+These functions used to exit the
 application immediately to prevent additional output being added to
-the response. You can disable this by setting the `exitOnResponse`
+the response. You can restore this functionality by setting the `exitOnResponse`
 option:
 
 ```php
-$gateway->setExitOnResponse(false);
+$gateway->setExitOnResponse(true);
 // or
-$notifyRequest->setExitOnResponse(false);
+$notifyRequest->setExitOnResponse(true);
 ```
 
 If you just want the body payload, this method will return it without
@@ -681,7 +686,10 @@ At the gateway, the user will authenticate or authorise their credit card,
 perform any 3D Secure actions that may be requested, then will return to the
 merchant site.
 
-To get the result details, the transaction is "completed" on return:
+### Form completeAuthorise
+
+To get the result details, the transaction is "completed" on the
+user's return. This will be at your `returnUrl` endpoint:
 
 ```php
 // The result will be read and decrypted from the return URL (or failure URL)
@@ -696,13 +704,29 @@ $result->getTransactionReference();
 
 If you already have the encrypted response string, then it can be passed in.
 However, you would normally leave it for the driver to read it for you from
-the current server request:
+the current server request, so the following would not normally be necessary:
 
     $crypt = $_GET['crypt']; // or supplied by your framework
     $result = $gateway->completeAuthorize(['crypt' => $crypt])->send();
 
 This is handy for testing or if the current page query parameters are not
 available in a particular architecture.
+
+It is important to make sure this result is what was expected by your
+merchant site.
+Your transaction ID will be returned in the result and can be inspected:
+
+    $result->getTransactionId()
+
+You *must* make sure this transaction ID matches the one you sent
+the user off with in the first place (store it in your session).
+If they do no match, then you cannot trust the result, as the user
+could be running two checkout flows at the same time, possibly
+for wildly different amounts.
+
+In a future release, the `completeAuthorize()` method will expect the
+`transactionId` to be supplied and it must match before it will
+return a success status.
 
 Like `Server` and `Direct`, you can use either the `DEFERRED` or the `AUTHENTICATE`
 method to reserve the amount.
@@ -724,13 +748,13 @@ admin panel.
 * `abort()` - abort an authorization before it is captured
 * `repeatAuthorize()` - new authorization based on past transaction
 * `repeatPurchase()` - new purchase based on past transaction
-* `deleteCard()` - remove a cardReference or token from the accout
+* `deleteCard()` - remove a cardReference or token from the account
 
 ### Repeat Authorize/Purchase
 
 An authorization or purchase can be created from a past authorization or purchase.
-You will need the `transactionReference` of the original transation.
-The `transactionReference` will be a JSON string containing the four peices of
+You will need the `transactionReference` of the original transaction.
+The `transactionReference` will be a JSON string containing the four pieces of
 information the gateway needs to reuse the transaction.
 
 ```php
@@ -987,7 +1011,7 @@ If you are having general issues with Omnipay, we suggest posting on
 [Stack Overflow](http://stackoverflow.com/). Be sure to add the
 [omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
 
-If you want to keep up to date with release anouncements, discuss ideas for the project,
+If you want to keep up to date with release announcements, discuss ideas for the project,
 or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
 you can subscribe to.
 

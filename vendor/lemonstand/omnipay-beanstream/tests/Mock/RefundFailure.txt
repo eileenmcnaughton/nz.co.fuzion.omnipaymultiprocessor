@@ -1,0 +1,9 @@
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "code":49,
+    "category":3,
+    "message":"Invalid transaction request string",
+    "reference":"https://www.beanstream.com/docs/errors#49"
+}

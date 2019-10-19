@@ -1,0 +1,10 @@
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "code": 19,
+    "category": 3,
+    "message": "Customer information failed data validation",
+    "reference": null,
+    "details": []
+}

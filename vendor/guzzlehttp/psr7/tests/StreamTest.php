@@ -231,6 +231,133 @@ class StreamTest extends BaseTest
         self::$isFReadError = false;
         $stream->close();
     }
+
+    /**
+     * @dataProvider gzipModeProvider
+     *
+     * @param string $mode
+     * @param bool   $readable
+     * @param bool   $writable
+     */
+    public function testGzipStreamModes($mode, $readable, $writable)
+    {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('This does not work on HHVM.');
+        }
+
+        $r = gzopen('php://temp', $mode);
+        $stream = new Stream($r);
+
+        $this->assertSame($readable, $stream->isReadable());
+        $this->assertSame($writable, $stream->isWritable());
+
+        $stream->close();
+    }
+
+    public function gzipModeProvider()
+    {
+        return [
+            ['mode' => 'rb9', 'readable' => true, 'writable' => false],
+            ['mode' => 'wb2', 'readable' => false, 'writable' => true],
+        ];
+    }
+
+    /**
+     * @dataProvider readableModeProvider
+     *
+     * @param string $mode
+     */
+    public function testReadableStream($mode)
+    {
+        $r = fopen('php://temp', $mode);
+        $stream = new Stream($r);
+
+        $this->assertTrue($stream->isReadable());
+
+        $stream->close();
+    }
+
+    public function readableModeProvider()
+    {
+        return [
+            ['r'],
+            ['w+'],
+            ['r+'],
+            ['x+'],
+            ['c+'],
+            ['rb'],
+            ['w+b'],
+            ['r+b'],
+            ['x+b'],
+            ['c+b'],
+            ['rt'],
+            ['w+t'],
+            ['r+t'],
+            ['x+t'],
+            ['c+t'],
+            ['a+'],
+            ['rb+'],
+        ];
+    }
+
+    public function testWriteOnlyStreamIsNotReadable()
+    {
+        $r = fopen('php://output', 'w');
+        $stream = new Stream($r);
+
+        $this->assertFalse($stream->isReadable());
+
+        $stream->close();
+    }
+
+    /**
+     * @dataProvider writableModeProvider
+     *
+     * @param string $mode
+     */
+    public function testWritableStream($mode)
+    {
+        $r = fopen('php://temp', $mode);
+        $stream = new Stream($r);
+
+        $this->assertTrue($stream->isWritable());
+
+        $stream->close();
+    }
+
+    public function writableModeProvider()
+    {
+        return [
+            ['w'],
+            ['w+'],
+            ['rw'],
+            ['r+'],
+            ['x+'],
+            ['c+'],
+            ['wb'],
+            ['w+b'],
+            ['r+b'],
+            ['rb+'],
+            ['x+b'],
+            ['c+b'],
+            ['w+t'],
+            ['r+t'],
+            ['x+t'],
+            ['c+t'],
+            ['a'],
+            ['a+'],
+        ];
+    }
+
+    public function testReadOnlyStreamIsNotWritable()
+    {
+        $r = fopen('php://input', 'r');
+        $stream = new Stream($r);
+
+        $this->assertFalse($stream->isWritable());
+
+        $stream->close();
+    }
 }
 
 namespace GuzzleHttp\Psr7;

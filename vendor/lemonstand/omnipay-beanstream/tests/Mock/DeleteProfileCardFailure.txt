@@ -1,0 +1,9 @@
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "code": 44,
+    "category": 3,
+    "message": "Operation failed, no matching card id.",
+    "reference": null
+}
