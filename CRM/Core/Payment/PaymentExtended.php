@@ -346,7 +346,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *
    * @param integer|null $contribution_id Contribution ID
    */
-  protected function setTransactionID($contribution_id, $prefixAction = 'add') {
+  protected function setContributionReference($contribution_id, $prefixAction = 'add') {
     $prefix = $this->getPrefix();
     if ($contribution_id) {
       if ($prefixAction === 'strip') {
