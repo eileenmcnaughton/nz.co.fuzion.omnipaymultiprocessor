@@ -7,7 +7,7 @@ This extension provides support for multiple payment processors in CiviCRM.
 The following payment processors are supported:
 
 * Authorize AIM
-* [Cybersource](../docs/Cybersource.md)
+* [Cybersource](https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor/blob/master/docs/Cybersource.md)
 * Eway RapidDirect, Rapid & Shared
 * GoPay
 * Mercanet
