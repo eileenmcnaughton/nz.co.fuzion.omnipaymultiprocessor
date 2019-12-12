@@ -217,6 +217,8 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * Get label for the payment information type.
    *
    * @return string
+   *
+   * @throws \CiviCRM_API3_Exception
    */
   public function getPaymentTypeLabel() {
     if (!isset($this->payment_type_label)) {
@@ -289,7 +291,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   public function getPaymentFormFields() {
     $paymentType = civicrm_api3('option_value', 'getvalue', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type', 'return' => 'name'));
     $fn = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $paymentType))) . 'FormFields';
-    if ($fn == 'getCreditCardFormFields' && $this->_paymentProcessor['billing_mode'] == 4) {
+    if ($fn === 'getCreditCardFormFields' && $this->_paymentProcessor['billing_mode'] == 4) {
       //@todo this is a traditional off-site processor
       return array();
     }
@@ -338,6 +340,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   public function handlePaymentNotification() {
   }
 
+  /**
+   * Get the prefix for the processor.
+   *
+   * @return string
+   *
+   * @throws \CiviCRM_API3_Exception
+   */
   protected function getPrefix() {
     $paymentFields = civicrm_api3('PaymentProcessor', 'getfields', []);
     foreach ($paymentFields['values'] as $paymentField) {
