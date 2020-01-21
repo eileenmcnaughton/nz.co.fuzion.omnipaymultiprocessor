@@ -176,6 +176,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
+        $this->saveTransactionReference($params['contributionID'], $response);
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
         CRM_Core_Session::storeSessionObjects(FALSE);
@@ -199,6 +200,41 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       // internal error, log exception and display a generic message to the customer
       //@todo - looks like invalid credit card numbers are winding up here too - we could handle separately by capturing that exception type - what is good fraud practice?
       return $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
+    }
+  }
+
+  /**
+   * Sagepay requires us remembering the transaction reference before redirecting,
+   * as it contains the `SecurityKey` field, that will be necessary in order
+   * to verify a successful payment notification.
+   */
+  protected function saveTransactionReference($contributionID, $response) {
+    civicrm_api3('Contribution', 'create', [
+      'id' => $contributionID,
+      'trxn_id' => $response->getTransactionReference()
+    ]);
+  }
+
+  /**
+   * During Sagepay payment notifications, we need to read the `SecurityKey`
+   * from the database.
+   */
+  protected function getSecurityKey($contributionID) {
+    $trxnId = CRM_Core_DAO::singleValueQuery('SELECT trxn_id
+      FROM civicrm_contribution
+      WHERE id = %1', [
+        1 => [ $contributionID, 'Integer' ]
+      ]
+    );
+
+    if ($trxnId) {
+      try {
+        $reference = json_decode($trxnId, TRUE);
+      } catch(Exception $e) {}
+
+      if (array_key_exists('SecurityKey', $reference)) {
+        return $reference['SecurityKey'];
+      }
     }
   }
 
@@ -512,6 +548,27 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $cardFields['billingState'] = CRM_Core_PseudoConstant::stateProvinceAbbreviation($cardFields['billingState']);
     }
 
+    // Prevent errors like "3140 : The DeliveryCountry value is invalid"
+    // by copying billing values as shipping values
+    if (empty($cardFields['shippingAddress1']) && isset($cardFields['billingAddress1'])) {
+      $cardFields['shippingAddress1'] = $cardFields['billingAddress1'];
+    }
+    if (empty($cardFields['shippingAddress2']) && isset($cardFields['billingAddress2'])) {
+      $cardFields['shippingAddress2'] = $cardFields['billingAddress2'];
+    }
+    if (empty($cardFields['shippingCity']) && isset($cardFields['billingCity'])) {
+      $cardFields['shippingCity'] = $cardFields['billingCity'];
+    }
+    if (empty($cardFields['shippingPostcode']) && isset($cardFields['billingPostcode'])) {
+      $cardFields['shippingPostcode'] = $cardFields['billingPostcode'];
+    }
+    if (empty($cardFields['shippingState']) && isset($cardFields['billingState'])) {
+      $cardFields['shippingState'] = $cardFields['billingState'];
+    }
+    if (empty($cardFields['shippingCountry']) && isset($cardFields['billingCountry'])) {
+      $cardFields['shippingCountry'] = $cardFields['billingCountry'];
+    }
+
     if (empty($cardFields['email'])) {
       if (!empty($params['email-' . $billingID])) {
         $cardFields['email'] = $params['email-' . $billingID];
@@ -781,6 +838,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $response = $this->gateway->completePurchase($params)->send();
       }
       if ($response->getTransactionId()) {
+        $securityKey = $this->getSecurityKey($response->getTransactionId());
+        if ($securityKey) {
+          $response->setSecurityKey($securityKey);
+        }
         $this->setContributionReference($response->getTransactionId(), 'strip');
       }
     }
@@ -956,7 +1017,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $userMsg = NULL;
         $redirectUrl = $this->getStoredUrl('success');
         if (!$redirectUrl && method_exists($response, 'confirm')) {
+          if (!$redirectUrl) {
+            $redirectUrl = CRM_Utils_System::url('civicrm', NULL, TRUE);
+          }
           $output = $response->confirm($redirectUrl, $userMsg);
+          exit;
           if ($output) {
             echo $output;
           }
