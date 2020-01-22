@@ -176,7 +176,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
-        $this->saveTransactionReference($params['contributionID'], $response);
+        if ($this->isNotificationFromDifferentSession()) {
+          $this->saveTransactionReference($params['contributionID'], $response);
+        }
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
         CRM_Core_Session::storeSessionObjects(FALSE);
@@ -204,22 +206,55 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * If the payment notification cames from a different session (in Sagepay, there
+   * are their servers), we'll need to know that so we can store some information
+   * that otherwise, would only be saved in the user session and therefore not
+   * available during the notification process.
+   */
+  protected function isNotificationFromDifferentSession() {
+    // As Sagepay is the only processor doing that at the moment, it is sufficient
+    // to check if the processor is a Sagepay processor. The there are more processors
+    // like that in the future, we may need to implement a more general way
+    // @todo $this->getProcessorTypeMetadata('notification_from_different_session')
+    return $this->_paymentProcessor['payment_processor_type'] = 'omnipay_SagePay_Server';
+  }
+
+  /**
    * Sagepay requires us remembering the transaction reference before redirecting,
    * as it contains the `SecurityKey` field, that will be necessary in order
    * to verify a successful payment notification.
+   *
+   * Also, their call to notify payments is made by Sagepay servers, not by
+   * the user who started the transaction. Therefore, as session variables
+   * are not going to be available, we need to store the `qfKey` also.
    */
   protected function saveTransactionReference($contributionID, $response) {
     civicrm_api3('Contribution', 'create', [
       'id' => $contributionID,
-      'trxn_id' => $response->getTransactionReference()
+      'trxn_id' => $this->addQfKeyToTransactionReference($response),
     ]);
   }
 
   /**
-   * During Sagepay payment notifications, we need to read the `SecurityKey`
-   * from the database.
+   * Save the qfKey as part of the transaction reference so it can be accessed
+   * from both sessions: the user one and the Sagepay notification service.
    */
-  protected function getSecurityKey($contributionID) {
+  protected function addQfKeyToTransactionReference($response) {
+    try {
+      $reference = json_decode($response->getTransactionReference(), TRUE);
+    } catch(Exception $e) {}
+
+    $reference['qfKey'] = $this->getQfKey();
+    return json_encode($reference);
+  }
+
+  /**
+   * During Sagepay payment notifications, we need to read both the
+   * `SecurityKey` and the `qfKey` from the database. The first one
+   * to actually validate the notification. The second one to obtain
+   * the redirection URLs.
+   */
+  protected function getSavedParameter($contributionID, $field) {
     $trxnId = CRM_Core_DAO::singleValueQuery('SELECT trxn_id
       FROM civicrm_contribution
       WHERE id = %1', [
@@ -232,10 +267,18 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $reference = json_decode($trxnId, TRUE);
       } catch(Exception $e) {}
 
-      if (array_key_exists('SecurityKey', $reference)) {
-        return $reference['SecurityKey'];
+      if (array_key_exists($field, $reference)) {
+        return $reference[$field];
       }
     }
+  }
+
+  protected function getSavedSecurityKey($contributionID) {
+    return $this->getSavedParameter($contributionID, 'SecurityKey');
+  }
+
+  protected function getSavedQfKey($contributionID) {
+    return $this->getSavedParameter($contributionID, 'qfKey');
   }
 
   /**
@@ -548,26 +591,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $cardFields['billingState'] = CRM_Core_PseudoConstant::stateProvinceAbbreviation($cardFields['billingState']);
     }
 
-    // Prevent errors like "3140 : The DeliveryCountry value is invalid"
-    // by copying billing values as shipping values
-    if (empty($cardFields['shippingAddress1']) && isset($cardFields['billingAddress1'])) {
-      $cardFields['shippingAddress1'] = $cardFields['billingAddress1'];
-    }
-    if (empty($cardFields['shippingAddress2']) && isset($cardFields['billingAddress2'])) {
-      $cardFields['shippingAddress2'] = $cardFields['billingAddress2'];
-    }
-    if (empty($cardFields['shippingCity']) && isset($cardFields['billingCity'])) {
-      $cardFields['shippingCity'] = $cardFields['billingCity'];
-    }
-    if (empty($cardFields['shippingPostcode']) && isset($cardFields['billingPostcode'])) {
-      $cardFields['shippingPostcode'] = $cardFields['billingPostcode'];
-    }
-    if (empty($cardFields['shippingState']) && isset($cardFields['billingState'])) {
-      $cardFields['shippingState'] = $cardFields['billingState'];
-    }
-    if (empty($cardFields['shippingCountry']) && isset($cardFields['billingCountry'])) {
-      $cardFields['shippingCountry'] = $cardFields['billingCountry'];
-    }
+    $this->copyShippingFieldsFromBillingIfEmpty($cardFields);
 
     if (empty($cardFields['email'])) {
       if (!empty($params['email-' . $billingID])) {
@@ -585,6 +609,21 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
     }
     return $cardFields;
+  }
+
+  /**
+   * To prevent errors like Sagepay's "3140 : The DeliveryCountry value is invalid",
+   * we copy billing values where shipping values are empty
+   */
+  protected function copyShippingFieldsFromBillingIfEmpty(&$cardFields) {
+    $fieldsSuffixes = [ 'Address1', 'Address2', 'City', 'Postcode', 'State', 'Country' ];
+    foreach($fieldSuffixes as $fieldSuffix) {
+      $billingField = 'billing' . $fieldSuffix;
+      $shippingField = 'shipping' . $fieldSuffix;
+      if (empty($cardFields[$shippingField]) && isset($cardFields[$billingField])) {
+        $cardFields[$shippingField] = $cardFields[$billingField];
+      }
+    }
   }
 
   /**
@@ -838,9 +877,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $response = $this->gateway->completePurchase($params)->send();
       }
       if ($response->getTransactionId()) {
-        $securityKey = $this->getSecurityKey($response->getTransactionId());
-        if ($securityKey) {
-          $response->setSecurityKey($securityKey);
+        if ($this->isNotificationFromDifferentSession()) {
+          $this->setQfKey($this->getSavedQfKey($response->getTransactionId()));
+          $securityKey = $this->getSavedSecurityKey($response->getTransactionId());
+          if ($securityKey) {
+            $response->setSecurityKey($securityKey);
+          }
         }
         $this->setContributionReference($response->getTransactionId(), 'strip');
       }
@@ -869,9 +911,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         ));
 
         if ($this->getLock() && CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']) !== 'Completed') {
+          if ($this->isNotificationFromDifferentSession()) {
+            $reference = $this->addQfKeyToTransactionReference($response);
+          } else {
+            $reference = $response->getTransactionReference();
+          }
           civicrm_api3('contribution', 'completetransaction', array(
             'id' => $this->transaction_id,
-            'trxn_id' => $response->getTransactionReference(),
+            'trxn_id' => $reference,
             'payment_processor_id' => $params['processor_id'],
           ));
         }
@@ -992,7 +1039,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         CRM_Core_Session::setStatus($userMsg);
         $redirectUrl = $this->getStoredUrl('fail');
         if (!$redirectUrl && method_exists($response, 'invalid')) {
-          $response->invalid($redirectUrl, $userMsg);
+          if ($this->isNotificationFromDifferentSession()) {
+            $qfKey = $this->getSavedQfKey($this->transaction_id);
+            $response->invalid($this->getReturnFailUrl($qfKey), $userMsg);
+          } else {
+            $response->invalid($redirectUrl, $userMsg);
+          }
         }
         break;
 
@@ -1004,7 +1056,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         CRM_Core_Session::setStatus($userMsg);
         $redirectUrl = $this->getStoredUrl('fail');
         if ($response && method_exists($response, 'error')) {
-          $response->error($redirectUrl, $userMsg);
+          if ($this->isNotificationFromDifferentSession()) {
+            $qfKey = $this->getSavedQfKey($this->transaction_id);
+            $response->error($this->getReturnFailUrl($qfKey), $userMsg);
+          } else {
+            $response->error($redirectUrl, $userMsg);
+          }
         }
         try {
           $this->handleError('error', $this->transaction_id . ' ' . $response->getMessage(), array('processor_error', $response->getMessage()), 9002, $userMsg);
@@ -1017,11 +1074,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $userMsg = NULL;
         $redirectUrl = $this->getStoredUrl('success');
         if (!$redirectUrl && method_exists($response, 'confirm')) {
-          if (!$redirectUrl) {
-            $redirectUrl = CRM_Utils_System::url('civicrm', NULL, TRUE);
+          if ($this->isNotificationFromDifferentSession()) {
+            $qfKey = $this->getSavedQfKey($this->transaction_id);
+            $response->confirm($this->getReturnSuccessUrl($qfKey), $userMsg);
+          } else {
+            $output = $response->confirm($redirectUrl, $userMsg);
           }
-          $output = $response->confirm($redirectUrl, $userMsg);
-          exit;
           if ($output) {
             echo $output;
           }
