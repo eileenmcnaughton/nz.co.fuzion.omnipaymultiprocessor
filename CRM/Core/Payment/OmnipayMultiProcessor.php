@@ -176,7 +176,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       elseif ($response->isRedirect()) {
-        if ($this->isNotificationFromDifferentSession()) {
+        if ($this->getProcessorTypeMetadata('notification_from_different_session')) {
           $this->saveTransactionReference($params['contributionID'], $response);
         }
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
@@ -203,20 +203,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       //@todo - looks like invalid credit card numbers are winding up here too - we could handle separately by capturing that exception type - what is good fraud practice?
       return $this->handleError('error', 'unknown processor error ' . $this->_paymentProcessor['payment_processor_type'], array($e->getCode() => $e->getMessage()), $e->getCode(), 'Sorry, there was an error processing your payment. Please try again later.');
     }
-  }
-
-  /**
-   * If the payment notification cames from a different session (in Sagepay, there
-   * are their servers), we'll need to know that so we can store some information
-   * that otherwise, would only be saved in the user session and therefore not
-   * available during the notification process.
-   */
-  protected function isNotificationFromDifferentSession() {
-    // As Sagepay is the only processor doing that at the moment, it is sufficient
-    // to check if the processor is a Sagepay processor. The there are more processors
-    // like that in the future, we may need to implement a more general way
-    // @todo $this->getProcessorTypeMetadata('notification_from_different_session')
-    return $this->_paymentProcessor['payment_processor_type'] = 'omnipay_SagePay_Server';
   }
 
   /**
@@ -877,7 +863,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $response = $this->gateway->completePurchase($params)->send();
       }
       if ($response->getTransactionId()) {
-        if ($this->isNotificationFromDifferentSession()) {
+        if ($this->getProcessorTypeMetadata('notification_from_different_session')) {
           $this->setQfKey($this->getSavedQfKey($response->getTransactionId()));
           $securityKey = $this->getSavedSecurityKey($response->getTransactionId());
           if ($securityKey) {
@@ -911,7 +897,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         ));
 
         if ($this->getLock() && CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']) !== 'Completed') {
-          if ($this->isNotificationFromDifferentSession()) {
+          if ($this->getProcessorTypeMetadata('notification_from_different_session')) {
             $reference = $this->addQfKeyToTransactionReference($response);
           } else {
             $reference = $response->getTransactionReference();
@@ -1039,7 +1025,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         CRM_Core_Session::setStatus($userMsg);
         $redirectUrl = $this->getStoredUrl('fail');
         if (!$redirectUrl && method_exists($response, 'invalid')) {
-          if ($this->isNotificationFromDifferentSession()) {
+          if ($this->getProcessorTypeMetadata('notification_from_different_session')) {
             $qfKey = $this->getSavedQfKey($this->transaction_id);
             $response->invalid($this->getReturnFailUrl($qfKey), $userMsg);
           } else {
@@ -1056,7 +1042,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         CRM_Core_Session::setStatus($userMsg);
         $redirectUrl = $this->getStoredUrl('fail');
         if ($response && method_exists($response, 'error')) {
-          if ($this->isNotificationFromDifferentSession()) {
+          if ($this->getProcessorTypeMetadata('notification_from_different_session')) {
             $qfKey = $this->getSavedQfKey($this->transaction_id);
             $response->error($this->getReturnFailUrl($qfKey), $userMsg);
           } else {
@@ -1074,7 +1060,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $userMsg = NULL;
         $redirectUrl = $this->getStoredUrl('success');
         if (!$redirectUrl && method_exists($response, 'confirm')) {
-          if ($this->isNotificationFromDifferentSession()) {
+          if ($this->getProcessorTypeMetadata('notification_from_different_session')) {
             $qfKey = $this->getSavedQfKey($this->transaction_id);
             $response->confirm($this->getReturnSuccessUrl($qfKey), $userMsg);
           } else {

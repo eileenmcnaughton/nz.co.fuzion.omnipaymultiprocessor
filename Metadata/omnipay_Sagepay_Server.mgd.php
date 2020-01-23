@@ -57,6 +57,7 @@ return array(
           ),
         ),
         'ipn_processing_delay' => 0,
+        'notification_from_different_session' => TRUE,
       ),
       'params' =>
         array(
@@ -67,10 +68,13 @@ return array(
           'user_name_label' => 'Vendor',
           'password_label' => 'unused',
           'signature_label' => 'unused',
-          'site_url' => '',
+          'site_url' => 'unused',
           'class_name' => 'Payment_OmnipayMultiProcessor',
           'billing_mode' => 4,
           'payment_type' => 3,
+          'url_recur_default' => 'http://unused.com',
+          'url_recur_test_default' => 'http://unused.com',
+          'is_recur' => 1,
         ),
     ),
 );
