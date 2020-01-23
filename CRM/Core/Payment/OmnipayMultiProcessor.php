@@ -616,7 +616,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * we copy billing values where shipping values are empty
    */
   protected function copyShippingFieldsFromBillingIfEmpty(&$cardFields) {
-    $fieldsSuffixes = [ 'Address1', 'Address2', 'City', 'Postcode', 'State', 'Country' ];
+    $fieldSuffixes = [ 'Address1', 'Address2', 'City', 'Postcode', 'State', 'Country' ];
     foreach($fieldSuffixes as $fieldSuffix) {
       $billingField = 'billing' . $fieldSuffix;
       $shippingField = 'shipping' . $fieldSuffix;
