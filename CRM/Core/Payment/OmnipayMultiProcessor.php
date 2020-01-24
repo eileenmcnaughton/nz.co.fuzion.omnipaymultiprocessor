@@ -820,6 +820,24 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Get details of CiviCRM mandatory and optional address fields.
+   *
+   * @param int $billingLocationID
+   *
+   * @return array
+   */
+  public function getBillingAddressFieldsMetadata($billingLocationID = NULL) {
+    $metadata = parent::getBillingAddressFieldsMetadata($billingLocationID);
+    $fields = $this->getProcessorTypeMetadata('fields');
+    $fieldDetails = $this->getProcessorTypeMetadata('field_details');
+    foreach($fieldDetails as $key => $value) {
+      $metaKey = $fields['billing_fields'][$key];
+      $metadata[$metaKey] = array_merge($metadata[$metaKey], $value);
+    }
+    return $metadata;
+  }
+
+  /**
    * Handle response from processor.
    *
    * We simply get the params from the REQUEST and pass them to a static function that

@@ -56,6 +56,11 @@ return array(
             'postal_code' => "billing_postal_code-{$billingLocationID}",
           ),
         ),
+        'field_details' => array(
+          'state_province' => array(
+            'is_required' => FALSE,
+          )
+        ),
         'ipn_processing_delay' => 0,
         'notification_from_different_session' => TRUE,
       ),
