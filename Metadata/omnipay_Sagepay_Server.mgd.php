@@ -63,6 +63,7 @@ return array(
         ),
         'ipn_processing_delay' => 0,
         'notification_from_different_session' => TRUE,
+        'continuous_authority' => TRUE,
       ),
       'params' =>
         array(

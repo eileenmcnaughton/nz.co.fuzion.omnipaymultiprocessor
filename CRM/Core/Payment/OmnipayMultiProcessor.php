@@ -141,8 +141,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if (!empty($params['token'])) {
         $response = $this->doTokenPayment($params);
       }
-      elseif (!empty($params['is_recur'])) {
+      elseif (!empty($params['is_recur']) && (!$this->getProcessorTypeMetadata('continuous_authority'))) {
         $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, array('action' => 'Purchase')), $this->_component))->send();
+      }
+      elseif ($params['continuous_authority_repeat'] && $this->getProcessorTypeMetadata('continuous_authority')) {
+        $repeat = $this->getCreditCardOptions($params);
+        unset($repeat['card']);
+        $repeat['transactionReference'] = $params['original_contribution_trxn_id'];
+        $response = $this->gateway->repeatAuthorize($repeat)->send();
       }
       else {
         $response = $this->gateway->purchase($this->getCreditCardOptions($params))
