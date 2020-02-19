@@ -1,0 +1,22 @@
+HTTP/1.1 200 OK
+Date: Thu, 20 Feb 2020 10:26:00 GMT
+
+VPSProtocol=3.00
+TxType=PAYMENT
+VendorTxCode=99999
+VPSTxId={C46AF0B5-E2D2-6477-4EE4-991BC04B44C4}
+Status=OK
+StatusDetail=0000 : The Authorisation was Successful.
+TxAuthNo=4898041
+AVSCV2=SECURITY CODE MATCH ONLY
+AddressResult=NOTMATCHED
+PostCodeResult=NOTMATCHED
+CV2Result=MATCHED
+GiftAid=0
+3DSecureStatus=NOTCHECKED
+CardType=VISA
+Last4Digits=0006
+VPSSignature=911718238EB7744144122288060CAEC7
+DeclineCode=00
+ExpiryDate=0123
+BankAuthCode=999777
