@@ -174,7 +174,8 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       NULL,
       TRUE,
       NULL,
-      FALSE
+      FALSE,
+      TRUE
     );
     return $allowLocalHost ? $url : ((stristr($url, '.')) ? $url : '');
   }
