@@ -160,6 +160,12 @@ The following gateways are provided by this package:
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
 
+## Contributing
+
+Contributions are **welcome** and will be fully **credited**.
+
+Contributions can be made via a Pull Request on [Github](https://github.com/sudiptpa/omnipay-nabtransact).
+
 ## Support
 
 If you are having general issues with Omnipay, we suggest posting on

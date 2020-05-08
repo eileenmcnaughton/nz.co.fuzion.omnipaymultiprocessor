@@ -26,7 +26,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
         ];
 
         $this->assertSame(
-            '3cdf9934588f2fa4b00df5adb36aec486befdaecdbb3de4c2515d00e05391101',
+            'c424541f1cc72055386c81b5b6b021312424024cd6b7d0c4feb949126e642e87',
             $this->request->generateResponseFingerprint($data)
         );
     }
@@ -42,7 +42,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
         $this->getHttpRequest()->query->replace([
             'timestamp'            => '20190215173250',
             'callback_status_code' => '-1',
-            'fingerprint'          => 'd319e8852e94972f8ef3f330884a0f5db85c6341fd367d6823a99e9b93d917c0',
+            'fingerprint'          => 'f4c6c0a4a3dd3a3dc1202b12d20b471d9595f587474a84c51e8916f86a9fc7a5',
             'txnid'                => '271337',
             'merchant'             => 'XYZ0010',
             'restext'              => 'Approved',
@@ -75,7 +75,7 @@ class DirectPostCompletePurchaseRequestTest extends TestCase
         $this->getHttpRequest()->query->replace([
             'timestamp'            => '20190215173250',
             'callback_status_code' => '404',
-            'fingerprint'          => 'af490d2635a7ebe8e97313fbea61924a51f4b4d095e2cf7a2a81f8fc3f5ca919',
+            'fingerprint'          => 'f8a4ecc7a81a3f682b79a7995a2c15ee3bea10a55dedf7a1cf4b99298b0716e4',
             'txnid'                => '274279',
             'merchant'             => 'XYZ0010',
             'restext'              => 'Customer Dispute',

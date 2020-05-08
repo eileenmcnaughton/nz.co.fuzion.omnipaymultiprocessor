@@ -5,13 +5,15 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\RequestOptions;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 class ClientTest extends TestCase
 {
@@ -20,7 +22,7 @@ class ClientTest extends TestCase
         $client = new Client();
         Server::enqueue([new Response(200, ['Content-Length' => 0])]);
         $response = $client->get(Server::$url);
-        $this->assertSame(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 
     /**
@@ -39,11 +41,11 @@ class ClientTest extends TestCase
         Server::flush();
         Server::enqueue([new Response(200, ['Content-Length' => 2], 'hi')]);
         $p = $client->getAsync(Server::$url, ['query' => ['test' => 'foo']]);
-        $this->assertInstanceOf(PromiseInterface::class, $p);
-        $this->assertSame(200, $p->wait()->getStatusCode());
+        self::assertInstanceOf(PromiseInterface::class, $p);
+        self::assertSame(200, $p->wait()->getStatusCode());
         $received = Server::received(true);
-        $this->assertCount(1, $received);
-        $this->assertSame('test=foo', $received[0]->getUri()->getQuery());
+        self::assertCount(1, $received);
+        self::assertSame('test=foo', $received[0]->getUri()->getQuery());
     }
 
     public function testCanSendSynchronously()
@@ -51,8 +53,8 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => new MockHandler([new Response()])]);
         $request = new Request('GET', 'http://example.com');
         $r = $client->send($request);
-        $this->assertInstanceOf(ResponseInterface::class, $r);
-        $this->assertSame(200, $r->getStatusCode());
+        self::assertInstanceOf(ResponseInterface::class, $r);
+        self::assertSame(200, $r->getStatusCode());
     }
 
     public function testClientHasOptions()
@@ -64,12 +66,12 @@ class ClientTest extends TestCase
             'handler'  => new MockHandler()
         ]);
         $base = $client->getConfig('base_uri');
-        $this->assertSame('http://foo.com', (string) $base);
-        $this->assertInstanceOf(Uri::class, $base);
-        $this->assertNotNull($client->getConfig('handler'));
-        $this->assertSame(2, $client->getConfig('timeout'));
-        $this->assertArrayHasKey('timeout', $client->getConfig());
-        $this->assertArrayHasKey('headers', $client->getConfig());
+        self::assertSame('http://foo.com', (string) $base);
+        self::assertInstanceOf(Uri::class, $base);
+        self::assertNotNull($client->getConfig('handler'));
+        self::assertSame(2, $client->getConfig('timeout'));
+        self::assertArrayHasKey('timeout', $client->getConfig());
+        self::assertArrayHasKey('headers', $client->getConfig());
     }
 
     public function testCanMergeOnBaseUri()
@@ -80,7 +82,7 @@ class ClientTest extends TestCase
             'handler'  => $mock
         ]);
         $client->get('baz');
-        $this->assertSame(
+        self::assertSame(
             'http://foo.com/bar/baz',
             (string)$mock->getLastRequest()->getUri()
         );
@@ -94,13 +96,13 @@ class ClientTest extends TestCase
             'base_uri' => 'http://foo.com/bar/'
         ]);
         $client->request('GET', new Uri('baz'));
-        $this->assertSame(
+        self::assertSame(
             'http://foo.com/bar/baz',
             (string) $mock->getLastRequest()->getUri()
         );
 
         $client->request('GET', new Uri('baz'), ['base_uri' => 'http://example.com/foo/']);
-        $this->assertSame(
+        self::assertSame(
             'http://example.com/foo/baz',
             (string) $mock->getLastRequest()->getUri(),
             'Can overwrite the base_uri through the request options'
@@ -114,10 +116,10 @@ class ClientTest extends TestCase
             'handler'  => $mock,
             'base_uri' => 'http://bar.com'
         ]);
-        $this->assertSame('http://bar.com', (string) $client->getConfig('base_uri'));
+        self::assertSame('http://bar.com', (string) $client->getConfig('base_uri'));
         $request = new Request('GET', '/baz');
         $client->send($request);
-        $this->assertSame(
+        self::assertSame(
             'http://bar.com/baz',
             (string) $mock->getLastRequest()->getUri()
         );
@@ -126,11 +128,11 @@ class ClientTest extends TestCase
     public function testMergesDefaultOptionsAndDoesNotOverwriteUa()
     {
         $c = new Client(['headers' => ['User-agent' => 'foo']]);
-        $this->assertSame(['User-agent' => 'foo'], $c->getConfig('headers'));
-        $this->assertInternalType('array', $c->getConfig('allow_redirects'));
-        $this->assertTrue($c->getConfig('http_errors'));
-        $this->assertTrue($c->getConfig('decode_content'));
-        $this->assertTrue($c->getConfig('verify'));
+        self::assertSame(['User-agent' => 'foo'], $c->getConfig('headers'));
+        self::assertInternalType('array', $c->getConfig('allow_redirects'));
+        self::assertTrue($c->getConfig('http_errors'));
+        self::assertTrue($c->getConfig('decode_content'));
+        self::assertTrue($c->getConfig('verify'));
     }
 
     public function testDoesNotOverwriteHeaderWithDefault()
@@ -141,7 +143,7 @@ class ClientTest extends TestCase
             'handler' => $mock
         ]);
         $c->get('http://example.com', ['headers' => ['User-Agent' => 'bar']]);
-        $this->assertSame('bar', $mock->getLastRequest()->getHeaderLine('User-Agent'));
+        self::assertSame('bar', $mock->getLastRequest()->getHeaderLine('User-Agent'));
     }
 
     public function testDoesNotOverwriteHeaderWithDefaultInRequest()
@@ -153,7 +155,7 @@ class ClientTest extends TestCase
         ]);
         $request = new Request('GET', Server::$url, ['User-Agent' => 'bar']);
         $c->send($request);
-        $this->assertSame('bar', $mock->getLastRequest()->getHeaderLine('User-Agent'));
+        self::assertSame('bar', $mock->getLastRequest()->getHeaderLine('User-Agent'));
     }
 
     public function testDoesOverwriteHeaderWithSetRequestOption()
@@ -165,7 +167,7 @@ class ClientTest extends TestCase
         ]);
         $request = new Request('GET', Server::$url, ['User-Agent' => 'bar']);
         $c->send($request, ['headers' => ['User-Agent' => 'YO']]);
-        $this->assertSame('YO', $mock->getLastRequest()->getHeaderLine('User-Agent'));
+        self::assertSame('YO', $mock->getLastRequest()->getHeaderLine('User-Agent'));
     }
 
     public function testCanUnsetRequestOptionWithNull()
@@ -176,14 +178,14 @@ class ClientTest extends TestCase
             'handler' => $mock
         ]);
         $c->get('http://example.com', ['headers' => null]);
-        $this->assertFalse($mock->getLastRequest()->hasHeader('foo'));
+        self::assertFalse($mock->getLastRequest()->hasHeader('foo'));
     }
 
     public function testRewriteExceptionsToHttpErrors()
     {
         $client = new Client(['handler' => new MockHandler([new Response(404)])]);
         $res = $client->get('http://foo.com', ['exceptions' => false]);
-        $this->assertSame(404, $res->getStatusCode());
+        self::assertSame(404, $res->getStatusCode());
     }
 
     public function testRewriteSaveToToSink()
@@ -192,7 +194,7 @@ class ClientTest extends TestCase
         $mock = new MockHandler([new Response(200, [], 'foo')]);
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['save_to' => $r]);
-        $this->assertSame($r, $mock->getLastOptions()['sink']);
+        self::assertSame($r, $mock->getLastOptions()['sink']);
     }
 
     public function testAllowRedirectsCanBeTrue()
@@ -201,7 +203,7 @@ class ClientTest extends TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
         $client->get('http://foo.com', ['allow_redirects' => true]);
-        $this->assertInternalType('array', $mock->getLastOptions()['allow_redirects']);
+        self::assertInternalType('array', $mock->getLastOptions()['allow_redirects']);
     }
 
     /**
@@ -249,7 +251,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $handler, 'cookies' => true]);
         $client->get('http://foo.com');
         $client->get('http://foo.com');
-        $this->assertSame('foo=bar', $mock->getLastRequest()->getHeaderLine('Cookie'));
+        self::assertSame('foo=bar', $mock->getLastRequest()->getHeaderLine('Cookie'));
     }
 
     public function testSetCookieToJar()
@@ -263,7 +265,7 @@ class ClientTest extends TestCase
         $jar = new CookieJar();
         $client->get('http://foo.com', ['cookies' => $jar]);
         $client->get('http://foo.com', ['cookies' => $jar]);
-        $this->assertSame('foo=bar', $mock->getLastRequest()->getHeaderLine('Cookie'));
+        self::assertSame('foo=bar', $mock->getLastRequest()->getHeaderLine('Cookie'));
     }
 
     public function testCanDisableContentDecoding()
@@ -272,8 +274,8 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['decode_content' => false]);
         $last = $mock->getLastRequest();
-        $this->assertFalse($last->hasHeader('Accept-Encoding'));
-        $this->assertFalse($mock->getLastOptions()['decode_content']);
+        self::assertFalse($last->hasHeader('Accept-Encoding'));
+        self::assertFalse($mock->getLastOptions()['decode_content']);
     }
 
     public function testCanSetContentDecodingToValue()
@@ -282,8 +284,8 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['decode_content' => 'gzip']);
         $last = $mock->getLastRequest();
-        $this->assertSame('gzip', $last->getHeaderLine('Accept-Encoding'));
-        $this->assertSame('gzip', $mock->getLastOptions()['decode_content']);
+        self::assertSame('gzip', $last->getHeaderLine('Accept-Encoding'));
+        self::assertSame('gzip', $mock->getLastOptions()['decode_content']);
     }
 
     /**
@@ -303,7 +305,7 @@ class ClientTest extends TestCase
         $request = new Request('PUT', 'http://foo.com');
         $client->send($request, ['body' => 'foo']);
         $last = $mock->getLastRequest();
-        $this->assertSame('foo', (string) $last->getBody());
+        self::assertSame('foo', (string) $last->getBody());
     }
 
     /**
@@ -323,7 +325,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $request = new Request('PUT', 'http://foo.com');
         $client->send($request, ['query' => 'foo']);
-        $this->assertSame('foo', $mock->getLastRequest()->getUri()->getQuery());
+        self::assertSame('foo', $mock->getLastRequest()->getUri()->getQuery());
     }
 
     public function testQueryCanBeArray()
@@ -332,7 +334,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $request = new Request('PUT', 'http://foo.com');
         $client->send($request, ['query' => ['foo' => 'bar baz']]);
-        $this->assertSame('foo=bar%20baz', $mock->getLastRequest()->getUri()->getQuery());
+        self::assertSame('foo=bar%20baz', $mock->getLastRequest()->getUri()->getQuery());
     }
 
     public function testCanAddJsonData()
@@ -342,8 +344,8 @@ class ClientTest extends TestCase
         $request = new Request('PUT', 'http://foo.com');
         $client->send($request, ['json' => ['foo' => 'bar']]);
         $last = $mock->getLastRequest();
-        $this->assertSame('{"foo":"bar"}', (string) $mock->getLastRequest()->getBody());
-        $this->assertSame('application/json', $last->getHeaderLine('Content-Type'));
+        self::assertSame('{"foo":"bar"}', (string) $mock->getLastRequest()->getBody());
+        self::assertSame('application/json', $last->getHeaderLine('Content-Type'));
     }
 
     public function testCanAddJsonDataWithoutOverwritingContentType()
@@ -356,8 +358,22 @@ class ClientTest extends TestCase
             'json'    => 'a'
         ]);
         $last = $mock->getLastRequest();
-        $this->assertSame('"a"', (string) $mock->getLastRequest()->getBody());
-        $this->assertSame('foo', $last->getHeaderLine('Content-Type'));
+        self::assertSame('"a"', (string) $mock->getLastRequest()->getBody());
+        self::assertSame('foo', $last->getHeaderLine('Content-Type'));
+    }
+
+    public function testCanAddJsonDataWithNullHeader()
+    {
+        $mock = new MockHandler([new Response()]);
+        $client = new Client(['handler' => $mock]);
+        $request = new Request('PUT', 'http://foo.com');
+        $client->send($request, [
+            'headers' => null,
+            'json'    => 'a'
+        ]);
+        $last = $mock->getLastRequest();
+        self::assertSame('"a"', (string) $mock->getLastRequest()->getBody());
+        self::assertSame('application/json', $last->getHeaderLine('Content-Type'));
     }
 
     public function testAuthCanBeTrue()
@@ -366,7 +382,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['auth' => false]);
         $last = $mock->getLastRequest();
-        $this->assertFalse($last->hasHeader('Authorization'));
+        self::assertFalse($last->hasHeader('Authorization'));
     }
 
     public function testAuthCanBeArrayForBasicAuth()
@@ -375,7 +391,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['auth' => ['a', 'b']]);
         $last = $mock->getLastRequest();
-        $this->assertSame('Basic YTpi', $last->getHeaderLine('Authorization'));
+        self::assertSame('Basic YTpi', $last->getHeaderLine('Authorization'));
     }
 
     public function testAuthCanBeArrayForDigestAuth()
@@ -384,7 +400,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['auth' => ['a', 'b', 'digest']]);
         $last = $mock->getLastOptions();
-        $this->assertSame([
+        self::assertSame([
             CURLOPT_HTTPAUTH => 2,
             CURLOPT_USERPWD  => 'a:b'
         ], $last['curl']);
@@ -396,7 +412,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['auth' => ['a', 'b', 'ntlm']]);
         $last = $mock->getLastOptions();
-        $this->assertSame([
+        self::assertSame([
             CURLOPT_HTTPAUTH => 8,
             CURLOPT_USERPWD  => 'a:b'
         ], $last['curl']);
@@ -408,7 +424,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $client->get('http://foo.com', ['auth' => 'foo']);
         $last = $mock->getLastOptions();
-        $this->assertSame('foo', $last['auth']);
+        self::assertSame('foo', $last['auth']);
     }
 
     public function testCanAddFormParams()
@@ -422,11 +438,11 @@ class ClientTest extends TestCase
             ]
         ]);
         $last = $mock->getLastRequest();
-        $this->assertSame(
+        self::assertSame(
             'application/x-www-form-urlencoded',
             $last->getHeaderLine('Content-Type')
         );
-        $this->assertSame(
+        self::assertSame(
             'foo=bar+bam&baz%5Bboo%5D=qux',
             (string) $last->getBody()
         );
@@ -445,7 +461,7 @@ class ClientTest extends TestCase
             ]
         ]);
         $last = $mock->getLastRequest();
-        $this->assertSame(
+        self::assertSame(
             'foo=bar+bam&baz%5Bboo%5D=qux',
             (string) $last->getBody()
         );
@@ -458,7 +474,8 @@ class ClientTest extends TestCase
      */
     public function testEnsuresThatFormParamsAndMultipartAreExclusive()
     {
-        $client = new Client(['handler' => function () {}]);
+        $client = new Client(['handler' => function () {
+        }]);
         $client->post('http://foo.com', [
             'form_params' => ['foo' => 'bar bam'],
             'multipart' => []
@@ -483,22 +500,22 @@ class ClientTest extends TestCase
         ]);
 
         $last = $mock->getLastRequest();
-        $this->assertContains(
+        self::assertContains(
             'multipart/form-data; boundary=',
             $last->getHeaderLine('Content-Type')
         );
 
-        $this->assertContains(
+        self::assertContains(
             'Content-Disposition: form-data; name="foo"',
             (string) $last->getBody()
         );
 
-        $this->assertContains('bar', (string) $last->getBody());
-        $this->assertContains(
+        self::assertContains('bar', (string) $last->getBody());
+        self::assertContains(
             'Content-Disposition: form-data; name="foo"' . "\r\n",
             (string) $last->getBody()
         );
-        $this->assertContains(
+        self::assertContains(
             'Content-Disposition: form-data; name="test"; filename="ClientTest.php"',
             (string) $last->getBody()
         );
@@ -529,22 +546,22 @@ class ClientTest extends TestCase
         );
 
         $last = $mock->getLastRequest();
-        $this->assertContains(
+        self::assertContains(
             'multipart/form-data; boundary=',
             $last->getHeaderLine('Content-Type')
         );
 
-        $this->assertContains(
+        self::assertContains(
             'Content-Disposition: form-data; name="foo"',
             (string) $last->getBody()
         );
 
-        $this->assertContains('bar', (string) $last->getBody());
-        $this->assertContains(
+        self::assertContains('bar', (string) $last->getBody());
+        self::assertContains(
             'Content-Disposition: form-data; name="foo"' . "\r\n",
             (string) $last->getBody()
         );
-        $this->assertContains(
+        self::assertContains(
             'Content-Disposition: form-data; name="test"; filename="ClientTest.php"',
             (string) $last->getBody()
         );
@@ -556,17 +573,17 @@ class ClientTest extends TestCase
         $https = getenv('HTTPS_PROXY');
         $no = getenv('NO_PROXY');
         $client = new Client();
-        $this->assertNull($client->getConfig('proxy'));
+        self::assertNull($client->getConfig('proxy'));
         putenv('HTTP_PROXY=127.0.0.1');
         $client = new Client();
-        $this->assertSame(
+        self::assertSame(
             ['http' => '127.0.0.1'],
             $client->getConfig('proxy')
         );
         putenv('HTTPS_PROXY=127.0.0.2');
         putenv('NO_PROXY=127.0.0.3, 127.0.0.4');
         $client = new Client();
-        $this->assertSame(
+        self::assertSame(
             ['http' => '127.0.0.1', 'https' => '127.0.0.2', 'no' => ['127.0.0.3','127.0.0.4']],
             $client->getConfig('proxy')
         );
@@ -580,7 +597,7 @@ class ClientTest extends TestCase
         $mock = new MockHandler([new Response()]);
         $client = new Client(['handler' => $mock]);
         $client->request('GET', 'http://foo.com');
-        $this->assertTrue($mock->getLastOptions()['synchronous']);
+        self::assertTrue($mock->getLastOptions()['synchronous']);
     }
 
     public function testSendSendsWithSync()
@@ -588,7 +605,7 @@ class ClientTest extends TestCase
         $mock = new MockHandler([new Response()]);
         $client = new Client(['handler' => $mock]);
         $client->send(new Request('GET', 'http://foo.com'));
-        $this->assertTrue($mock->getLastOptions()['synchronous']);
+        self::assertTrue($mock->getLastOptions()['synchronous']);
     }
 
     public function testCanSetCustomHandler()
@@ -596,7 +613,7 @@ class ClientTest extends TestCase
         $mock = new MockHandler([new Response(500)]);
         $client = new Client(['handler' => $mock]);
         $mock2 = new MockHandler([new Response(200)]);
-        $this->assertSame(
+        self::assertSame(
             200,
             $client->send(new Request('GET', 'http://foo.com'), [
                 'handler' => $mock2
@@ -610,7 +627,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler' => $mock]);
         $request = new Request('PUT', 'http://foo.com');
         $client->send($request, ['query' => ['foo' => 'bar', 'john' => 'doe']]);
-        $this->assertSame('foo=bar&john=doe', $mock->getLastRequest()->getUri()->getQuery());
+        self::assertSame('foo=bar&john=doe', $mock->getLastRequest()->getUri()->getQuery());
     }
 
     public function testSendSendsWithIpAddressAndPortAndHostHeaderInRequestTheHostShouldBePreserved()
@@ -621,7 +638,7 @@ class ClientTest extends TestCase
 
         $client->send($request);
 
-        $this->assertSame('foo.com', $mockHandler->getLastRequest()->getHeader('Host')[0]);
+        self::assertSame('foo.com', $mockHandler->getLastRequest()->getHeader('Host')[0]);
     }
 
     public function testSendSendsWithDomainAndHostHeaderInRequestTheHostShouldBePreserved()
@@ -632,7 +649,7 @@ class ClientTest extends TestCase
 
         $client->send($request);
 
-        $this->assertSame('foo.com', $mockHandler->getLastRequest()->getHeader('Host')[0]);
+        self::assertSame('foo.com', $mockHandler->getLastRequest()->getHeader('Host')[0]);
     }
 
     /**
@@ -652,7 +669,7 @@ class ClientTest extends TestCase
 
         $client->request('GET', '//example.org/test');
 
-        $this->assertSame('http://example.org/test', (string) $mockHandler->getLastRequest()->getUri());
+        self::assertSame('http://example.org/test', (string) $mockHandler->getLastRequest()->getUri());
     }
 
     public function testOnlyAddSchemeWhenHostIsPresent()
@@ -661,7 +678,7 @@ class ClientTest extends TestCase
         $client = new Client(['handler'  => $mockHandler]);
 
         $client->request('GET', 'baz');
-        $this->assertSame(
+        self::assertSame(
             'baz',
             (string) $mockHandler->getLastRequest()->getUri()
         );
@@ -673,5 +690,122 @@ class ClientTest extends TestCase
     public function testHandlerIsCallable()
     {
         new Client(['handler' => 'not_cllable']);
+    }
+
+    public function testResponseBodyAsString()
+    {
+        $responseBody = '{ "package": "guzzle" }';
+        $mock = new MockHandler([new Response(200, ['Content-Type' => 'application/json'], $responseBody)]);
+        $client = new Client(['handler' => $mock]);
+        $request = new Request('GET', 'http://foo.com');
+        $response = $client->send($request, ['json' => ['a' => 'b']]);
+
+        self::assertSame($responseBody, (string) $response->getBody());
+    }
+
+    public function testResponseContent()
+    {
+        $responseBody = '{ "package": "guzzle" }';
+        $mock = new MockHandler([new Response(200, ['Content-Type' => 'application/json'], $responseBody)]);
+        $client = new Client(['handler' => $mock]);
+        $request = new Request('POST', 'http://foo.com');
+        $response = $client->send($request, ['json' => ['a' => 'b']]);
+
+        self::assertSame($responseBody, $response->getBody()->getContents());
+    }
+
+    public function testIdnSupportDefaultValue()
+    {
+        $mockHandler = new MockHandler([new Response()]);
+        $client = new Client(['handler' => $mockHandler]);
+
+        $config = $client->getConfig();
+
+        self::assertTrue($config['idn_conversion']);
+    }
+
+    public function testIdnIsTranslatedToAsciiWhenConversionIsEnabled()
+    {
+        $mockHandler = new MockHandler([new Response()]);
+        $client = new Client(['handler' => $mockHandler]);
+
+        $client->request('GET', 'https://яндекс.рф/images', ['idn_conversion' => true]);
+
+        $request = $mockHandler->getLastRequest();
+
+        self::assertSame('https://xn--d1acpjx3f.xn--p1ai/images', (string) $request->getUri());
+        self::assertSame('xn--d1acpjx3f.xn--p1ai', (string) $request->getHeaderLine('Host'));
+    }
+
+    public function testIdnStaysTheSameWhenConversionIsDisabled()
+    {
+        $mockHandler = new MockHandler([new Response()]);
+        $client = new Client(['handler' => $mockHandler]);
+
+        $client->request('GET', 'https://яндекс.рф/images', ['idn_conversion' => false]);
+
+        $request = $mockHandler->getLastRequest();
+
+        self::assertSame('https://яндекс.рф/images', (string) $request->getUri());
+        self::assertSame('яндекс.рф', (string) $request->getHeaderLine('Host'));
+    }
+
+    /**
+     * @expectedException \GuzzleHttp\Exception\InvalidArgumentException
+     * @expectedExceptionMessage IDN conversion failed (errors: IDNA_ERROR_LEADING_HYPHEN)
+     */
+    public function testExceptionOnInvalidIdn()
+    {
+        $mockHandler = new MockHandler([new Response()]);
+        $client = new Client(['handler' => $mockHandler]);
+
+        $client->request('GET', 'https://-яндекс.рф/images', ['idn_conversion' => true]);
+    }
+
+    /**
+     * @depends testCanUseRelativeUriWithSend
+     * @depends testIdnSupportDefaultValue
+     */
+    public function testIdnBaseUri()
+    {
+        $mock = new MockHandler([new Response()]);
+        $client = new Client([
+            'handler'  => $mock,
+            'base_uri' => 'http://яндекс.рф',
+        ]);
+        self::assertSame('http://яндекс.рф', (string) $client->getConfig('base_uri'));
+        $request = new Request('GET', '/baz');
+        $client->send($request);
+        self::assertSame('http://xn--d1acpjx3f.xn--p1ai/baz', (string) $mock->getLastRequest()->getUri());
+        self::assertSame('xn--d1acpjx3f.xn--p1ai', (string) $mock->getLastRequest()->getHeaderLine('Host'));
+    }
+
+    public function testIdnWithRedirect()
+    {
+        $mockHandler = new MockHandler([
+            new Response(302, ['Location' => 'http://www.tést.com/whatever']),
+            new Response()
+        ]);
+        $handler = HandlerStack::create($mockHandler);
+        $requests = [];
+        $handler->push(Middleware::history($requests));
+        $client = new Client(['handler' => $handler]);
+
+        $client->request('GET', 'https://яндекс.рф/images', [
+            RequestOptions::ALLOW_REDIRECTS => [
+                'referer' => true,
+                'track_redirects' => true
+            ],
+            'idn_conversion' => true
+        ]);
+
+        $request = $mockHandler->getLastRequest();
+
+        self::assertSame('http://www.xn--tst-bma.com/whatever', (string) $request->getUri());
+        self::assertSame('www.xn--tst-bma.com', (string) $request->getHeaderLine('Host'));
+
+        $request = $requests[0]['request'];
+        self::assertSame('https://xn--d1acpjx3f.xn--p1ai/images', (string) $request->getUri());
+        self::assertSame('xn--d1acpjx3f.xn--p1ai', (string) $request->getHeaderLine('Host'));
     }
 }

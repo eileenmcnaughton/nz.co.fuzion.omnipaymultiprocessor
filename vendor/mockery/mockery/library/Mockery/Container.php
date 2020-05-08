@@ -230,7 +230,7 @@ class Container
         $this->getLoader()->load($def);
 
         $mock = $this->_getInstance($def->getClassName(), $constructorArgs);
-        $mock->mockery_init($this, $config->getTargetObject());
+        $mock->mockery_init($this, $config->getTargetObject(), $config->isInstanceMock());
 
         if (!empty($quickdefs)) {
             $mock->shouldReceive($quickdefs)->byDefault();
@@ -487,7 +487,7 @@ class Container
         }
 
         try {
-            $instantiator = new Instantiator;
+            $instantiator = new Instantiator();
             $instance = $instantiator->instantiate($mockName);
         } catch (\Exception $ex) {
             $internalMockName = $mockName . '_Internal';

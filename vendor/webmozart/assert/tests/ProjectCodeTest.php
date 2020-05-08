@@ -32,15 +32,15 @@ class ProjectCodeTest extends BaseTestCase
             $this->addToAssertionCount(1);
             return;
         }
-
-        $this->assertContains(
-            '@method static void nullOr' . ucfirst($method),
-            self::$assertDocComment,
-            sprintf(
+        $correct = strpos( (string)self::$assertDocComment,'@method static void nullOr' . ucfirst($method));
+        if ($correct === false) {
+            $this->fail(sprintf(
                 'All methods have a corresponding "nullOr" method, please add the "nullOr%s" method to the class level doc comment.',
                 ucfirst($method)
-            )
-        );
+            ));
+        }
+
+       $this->addToAssertionCount(1);
     }
 
     /**
@@ -50,14 +50,16 @@ class ProjectCodeTest extends BaseTestCase
      */
     public function testHasAll($method)
     {
-        $this->assertContains(
-            '@method static void all' . ucfirst($method),
-            self::$assertDocComment,
-            sprintf(
+        $correct = strpos((string) self::$assertDocComment,'@method static void all' . ucfirst($method));
+
+        if ($correct === false) {
+            $this->fail(sprintf(
                 'All methods have a corresponding "all" method, please add the "all%s" method to the class level doc comment.',
                 ucfirst($method)
-            )
-        );
+            ));
+        }
+
+        $this->addToAssertionCount(1);
     }
 
     /**
@@ -67,13 +69,61 @@ class ProjectCodeTest extends BaseTestCase
      */
     public function testIsInReadme($method)
     {
-        $this->assertContains(
-            $method,
-            self::$readmeContent,
-            sprintf(
+        $correct = strpos((string) self::$readmeContent,$method);
+
+        if($correct === false) {
+            $this->fail(sprintf(
                 'All methods must be documented in the README.md, please add the "%s" method.',
-                ucfirst($method)
+                $method
+            ));
+        }
+        $this->addToAssertionCount(1);
+    }
+
+    /**
+     * @dataProvider provideMethods
+     *
+     * @param ReflectionMethod $method
+     */
+    public function testHasThrowsAnnotation($method)
+    {
+        $doc = $method->getDocComment();
+
+        $this->assertNotFalse(
+            $doc,
+            sprintf(
+                'Expected a doc comment on the "%s" method, but none found',
+                $method->getName()
             )
+        );
+
+        $this->assertContains(
+            '@throws InvalidArgumentException',
+            $doc,
+            sprintf(
+                'Expected method "%s" to have an @throws InvalidArgumentException annotation, but none found',
+                $method->getName()
+            )
+        );
+
+    }
+
+    /**
+     * @dataProvider provideMethods
+     *
+     * @param ReflectionMethod $method
+     */
+    public function testHasCorrespondingStaticAnalysisFile($method)
+    {
+        $doc = $method->getDocComment();
+
+        if($doc === false || strpos($doc, '@psalm-assert') === false) {
+            $this->addToAssertionCount(1);
+            return;
+        }
+
+        $this->assertFileExists(
+            __DIR__ . '/static-analysis/assert-'. $method->getName() . '.php'
         );
     }
 
@@ -83,14 +133,24 @@ class ProjectCodeTest extends BaseTestCase
     public function providesMethodNames()
     {
         return array_map(function($value) {
-            return array($value);
-        }, $this->getMethodNames());
+            return array($value->getName());
+        }, $this->getMethods());
     }
 
     /**
      * @return array
      */
-    private function getMethodNames()
+    public function provideMethods()
+    {
+        return array_map(function($value) {
+            return array($value);
+        }, $this->getMethods());
+    }
+
+    /**
+     * @return array
+     */
+    private function getMethods()
     {
         static $methods;
 
@@ -108,11 +168,9 @@ class ProjectCodeTest extends BaseTestCase
             if (strpos($methodName, '__') === 0) {
                 continue;
             }
-            $methods[] = $methodName;
+            $methods[] = $rcMethod;
         }
 
         return $methods;
-
     }
-
 }

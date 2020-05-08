@@ -56,7 +56,7 @@ curl -sS https://getcomposer.org/installer | php
 Next, run the Composer command to install the latest stable version of Guzzle:
 
 ```bash
-php composer.phar require guzzlehttp/guzzle
+composer require guzzlehttp/guzzle
 ```
 
 After installing, you need to require Composer's autoloader:
@@ -68,7 +68,7 @@ require 'vendor/autoload.php';
 You can then later update Guzzle using composer:
 
  ```bash
-php composer.phar update
+composer update
  ```
 
 
@@ -78,7 +78,7 @@ php composer.phar update
 |---------|------------|---------------------|--------------|---------------------|---------------------|-------|-------------|
 | 3.x     | EOL        | `guzzle/guzzle`     | `Guzzle`     | [v3][guzzle-3-repo] | [v3][guzzle-3-docs] | No    | >= 5.3.3    |
 | 4.x     | EOL        | `guzzlehttp/guzzle` | `GuzzleHttp` | [v4][guzzle-4-repo] | N/A                 | No    | >= 5.4      |
-| 5.x     | Maintained | `guzzlehttp/guzzle` | `GuzzleHttp` | [v5][guzzle-5-repo] | [v5][guzzle-5-docs] | No    | >= 5.4      |
+| 5.x     | EOL        | `guzzlehttp/guzzle` | `GuzzleHttp` | [v5][guzzle-5-repo] | [v5][guzzle-5-docs] | No    | >= 5.4      |
 | 6.x     | Latest     | `guzzlehttp/guzzle` | `GuzzleHttp` | [v6][guzzle-6-repo] | [v6][guzzle-6-docs] | Yes   | >= 5.5      |
 
 [guzzle-3-repo]: https://github.com/guzzle/guzzle3

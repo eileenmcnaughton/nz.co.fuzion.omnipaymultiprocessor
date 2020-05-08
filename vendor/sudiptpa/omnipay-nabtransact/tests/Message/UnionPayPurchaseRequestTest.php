@@ -24,7 +24,7 @@ class UnionPayPurchaseRequestTest extends TestCase
         $data = $this->request->getData();
         $data['EPS_TIMESTAMP'] = '20190215173250';
 
-        $this->assertSame('9c0c1edb9036239fc61a9a277af5b69f608a1b99808c9173c34463c362a16076', $this->request->generateFingerprint($data));
+        $this->assertSame('1b72d460b36e6633bf57b119d6bd3635da6fc57324a622c1d41b5b26f08fce8d', $this->request->generateFingerprint($data));
     }
 
     public function testPurchase()
@@ -39,8 +39,10 @@ class UnionPayPurchaseRequestTest extends TestCase
         $this->assertNull($response->getMessage());
         $this->assertNull($response->getCode());
 
-        $this->assertStringStartsWith('https://transact.nab.com.au/live/directpostv2/authorise',
-            $response->getRedirectUrl());
+        $this->assertStringStartsWith(
+            'https://transact.nab.com.au/live/directpostv2/authorise',
+            $response->getRedirectUrl()
+        );
         $this->assertSame('GET', $response->getRedirectMethod());
         $this->assertArrayHasKey('EPS_FINGERPRINT', $response->getData());
     }

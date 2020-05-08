@@ -299,6 +299,15 @@ class ResponseTest extends BaseTest
         }
     }
 
+    public function testWithAddedHeaderArrayValueAndKeys()
+    {
+        $message = (new Response())->withAddedHeader('list', ['foo' => 'one']);
+        $message = $message->withAddedHeader('list', ['foo' => 'two', 'bar' => 'three']);
+
+        $headerLine = $message->getHeaderLine('list');
+        $this->assertSame('one, two, three', $headerLine);
+    }
+
     /**
      * @dataProvider nonIntegerStatusCodeProvider
      * @param mixed $invalidValues

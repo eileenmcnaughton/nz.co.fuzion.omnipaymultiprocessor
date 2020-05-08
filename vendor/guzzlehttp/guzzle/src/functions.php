@@ -56,7 +56,7 @@ function describe_type($input)
 /**
  * Parses an array of header lines into an associative array of headers.
  *
- * @param array $lines Header lines array of strings in the following
+ * @param iterable $lines Header lines array of strings in the following
  *                     format: "Name: Value"
  * @return array
  */
@@ -97,8 +97,8 @@ function debug_resource($value = null)
  *
  * The returned handler is not wrapped by any default middlewares.
  *
- * @throws \RuntimeException if no viable Handler is available.
  * @return callable Returns the best handler for the given system.
+ * @throws \RuntimeException if no viable Handler is available.
  */
 function choose_handler()
 {
@@ -196,7 +196,8 @@ function default_ca_bundle()
         }
     }
 
-    throw new \RuntimeException(<<< EOT
+    throw new \RuntimeException(
+        <<< EOT
 No system CA bundle could be found in any of the the common system locations.
 PHP versions earlier than 5.6 are not properly configured to use the system's
 CA bundle by default. In order to verify peer certificates, you will need to
@@ -330,16 +331,4 @@ function json_encode($value, $options = 0, $depth = 512)
     }
 
     return $json;
-}
-
-/**
- * Wrapper for the hrtime() or microtime() functions
- * (depending on the PHP version, one of the two is used)
- *
- * @return float|mixed UNIX timestamp
- * @internal
- */
-function _current_time()
-{
-    return function_exists('hrtime') ? hrtime(true) / 1e9 : microtime(true);
 }

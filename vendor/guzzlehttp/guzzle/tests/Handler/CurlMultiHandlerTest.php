@@ -5,17 +5,41 @@ use GuzzleHttp\Handler\CurlMultiHandler;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Tests\Server;
+use GuzzleHttp\Utils;
 use PHPUnit\Framework\TestCase;
 
 class CurlMultiHandlerTest extends TestCase
 {
+    public function setUp()
+    {
+        $_SERVER['curl_test'] = true;
+        unset($_SERVER['_curl_multi']);
+    }
+
+    public function tearDown()
+    {
+        unset($_SERVER['_curl_multi'], $_SERVER['curl_test']);
+    }
+
+    public function testCanAddCustomCurlOptions()
+    {
+        Server::flush();
+        Server::enqueue([new Response()]);
+        $a = new CurlMultiHandler(['options' => [
+            CURLMOPT_MAXCONNECTS => 5,
+        ]]);
+        $request = new Request('GET', Server::$url);
+        $a($request, []);
+        self::assertEquals(5, $_SERVER['_curl_multi'][CURLMOPT_MAXCONNECTS]);
+    }
+
     public function testSendsRequest()
     {
         Server::enqueue([new Response()]);
         $a = new CurlMultiHandler();
         $request = new Request('GET', Server::$url);
         $response = $a($request, [])->wait();
-        $this->assertSame(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 
     /**
@@ -31,7 +55,7 @@ class CurlMultiHandlerTest extends TestCase
     public function testCanSetSelectTimeout()
     {
         $a = new CurlMultiHandler(['select_timeout' => 2]);
-        $this->assertEquals(2, $this->readAttribute($a, 'selectTimeout'));
+        self::assertEquals(2, self::readAttribute($a, 'selectTimeout'));
     }
 
     public function testCanCancel()
@@ -47,8 +71,8 @@ class CurlMultiHandlerTest extends TestCase
             $responses[] = $response;
         }
 
-        foreach($responses as $r) {
-            $this->assertSame('rejected', $response->getState());
+        foreach ($responses as $r) {
+            self::assertSame('rejected', $response->getState());
         }
     }
 
@@ -60,7 +84,7 @@ class CurlMultiHandlerTest extends TestCase
         $response = $a(new Request('GET', Server::$url), []);
         $response->wait();
         $response->cancel();
-        $this->assertSame('fulfilled', $response->getState());
+        self::assertSame('fulfilled', $response->getState());
     }
 
     public function testDelaysConcurrently()
@@ -68,10 +92,10 @@ class CurlMultiHandlerTest extends TestCase
         Server::flush();
         Server::enqueue([new Response()]);
         $a = new CurlMultiHandler();
-        $expected = \GuzzleHttp\_current_time() + (100 / 1000);
+        $expected = Utils::currentTime() + (100 / 1000);
         $response = $a(new Request('GET', Server::$url), ['delay' => 100]);
         $response->wait();
-        $this->assertGreaterThanOrEqual($expected, \GuzzleHttp\_current_time());
+        self::assertGreaterThanOrEqual($expected, Utils::currentTime());
     }
 
     public function testUsesTimeoutEnvironmentVariables()
@@ -79,13 +103,13 @@ class CurlMultiHandlerTest extends TestCase
         $a = new CurlMultiHandler();
 
         //default if no options are given and no environment variable is set
-        $this->assertEquals(1, $this->readAttribute($a, 'selectTimeout'));
+        self::assertEquals(1, self::readAttribute($a, 'selectTimeout'));
 
         putenv("GUZZLE_CURL_SELECT_TIMEOUT=3");
         $a = new CurlMultiHandler();
         $selectTimeout = getenv('GUZZLE_CURL_SELECT_TIMEOUT');
         //Handler reads from the environment if no options are given
-        $this->assertEquals($selectTimeout, $this->readAttribute($a, 'selectTimeout'));
+        self::assertEquals($selectTimeout, self::readAttribute($a, 'selectTimeout'));
     }
 
     /**

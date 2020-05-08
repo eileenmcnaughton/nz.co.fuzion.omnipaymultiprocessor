@@ -28,7 +28,7 @@
         "psr/http-message-implementation": "1.0"
     },
     "suggest": {
-        "zendframework/zend-httphandlerrunner": "Emit PSR-7 responses"
+        "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
     },
     "autoload": {
         "psr-4": {
