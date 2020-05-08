@@ -1,11 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -22,11 +23,15 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}throws tag in a Docblock.
  */
-final class Throws extends TagWithType implements Factory\StaticMethod
+final class Throws extends BaseTag implements Factory\StaticMethod
 {
-    public function __construct(Type $type, Description $description = null)
+    protected $name = 'throws';
+
+    /** @var Type */
+    private $type;
+
+    public function __construct(Type $type, ?Description $description = null)
     {
-        $this->name = 'throws';
         $this->type = $type;
         $this->description = $description;
     }
@@ -35,23 +40,30 @@ final class Throws extends TagWithType implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
-    ) {
-        Assert::string($body);
+        string $body,
+        ?TypeResolver $typeResolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
+    ): self {
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 
-        list($type, $description) = self::extractTypeFromBody($body);
+        $parts = preg_split('/\s+/Su', $body, 2);
 
-        $type = $typeResolver->resolve($type, $context);
-        $description = $descriptionFactory->create($description, $context);
+        $type = $typeResolver->resolve($parts[0] ?? '', $context);
+        $description = $descriptionFactory->create($parts[1] ?? '', $context);
 
         return new static($type, $description);
     }
 
-    public function __toString()
+    /**
+     * Returns the type section of the variable.
+     */
+    public function getType(): Type
+    {
+        return $this->type;
+    }
+
+    public function __toString(): string
     {
         return $this->type . ' ' . $this->description;
     }

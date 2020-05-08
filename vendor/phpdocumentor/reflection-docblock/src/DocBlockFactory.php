@@ -1,11 +1,12 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -28,9 +29,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
 
     /**
      * Initializes this factory with the required subcontractors.
-     *
-     * @param DescriptionFactory $descriptionFactory
-     * @param TagFactory         $tagFactory
      */
     public function __construct(DescriptionFactory $descriptionFactory, TagFactory $tagFactory)
     {
@@ -42,10 +40,8 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * Factory method for easy instantiation.
      *
      * @param string[] $additionalTags
-     *
-     * @return DocBlockFactory
      */
-    public static function createInstance(array $additionalTags = [])
+    public static function createInstance(array $additionalTags = []): self
     {
         $fqsenResolver = new FqsenResolver();
         $tagFactory = new StandardTagFactory($fqsenResolver);
@@ -65,12 +61,8 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * @param object|string $docblock A string containing the DocBlock to parse or an object supporting the
      *                                getDocComment method (such as a ReflectionClass object).
-     * @param Types\Context $context
-     * @param Location      $location
-     *
-     * @return DocBlock
      */
-    public function create($docblock, Types\Context $context = null, Location $location = null)
+    public function create($docblock, ?Types\Context $context = null, ?Location $location = null): DocBlock
     {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
@@ -88,7 +80,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         }
 
         $parts = $this->splitDocBlock($this->stripDocComment($docblock));
-        list($templateMarker, $summary, $description, $tags) = $parts;
+        [$templateMarker, $summary, $description, $tags] = $parts;
 
         return new DocBlock(
             $summary,
@@ -103,7 +95,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         );
     }
 
-    public function registerTagHandler($tagName, $handler)
+    public function registerTagHandler($tagName, $handler): void
     {
         $this->tagFactory->registerTagHandler($tagName, $handler);
     }
@@ -112,10 +104,8 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * Strips the asterisks from the DocBlock comment.
      *
      * @param string $comment String containing the comment text.
-     *
-     * @return string
      */
-    private function stripDocComment($comment)
+    private function stripDocComment(string $comment): string
     {
         $comment = trim(preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u', '$1', $comment));
 
@@ -137,7 +127,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @return string[] containing the template marker (if any), summary, description and a string containing the tags.
      */
-    private function splitDocBlock($comment)
+    private function splitDocBlock(string $comment): array
     {
         // Performance improvement cheat: if the first character is an @ then only tags are in this DocBlock. This
         // method does not split tags so we return this verbatim as the fourth result (tags). This saves us the
@@ -176,7 +166,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
                 [^\n.]+
                 (?:
                   (?! \. \n | \n{2} )     # End summary upon a dot followed by newline or two newlines
-                  [\n.] (?! [ \t]* @\pL ) # End summary when an @ is found as first character on a new line
+                  [\n.]* (?! [ \t]* @\pL ) # End summary when an @ is found as first character on a new line
                   [^\n.]+                 # Include anything else
                 )*
                 \.?
@@ -217,9 +207,9 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * @param string $tags Tag block to parse.
      * @param Types\Context $context Context of the parsed Tag
      *
-     * @return DocBlock\Tag[]
+     * @return DocBlock\Tag[]|string[]|null[]
      */
-    private function parseTagBlock($tags, Types\Context $context)
+    private function parseTagBlock(string $tags, Types\Context $context): array
     {
         $tags = $this->filterTagBlock($tags);
         if (!$tags) {
@@ -235,11 +225,9 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     }
 
     /**
-     * @param string $tags
-     *
      * @return string[]
      */
-    private function splitTagBlockIntoTagLines($tags)
+    private function splitTagBlockIntoTagLines(string $tags): array
     {
         $result = [];
         foreach (explode("\n", $tags) as $tag_line) {
@@ -253,11 +241,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         return $result;
     }
 
-    /**
-     * @param $tags
-     * @return string
-     */
-    private function filterTagBlock($tags)
+    private function filterTagBlock($tags): ?string
     {
         $tags = trim($tags);
         if (!$tags) {

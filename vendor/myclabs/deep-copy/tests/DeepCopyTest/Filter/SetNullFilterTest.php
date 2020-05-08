@@ -1,15 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace DeepCopyTest\Filter;
 
 use DeepCopy\Filter\SetNullFilter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * @covers \DeepCopy\Filter\SetNullFilter
  */
-class SetNullFilterTest extends PHPUnit_Framework_TestCase
+class SetNullFilterTest extends TestCase
 {
     public function test_it_sets_the_given_property_to_null()
     {
