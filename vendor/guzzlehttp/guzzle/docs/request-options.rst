@@ -553,6 +553,31 @@ http_errors
     default when creating a handler with ``GuzzleHttp\default_handler``.
 
 
+idn_conversion
+--------------
+
+:Summary: Internationalized Domain Name (IDN) support (enabled by default if
+    ``intl`` extension is available).
+:Types:
+    - bool
+    - int
+:Default: ``true`` if ``intl`` extension is available (and ICU library is 4.6+ for PHP 7.2+), ``false`` otherwise
+:Constant: ``GuzzleHttp\RequestOptions::IDN_CONVERSION``
+
+.. code-block:: php
+
+    $client->request('GET', 'https://яндекс.рф');
+    // яндекс.рф is translated to xn--d1acpjx3f.xn--p1ai before passing it to the handler
+
+    $res = $client->request('GET', 'https://яндекс.рф', ['idn_conversion' => false]);
+    // The domain part (яндекс.рф) stays unmodified
+
+Enables/disables IDN support, can also be used for precise control by combining
+IDNA_* constants (except IDNA_ERROR_*), see ``$options`` parameter in
+`idn_to_ascii() <https://www.php.net/manual/en/function.idn-to-ascii.php>`_
+documentation for more details.
+
+
 json
 ----
 
@@ -788,7 +813,7 @@ host names that should not be proxied to.
 
     Guzzle will automatically populate this value with your environment's
     ``NO_PROXY`` environment variable. However, when providing a ``proxy``
-    request option, it is up to your to provide the ``no`` value parsed from
+    request option, it is up to you to provide the ``no`` value parsed from
     the ``NO_PROXY`` environment variable
     (e.g., ``explode(',', getenv('NO_PROXY'))``).
 

@@ -69,7 +69,7 @@ class Mockery
      */
     public static function globalHelpers()
     {
-        require_once __DIR__.'/helpers.php';
+        require_once __DIR__ . '/helpers.php';
     }
 
     /**
@@ -234,7 +234,7 @@ class Mockery
     }
 
     /**
-     * Setter for the $_generator static propery.
+     * Setter for the $_generator static property.
      *
      * @param \Mockery\Generator\Generator $generator
      */
@@ -435,6 +435,23 @@ class Mockery
     /**
      * Return instance of CLOSURE matcher.
      *
+     * @param $reference
+     *
+     * @return \Mockery\Matcher\Closure
+     */
+    public static function capture(&$reference)
+    {
+        $closure = function ($argument) use (&$reference) {
+            $reference = $argument;
+            return true;
+        };
+
+        return new \Mockery\Matcher\Closure($closure);
+    }
+
+    /**
+     * Return instance of CLOSURE matcher.
+     *
      * @param mixed $closure
      *
      * @return \Mockery\Matcher\Closure
@@ -575,10 +592,10 @@ class Mockery
                     $sample[] = "$key => $value";
                 }
 
-                $argument = "[".implode(", ", $sample)."]";
+                $argument = "[" . implode(", ", $sample) . "]";
             }
 
-            return ((strlen($argument) > 1000) ? substr($argument, 0, 1000).'...]' : $argument);
+            return ((strlen($argument) > 1000) ? substr($argument, 0, 1000) . '...]' : $argument);
         }
 
         if (is_bool($argument)) {
@@ -593,7 +610,7 @@ class Mockery
             return 'NULL';
         }
 
-        return "'".(string) $argument."'";
+        return "'" . (string) $argument . "'";
     }
 
     /**

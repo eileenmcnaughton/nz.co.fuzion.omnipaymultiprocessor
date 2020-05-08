@@ -29,7 +29,7 @@ class DirectPostAuthorizeRequestTest extends TestCase
         $data = $this->request->getData();
         $data['EPS_TIMESTAMP'] = '20190215173250';
 
-        $this->assertSame('61d48022818196fb1bbe4e029c4280b163496751bc9a479b6e1dfaf6d134a490', $this->request->generateFingerprint($data));
+        $this->assertSame('3a263ec515c7272ea1ab656b454923b801fa14ad13ac0b3ad616693b1d137431', $this->request->generateFingerprint($data));
     }
 
     public function testSend()

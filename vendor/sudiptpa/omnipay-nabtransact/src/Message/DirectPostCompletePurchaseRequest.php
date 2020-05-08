@@ -37,7 +37,7 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
             $data['summarycode'],
         ]);
 
-        return hash_hmac('sha256', $hash, true);
+        return hash_hmac('sha256', $hash, $this->getTransactionPassword());
     }
 
     /**

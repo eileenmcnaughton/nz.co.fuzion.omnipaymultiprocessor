@@ -194,7 +194,7 @@ trait MessageTrait
             }
 
             return trim((string) $value, " \t");
-        }, $values);
+        }, array_values($values));
     }
 
     private function assertHeader($header)

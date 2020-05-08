@@ -167,7 +167,7 @@ class MethodProphecySpec extends ObjectBehavior
         $this->getPromise()->execute(array(), $objectProphecy, $this)->shouldYield(array('foo', 'bar'));
     }
 
-    function it_yields_key_value_paris_configured_in_willYield(ObjectProphecy $objectProphecy)
+    function it_yields_key_value_pairs_configured_in_willYield(ObjectProphecy $objectProphecy)
     {
         if (PHP_VERSION_ID < 70000) {
             throw new SkippingException('Yield language feature was introduced in >=5.5 but shouldYield matcher only available in >=7.0');
@@ -366,7 +366,7 @@ class MethodProphecySpec extends ObjectBehavior
         $this->withArguments($arguments);
 
         try {
-          $this->callOnWrappedObject('shouldHave', array($prediction));
+            $this->callOnWrappedObject('shouldHave', array($prediction));
         } catch (\Exception $e) {}
 
         $this->getCheckedPredictions()->shouldReturn(array($prediction));
@@ -378,6 +378,7 @@ class MethodProphecySpec extends ObjectBehavior
         Call $call1,
         Call $call2
     ) {
+        $objectProphecy->addMethodProphecy($this)->willReturn(null);
         $callback = function ($calls, $object, $method) {
             throw new RuntimeException;
         };

@@ -31,7 +31,7 @@ abstract class DirectPostAbstractRequest extends AbstractRequest
             $data['EPS_TIMESTAMP'],
         ]);
 
-        return hash_hmac('sha256', $hash, true);
+        return hash_hmac('sha256', $hash, $this->getTransactionPassword());
     }
 
     /**

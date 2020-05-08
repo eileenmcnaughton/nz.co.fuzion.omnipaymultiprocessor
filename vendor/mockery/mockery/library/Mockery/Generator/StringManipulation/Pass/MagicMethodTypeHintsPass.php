@@ -111,7 +111,7 @@ class MagicMethodTypeHintsPass implements Pass
     }
 
     /**
-     * Checks if the method is declared withing code.
+     * Checks if the method is declared within code.
      *
      * @param int $code
      * @param Method $method
@@ -173,14 +173,14 @@ class MagicMethodTypeHintsPass implements Pass
     ) {
         $declaration = 'public';
         $declaration .= $method->isStatic() ? ' static' : '';
-        $declaration .= ' function '.$method->getName().'(';
+        $declaration .= ' function ' . $method->getName() . '(';
 
         foreach ($method->getParameters() as $index => $parameter) {
-            $declaration .= $parameter->getTypeHintAsString().' ';
+            $declaration .= $parameter->getTypeHintAsString() . ' ';
             $name = isset($namedParameters[$index]) ?
                 $namedParameters[$index]            :
                 $parameter->getName();
-            $declaration .= '$'.$name;
+            $declaration .= '$' . $name;
             $declaration .= ',';
         }
         $declaration = rtrim($declaration, ',');
@@ -188,7 +188,7 @@ class MagicMethodTypeHintsPass implements Pass
 
         $returnType = $method->getReturnType();
         if (!empty($returnType)) {
-            $declaration .= ': '.$returnType;
+            $declaration .= ': ' . $returnType;
         }
 
         return $declaration;

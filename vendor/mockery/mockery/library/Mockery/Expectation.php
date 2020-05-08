@@ -224,12 +224,14 @@ class Expectation implements ExpectationInterface
     {
         $mockClass = get_class($this->_mock);
         $container = $this->_mock->mockery_getContainer();
+        /** @var Mock[] $mocks */
         $mocks = $container->getMocks();
         foreach ($this->_setQueue as $name => &$values) {
             if (count($values) > 0) {
                 $value = array_shift($values);
+                $this->_mock->{$name} = $value;
                 foreach ($mocks as $mock) {
-                    if (is_a($mock, $mockClass)) {
+                    if (is_a($mock, $mockClass) && $mock->mockery_isInstance()) {
                         $mock->{$name} = $value;
                     }
                 }
@@ -404,7 +406,7 @@ class Expectation implements ExpectationInterface
     /**
      * Expected argument setter for the expectation
      *
-     * @param mixed[] ...$args
+     * @param mixed|mixed[] ...$args
      * @return self
      */
     public function with(...$args)
@@ -453,7 +455,7 @@ class Expectation implements ExpectationInterface
         } elseif ($argsOrClosure instanceof Closure) {
             $this->withArgsMatchedByClosure($argsOrClosure);
         } else {
-            throw new \InvalidArgumentException(sprintf('Call to %s with an invalid argument (%s), only array and '.
+            throw new \InvalidArgumentException(sprintf('Call to %s with an invalid argument (%s), only array and ' .
                 'closure are allowed', __METHOD__, $argsOrClosure));
         }
         return $this;
@@ -502,7 +504,7 @@ class Expectation implements ExpectationInterface
     /**
      * Set a return value, or sequential queue of return values
      *
-     * @param mixed[] ...$args
+     * @param mixed|mixed[] ...$args
      * @return self
      */
     public function andReturn(...$args)
@@ -514,7 +516,7 @@ class Expectation implements ExpectationInterface
     /**
      * Set a return value, or sequential queue of return values
      *
-     * @param mixed[] ...$args
+     * @param mixed|mixed[] ...$args
      * @return self
      */
     public function andReturns(...$args)
@@ -559,13 +561,35 @@ class Expectation implements ExpectationInterface
     }
 
     /**
+     * Sets up a closure to return the nth argument from the expected method call
+     *
+     * @param int $index
+     * @return self
+     */
+    public function andReturnArg($index)
+    {
+        if (!is_int($index) || $index < 0) {
+            throw new \InvalidArgumentException("Invalid argument index supplied. Index must be a positive integer.");
+        }
+        $closure = function (...$args) use ($index) {
+            if (array_key_exists($index, $args)) {
+                return $args[$index];
+            }
+            throw new \OutOfBoundsException("Cannot return an argument value. No argument exists for the index $index");
+        };
+
+        $this->_closureQueue = [$closure];
+        return $this;
+    }
+
+    /**
      * Return a self-returning black hole object.
      *
      * @return self
      */
     public function andReturnUndefined()
     {
-        $this->andReturn(new \Mockery\Undefined);
+        $this->andReturn(new \Mockery\Undefined());
         return $this;
     }
 

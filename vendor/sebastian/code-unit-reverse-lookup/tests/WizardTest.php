@@ -29,32 +29,9 @@ class WizardTest extends TestCase
 
     public function testMethodCanBeLookedUp()
     {
-        require __DIR__ . '/_fixture/Foo.php';
-
         $this->assertEquals(
-            'Foo::method',
-            $this->wizard->lookup(
-                __DIR__ . '/_fixture/Foo.php',
-                6
-            )
-        );
-
-        return $this->wizard;
-    }
-
-    /**
-     * @depends testMethodCanBeLookedUp
-     */
-    public function testMethodCanBeLookedUp2(Wizard $wizard)
-    {
-        require __DIR__ . '/_fixture/Bar.php';
-
-        $this->assertEquals(
-            'Bar::method',
-            $wizard->lookup(
-                __DIR__ . '/_fixture/Bar.php',
-                6
-            )
+            __METHOD__,
+            $this->wizard->lookup(__FILE__, __LINE__)
         );
     }
 

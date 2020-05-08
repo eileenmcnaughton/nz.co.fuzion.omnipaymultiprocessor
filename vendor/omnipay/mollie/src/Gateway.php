@@ -41,6 +41,11 @@ use Omnipay\Mollie\Message\Request\UpdateCustomerRequest;
 class Gateway extends AbstractGateway
 {
     /**
+     * Version of our gateway.
+     */
+    const GATEWAY_VERSION = "5.2";
+
+    /**
      * @return string
      */
     public function getName()
@@ -73,6 +78,35 @@ class Gateway extends AbstractGateway
     public function setApiKey($value)
     {
         return $this->setParameter('apiKey', $value);
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getVersionStrings()
+    {
+        return $this->getParameter('versionStrings');
+    }
+
+    /**
+     * @param  string $value
+     * @return $this
+     */
+    public function setVersionStrings(array $values)
+    {
+        return $this->setParameter('versionStrings', $values);
+    }
+
+    /**
+     * @param  string $value
+     * @return $this
+     */
+    public function addVersionString($value)
+    {
+        $versionStrings =  $this->getVersionStrings() ?: [];
+        $versionStrings[] = str_replace([" ", "\t", "\n", "\r"], '-', $value);
+
+        return $this->setVersionStrings($versionStrings);
     }
 
     /**

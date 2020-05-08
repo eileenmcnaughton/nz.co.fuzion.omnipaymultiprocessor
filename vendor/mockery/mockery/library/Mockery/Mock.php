@@ -36,7 +36,7 @@ class Mock implements MockInterface
     protected $_mockery_expectations = array();
 
     /**
-     * Stores an inital number of expectations that can be manipulated
+     * Stores an initial number of expectations that can be manipulated
      * while using the getter method.
      *
      * @var int
@@ -156,18 +156,21 @@ class Mock implements MockInterface
      */
     protected $_mockery_thrownExceptions = [];
 
+    protected $_mockery_instanceMock = true;
+
     /**
      * We want to avoid constructors since class is copied to Generator.php
      * for inclusion on extending class definitions.
      *
      * @param \Mockery\Container $container
      * @param object $partialObject
+     * @param bool $instanceMock
      * @return void
      */
-    public function mockery_init(\Mockery\Container $container = null, $partialObject = null)
+    public function mockery_init(\Mockery\Container $container = null, $partialObject = null, $instanceMock = true)
     {
         if (is_null($container)) {
-            $container = new \Mockery\Container;
+            $container = new \Mockery\Container();
         }
         $this->_mockery_container = $container;
         if (!is_null($partialObject)) {
@@ -181,6 +184,8 @@ class Mock implements MockInterface
                 }
             }
         }
+
+        $this->_mockery_instanceMock = $instanceMock;
     }
 
     /**
@@ -206,7 +211,9 @@ class Mock implements MockInterface
         $allowMockingProtectedMethods = $this->_mockery_allowMockingProtectedMethods;
 
         $lastExpectation = \Mockery::parseShouldReturnArgs(
-            $this, $methodNames, function ($method) use ($self, $allowMockingProtectedMethods) {
+            $this,
+            $methodNames,
+            function ($method) use ($self, $allowMockingProtectedMethods) {
                 $rm = $self->mockery_getMethod($method);
                 if ($rm) {
                     if ($rm->isPrivate()) {
@@ -312,7 +319,7 @@ class Mock implements MockInterface
     public function asUndefined()
     {
         $this->_mockery_ignoreMissing = true;
-        $this->_mockery_defaultReturnValue = new \Mockery\Undefined;
+        $this->_mockery_defaultReturnValue = new \Mockery\Undefined();
         return $this;
     }
 
@@ -656,6 +663,11 @@ class Mock implements MockInterface
         $onlyImplementsMock = 2 == count($interfaces);
 
         return (false === $rfc->getParentClass()) && $onlyImplementsMock;
+    }
+
+    public function mockery_isInstance()
+    {
+        return $this->_mockery_instanceMock;
     }
 
     public function __wakeup()
