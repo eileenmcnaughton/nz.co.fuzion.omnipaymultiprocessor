@@ -19,7 +19,7 @@ use Civi\Test\TransactionalInterface;
  *
  * @group headless
  */
-class EwayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
+class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
   use \Civi\Test\Api3TestTrait;
   use HttpClientTestTrait;
   use EwayRapidDirectTestTrait;

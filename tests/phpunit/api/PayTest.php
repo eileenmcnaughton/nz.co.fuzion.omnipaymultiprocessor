@@ -20,7 +20,7 @@ use GuzzleHttp\Psr7\Response;
  *
  * @group headless
  */
-class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
+class api_PayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
   use \Civi\Test\Api3TestTrait;
   use HttpClientTestTrait;
 
@@ -42,6 +42,8 @@ class api_PayTest extends \PHPUnit_Framework_TestCase implements HeadlessInterfa
 
   /**
    * Test the pre-approval function.
+   *
+   * @throws \CRM_Core_Exception
    */
   public function testPayRest() {
 
