@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -6,7 +7,7 @@
  * file that was distributed with this source code.
  *
  * @author    Jan Schneider <jan@horde.org>
- * @copyright 2017 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2018 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -35,13 +36,9 @@ class AlignFormatter implements Formatter
 
     /**
      * Formats the given tag to return a simple plain text version.
-     *
-     * @param Tag $tag
-     *
-     * @return string
      */
-    public function format(Tag $tag)
+    public function format(Tag $tag): string
     {
-        return '@' . $tag->getName() . str_repeat(' ', $this->maxLen - strlen($tag->getName()) + 1) . (string)$tag;
+        return '@' . $tag->getName() . str_repeat(' ', $this->maxLen - strlen($tag->getName()) + 1) . (string) $tag;
     }
 }

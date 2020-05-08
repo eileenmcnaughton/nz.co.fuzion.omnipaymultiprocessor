@@ -1,15 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace DeepCopyTest\Filter;
 
 use DeepCopy\Filter\ReplaceFilter;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * @covers \DeepCopy\Filter\ReplaceFilter
  */
-class ReplaceFilterTest extends PHPUnit_Framework_TestCase
+class ReplaceFilterTest extends TestCase
 {
     /**
      * @dataProvider provideCallbacks

@@ -1,19 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\Types;
 
-use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Fqsen;
+use phpDocumentor\Reflection\Type;
 
 /**
  * Represents a collection type as described in the PSR-5, the PHPDoc Standard.
@@ -28,17 +28,15 @@ use phpDocumentor\Reflection\Fqsen;
  */
 final class Collection extends AbstractList
 {
-
-    /** @var Fqsen */
+    /** @var Fqsen|null */
     private $fqsen;
 
     /**
      * Initializes this representation of an array with the given Type or Fqsen.
      *
-     * @param Type $valueType
-     * @param Type $keyType
+     * @param Fqsen|null $fqsen
      */
-    public function __construct(Fqsen $fqsen, Type $valueType, Type $keyType = null)
+    public function __construct(Fqsen $fqsen = null, Type $valueType, Type $keyType = null)
     {
         parent::__construct($valueType, $keyType);
 
@@ -48,7 +46,7 @@ final class Collection extends AbstractList
     /**
      * Returns the FQSEN associated with this object.
      *
-     * @return Fqsen
+     * @return Fqsen|null
      */
     public function getFqsen()
     {
@@ -57,15 +55,13 @@ final class Collection extends AbstractList
 
     /**
      * Returns a rendered output of the Type as it would be used in a DocBlock.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->keyType === null) {
-            return $this->fqsen.'<'.$this->valueType . '>';
+            return $this->fqsen . '<' . $this->valueType . '>';
         }
 
-        return $this->fqsen.'<'.$this->keyType . ',' . $this->valueType . '>';
+        return $this->fqsen . '<' . $this->keyType . ',' . $this->valueType . '>';
     }
 }
