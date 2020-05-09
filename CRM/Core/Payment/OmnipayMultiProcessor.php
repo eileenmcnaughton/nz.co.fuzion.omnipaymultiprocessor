@@ -232,6 +232,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Get core CiviCRM payment fields.
    *
    * @return array
+   * @throws \CRM_Core_Exception
    */
   private function getCorePaymentFields() {
     $creditCardType = ['' => E::ts('- select -')] + CRM_Contribute_PseudoConstant::creditCard();
@@ -561,6 +562,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @param array $params
    *
    * @return array
+   * @throws \CRM_Core_Exception
    */
   protected function getCreditCardOptions($params) {
     $creditCardOptions = [
@@ -887,6 +889,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     return $response->getPlanData();
   }
 
+  /**
+   * @param $params
+   *
+   * @return mixed
+   *
+   * @throws \CRM_Core_Exception
+   * @throws \CiviCRM_API3_Exception
+   */
   public function query($params) {
     $this->createGateway($this->_paymentProcessor['id']);
     $response = $this->gateway->query($params)->send();
@@ -903,6 +913,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return bool
    * @throws CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public static function processPaymentResponse($params) {
     $processor = civicrm_api3('payment_processor', 'getsingle', ['id' => $params['processor_id']]);
@@ -1253,6 +1264,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * form (UpdateSubscription).
    *
    * @return array
+   * @throws \CiviCRM_API3_Exception
    */
   public function getEditableRecurringScheduleFields() {
     $possibles = ['amount'];
