@@ -824,7 +824,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
       catch (CiviCRM_API3_Exception $e) {
-        if (!stristr($e->getMessage(), 'Contribution already completed')) {
+        if (stripos($e->getMessage(), 'Contribution already completed') === FALSE) {
           $this->handleError('error', 'ipn_completion failed', $this->transaction_id . $e->getMessage(), 9000, 'An error may have occurred. Please check your receipt is correct');
         }
       }
@@ -1394,7 +1394,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (isset(Civi::$statics['Omnipay_Test_Config']['client'])) {
       $parameters = Civi::$statics['Omnipay_Test_Config']['client'];
     };
-    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']), $parameters);
+    $request = NULL;
+    if (isset(Civi::$statics['Omnipay_Test_Config']['request'])) {
+      $request = Civi::$statics['Omnipay_Test_Config']['request'];
+    };
+    $this->gateway = Omnipay::create(str_replace('omnipay_', '', $this->_paymentProcessor['payment_processor_type']), $parameters, $request);
   }
 
   /**

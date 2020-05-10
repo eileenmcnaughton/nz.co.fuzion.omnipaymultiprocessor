@@ -5,7 +5,7 @@ namespace Omnipay\Mercanet\Message;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\NotificationInterface;
-use Guzzle\Http\ClientInterface;
+use Omnipay\Common\Http\ClientInterface;
 
 /**
  * Mercanet Notification.
@@ -29,7 +29,7 @@ class OffsiteNotifyRequest extends OffsiteAbstractRequest implements Notificatio
         // This would be a good place to convert the encoding if required
         // e.g. ISO-8859-1 to UTF-8.
 
-        $this->data = $httpRequest->request->all();
+        $this->data = $httpRequest->request->all()['data'];
     }
 
     public function getData()
