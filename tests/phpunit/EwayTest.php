@@ -23,6 +23,7 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
   use \Civi\Test\Api3TestTrait;
   use HttpClientTestTrait;
   use EwayRapidDirectTestTrait;
+  use OmnipayTestTrait;
 
   /**
    * Parameters to use for submitting.
@@ -31,6 +32,10 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
    */
   protected $submitParams = [];
 
+  /**
+   * @return \Civi\Test\CiviEnvBuilder
+   * @throws \CRM_Extension_Exception_ParseException
+   */
   public function setUpHeadless() {
     // Civi\Test has many helpers, like install(), uninstall(), sql(), and sqlFile().
     // See: https://github.com/civicrm/org.civicrm.testapalooza/blob/master/civi-test.md
@@ -39,14 +44,9 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
       ->apply();
   }
 
-  public function setUp() {
-    parent::setUp();
-  }
-
-  public function tearDown() {
-    parent::tearDown();
-  }
-
+  /**
+   * @throws \CiviCRM_API3_Exception
+   */
   public function testTransparentDirectDisplayFields() {
     $processor = $this->createTestProcessor('Eway_Rapid');
     $processorObject = \Civi\Payment\System::singleton()->getById($processor['id']);
@@ -100,19 +100,6 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
     $this->assertEquals($this->getRequest($contribution, $invoiceDescription),
       $outbound[0]);
 
-  }
-
-  /**
-   * @return array|int
-   */
-  protected function createTestProcessor($type) {
-    $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
-      'payment_processor_type_id' => 'omnipay_' . $type,
-      'user_name' => 'abd',
-      'password' => 'def',
-      'is_test' => 1,
-    ]);
-    return $processor;
   }
 
   /**

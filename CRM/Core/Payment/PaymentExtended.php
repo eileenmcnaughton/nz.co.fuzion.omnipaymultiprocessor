@@ -238,7 +238,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *
    * @param string $level
    * @param string $message
-   * @param string $context
+   * @param string|array $context
    *
    * @param int $errorCode
    * @param string $userMessage
@@ -255,7 +255,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     $log->log($level, $message, (array) $context);
 
     if (CRM_Core_Permission::check('administer payment processors')) {
-      $userMessage .= implode(',', $context);
+      $userMessage .= implode(',', (array) $context);
     }
     $this->logHttpTraffic();
     throw new \Civi\Payment\Exception\PaymentProcessorException($userMessage);
