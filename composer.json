@@ -37,7 +37,8 @@
         "fuzion/omnipay-mercanet": "^3.0@dev",
         "razorpay/omnipay-razorpay": "^3.0@dev",
         "clue/stream-filter": "^1.4.1",
-        "lemonstand/omnipay-beanstream": "dev-master"
+        "lemonstand/omnipay-beanstream": "dev-master",
+        "guzzlehttp/guzzle": "6.3.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6",
@@ -47,7 +48,7 @@
     "minimum-stability": "dev",
     "config": {
         "platform": {
-            "php": "7.1.0",
+            "php": "7.1.0"
 
 
         }

@@ -428,7 +428,7 @@ class ExpectationTest extends MockeryTestCase
     {
         $this->mock->shouldReceive('foo')->withArgs(array('a string'));
         $this->expectException(\Mockery\Exception::class);
-        $this->expectExceptionMessageRegExp('/foo\(NULL\)/');
+        $this->expectExceptionMessageRegEx('/foo\(NULL\)/');
         $this->mock->foo(null);
         Mockery::close();
     }
@@ -436,7 +436,7 @@ class ExpectationTest extends MockeryTestCase
     public function testExpectsArgumentsArrayThrowsExceptionIfPassedWrongArgumentType()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessageRegExp('/invalid argument (.+), only array and closure are allowed/');
+        $this->expectExceptionMessageRegEx('/invalid argument (.+), only array and closure are allowed/');
         $this->mock->shouldReceive('foo')->withArgs(5);
         Mockery::close();
     }
@@ -1081,7 +1081,7 @@ class ExpectationTest extends MockeryTestCase
     {
         $this->mock->shouldReceive('foo')->with(1, 2, Mockery::andAnyOthers())->twice();
         $this->mock->foo(1, 2, 3, 4, 5);
-        $this->mock->foo(1, 'str', 3, 4);
+        $this->mock->foo(1, 2, 'str', 3, 4);
     }
 
     public function testAndAnyOtherConstraintDoesNotPreventMatchingOfRegularArguments()
@@ -1090,6 +1090,14 @@ class ExpectationTest extends MockeryTestCase
         $this->expectException(\Mockery\Exception::class);
         $this->mock->foo(10, 2, 3, 4, 5);
         Mockery::close();
+    }
+
+    public function testAndAnyOtherConstraintMultipleExpectationsButNoOthers()
+    {
+        $this->mock->shouldReceive('foo')->with('a', Mockery::andAnyOthers())->andReturn('a');
+        $this->mock->shouldReceive('foo')->with('b', Mockery::andAnyOthers())->andReturn('b');
+        $this->assertEquals('a', $this->mock->foo('a'));
+        $this->assertEquals('b', $this->mock->foo('b'));
     }
 
     public function testArrayConstraintMatchesArgument()
@@ -2078,7 +2086,7 @@ class ExpectationTest extends MockeryTestCase
     public function testCountWithBecauseExceptionMessage()
     {
         $this->expectException(InvalidCountException::class);
-        $this->expectExceptionMessageRegexp(
+        $this->expectExceptionMessageRegex(
             '/Method foo\(<Any Arguments>\) from Mockery_[\d]+ should be called' . PHP_EOL . ' ' .
             'exactly 1 times but called 0 times. Because We like foo/'
         );

@@ -17,7 +17,7 @@ class SessionCookieJarTest extends TestCase
         $this->sessionVar = 'sessionKey';
 
         if (!isset($_SESSION)) {
-            $_SESSION = [];
+            $_SESSION = array();
         }
     }
 
@@ -33,12 +33,12 @@ class SessionCookieJarTest extends TestCase
     public function testLoadsFromSession()
     {
         $jar = new SessionCookieJar($this->sessionVar);
-        self::assertSame([], $jar->getIterator()->getArrayCopy());
+        $this->assertEquals([], $jar->getIterator()->getArrayCopy());
         unset($_SESSION[$this->sessionVar]);
     }
 
     /**
-     * @dataProvider providerPersistsToSessionParameters
+     * @dataProvider testPersistsToSessionParameters
      */
     public function testPersistsToSession($testSaveSessionCookie = false)
     {
@@ -61,32 +61,32 @@ class SessionCookieJarTest extends TestCase
             'Domain'  => 'foo.com',
         ]));
 
-        self::assertCount(3, $jar);
+        $this->assertCount(3, $jar);
         unset($jar);
 
         // Make sure it wrote to the sessionVar in $_SESSION
         $contents = $_SESSION[$this->sessionVar];
-        self::assertNotEmpty($contents);
+        $this->assertNotEmpty($contents);
 
         // Load the cookieJar from the file
         $jar = new SessionCookieJar($this->sessionVar);
 
         if ($testSaveSessionCookie) {
-            self::assertCount(3, $jar);
+            $this->assertCount(3, $jar);
         } else {
             // Weeds out temporary and session cookies
-            self::assertCount(2, $jar);
+            $this->assertCount(2, $jar);
         }
 
         unset($jar);
         unset($_SESSION[$this->sessionVar]);
     }
 
-    public function providerPersistsToSessionParameters()
+    public function testPersistsToSessionParameters()
     {
-        return [
-            [false],
-            [true]
-        ];
+        return array(
+            array(false),
+            array(true)
+        );
     }
 }

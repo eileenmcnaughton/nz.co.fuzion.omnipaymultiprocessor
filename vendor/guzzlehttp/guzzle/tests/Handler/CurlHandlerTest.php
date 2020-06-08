@@ -7,7 +7,6 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Tests\Server;
-use GuzzleHttp\Utils;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,8 +37,8 @@ class CurlHandlerTest extends TestCase
         Server::enqueue([$response, $response]);
         $a = new CurlHandler();
         $request = new Request('GET', Server::$url);
-        self::assertInstanceOf('GuzzleHttp\Promise\FulfilledPromise', $a($request, []));
-        self::assertInstanceOf('GuzzleHttp\Promise\FulfilledPromise', $a($request, []));
+        $a($request, []);
+        $a($request, []);
     }
 
     public function testDoesSleep()
@@ -48,9 +47,9 @@ class CurlHandlerTest extends TestCase
         Server::enqueue([$response]);
         $a = new CurlHandler();
         $request = new Request('GET', Server::$url);
-        $s = Utils::currentTime();
+        $s = microtime(true);
         $a($request, ['delay' => 0.1])->wait();
-        self::assertGreaterThan(0.0001, Utils::currentTime() - $s);
+        $this->assertGreaterThan(0.0001, microtime(true) - $s);
     }
 
     public function testCreatesCurlErrorsWithContext()
@@ -61,10 +60,10 @@ class CurlHandlerTest extends TestCase
         $p = $handler($request, ['timeout' => 0.001, 'connect_timeout' => 0.001])
             ->otherwise(function (ConnectException $e) use (&$called) {
                 $called = true;
-                self::assertArrayHasKey('errno', $e->getHandlerContext());
+                $this->assertArrayHasKey('errno', $e->getHandlerContext());
             });
         $p->wait();
-        self::assertTrue($called);
+        $this->assertTrue($called);
     }
 
     public function testUsesContentLengthWhenOverInMemorySize()
@@ -81,7 +80,7 @@ class CurlHandlerTest extends TestCase
         );
         $handler($request, [])->wait();
         $received = Server::received()[0];
-        self::assertEquals(1000000, $received->getHeaderLine('Content-Length'));
-        self::assertFalse($received->hasHeader('Transfer-Encoding'));
+        $this->assertEquals(1000000, $received->getHeaderLine('Content-Length'));
+        $this->assertFalse($received->hasHeader('Transfer-Encoding'));
     }
 }

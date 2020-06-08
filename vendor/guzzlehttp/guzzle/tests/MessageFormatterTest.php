@@ -2,10 +2,10 @@
 namespace GuzzleHttp\Tests;
 
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\MessageFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,9 +16,9 @@ class MessageFormatterTest extends TestCase
     public function testCreatesWithClfByDefault()
     {
         $f = new MessageFormatter();
-        self::assertEquals(MessageFormatter::CLF, self::readAttribute($f, 'template'));
+        $this->assertEquals(MessageFormatter::CLF, $this->readAttribute($f, 'template'));
         $f = new MessageFormatter(null);
-        self::assertEquals(MessageFormatter::CLF, self::readAttribute($f, 'template'));
+        $this->assertEquals(MessageFormatter::CLF, $this->readAttribute($f, 'template'));
     }
 
     public function dateProvider()
@@ -38,7 +38,7 @@ class MessageFormatterTest extends TestCase
         $f = new MessageFormatter($format);
         $request = new Request('GET', '/');
         $result = $f->format($request);
-        self::assertRegExp($pattern, $result);
+        $this->assertEquals(1, preg_match($pattern, $result));
     }
 
     public function formatProvider()
@@ -88,6 +88,6 @@ class MessageFormatterTest extends TestCase
     public function testFormatsMessages($template, $args, $result)
     {
         $f = new MessageFormatter($template);
-        self::assertSame((string) $result, call_user_func_array([$f, 'format'], $args));
+        $this->assertEquals((string) $result, call_user_func_array(array($f, 'format'), $args));
     }
 }

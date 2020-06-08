@@ -191,7 +191,7 @@ class Mock implements MockInterface
     /**
      * Set expected method calls
      *
-     * @param mixed ...$methodNames one or many methods that are expected to be called in this mock
+     * @param string ...$methodNames one or many methods that are expected to be called in this mock
      *
      * @return \Mockery\ExpectationInterface|\Mockery\Expectation|\Mockery\HigherOrderMessage
      */
@@ -279,7 +279,7 @@ class Mock implements MockInterface
     /**
      * Shortcut method for setting an expectation that a method should not be called.
      *
-     * @param array ...$methodNames one or many methods that are expected not to be called in this mock
+     * @param string ...$methodNames one or many methods that are expected not to be called in this mock
      * @return \Mockery\ExpectationInterface|\Mockery\Expectation|\Mockery\HigherOrderMessage
      */
     public function shouldNotReceive(...$methodNames)
@@ -612,7 +612,7 @@ class Mock implements MockInterface
 
     public function __isset($name)
     {
-        if (false === stripos($name, '_mockery_') && method_exists(get_parent_class($this), '__isset')) {
+        if (false === stripos($name, '_mockery_') && get_parent_class($this) && method_exists(get_parent_class($this), '__isset')) {
             return call_user_func('parent::__isset', $name);
         }
 
@@ -635,7 +635,7 @@ class Mock implements MockInterface
      */
     public function mockery_callSubjectMethod($name, array $args)
     {
-        if (!method_exists($this, $name) && method_exists(get_parent_class($this), '__call')) {
+        if (!method_exists($this, $name) && get_parent_class($this) && method_exists(get_parent_class($this), '__call')) {
             return call_user_func('parent::__call', $name, $args);
         }
         return call_user_func_array('parent::' . $name, $args);
@@ -890,9 +890,9 @@ class Mock implements MockInterface
         ) {
             return call_user_func_array(array($this->_mockery_partial, $method), $args);
         } elseif ($this->_mockery_deferMissing && is_callable("parent::$method")
-            && (!$this->hasMethodOverloadingInParentClass() || method_exists(get_parent_class($this), $method))) {
+            && (!$this->hasMethodOverloadingInParentClass() || (get_parent_class($this) && method_exists(get_parent_class($this), $method)))) {
             return call_user_func_array("parent::$method", $args);
-        } elseif ($this->_mockery_deferMissing && method_exists(get_parent_class($this), '__call')) {
+        } elseif ($this->_mockery_deferMissing && get_parent_class($this) && method_exists(get_parent_class($this), '__call')) {
             return call_user_func('parent::__call', $method, $args);
         } elseif ($method == '__toString') {
             // __toString is special because we force its addition to the class API regardless of the

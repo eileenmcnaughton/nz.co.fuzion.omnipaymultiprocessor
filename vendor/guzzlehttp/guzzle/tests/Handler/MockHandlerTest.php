@@ -19,19 +19,19 @@ class MockHandlerTest extends TestCase
         $mock = new MockHandler([$res]);
         $request = new Request('GET', 'http://example.com');
         $p = $mock($request, []);
-        self::assertSame($res, $p->wait());
+        $this->assertSame($res, $p->wait());
     }
 
     public function testIsCountable()
     {
         $res = new Response();
         $mock = new MockHandler([$res, $res]);
-        self::assertCount(2, $mock);
+        $this->assertCount(2, $mock);
     }
 
     public function testEmptyHandlerIsCountable()
     {
-        self::assertCount(0, new MockHandler());
+        $this->assertCount(0, new MockHandler());
     }
 
     /**
@@ -52,9 +52,9 @@ class MockHandlerTest extends TestCase
         $p = $mock($request, []);
         try {
             $p->wait();
-            self::fail();
+            $this->fail();
         } catch (\Exception $e2) {
-            self::assertSame($e, $e2);
+            $this->assertSame($e, $e2);
         }
     }
 
@@ -64,21 +64,21 @@ class MockHandlerTest extends TestCase
         $mock = new MockHandler([$res]);
         $request = new Request('GET', 'http://example.com');
         $mock($request, ['foo' => 'bar']);
-        self::assertSame($request, $mock->getLastRequest());
-        self::assertSame(['foo' => 'bar'], $mock->getLastOptions());
+        $this->assertSame($request, $mock->getLastRequest());
+        $this->assertEquals(['foo' => 'bar'], $mock->getLastOptions());
     }
 
     public function testSinkFilename()
     {
-        $filename = sys_get_temp_dir() . '/mock_test_' . uniqid();
+        $filename = sys_get_temp_dir().'/mock_test_'.uniqid();
         $res = new Response(200, [], 'TEST CONTENT');
         $mock = new MockHandler([$res]);
         $request = new Request('GET', '/');
         $p = $mock($request, ['sink' => $filename]);
         $p->wait();
 
-        self::assertFileExists($filename);
-        self::assertStringEqualsFile($filename, 'TEST CONTENT');
+        $this->assertFileExists($filename);
+        $this->assertStringEqualsFile($filename, 'TEST CONTENT');
 
         unlink($filename);
     }
@@ -93,8 +93,8 @@ class MockHandlerTest extends TestCase
         $p = $mock($request, ['sink' => $file]);
         $p->wait();
 
-        self::assertFileExists($meta['uri']);
-        self::assertStringEqualsFile($meta['uri'], 'TEST CONTENT');
+        $this->assertFileExists($meta['uri']);
+        $this->assertStringEqualsFile($meta['uri'], 'TEST CONTENT');
     }
 
     public function testSinkStream()
@@ -106,20 +106,18 @@ class MockHandlerTest extends TestCase
         $p = $mock($request, ['sink' => $stream]);
         $p->wait();
 
-        self::assertFileExists($stream->getMetadata('uri'));
-        self::assertStringEqualsFile($stream->getMetadata('uri'), 'TEST CONTENT');
+        $this->assertFileExists($stream->getMetadata('uri'));
+        $this->assertStringEqualsFile($stream->getMetadata('uri'), 'TEST CONTENT');
     }
 
     public function testCanEnqueueCallables()
     {
         $r = new Response();
-        $fn = function ($req, $o) use ($r) {
-            return $r;
-        };
+        $fn = function ($req, $o) use ($r) { return $r; };
         $mock = new MockHandler([$fn]);
         $request = new Request('GET', 'http://example.com');
         $p = $mock($request, ['foo' => 'bar']);
-        self::assertSame($r, $p->wait());
+        $this->assertSame($r, $p->wait());
     }
 
     /**
@@ -159,19 +157,17 @@ class MockHandlerTest extends TestCase
         });
         $request = new Request('GET', 'http://example.com');
         $mock($request, [])->wait();
-        self::assertSame($res, $c);
+        $this->assertSame($res, $c);
     }
 
     public function testInvokesOnRejected()
     {
         $e = new \Exception('a');
         $c = null;
-        $mock = new MockHandler([$e], null, function ($v) use (&$c) {
-            $c = $v;
-        });
+        $mock = new MockHandler([$e], null, function ($v) use (&$c) { $c = $v; });
         $request = new Request('GET', 'http://example.com');
         $mock($request, [])->wait(false);
-        self::assertSame($e, $c);
+        $this->assertSame($e, $c);
     }
 
     /**
@@ -200,62 +196,29 @@ class MockHandlerTest extends TestCase
         $res = new Response();
         $mock = new MockHandler([$res]);
         $request = new Request('GET', 'http://example.com');
-        /** @var TransferStats|null $stats */
         $stats = null;
         $onStats = function (TransferStats $s) use (&$stats) {
             $stats = $s;
         };
         $p = $mock($request, ['on_stats' => $onStats]);
         $p->wait();
-        self::assertSame($res, $stats->getResponse());
-        self::assertSame($request, $stats->getRequest());
+        $this->assertSame($res, $stats->getResponse());
+        $this->assertSame($request, $stats->getRequest());
     }
 
     public function testInvokesOnStatsFunctionForError()
     {
         $e = new \Exception('a');
         $c = null;
-        $mock = new MockHandler([$e], null, function ($v) use (&$c) {
-            $c = $v;
-        });
+        $mock = new MockHandler([$e], null, function ($v) use (&$c) { $c = $v; });
         $request = new Request('GET', 'http://example.com');
-
-        /** @var TransferStats|null $stats */
         $stats = null;
         $onStats = function (TransferStats $s) use (&$stats) {
             $stats = $s;
         };
         $mock($request, ['on_stats' => $onStats])->wait(false);
-        self::assertSame($e, $stats->getHandlerErrorData());
-        self::assertNull($stats->getResponse());
-        self::assertSame($request, $stats->getRequest());
-    }
-
-    public function testTransferTime()
-    {
-        $e = new \Exception('a');
-        $c = null;
-        $mock = new MockHandler([$e], null, function ($v) use (&$c) {
-            $c = $v;
-        });
-        $request = new Request('GET', 'http://example.com');
-        $stats = null;
-        $onStats = function (TransferStats $s) use (&$stats) {
-            $stats = $s;
-        };
-        $mock($request, [ 'on_stats' => $onStats, 'transfer_time' => 0.4 ])->wait(false);
-        self::assertEquals(0.4, $stats->getTransferTime());
-    }
-
-    public function testResetQueue()
-    {
-        $mock = new MockHandler([new Response(200), new Response(204)]);
-        self::assertCount(2, $mock);
-
-        $mock->reset();
-        self::assertEmpty($mock);
-
-        $mock->append(new Response(500));
-        self::assertCount(1, $mock);
+        $this->assertSame($e, $stats->getHandlerErrorData());
+        $this->assertNull($stats->getResponse());
+        $this->assertSame($request, $stats->getRequest());
     }
 }

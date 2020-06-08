@@ -8,7 +8,7 @@ class FunctionsTest extends TestCase
 {
     public function testExpandsTemplate()
     {
-        self::assertSame(
+        $this->assertEquals(
             'foo/123',
             GuzzleHttp\uri_template('foo/{bar}', ['bar' => '123'])
         );
@@ -21,7 +21,7 @@ class FunctionsTest extends TestCase
     public function testProvidesDefaultUserAgent()
     {
         $ua = GuzzleHttp\default_user_agent();
-        self::assertRegExp('#^GuzzleHttp/.+ curl/.+ PHP/.+$#', $ua);
+        $this->assertEquals(1, preg_match('#^GuzzleHttp/.+ curl/.+ PHP/.+$#', $ua));
     }
 
     public function typeProvider()
@@ -41,13 +41,13 @@ class FunctionsTest extends TestCase
      */
     public function testDescribesType($input, $output)
     {
-        self::assertSame($output, GuzzleHttp\describe_type($input));
+        $this->assertEquals($output, GuzzleHttp\describe_type($input));
     }
 
     public function testParsesHeadersFromLines()
     {
         $lines = ['Foo: bar', 'Foo: baz', 'Abc: 123', 'Def: a, b'];
-        self::assertSame([
+        $this->assertEquals([
             'Foo' => ['bar', 'baz'],
             'Abc' => ['123'],
             'Def' => ['a, b'],
@@ -57,19 +57,19 @@ class FunctionsTest extends TestCase
     public function testParsesHeadersFromLinesWithMultipleLines()
     {
         $lines = ['Foo: bar', 'Foo: baz', 'Foo: 123'];
-        self::assertSame([
+        $this->assertEquals([
             'Foo' => ['bar', 'baz', '123'],
         ], GuzzleHttp\headers_from_lines($lines));
     }
 
     public function testReturnsDebugResource()
     {
-        self::assertInternalType('resource', GuzzleHttp\debug_resource());
+        $this->assertInternalType('resource', GuzzleHttp\debug_resource());
     }
 
     public function testProvidesDefaultCaBundler()
     {
-        self::assertFileExists(GuzzleHttp\default_ca_bundle());
+        $this->assertFileExists(GuzzleHttp\default_ca_bundle());
     }
 
     public function noProxyProvider()
@@ -89,7 +89,7 @@ class FunctionsTest extends TestCase
      */
     public function testChecksNoProxyList($host, $list, $result)
     {
-        self::assertSame(
+        $this->assertSame(
             $result,
             \GuzzleHttp\is_host_in_noproxy($host, $list)
         );
@@ -105,7 +105,7 @@ class FunctionsTest extends TestCase
 
     public function testEncodesJson()
     {
-        self::assertSame('true', \GuzzleHttp\json_encode(true));
+        $this->assertEquals('true', \GuzzleHttp\json_encode(true));
     }
 
     /**
@@ -118,7 +118,7 @@ class FunctionsTest extends TestCase
 
     public function testDecodesJson()
     {
-        self::assertTrue(\GuzzleHttp\json_decode('true'));
+        $this->assertTrue(\GuzzleHttp\json_decode('true'));
     }
 
     /**

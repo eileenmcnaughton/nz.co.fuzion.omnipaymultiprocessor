@@ -1,8 +1,8 @@
 <?php
 namespace GuzzleHttp\Tests;
 
-use GuzzleHttp\Psr7;
 use GuzzleHttp\TransferStats;
+use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
 class TransferStatsTest extends TestCase
@@ -18,13 +18,13 @@ class TransferStatsTest extends TestCase
             null,
             ['foo' => 'bar']
         );
-        self::assertSame($request, $stats->getRequest());
-        self::assertSame($response, $stats->getResponse());
-        self::assertTrue($stats->hasResponse());
-        self::assertSame(['foo' => 'bar'], $stats->getHandlerStats());
-        self::assertSame('bar', $stats->getHandlerStat('foo'));
-        self::assertSame($request->getUri(), $stats->getEffectiveUri());
-        self::assertEquals(10.5, $stats->getTransferTime());
-        self::assertNull($stats->getHandlerErrorData());
+        $this->assertSame($request, $stats->getRequest());
+        $this->assertSame($response, $stats->getResponse());
+        $this->assertTrue($stats->hasResponse());
+        $this->assertEquals(['foo' => 'bar'], $stats->getHandlerStats());
+        $this->assertEquals('bar', $stats->getHandlerStat('foo'));
+        $this->assertSame($request->getUri(), $stats->getEffectiveUri());
+        $this->assertEquals(10.5, $stats->getTransferTime());
+        $this->assertNull($stats->getHandlerErrorData());
     }
 }

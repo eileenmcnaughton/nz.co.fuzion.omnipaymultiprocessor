@@ -32,36 +32,24 @@ a response or exception by shifting return values off of a queue.
 
     // Create a mock and queue two responses.
     $mock = new MockHandler([
-        new Response(200, ['X-Foo' => 'Bar'], 'Hello, World'),
+        new Response(200, ['X-Foo' => 'Bar']),
         new Response(202, ['Content-Length' => 0]),
-        new RequestException('Error Communicating with Server', new Request('GET', 'test'))
+        new RequestException("Error Communicating with Server", new Request('GET', 'test'))
     ]);
 
-    $handlerStack = HandlerStack::create($mock);
-    $client = new Client(['handler' => $handlerStack]);
+    $handler = HandlerStack::create($mock);
+    $client = new Client(['handler' => $handler]);
 
     // The first request is intercepted with the first response.
-    $response = $client->request('GET', '/');
-    echo $response->getStatusCode();
+    echo $client->request('GET', '/')->getStatusCode();
     //> 200
-    echo $response->getBody();
-    //> Hello, World
     // The second request is intercepted with the second response.
     echo $client->request('GET', '/')->getStatusCode();
     //> 202
 
-    // Reset the queue and queue up a new response
-    $mock->reset();
-    $mock->append(new Response(201));
-
-    // As the mock was reset, the new response is the 201 CREATED,
-    // instead of the previously queued RequestException
-    echo $client->request('GET', '/')->getStatusCode();
-    //> 201
-
-
 When no more responses are in the queue and a request is sent, an
 ``OutOfBoundsException`` is thrown.
+
 
 History Middleware
 ==================
@@ -80,13 +68,11 @@ history of the requests that were sent by a client.
     $container = [];
     $history = Middleware::history($container);
 
-    $handlerStack = HandlerStack::create();
-    // or $handlerStack = HandlerStack::create($mock); if using the Mock handler.
-
+    $stack = HandlerStack::create();
     // Add the history middleware to the handler stack.
-    $handlerStack->push($history);
+    $stack->push($history);
 
-    $client = new Client(['handler' => $handlerStack]);
+    $client = new Client(['handler' => $stack]);
 
     $client->request('GET', 'http://httpbin.org/get');
     $client->request('HEAD', 'http://httpbin.org/get');
