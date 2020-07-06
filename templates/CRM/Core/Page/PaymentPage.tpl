@@ -1,4 +1,4 @@
-<form action="{$post_url}" method="post" id="payment-redirect">
+<form action="{$post_url}" method="post" id="payment-redirect" class="crm-payment-form">
   {foreach from=$hidden_fields key=hidden_field item=hidden_field_input}
     <input name="{$hidden_field}" value="{$hidden_field_input}" type="hidden"/>
   {/foreach}
@@ -22,7 +22,7 @@
         {/if}
 
      {elseif $field_spec.htmlType == 'select'}
-        <select name="{$display_field}" id="{$core_field_name}" class="crm-form-select">
+        <select name="{$display_field}" id="{$core_field_name}" class="crm-form-select required">
           {foreach from=$field_spec.options key=attribute item=attribute_value}
             <option value="{$attribute}">{$attribute_value}</option>
           {/foreach}
@@ -69,7 +69,8 @@
   {if empty($display_fields)}<p>{ts}Please Click the pay now button if you are not automatically redirected{/ts}</p>{/if}
 
   <input class='form-submit default crm-form-submit' type="submit" value="{ts}Pay now{/ts}">
-
+  {* jQuery validate *}
+  {include file="CRM/Form/validate.tpl"}
 </form>
 {if empty($display_fields)}
 <script type="text/javascript">

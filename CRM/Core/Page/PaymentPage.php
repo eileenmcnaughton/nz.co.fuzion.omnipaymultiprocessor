@@ -41,6 +41,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
     $this->assign('hidden_fields', array_diff_key($formData, $displayFields));
     $this->assign('display_fields', $displayFields);
     $this->assign('post_url', $formData['post_submit_url']);
+    $this->assign('form', ['formClass' => 'crm-payment-form']);
     return parent::run();
   }
 
