@@ -179,6 +179,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       elseif ($response->isRedirect()) {
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
+        $this->pruneProcessorObjectsOutOfSession();
+
         CRM_Core_Session::storeSessionObjects(FALSE);
         if ($response->isTransparentRedirect()) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + [
@@ -226,6 +228,36 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   protected function getProcessorPassThroughFields() {
     $passThroughFields = $this->getProcessorTypeMetadata('pass_through_fields');
     return $passThroughFields ? $passThroughFields : [];
+  }
+
+  /**
+   * Unset any Payment processor objects from the session keys.
+   *
+   * The form array will include payment processor objects. These
+   * don't always unserialize well per
+   * https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor/issues/145
+   * and are not really best practice either IHMO.
+   *
+   * I'm fairly sure they evolved through a process of setting on the form
+   * without any particular concern to whether they should or shouldn't be
+   * in the session.
+   */
+  protected function pruneProcessorObjectsOutOfSession() {
+    foreach (CRM_Core_Session::$_managedNames as $formObject) {
+      if (isset($_SESSION[$formObject[0]][$formObject[1]])) {
+        $sessionValue = &$_SESSION[$formObject[0]][$formObject[1]];
+        if (isset($sessionValue['paymentProcessor']['object'])) {
+          unset($sessionValue['paymentProcessor']['object']);
+        }
+        if (isset($sessionValue['paymentProcessors'])) {
+          foreach ($sessionValue['paymentProcessors'] as $id => $processor) {
+            if (isset($processor['object'])) {
+              unset($sessionValue['paymentProcessors'][$id]['object']);
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
