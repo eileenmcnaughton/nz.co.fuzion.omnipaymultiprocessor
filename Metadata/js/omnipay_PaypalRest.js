@@ -3,6 +3,29 @@
   var form = $('#billing-payment-block').closest('form');
   var qfKey = $('[name=qfKey]', form).val();
 
+  /**
+   * Get the total amount on the form
+   * @returns {number}
+   */
+  function getTotalAmount() {
+    var totalFee = 0.0;
+    if (typeof CRM.payment.getTotalAmount !== 'undefined') {
+      return CRM.payment.getTotalAmount();
+    }
+
+    if (typeof calculateTotalFee == 'function') {
+        // This is ONLY triggered in the following circumstances on a CiviCRM contribution page:
+        // - With a priceset that allows a 0 amount to be selected.
+        // - When we are the ONLY payment processor configured on the page.
+        totalFee = parseFloat(calculateTotalFee());
+    }
+    else if (document.getElementById('total_amount')) {
+      // The input#total_amount field exists on backend contribution forms
+      totalFee = parseFloat(document.getElementById('total_amount').value);
+    }
+    return totalFee;
+  }
+
   function renderPaypal() {
     paypal.Buttons({
 
@@ -30,7 +53,7 @@
 
           var frequencyInterval = $('#frequency_interval').val() || 1;
           var frequencyUnit = $('#frequency_unit').val() ? $('#frequency_interval').val() : CRM.vars.omnipay.frequency_unit;
-          var paymentAmount = calculateTotalFee();
+          var paymentAmount = getTotalAmount();
           var isRecur = $('#is_recur').is(":checked");
           var recurText = isRecur ? ' recurring' : '';
 
