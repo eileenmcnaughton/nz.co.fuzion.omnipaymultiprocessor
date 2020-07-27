@@ -357,7 +357,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $jsVariables[$clientSideKey] = $this->_paymentProcessor[$key];
       }
     }
-    CRM_Core_Resources::singleton()->addVars('omnipay', $jsVariables);
+
+    \Civi::resources()->addVars('omnipay', $jsVariables, 'billing-block');
     if (is_array($regions)) {
       foreach ($regions as $region => $additions) {
         foreach ($additions as $addition) {
