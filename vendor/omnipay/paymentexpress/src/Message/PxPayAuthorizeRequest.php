@@ -8,7 +8,7 @@ use Omnipay\Common\Message\AbstractRequest;
 /**
  * PaymentExpress PxPay Authorize Request
  *
- * @link https://www.paymentexpress.com/Technical_Resources/Ecommerce_Hosted/PxPay_2_0
+ * @link https://www.windcave.com/developer-e-commerce-paymentexpress-hosted-pxpay
  */
 class PxPayAuthorizeRequest extends AbstractRequest
 {
@@ -17,14 +17,14 @@ class PxPayAuthorizeRequest extends AbstractRequest
      *
      * @var string URL
      */
-    protected $liveEndpoint = 'https://sec.paymentexpress.com/pxaccess/pxpay.aspx';
+    protected $liveEndpoint = 'https://sec.windcave.com/pxaccess/pxpay.aspx';
 
     /**
      * PxPay test Endpoint URL
      *
      * @var string URL
      */
-    protected $testEndpoint = 'https://uat.paymentexpress.com/pxaccess/pxpay.aspx';
+    protected $testEndpoint = 'https://uat.windcave.com/pxaccess/pxpay.aspx';
 
     /**
      * PxPay TxnType
@@ -202,6 +202,32 @@ class PxPayAuthorizeRequest extends AbstractRequest
     }
 
     /**
+     * Get the ForcePaymentMethod Opt
+     *
+     * Optional parameter can be used to set force a payment method for the hosted payments page
+     * and ignore any other payment methods enabled on the account.
+     *
+     * @return mixed
+     */
+    public function getForcePaymentMethod()
+    {
+        return $this->getParameter('forcePaymentMethod');
+    }
+
+    /**
+     * Set the ForcePaymentMethod field on the request
+     *
+     * @param string $value  The payment method to force e.g. 'Card', 'Account2Account', etc.
+     *
+     * @return mixed
+     */
+    public function setForcePaymentMethod($value)
+    {
+        return $this->setParameter('forcePaymentMethod', $value);
+    }
+
+
+    /**
      * Get the transaction data
      *
      * @return SimpleXMLElement
@@ -245,6 +271,10 @@ class PxPayAuthorizeRequest extends AbstractRequest
 
         if ($this->getOpt()) {
             $data->Opt = $this->getOpt();
+        }
+
+        if ($this->getForcePaymentMethod()) {
+            $data->ForcePaymentMethod = $this->getForcePaymentMethod();
         }
 
         return $data;

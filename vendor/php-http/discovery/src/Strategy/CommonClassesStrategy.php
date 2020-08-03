@@ -26,6 +26,7 @@ use Http\Message\MessageFactory\SlimMessageFactory;
 use Http\Message\StreamFactory\SlimStreamFactory;
 use Http\Message\UriFactory\SlimUriFactory;
 use Slim\Http\Request as SlimRequest;
+use GuzzleHttp\Client as GuzzleHttp;
 use Http\Adapter\Guzzle6\Client as Guzzle6;
 use Http\Adapter\Guzzle5\Client as Guzzle5;
 use Http\Client\Curl\Client as Curl;
@@ -96,6 +97,10 @@ final class CommonClassesStrategy implements DiscoveryStrategy
                 'condition' => [SymfonyPsr18::class, Psr17RequestFactory::class],
             ],
             [
+                'class' => GuzzleHttp::class,
+                'condition' => [self::class, 'isGuzzleImplementingPsr18'],
+            ],
+            [
                 'class' => [self::class, 'buzzInstantiate'],
                 'condition' => [\Buzz\Client\FileGetContents::class, \Buzz\Message\ResponseBuilder::class],
             ],
@@ -108,23 +113,32 @@ final class CommonClassesStrategy implements DiscoveryStrategy
     public static function getCandidates($type)
     {
         if (Psr18Client::class === $type) {
-            $candidates = self::$classes[PSR18Client::class];
+            return self::getPsr18Candidates();
+        }
 
-            // HTTPlug 2.0 clients implements PSR18Client too.
-            foreach (self::$classes[HttpClient::class] as $c) {
+        return self::$classes[$type] ?? [];
+    }
+
+    /**
+     * @return array The return value is always an array with zero or more elements. Each
+     *               element is an array with two keys ['class' => string, 'condition' => mixed].
+     */
+    private static function getPsr18Candidates()
+    {
+        $candidates = self::$classes[Psr18Client::class];
+
+        // HTTPlug 2.0 clients implements PSR18Client too.
+        foreach (self::$classes[HttpClient::class] as $c) {
+            try {
                 if (is_subclass_of($c['class'], Psr18Client::class)) {
                     $candidates[] = $c;
                 }
+            } catch (\Throwable $e) {
+                trigger_error(sprintf('Got exception "%s (%s)" while checking if a PSR-18 Client is available', get_class($e), $e->getMessage()), E_USER_WARNING);
             }
-
-            return $candidates;
         }
 
-        if (isset(self::$classes[$type])) {
-            return self::$classes[$type];
-        }
-
-        return [];
+        return $candidates;
     }
 
     public static function buzzInstantiate()
@@ -135,6 +149,11 @@ final class CommonClassesStrategy implements DiscoveryStrategy
     public static function symfonyPsr18Instantiate()
     {
         return new SymfonyPsr18(null, Psr17FactoryDiscovery::findResponseFactory(), Psr17FactoryDiscovery::findStreamFactory());
+    }
+
+    public static function isGuzzleImplementingPsr18()
+    {
+        return defined('GuzzleHttp\ClientInterface::MAJOR_VERSION');
     }
 
     /**

@@ -11,7 +11,7 @@ use SimpleXMLElement;
  */
 class PxFusionPurchaseRequest extends AbstractRequest
 {
-    protected $endpoint = 'https://sec.paymentexpress.com/pxf/pxf.svc';
+    protected $endpoint = 'https://sec.windcave.com/pxf/pxf.svc';
     protected $namespace = 'http://paymentexpress.com';
     protected $action = 'Purchase';
 

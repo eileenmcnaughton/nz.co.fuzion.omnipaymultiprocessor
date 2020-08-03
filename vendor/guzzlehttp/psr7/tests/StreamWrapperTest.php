@@ -122,6 +122,8 @@ class StreamWrapperTest extends BaseTest
     {
         StreamWrapper::register();
 
+        $stBlksize  = defined('PHP_WINDOWS_VERSION_BUILD') ? -1 : 0;
+
         $this->assertEquals(
             [
                 'dev'     => 0,
@@ -135,8 +137,8 @@ class StreamWrapperTest extends BaseTest
                 'atime'   => 0,
                 'mtime'   => 0,
                 'ctime'   => 0,
-                'blksize' => 0,
-                'blocks'  => 0,
+                'blksize' => $stBlksize,
+                'blocks'  => $stBlksize,
                 0         => 0,
                 1         => 0,
                 2         => 0,
@@ -148,8 +150,8 @@ class StreamWrapperTest extends BaseTest
                 8         => 0,
                 9         => 0,
                 10        => 0,
-                11        => 0,
-                12        => 0,
+                11        => $stBlksize,
+                12        => $stBlksize,
             ],
             stat('guzzle://stream')
         );

@@ -66,6 +66,8 @@ class PumpStream implements StreamInterface
     {
         $this->tellPos = false;
         $this->source = null;
+
+        return null;
     }
 
     public function getSize()

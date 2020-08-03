@@ -17,8 +17,8 @@ class DirectPostPurchaseRequestTest extends TestCase
             'returnUrl'           => 'https://www.example.com/return',
             'card'                => [
                 'number'      => '4444333322221111',
-                'expiryMonth' => '06',
-                'expiryYear'  => '2020',
+                'expiryMonth' => '12',
+                'expiryYear'  => '2030',
                 'cvv'         => '123',
             ],
         ]);

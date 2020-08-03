@@ -98,6 +98,8 @@ class AppendStream implements StreamInterface
         }
 
         $this->streams = [];
+
+        return null;
     }
 
     public function tell()

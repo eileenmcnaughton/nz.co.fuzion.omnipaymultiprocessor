@@ -49,6 +49,8 @@ class BufferStream implements StreamInterface
     public function detach()
     {
         $this->close();
+
+        return null;
     }
 
     public function getSize()

@@ -18,7 +18,7 @@ class SecureXMLAuthorizeRequestTest extends TestCase
             'transactionId'       => '1234',
             'card'                => [
                 'number'         => '4444333322221111',
-                'expiryMonth'    => '10',
+                'expiryMonth'    => '12',
                 'expiryYear'     => '2030',
                 'cvv'            => '123',
                 'cardHolderName' => 'Sujip Thapa',

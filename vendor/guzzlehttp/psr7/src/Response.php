@@ -134,7 +134,7 @@ class Response implements ResponseInterface
         if ($reasonPhrase == '' && isset(self::$phrases[$new->statusCode])) {
             $reasonPhrase = self::$phrases[$new->statusCode];
         }
-        $new->reasonPhrase = $reasonPhrase;
+        $new->reasonPhrase = (string) $reasonPhrase;
         return $new;
     }
 

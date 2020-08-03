@@ -17,7 +17,7 @@ class DirectPostAuthorizeRequestTest extends TestCase
             'returnUrl'           => 'https://www.abc.com/return',
             'card'                => [
                 'number'      => '4444333322221111',
-                'expiryMonth' => '6',
+                'expiryMonth' => '12',
                 'expiryYear'  => '2030',
                 'cvv'         => '123',
             ],

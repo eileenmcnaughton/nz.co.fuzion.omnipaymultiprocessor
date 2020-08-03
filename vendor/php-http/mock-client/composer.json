@@ -16,19 +16,22 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.1 || ^8.0",
         "php-http/client-common": "^1.9 || ^2.0",
         "php-http/discovery": "^1.0",
         "php-http/httplug": "^1.0 || ^2.0",
-        "php-http/message-factory": "^1.0"
+        "php-http/message-factory": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0",
+        "symfony/polyfill-php80": "^1.17"
     },
     "provide": {
         "php-http/async-client-implementation": "1.0",
         "php-http/client-implementation": "1.0"
     },
     "require-dev": {
-        "henrikbjorn/phpspec-code-coverage": "^1.0",
-        "phpspec/phpspec": "^2.4"
+        "phpspec/phpspec": "^5.1 || ^6.0"
     },
     "config": {
         "sort-packages": true
@@ -43,8 +46,6 @@
             "Http\\Mock\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "test": "vendor/bin/phpspec run",
         "test-ci": "vendor/bin/phpspec run -c phpspec.ci.yml"
