@@ -53,6 +53,9 @@
  * database as appropriate. For more details, see "hook_civicrm_managed" at:
  * http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
  */
+
+use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
+
 return [
   [
     'name' => 'PayPal Checkout',
@@ -114,16 +117,8 @@ return [
       'regions' => [
         //'billing-block-post' => [],
         'billing-block' => [
-          [
-            'markup' => '<div id="paypal-button-container" class="crm-paypal-buttons"></div>',
-            'name' => 'paypal_button',
-            'weight' => 400,
-          ],
-          [
-            'name' => 'paypal_script',
-            'weight' => 500,
-            'script' => file_get_contents(__DIR__ . '/js/omnipay_PaypalRest.js'),
-          ],
+          ['markup' => '<div id="paypal-button-container" class="crm-paypal-buttons"></div>', 'name' => 'paypal_button', 'weight' => 400],
+          ['name' => 'paypal_script', 'weight' => 500, 'scriptUrl' => \Civi::resources()->addCacheCode(E::url('Metadata/js/omnipay_PaypalRest.js'))]
         ],
       ],
     ],
