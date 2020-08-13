@@ -118,6 +118,7 @@ return [
         //'billing-block-post' => [],
         'billing-block' => [
           ['markup' => '<div id="paypal-button-container" class="crm-paypal-buttons"></div>', 'name' => 'paypal_button', 'weight' => 400],
+          ['template' => E::path('templates/CRM/Omnipaymultiprocessor/Form/OmnipayResource.tpl'), 'region' => 'billing-block', 'weight' => -1],
           ['name' => 'paypal_script', 'weight' => 500, 'scriptUrl' => \Civi::resources()->addCacheCode(E::url('Metadata/js/omnipay_PaypalRest.js'))]
         ],
       ],
