@@ -3,6 +3,11 @@
   var form = $('#billing-payment-block').closest('form');
   var qfKey = $('[name=qfKey]', form).val();
 
+  if (typeof CRM.vars.omnipay === 'undefined') {
+    console.log('CRM.vars.omnipay not defined! Not a Omnipay processor?');
+    return;
+  }
+
   function renderPaypal() {
     paypal.Buttons({
 
