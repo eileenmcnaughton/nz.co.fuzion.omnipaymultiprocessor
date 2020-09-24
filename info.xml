@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <extension key="nz.co.fuzion.omnipaymultiprocessor" type="module">
   <file>omnipaymultiprocessor</file>
-  <name>Omnipay multiprocessor support</name>
+  <name>Omnipay multiprocessor support (MJW version)</name>
   <description>Support for Multiple processors using OmniPay library</description>
   <license>AGPL</license>
   <maintainer>
@@ -11,11 +11,11 @@
   <urls>
     <url desc="Main Extension Page">https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor</url>
     <url desc="Documentation">https://civicrm.org/blogs/eileen/rethinking-payment-processing</url>
-    <url desc="Support">http://forum.civicrm.org</url>
+    <url desc="Support">https://mjw.pt/support/omnipay</url>
     <url desc="Licensing">http://civicrm.org/licensing</url>
   </urls>
-  <releaseDate>2020-08-11</releaseDate>
-  <version>3.13</version>
+  <releaseDate>2020-09-24</releaseDate>
+  <version>3.13-MJW</version>
   <develStage>stable</develStage>
   <compatibility>
     <ver>5.28</ver>
@@ -24,4 +24,7 @@
   <civix>
     <namespace>CRM/Omnipaymultiprocessor</namespace>
   </civix>
+  <requires>
+    <ext>mjwshared</ext>
+  </requires>
 </extension>
