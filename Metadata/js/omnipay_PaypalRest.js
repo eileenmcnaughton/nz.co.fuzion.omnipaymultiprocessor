@@ -114,9 +114,9 @@
 
         onApprove: function (data, actions) {
           var isRecur = 1;
-          var paymentToken = data['billingToken'];
+          var paymentToken = data.billingToken;
           if (!paymentToken) {
-            paymentToken = data['paymentID'];
+            paymentToken = data.paymentID;
             isRecur = 0;
           }
 
@@ -125,7 +125,7 @@
           if (crmSubmitButtons) {
             crmSubmitButtons.style.display = 'block';
           }
-          document.getElementById('PayerID').value = data['payerID'];
+          document.getElementById('PayerID').value = data.payerID;
           document.getElementById('payment_token').value = paymentToken;
 
           CRM.$(CRM.payment.getBillingSubmit()).click();
