@@ -128,7 +128,7 @@
           document.getElementById('PayerID').value = data['payerID'];
           document.getElementById('payment_token').value = paymentToken;
 
-         // CRM.$(CRM.payment.getBillingSubmit()).click();
+          CRM.$(CRM.payment.getBillingSubmit()).click();
         },
 
         onError: function(err) {
