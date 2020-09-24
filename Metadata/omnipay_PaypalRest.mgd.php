@@ -74,7 +74,7 @@ return [
       'url_site_test_default' => 'http://unused.com',
       'url_recur_test_default' => 'http://unused.com',
       'url_api_test_default' => 'http://unused.com',
-      'billing_mode' => 4,
+      'billing_mode' => 1,
       'payment_type' => 1,
       'is_recur' => 1,
     ],
