@@ -81,6 +81,7 @@ return [
     'metadata' => [
       'suppress_submit_button' => 1,
       'supports_preapproval' => 1,
+      'fields' => ['billing_fields' => []],
       'payment_fields' => ['payment_token', 'PayerID', 'post_authorize'],
       'pass_through_fields' => [
         'referrerCode' => 'CiviCRM_SP',
