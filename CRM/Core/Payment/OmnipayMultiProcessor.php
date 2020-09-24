@@ -162,6 +162,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->initialize($params);
     $this->saveBillingAddressIfRequired($params);
 
+    // "token" only gets set when coming in via a contribution page.
+    // Otherwise we need to set it from the actual parameter that's set on the form
+    if (!empty($params['paymentToken']) && empty($params['token'])) {
+      $params['token'] = $params['paymentToken'];
+    }
+
     try {
       if (!empty($params['token'])) {
         $response = $this->doTokenPayment($params);
