@@ -12,6 +12,11 @@
 
         onInit: function(data, actions) {
 
+          // On webform, hide the submit button as it's triggered automatically
+          if (CRM.$('[type="submit"].webform-submit').length !== 0) {
+            $('[type="submit"].webform-submit').hide();
+          }
+
           $('[type="submit"][formnovalidate="1"]',
             '[type="submit"][formnovalidate="formnovalidate"]',
             '[type="submit"].cancel',
