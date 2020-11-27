@@ -65,8 +65,6 @@ return array(
           'name' => 'omnipay_SagePay_Server',
           'description' => 'Omnipay SagePay Payment Processor',
           'user_name_label' => 'Vendor',
-          'password_label' => 'unused',
-          'signature_label' => 'unused',
           'site_url' => '',
           'class_name' => 'Payment_OmnipayMultiProcessor',
           'billing_mode' => 4,
