@@ -1,0 +1,7 @@
+site_name: Omnipay Guide
+site_description: Guide to Omnipay extension
+repo_url: https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor
+
+nav:
+  - Introduction: index.md
+  - Adding a processor: adding-a-processor.md
