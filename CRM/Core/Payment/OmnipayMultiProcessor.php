@@ -42,13 +42,6 @@ use Http\Adapter\Guzzle6\Client as HttpPlugClient;
 class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExtended implements serializable {
 
   /**
-   * For code clarity declare is_test as a boolean.
-   *
-   * @var bool
-   */
-  protected $_is_test = FALSE;
-
-  /**
    * names of fields in payment processor table that relate to configuration of the processor instance
    *
    * @var array
@@ -67,7 +60,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return string
    */
-  public function serialize() {
+  public function serialize(): string {
     $this->cleanupClassForSerialization(TRUE);
     return serialize(get_object_vars($this));
   }
@@ -105,14 +98,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * @return string
    */
-  public function getQfKey() {
+  public function getQfKey(): string {
     return $this->qfKey;
   }
 
   /**
    * @param string $qfKey
    */
-  public function setQfKey($qfKey) {
+  public function setQfKey(string $qfKey): void {
     $this->qfKey = $qfKey;
   }
 
@@ -209,10 +202,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Initialize class variables.
    *
    * @param array $params
+   *
+   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   protected function initialize(&$params) {
     $this->_component = $params['component'];
-    $this->setQfKey(CRM_Utils_Array::value('qfKey', $params));
+    $this->setQfKey($params['qfKey'] ?? '');
     $this->ensurePaymentProcessorTypeIsSet();
     $this->createGatewayObject();
     $this->setProcessorFields();
@@ -557,7 +553,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       else {
         foreach ($params as $fieldName => $value) {
-          if (substr($fieldName, 0, 5) == 'email') {
+          if (strpos($fieldName, 'email') === 0) {
             $cardFields['email'] = $value;
           }
         }
@@ -596,7 +592,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    * @throws \CRM_Core_Exception
    */
-  protected function getCreditCardOptions($params) {
+  protected function getCreditCardOptions(array $params): array {
     $creditCardOptions = [
       'amount' => $this->getAmount($params),
       'currency' => $this->getCurrency($params),
@@ -692,7 +688,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return array
    * @todo move this metadata requirement onto the class - or the mgd files
    */
-  public function getBillingBlockFields() {
+  public function getBillingBlockFields(): array {
     $billingID = $locationTypes = CRM_Core_BAO_LocationType::getBilling();
     //for now we will cheat & just use the really blunt characteristics option - ie.
     // ie billing mode 1 or payment type 3 get billing fields.
@@ -744,6 +740,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @param int $billingLocationID
    *
    * @return array
+   * @throws \CiviCRM_API3_Exception
    */
   public function getBillingAddressFields($billingLocationID = NULL) {
     $fields = $this->getProcessorTypeMetadata('fields');
@@ -1603,9 +1600,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     switch ($context) {
       case 'contributionPageContinueText' :
         return ts('Click <strong>Continue</strong> to finalise your payment');
-        break;
-
     }
+    return parent::getText($context, $params);
   }
 
 }
