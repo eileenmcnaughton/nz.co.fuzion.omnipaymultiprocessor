@@ -6,12 +6,12 @@
  * Time: 12:53 PM
  */
 $billingLocationID = CRM_Core_BAO_LocationType::getBilling();
-return array(
-  array(
+return [
+  [
     'name' => 'OmniPay - Cybersource',
     'entity' => 'payment_processor_type',
-    'metadata' => array(
-      'billing_fields' => array(
+    'metadata' => [
+      'billing_fields' => [
         'first_name' => 'billing_first_name',
         'middle_name' => 'billing_middle_name',
         'last_name' => 'billing_last_name',
@@ -20,52 +20,52 @@ return array(
         'country' => "billing_country_id-{$billingLocationID}",
         'state_province' => "billing_state_province_id-{$billingLocationID}",
         'postal_code' => "billing_postal_code-{$billingLocationID}",
-      ),
-      'transparent_redirect' => array(
-        'fields' => array(
-          'card_type' => array(
+      ],
+      'transparent_redirect' => [
+        'fields' => [
+          'card_type' => [
             'core_field_name' => 'credit_card_type',
-            'options' => array(
+            'options' => [
               '' => ts('- select -'),
               '001' => 'Visa',
               '002' => 'Mastercard',
               '003' => 'Amex',
               '004' => 'Discover',
-            ),
+            ],
             'htmlType' => 'select',
             'title' => ts('Card Type'),
-          ),
-          'card_number' => array(
+          ],
+          'card_number' => [
             'htmlType' => 'text',
             'core_field_name' => 'credit_card_number',
             'title' => ts('Card Number'),
-            'attributes' => array(
+            'attributes' => [
               'size' => 20,
               'maxlength' => 20,
               'autocomplete' => 'off',
-            ),
-          ),
-          'card_expiry_date' => array(
+            ],
+          ],
+          'card_expiry_date' => [
             'core_field_name' => 'credit_card_exp_date',
             'htmlType' => 'date',
             'title' => ts('Expiration Date'),
             'month_field' => 'card_expiry_date_M',
             'year_field' => 'card_expiry_date_Y',
-          ),
-          'card_cvn' => array(
+          ],
+          'card_cvn' => [
             'htmlType' => 'text',
             'core_field_name' => 'cvv2',
-            'attributes' => array(
+            'attributes' => [
               'size' => 5,
               'maxlength' => 10,
               'autocomplete' => 'off',
-            ),
+            ],
             'title' => ts('Security Code'),
-          ),
-        ),
-      ),
-    ),
-    'params' => array(
+          ],
+        ],
+      ],
+    ],
+    'params' => [
       'version' => 3,
       'title' => 'OmniPay - Cybersource',
       'name' => 'omnipay_Cybersource',
@@ -78,6 +78,6 @@ return array(
       'url_api_default' => 'https://testsecureacceptance.cybersource.com/silent/pay',
       'billing_mode' => 4,
       'payment_type' => 3,
-    ),
-  ),
-);
+    ],
+  ],
+];
