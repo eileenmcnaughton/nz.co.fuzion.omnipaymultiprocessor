@@ -1,7 +1,35 @@
-site_name: Omnipay Guide
-site_description: Guide to Omnipay extension
+site_name: Omnipay
+site_description: Provides support for multiple payment processors in CiviCRM.
 repo_url: https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor
+theme:
+  name: material
 
 nav:
   - Introduction: index.md
   - Adding a processor: adding-a-processor.md
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - def_list
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      guess_lang: true
+      extend_pygments_lang:
+        - name: php
+          lang: php
+          options:
+            startinline: true
+  - pymdownx.superfences:
+      css_class: codehilite
+  - pymdownx.inlinehilite:
+      css_class: codehilite
+  - pymdownx.tilde
+  - pymdownx.betterem
+  - pymdownx.mark
+
+plugins:
+  - search:
+      lang: en
