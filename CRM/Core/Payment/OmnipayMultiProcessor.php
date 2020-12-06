@@ -169,7 +169,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         //gross_amount ? fee_amount?
         return $params;
       }
-      elseif ($response->isRedirect()) {
+      if ($response->isRedirect()) {
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
         $this->pruneProcessorObjectsOutOfSession();
@@ -1187,7 +1187,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           'pre_approval_parameters' => ['token' => $params['token']],
         ];
       }
-      elseif ($response->isRedirect()) {
+      if ($response->isRedirect()) {
 
         if ($response->getTransactionReference()) {
           // For Paypal express with jsv4 we should just return the token.
