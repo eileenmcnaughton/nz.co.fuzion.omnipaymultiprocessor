@@ -19,6 +19,13 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
   use SagepayTestTrait;
 
   /**
+   * ID of payment processor created for test.
+   *
+   * @var int
+   */
+  protected $paymentProcessorID;
+
+  /**
    * @return \Civi\Test\CiviEnvBuilder
    * @throws \CRM_Extension_Exception_ParseException
    */
@@ -46,12 +53,12 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
       'contact_type' => 'Individual',
     ])->execute()->first();
 
-    $this->_processor = $this->callAPISuccess('PaymentProcessor', 'create', [
+    $this->paymentProcessorID = (int) $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_SagePay_Server',
       'user_name' => 'abc',
       'is_test' => 1,
       'sequential' => 1,
-    ])['values'][0];
+    ])['values'][0]['id'];
 
     $this->_contribution = $this->callAPISuccess('Contribution', 'create', [
       'contact_id' => $this->_contact['id'],
@@ -69,6 +76,7 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
    * must be saved as part of the `trxn_id` JSON.
    *
    * @throws \CRM_Core_Exception
+   * @throws \CiviCRM_API3_Exception
    */
   public function testSavesImportantFieldsInTrxnId(): void {
     Civi::$statics['Omnipay_Test_Config'] = [ 'client' => $this->getHttpClient() ];
@@ -77,7 +85,7 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
     $transactionSecret = $this->getSagepayTransactionSecret();
 
     $payment = $this->callAPISuccess('PaymentProcessor', 'pay', [
-      'payment_processor_id' => $this->_processor['id'],
+      'payment_processor_id' => $this->paymentProcessorID,
       'amount' => $this->_new['amount'],
       'qfKey' => $this->getQfKey(),
       'currency' => $this->_new['currency'],
