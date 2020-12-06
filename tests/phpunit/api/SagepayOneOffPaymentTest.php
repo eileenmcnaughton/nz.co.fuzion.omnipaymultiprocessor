@@ -1,5 +1,6 @@
 <?php
 
+use Civi\Api4\Contact;
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 use Civi\Test\HeadlessInterface;
 use Civi\Test\HookInterface;
@@ -30,17 +31,21 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
       ->apply();
   }
 
-  public function setUp() {
+  /**
+   * Setup for test.
+   *
+   * @throws \API_Exception
+   * @throws \CRM_Core_Exception
+   */
+  public function setUp():void {
     parent::setUp();
 
     $this->_new = $this->getNewTransaction();
-
-    $this->_contact = $this->callAPISuccess("Contact", "create", [
-      "first_name" => $this->_new["card"]["firstName"],
-      "last_name" => $this->_new["card"]["lastName"],
-      "contact_type" => "Individual",
-      "sequential" => 1,
-      ])["values"][0];
+    $this->_contact = (array) Contact::create(FALSE)->setValues([
+      'first_name' => $this->getNewTransaction()['card']['firstName'],
+      'last_name' => $this->getNewTransaction()['card']['lastName'],
+      'contact_type' => 'Individual',
+    ])->execute()->first();
 
     $this->_processor = $this->callAPISuccess("PaymentProcessor", "create", [
       "payment_processor_type_id" => "omnipay_SagePay_Server",
