@@ -1,7 +1,6 @@
 <?php
 
 use Civi\Api4\Contact;
-use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 use Civi\Test\HeadlessInterface;
 use Civi\Test\HookInterface;
 use Civi\Test\TransactionalInterface;
