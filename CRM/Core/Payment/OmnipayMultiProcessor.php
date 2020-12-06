@@ -169,7 +169,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         //gross_amount ? fee_amount?
         return $params;
       }
-      elseif ($response->isRedirect()) {
+      if ($response->isRedirect()) {
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
         $this->pruneProcessorObjectsOutOfSession();
@@ -238,8 +238,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * without any particular concern to whether they should or shouldn't be
    * in the session.
    */
-  protected function pruneProcessorObjectsOutOfSession() {
-    foreach (CRM_Core_Session::$_managedNames as $formObject) {
+  protected function pruneProcessorObjectsOutOfSession(): void {
+    foreach ((CRM_Core_Session::$_managedNames ?? []) as $formObject) {
       if (isset($_SESSION[$formObject[0]][$formObject[1]])) {
         $sessionValue = &$_SESSION[$formObject[0]][$formObject[1]];
         if (isset($sessionValue['paymentProcessor']['object'])) {
@@ -257,77 +257,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
-   * Get core CiviCRM payment fields.
-   *
-   * @return array
-   * @throws \CRM_Core_Exception
-   */
-  private function getCorePaymentFields() {
-    $creditCardType = ['' => E::ts('- select -')] + CRM_Contribute_PseudoConstant::creditCard();
-    return [
-      'credit_card_number' => [
-        'htmlType' => 'text',
-        'name' => 'credit_card_number',
-        'title' => ts('Card Number'),
-        'cc_field' => TRUE,
-        'attributes' => [
-          'size' => 20,
-          'maxlength' => 20,
-          'autocomplete' => 'off',
-        ],
-        'is_required' => TRUE,
-      ],
-      'cvv2' => [
-        'htmlType' => 'text',
-        'name' => 'cvv2',
-        'title' => ts('Security Code'),
-        'cc_field' => TRUE,
-        'attributes' => [
-          'size' => 5,
-          'maxlength' => 5,
-          'autocomplete' => 'off',
-        ],
-        'is_required' => TRUE,
-      ],
-      'credit_card_exp_date' => [
-        'htmlType' => 'date',
-        'name' => 'credit_card_exp_date',
-        'title' => ts('Expiration Date'),
-        'cc_field' => TRUE,
-        'attributes' => CRM_Core_SelectValues::date('creditCard'),
-        'is_required' => TRUE,
-        'month_field' => 'credit_card_exp_date_M',
-        'year_field' => 'credit_card_exp_date_Y',
-      ],
-
-      'credit_card_type' => [
-        'htmlType' => 'select',
-        'name' => 'credit_card_type',
-        'title' => ts('Card Type'),
-        'cc_field' => TRUE,
-        'attributes' => $creditCardType,
-        'is_required' => FALSE,
-      ],
-      'card_name' => [
-        'htmlType' => 'text',
-        'name' => 'card_name',
-        'title' => ts('Card Name'),
-        'cc_field' => FALSE,
-        'is_required' => TRUE,
-        'contact_api' => 'display_name',
-      ],
-    ];
-  }
-
-  /**
    * Paypal express replaces the submit button with it's own.
    *
    * @return bool
    *   Should the form button by suppressed?
-   * @throws \Civi\Payment\Exception\PaymentProcessorException
    */
-  public function isSuppressSubmitButtons() {
-    return $this->getProcessorTypeMetadata('suppress_submit_button');
+  public function isSuppressSubmitButtons(): bool {
+    return (bool) $this->getProcessorTypeMetadata('suppress_submit_button');
   }
 
   /**
@@ -373,7 +309,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @throws CRM_Core_Exception
    */
-  public function setProcessorFields() {
+  public function setProcessorFields(): void {
     $fields = $this->getProcessorFields();
     try {
       foreach ($fields as $name => $value) {
@@ -410,7 +346,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @throws CiviCRM_API3_Exception
    */
-  function getProcessorFields() {
+  public function getProcessorFields(): array {
     $labelFields = $result = [];
     foreach ($this->_configurationFields as $configField) {
       if (!empty($this->_paymentProcessor[$configField])) {
@@ -1187,7 +1123,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           'pre_approval_parameters' => ['token' => $params['token']],
         ];
       }
-      elseif ($response->isRedirect()) {
+      if ($response->isRedirect()) {
 
         if ($response->getTransactionReference()) {
           // For Paypal express with jsv4 we should just return the token.
