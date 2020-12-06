@@ -46,21 +46,21 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
       'contact_type' => 'Individual',
     ])->execute()->first();
 
-    $this->_processor = $this->callAPISuccess("PaymentProcessor", "create", [
-      "payment_processor_type_id" => "omnipay_SagePay_Server",
+    $this->_processor = $this->callAPISuccess('PaymentProcessor', 'create', [
+      'payment_processor_type_id' => 'omnipay_SagePay_Server',
       'user_name' => 'abc',
       'is_test' => 1,
       'sequential' => 1,
-    ])["values"][0];
+    ])['values'][0];
 
-    $this->_contribution = $this->callAPISuccess("Contribution", "create", [
-      "contact_id" => $this->_contact["id"],
-      "contribution_status_id" => "Pending",
-      "financial_type_id" => "Donation",
-      "receive_date" => "today",
-      "total_amount" => $this->_new["amount"],
-      "sequential" => 1,
-    ])["values"][0];
+    $this->_contribution = $this->callAPISuccess('Contribution', 'create', [
+      'contact_id' => $this->_contact['id'],
+      'contribution_status_id' => 'Pending',
+      'financial_type_id' => 'Donation',
+      'receive_date' => 'today',
+      'total_amount' => $this->_new['amount'],
+      'sequential' => 1,
+    ])['values'][0];
   }
 
   /**
@@ -76,22 +76,22 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
     $this->setMockHttpResponse('SagepayOneOffPaymentSecret.txt');
     $transactionSecret = $this->getSagepayTransactionSecret();
 
-    $payment = $this->callAPISuccess("PaymentProcessor", "pay", [
-      "payment_processor_id" => $this->_processor["id"],
-      "amount" => $this->_new["amount"],
-      "qfKey" => $this->getQfKey(),
-      "currency" => $this->_new["currency"],
-      "component" => "contribute",
-      "email" => $this->_new["card"]["email"],
-      "contactID" => $this->_contact["id"],
-      "contributionID" => $this->_contribution["id"],
-      "contribution_id" => $this->_contribution["id"],
+    $payment = $this->callAPISuccess('PaymentProcessor', 'pay', [
+      'payment_processor_id' => $this->_processor['id'],
+      'amount' => $this->_new['amount'],
+      'qfKey' => $this->getQfKey(),
+      'currency' => $this->_new['currency'],
+      'component' => 'contribute',
+      'email' => $this->_new['card']['email'],
+      'contactID' => $this->_contact['id'],
+      'contributionID' => $this->_contribution['id'],
+      'contribution_id' => $this->_contribution['id'],
     ]);
 
-    $contribution = $this->callAPISuccess("Contribution", "get", [
-      "return" => [ "trxn_id" ],
-      "contact_id" => $this->_contact["id"],
-      "sequential" => 1,
+    $contribution = $this->callAPISuccess('Contribution', 'get', [
+      'return' => ['trxn_id'],
+      'contact_id' => $this->_contact['id'],
+      'sequential' => 1,
     ]);
 
     /*$this->setMockHttpResponse("SagepayOneOffPaymentSuccess.txt");
@@ -99,11 +99,11 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
     $handler->processPaymentNotification($this->getSagepayPaymentConfirmation($this->_processor["id"]));*/
     // Return early as at this stage the test is intended to address the parts that currently work.
     return;
-    $trxnId = json_decode($contribution["values"][0]["trxn_id"], TRUE);
+    $trxnId = json_decode($contribution['values'][0]['trxn_id'], TRUE);
 
-    $this->assertEquals($trxnId["SecurityKey"], $transactionSecret["SecurityKey"]);
-    $this->assertEquals($trxnId["VPSTxId"], $transactionSecret["VPSTxId"]);
-    $this->assertEquals($trxnId["qfKey"], $this->getQfKey());
+    $this->assertEquals($trxnId['SecurityKey'], $transactionSecret['SecurityKey']);
+    $this->assertEquals($trxnId['VPSTxId'], $transactionSecret['VPSTxId']);
+    $this->assertEquals($trxnId['qfKey'], $this->getQfKey());
   }
 
 }

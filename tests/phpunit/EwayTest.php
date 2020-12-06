@@ -168,7 +168,7 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
     if (!$isEncrypted) {
       return 234;
     }
-    return "eCrypted:JqwlzOpX3mbaPNjoVWRtXmG4emlEPl8gossAHXBPgwcOBmqfJyWWYInaIATQYDG8dOSlReJNhA2h4lairQL1KIrJG1IaaTwbQVIx+P2PozfLAvmM1wmXkoHHpV8bSEJ4zqkNlX2bSkkh+V9iF6GKb4WEzCqFJbaJ5MXfp+mSRzvojfgvixV7rIUghRSCNe8+PYkvO4iJkhL5D3YFiEvJDvsRbHaD2NFJgK3be12Tp2hIyLAHKvN8hIiMnVqA+dBC03Y9ji20u9gU5KB2REWb6QsXoRuIESbqWESgxasJhbCfa4ov2F2RpLtb01dhAfipM2HZeGVHhmvhxTRpa0+w==";
+    return 'eCrypted:JqwlzOpX3mbaPNjoVWRtXmG4emlEPl8gossAHXBPgwcOBmqfJyWWYInaIATQYDG8dOSlReJNhA2h4lairQL1KIrJG1IaaTwbQVIx+P2PozfLAvmM1wmXkoHHpV8bSEJ4zqkNlX2bSkkh+V9iF6GKb4WEzCqFJbaJ5MXfp+mSRzvojfgvixV7rIUghRSCNe8+PYkvO4iJkhL5D3YFiEvJDvsRbHaD2NFJgK3be12Tp2hIyLAHKvN8hIiMnVqA+dBC03Y9ji20u9gU5KB2REWb6QsXoRuIESbqWESgxasJhbCfa4ov2F2RpLtb01dhAfipM2HZeGVHhmvhxTRpa0+w==';
   }
 
   /**
