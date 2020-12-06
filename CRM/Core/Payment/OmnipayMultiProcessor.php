@@ -238,8 +238,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * without any particular concern to whether they should or shouldn't be
    * in the session.
    */
-  protected function pruneProcessorObjectsOutOfSession() {
-    foreach (CRM_Core_Session::$_managedNames as $formObject) {
+  protected function pruneProcessorObjectsOutOfSession(): void {
+    foreach ((CRM_Core_Session::$_managedNames ?? []) as $formObject) {
       if (isset($_SESSION[$formObject[0]][$formObject[1]])) {
         $sessionValue = &$_SESSION[$formObject[0]][$formObject[1]];
         if (isset($sessionValue['paymentProcessor']['object'])) {
