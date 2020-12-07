@@ -1,6 +1,8 @@
 <?php
 
-use GuzzleHttp\Psr7\Response;
+use Omnipay\Common\Http\Client;
+use Omnipay\SagePay\Message\ServerNotifyRequest;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SagepayTestTrait
@@ -9,6 +11,8 @@ use GuzzleHttp\Psr7\Response;
  * integration.
  */
 trait SagepayTestTrait {
+
+  use \Omnipay\SagePay\Traits\ServerNotifyTrait;
 
   protected function getNewContributionPage($processorID): array {
     return [
@@ -118,13 +122,13 @@ trait SagepayTestTrait {
    *
    * @return array
    */
-  protected function getSagepayPaymentConfirmation($processorID): array {
+  protected function getSagepayPaymentConfirmation($processorID, $contributionID): array {
     return [
-      'q' => 'civicrm/payment/ipn/99999/' . $processorID,
+      'q' => 'civicrm/payment/ipn/' . $contributionID . '/' . $processorID,
       'processor_id' => $processorID,
       'VPSProtocol' => '3.00',
       'TxType' => 'PAYMENT',
-      'VendorTxCode' => '99999',
+      'VendorTxCode' => $contributionID,
       'VPSTxId' => '{C46AF0B5-E2D2-6477-4EE4-991BC04B44C4}',
       'Status' => 'OK',
       'StatusDetail' => '0000 : The Authorisation was Successful.',
@@ -137,13 +141,32 @@ trait SagepayTestTrait {
       '3DSecureStatus' => 'NOTCHECKED',
       'CardType' => 'VISA',
       'Last4Digits' => '0006',
-      'VPSSignature' => '911718238EB7744144122288060CAEC7',
       'DeclineCode' => '00',
       'ExpiryDate' => '0123',
       'BankAuthCode' => '999777',
       'IDS_request_uri' => '/civicrm/payment/ipn/99999/1',
       'IDS_user_agent' => 'SagePay-Notifier/1.0',
     ];
+  }
+
+  /**
+   * @param $params
+   */
+  public function signRequest($params): void {
+    Civi::$statics['Omnipay_Test_Config']['request'] = new Request();
+    Civi::$statics['Omnipay_Test_Config']['request']->initialize(
+      [],
+      $params
+    );
+    $request = new ServerNotifyRequest(new Client(), Civi::$statics['Omnipay_Test_Config']['request']);
+    $request->setVendor('abc');
+    $params['VPSSignature'] = $request->buildSignature();
+    Civi::$statics['Omnipay_Test_Config']['request'] = new Request();
+    Civi::$statics['Omnipay_Test_Config']['request']->initialize(
+      [],
+      $params
+    );
+
   }
 
 }
