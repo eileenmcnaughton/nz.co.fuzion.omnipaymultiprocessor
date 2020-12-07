@@ -102,9 +102,21 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
       'sequential' => 1,
     ]);
 
-    /*$this->setMockHttpResponse("SagepayOneOffPaymentSuccess.txt");
-    $handler = new CRM_Core_Payment_OmnipayMultiProcessor('test', $this->_processor);
-    $handler->processPaymentNotification($this->getSagepayPaymentConfirmation($this->_processor["id"]));*/
+    // Reset session as this would come in from the sage server.
+    CRM_Core_Session::singleton()->reset();
+    $ipnParams = $this->getSagepayPaymentConfirmation($this->paymentProcessorID, $contribution['id']);
+    $this->signRequest($ipnParams);
+    try {
+      CRM_Core_Payment_OmnipayMultiProcessor::processPaymentResponse(['processor_id' => $this->paymentProcessorID]);
+    }
+    catch (CRM_Core_Exception_PrematureExitException $e) {
+      // Check we didn't try to redirect the server.
+      $this->assertArrayNotHasKey('url', $e->errorData);
+      $contribution = \Civi\Api4\Contribution::get(FALSE)
+        ->addWhere('id', '=', $contribution['id'])
+        ->addSelect('contribution_status_id:name')->execute()->first();
+      $this->assertEquals('Completed', $contribution['contribution_status_id:name']);
+    }
     // Return early as at this stage the test is intended to address the parts that currently work.
     return;
     $trxnId = json_decode($contribution['values'][0]['trxn_id'], TRUE);
