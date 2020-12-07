@@ -935,10 +935,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $userMsg = NULL;
         $redirectUrl = $this->getStoredUrl('success');
         if (!$redirectUrl && method_exists($response, 'confirm')) {
-          $output = $response->confirm($redirectUrl, $userMsg);
-          if ($output) {
-            echo $output;
-          }
+          $response->confirm($this->getNotifyUrl(), $userMsg);
         }
         break;
     }

@@ -76,6 +76,7 @@ class OffsiteNotifyResponse implements \Omnipay\Common\Message\NotificationInter
      */
     public function confirm()
     {
+        echo $this->getResponseBody();
         return $this->getResponseBody();
     }
 }
