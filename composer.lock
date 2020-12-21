@@ -463,7 +463,7 @@
                 "payment",
                 "payments"
             ],
-            "time": "2019-01-26T01:12:01+00:00"
+            "time": "2016-12-13T20:16:45+00:00"
         },
         {
             "name": "moneyphp/money",
@@ -754,7 +754,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2018-11-26T04:36:54+00:00"
+            "time": "2019-02-18T00:19:46+00:00"
         },
         {
             "name": "omnipay/mollie",
@@ -892,14 +892,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eileenmcnaughton/omnipay-paypal.git",
-                "reference": "8a6f38a9a4665ce024b719293da7a273c39a5882"
+                "reference": "a3ab73e8abe6b925f52e50e87c7a0cb55bffaeb1"
             },
             "require": {
                 "omnipay/common": "^3"
             },
             "require-dev": {
                 "omnipay/tests": "^3",
-                "phpro/grumphp": "^0.14",
+                "phpro/grumphp": "1.3.0",
                 "squizlabs/php_codesniffer": "^3"
             },
             "type": "library",
@@ -937,7 +937,7 @@
                 "paypal",
                 "purchase"
             ],
-            "time": "2019-03-25T05:17:22+00:00"
+            "time": "2020-12-21T08:58:39+00:00"
         },
         {
             "name": "omnipay/sagepay",
@@ -1777,7 +1777,7 @@
             "support": {
                 "email": "support@razorpay.com"
             },
-            "time": "2018-11-26T05:35:01+00:00"
+            "time": "2018-11-26T05:49:36+00:00"
         },
         {
             "name": "sudiptpa/omnipay-nabtransact",
@@ -4078,5 +4078,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.1.0"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
