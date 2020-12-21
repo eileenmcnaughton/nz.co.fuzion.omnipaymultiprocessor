@@ -53,6 +53,9 @@
  * database as appropriate. For more details, see "hook_civicrm_managed" at:
  * http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
  */
+
+use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
+
 return [
   [
     'name' => 'PayPal Checkout',
@@ -71,13 +74,14 @@ return [
       'url_site_test_default' => 'http://unused.com',
       'url_recur_test_default' => 'http://unused.com',
       'url_api_test_default' => 'http://unused.com',
-      'billing_mode' => 4,
+      'billing_mode' => 1,
       'payment_type' => 1,
       'is_recur' => 1,
     ],
     'metadata' => [
       'suppress_submit_button' => 1,
       'supports_preapproval' => 1,
+      'fields' => ['billing_fields' => []],
       'payment_fields' => ['payment_token', 'PayerID', 'post_authorize'],
       'pass_through_fields' => [
         'referrerCode' => 'CiviCRM_SP',
@@ -114,16 +118,9 @@ return [
       'regions' => [
         //'billing-block-post' => [],
         'billing-block' => [
-          [
-            'markup' => '<div id="paypal-button-container" class="crm-paypal-buttons"></div>',
-            'name' => 'paypal_button',
-            'weight' => 400,
-          ],
-          [
-            'name' => 'paypal_script',
-            'weight' => 500,
-            'script' => file_get_contents(__DIR__ . '/js/omnipay_PaypalRest.js'),
-          ],
+          ['markup' => '<div id="paypal-button-container" class="crm-paypal-buttons"></div>', 'name' => 'paypal_button', 'weight' => 400],
+          ['template' => E::path('templates/CRM/Omnipaymultiprocessor/Form/OmnipayResource.tpl'), 'region' => 'billing-block', 'weight' => -1],
+          ['name' => 'paypal_script', 'weight' => 500, 'scriptUrl' => \Civi::resources()->addCacheCode(E::url('Metadata/js/omnipay_PaypalRest.js'))]
         ],
       ],
     ],
