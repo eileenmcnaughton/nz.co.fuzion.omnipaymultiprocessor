@@ -817,14 +817,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       // Mark the contribution as failed (only allowed if status=Pending).
       // We get multiple requests from some processors (eg. Sagepay) where the contribution has already been marked as "Cancelled".
       try {
-        $contribution = civicrm_api3('contribution', 'getsingle', [
-          'id' => $this->transaction_id,
-          'return' => 'contribution_status_id',
-        ]);
-
-        $contributionStatusName = CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']);
-        if ($contributionStatusName === 'Pending') {
+        $this->loadContribution();
+        if ($this->contribution['contribution_status_id:name'] === 'Pending') {
           civicrm_api3('contribution', 'create', ['id' => $this->transaction_id, 'contribution_status_id' => 'Failed']);
+        }
+        elseif ($this->contribution['contribution_status_id:name'] === 'Completed') {
+          $this->redirectOrExit('success', $response);
         }
       }
       catch (Exception $e) {
