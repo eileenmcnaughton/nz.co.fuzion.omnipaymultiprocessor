@@ -13,7 +13,7 @@ use Civi\Test\Api3TestTrait;
  *
  * @group headless
  */
-class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
+class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, TransactionalInterface {
   use Api3TestTrait;
   use HttpClientTestTrait;
   use SagepayTestTrait;
