@@ -47,11 +47,11 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
     parent::setUp();
 
     $this->_new = $this->getNewTransaction();
-    $this->_contact = (array) Contact::create(FALSE)->setValues([
+    $this->ids['Contact'] = (int) Contact::create(FALSE)->setValues([
       'first_name' => $this->getNewTransaction()['card']['firstName'],
       'last_name' => $this->getNewTransaction()['card']['lastName'],
       'contact_type' => 'Individual',
-    ])->execute()->first();
+    ])->execute()->first()['id'];
 
     $this->paymentProcessorID = (int) $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_SagePay_Server',
@@ -61,7 +61,7 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
     ])['values'][0]['id'];
 
     $this->_contribution = $this->callAPISuccess('Contribution', 'create', [
-      'contact_id' => $this->_contact['id'],
+      'contact_id' => $this->ids['Contact'],
       'contribution_status_id' => 'Pending',
       'financial_type_id' => 'Donation',
       'receive_date' => 'today',
@@ -78,7 +78,7 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
    * @throws \CRM_Core_Exception
    * @throws \CiviCRM_API3_Exception
    */
-  public function testSavesImportantFieldsInTrxnId(): void {
+  public function testDoSinglePayment(): void {
     Civi::$statics['Omnipay_Test_Config'] = [ 'client' => $this->getHttpClient() ];
 
     $this->setMockHttpResponse('SagepayOneOffPaymentSecret.txt');
@@ -91,14 +91,14 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
       'currency' => $this->_new['currency'],
       'component' => 'contribute',
       'email' => $this->_new['card']['email'],
-      'contactID' => $this->_contact['id'],
+      'contactID' => $this->ids['Contact'],
       'contributionID' => $this->_contribution['id'],
       'contribution_id' => $this->_contribution['id'],
     ]);
 
     $contribution = $this->callAPISuccess('Contribution', 'get', [
       'return' => ['trxn_id'],
-      'contact_id' => $this->_contact['id'],
+      'contact_id' => $this->ids['Contact'],
       'sequential' => 1,
     ]);
 
