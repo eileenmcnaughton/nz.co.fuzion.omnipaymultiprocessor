@@ -160,6 +160,7 @@ trait SagepayTestTrait {
     );
     $request = new ServerNotifyRequest(new Client(), Civi::$statics['Omnipay_Test_Config']['request']);
     $request->setVendor('abc');
+    $request->setSecurityKey('POW8PD7OPZ');
     $params['VPSSignature'] = $request->buildSignature();
     Civi::$statics['Omnipay_Test_Config']['request'] = new Request();
     Civi::$statics['Omnipay_Test_Config']['request']->initialize(

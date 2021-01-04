@@ -114,16 +114,9 @@ class SagepayOneOffPaymentTest extends TestCase implements HeadlessInterface, Ho
       $this->assertArrayNotHasKey('url', $e->errorData);
       $contribution = \Civi\Api4\Contribution::get(FALSE)
         ->addWhere('id', '=', $contribution['id'])
-        ->addSelect('contribution_status_id:name')->execute()->first();
+        ->addSelect('contribution_status_id:name', 'trxn_id')->execute()->first();
       $this->assertEquals('Completed', $contribution['contribution_status_id:name']);
     }
-    // Return early as at this stage the test is intended to address the parts that currently work.
-    return;
-    $trxnId = json_decode($contribution['values'][0]['trxn_id'], TRUE);
-
-    $this->assertEquals($trxnId['SecurityKey'], $transactionSecret['SecurityKey']);
-    $this->assertEquals($trxnId['VPSTxId'], $transactionSecret['VPSTxId']);
-    $this->assertEquals($trxnId['qfKey'], $this->getQfKey());
   }
 
 }

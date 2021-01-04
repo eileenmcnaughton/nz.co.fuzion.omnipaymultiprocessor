@@ -34,7 +34,7 @@ use GuzzleHttp\HandlerStack;
 use Omnipay\Common\Http\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as HttpPlugClient;
-
+use Civi\Api4\Contribution;
 
 /**
  * Class CRM_Core_Payment_OmnipayMultiProcessor.
@@ -52,6 +52,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     'signature',
     'subject',
   ];
+
+  /**
+   * Retrieved contribution.
+   *
+   * @var \Civi\Api4\Generic\Result
+   */
+  protected $contribution;
 
   /**
    * Serialize, first removing gateway
@@ -170,6 +177,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return $params;
       }
       if ($response->isRedirect()) {
+        if ($response->getTransactionReference()) {
+          // Most processors don't return a reference at this stage, but it's OK
+          // to store the reference if they do (ie. SagePay). Note that this might
+          // be a temporary fix as I'm considering creating a payment token record might be
+          // more appropriate.
+          Contribution::update(FALSE)
+            ->addWhere('id', '=', $params['contributionID'])
+            ->setValues(['trxn_id' => $response->getTransactionReference()])->execute();
+        }
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
         $this->pruneProcessorObjectsOutOfSession();
@@ -313,10 +329,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $fields = $this->getProcessorFields();
     try {
       foreach ($fields as $name => $value) {
-        $fn = "set{$name}";
-        if (method_exists($this->gateway, $fn)) {
-          $this->gateway->$fn($value);
-        }
+        $this->setGatewayParamIfExists($name, $value);
       }
       if (\Civi::settings()->get('omnipay_test_mode')) {
         $this->_is_test = TRUE;
@@ -722,6 +735,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if (is_numeric($lastParam)) {
         $params['processor_id'] = $lastParam;
       }
+      $lastParam = array_pop($q);
+      if (is_numeric($lastParam)) {
+        // In this case the contribution id is in the url.
+        $this->setContributionReference($lastParam);
+      }
     }
 
     $paymentProcessorID = $params['processor_id'];
@@ -755,6 +773,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
     }
     catch (\Omnipay\Common\Exception\InvalidRequestException $e) {
+      // This contribution id retrieval might be a duplicate.
       $q = explode('/', CRM_Utils_Array::value(CRM_Core_Config::singleton()->userFrameworkURLVar, $_GET, ''));
       array_pop($q);
       $this->setContributionReference(array_pop($q));
@@ -772,12 +791,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if ($response->isSuccessful()) {
       try {
         //cope with CRM14950 not being implemented
-        $contribution = civicrm_api3('contribution', 'getsingle', [
-          'id' => $this->transaction_id,
-          //'return' => 'contribution_status_id, contribution_recur_id, contact_id, contribution_contact_id',
-        ]);
+        $this->loadContribution();
 
-        if ($this->getLock() && CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']) !== 'Completed') {
+        if ($this->getLock() && $this->contribution['contribution_status_id:name'] !== 'Completed') {
+          $this->gatewayConfirmContribution($response);
           civicrm_api3('contribution', 'completetransaction', [
             'id' => $this->transaction_id,
             'trxn_id' => $response->getTransactionReference(),
@@ -800,14 +817,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       // Mark the contribution as failed (only allowed if status=Pending).
       // We get multiple requests from some processors (eg. Sagepay) where the contribution has already been marked as "Cancelled".
       try {
-        $contribution = civicrm_api3('contribution', 'getsingle', [
-          'id' => $this->transaction_id,
-          'return' => 'contribution_status_id',
-        ]);
-
-        $contributionStatusName = CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $contribution['contribution_status_id']);
-        if ($contributionStatusName === 'Pending') {
+        $this->loadContribution();
+        if ($this->contribution['contribution_status_id:name'] === 'Pending') {
           civicrm_api3('contribution', 'create', ['id' => $this->transaction_id, 'contribution_status_id' => 'Failed']);
+        }
+        elseif ($this->contribution['contribution_status_id:name'] === 'Completed') {
+          $this->redirectOrExit('success', $response);
         }
       }
       catch (Exception $e) {
@@ -932,11 +947,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
         break;
       case 'success':
-        $userMsg = NULL;
         $redirectUrl = $this->getStoredUrl('success');
-        if (!$redirectUrl && method_exists($response, 'confirm')) {
-          $response->confirm($this->getNotifyUrl(), $userMsg);
-        }
         break;
     }
 
@@ -1535,6 +1546,63 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         return ts('Click <strong>Continue</strong> to finalise your payment');
     }
     return parent::getText($context, $params);
+  }
+
+  /**
+   * @return array
+   * @throws \CiviCRM_API3_Exception
+   */
+  protected function loadContribution(): array {
+    if (!$this->contribution) {
+      $this->contribution = civicrm_api3('contribution', 'getsingle', [
+        'id' => $this->transaction_id,
+        //'return' => 'contribution_status_id, contribution_recur_id, contact_id, contribution_contact_id',
+      ]);
+      $this->contribution['contribution_status_id:name'] = CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $this->contribution['contribution_status_id']);
+    }
+    return $this->contribution;
+  }
+
+  /**
+   * Set the parameter on the gateway if the method exists.
+   *
+   * @param string $name
+   * @param mixed $value
+   */
+  protected function setGatewayParamIfExists(string $name, $value): void {
+    $fn = "set{$name}";
+    if (method_exists($this->gateway, $fn)) {
+      $this->gateway->$fn($value);
+    }
+  }
+
+  /**
+   * Confirm contribution with gateway, if necessary.
+   *
+   * The confirm function can do a combination of
+   * - notify the gateway that the contribution should be finalised
+   * output any required html. (Sagepay does both, Mercanet doe the latter).
+   * At this stage output is permitted here, although we could capture & output later.
+   *
+   * @param \Omnipay\Common\Message\ResponseInterface $response
+   */
+  protected function gatewayConfirmContribution($response): void {
+    if (method_exists($response, 'confirm')) {
+      // At this stage we are storing returned transaction date that is useful here in the contribution
+      // pre re-direct (specifically for Sage Server). If this is the case then retrieve & use.
+      // Note that this might be more appropriate saved as a payment_token & I am considering that.
+      // This has test cover in the case of Sage Server so it can be altered later with reference to tests.
+      $storedTransactionData = json_decode($this->contribution['trxn_id'] ?? NULL, TRUE);
+      if (is_array($storedTransactionData)) {
+        foreach ($storedTransactionData as $name => $value) {
+          $fn = "set{$name}";
+          if (method_exists($response, $fn)) {
+            $response->$fn($value);
+          }
+        }
+      }
+      $response->confirm($this->getNotifyUrl());
+    }
   }
 
 }
