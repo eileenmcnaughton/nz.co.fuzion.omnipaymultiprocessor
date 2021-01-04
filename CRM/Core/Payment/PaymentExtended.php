@@ -264,8 +264,13 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
 
   /**
    * Log http traffic for analysis - only in developer mode!
+   *
+   * @param bool $isCleanupForSerialize
+   *   Things seem to be called the wrong way around - likely our
+   *   eventual addition of the unserialize function makes a log
+   *   redundant. However, this param prevents a loop for now.
    */
-  protected function logHttpTraffic() {
+  protected function logHttpTraffic($isCleanupForSerialize = TRUE) {
     if (!\Civi::settings()->get('omnipay_developer_mode')) {
       return;
     }
@@ -280,7 +285,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
         'response' => (string) $transaction['response']->getBody(),
       ]);
     }
-    $this->cleanupClassForSerialization();
+    if ($isCleanupForSerialize) {
+      $this->cleanupClassForSerialization();
+    }
   }
 
   /**
@@ -383,6 +390,9 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *   unsetting it when it is still being used.)
    */
   protected function cleanupClassForSerialization($isIncludeGateWay = FALSE) {
+    if (\Civi::settings()->get('omnipay_developer_mode') && !empty($this->history)) {
+      $this->logHttpTraffic(FALSE);
+    }
     $this->history = [];
     $this->client = NULL;
     $this->guzzleClient = NULL;
