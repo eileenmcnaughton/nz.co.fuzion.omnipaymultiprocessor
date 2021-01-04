@@ -35,6 +35,7 @@ use Omnipay\Common\Http\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as HttpPlugClient;
 use Civi\Api4\Contribution;
+use Civi\Payment\PropertyBag;
 
 /**
  * Class CRM_Core_Payment_OmnipayMultiProcessor.
@@ -59,6 +60,18 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @var \Civi\Api4\Generic\Result
    */
   protected $contribution;
+
+  /**
+   * Instance of property bag.
+   *
+   * Note that we might opt to copy the class into this extension & modify it
+   * if we decide to adopt the property bag more thoroughly. Alternatively we
+   * will use the core one if the core processors (or at least some) are migrated
+   * to use it.
+   *
+   * @var \Civi\Payment\PropertyBag
+   */
+  protected $propertyBag;
 
   /**
    * Serialize, first removing gateway
@@ -134,6 +147,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'payment_status_id' => array_search('Completed', CRM_Contribute_BAO_Contribution::buildOptions('contribution_status_id', 'validate')),
       ];
     }
+
     $params['component'] = strtolower($component);
     $this->initialize($params);
     $this->saveBillingAddressIfRequired($params);
@@ -230,6 +244,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->setProcessorFields();
     $this->setContributionReference(CRM_Utils_Array::value('contributionID', $params));
     $this->storeReturnUrls(CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
+    // Instantiate the core property bag in order to allow us to access the getAmount function.
+    // Note that there is no intention to integrate the PropertyBag more thoroughly until
+    // core processors have migrated.
+    $this->propertyBag = new PropertyBag();
+    $this->propertyBag->mergeLegacyInputParams($params);
+
   }
 
   /**
@@ -543,7 +563,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected function getCreditCardOptions(array $params): array {
     $creditCardOptions = [
-      'amount' => $this->getAmount($params),
+      'amount' => $this->propertyBag->getAmount(),
       'currency' => $this->getCurrency($params),
       'description' => $this->getPaymentDescription($params),
       'transactionId' => $this->formatted_transaction_id,
