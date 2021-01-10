@@ -819,7 +819,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           ]);
         }
         if (!empty($this->contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != FALSE) {
-          $this->storePaymentToken($params, $this->contribution, $tokenReference);
+          $this->storePaymentToken(array_merge($params, ['contact_id' => $contribution['contact_id']]), $this->contribution['contribution_recur_id'], $tokenReference);
         }
       }
       catch (CiviCRM_API3_Exception $e) {
@@ -988,19 +988,17 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @throws \CiviCRM_API3_Exception
    */
-  protected function storePaymentToken($params, $contribution, $tokenReference) {
-    $contributionRecurID = $contribution['contribution_recur_id'];
-    $token = civicrm_api3('payment_token', 'create', [
-      'contact_id' => $contribution['contact_id'],
-      'payment_processor_id' => $params['processor_id'],
-      'token' => $tokenReference,
-      'is_transactional' => FALSE,
-      'created_id' => (CRM_Core_Session::singleton()->getLoggedInContactID() ?: $contribution['contact_id']),
-    ]);
+  protected function storePaymentToken($params, $contributionRecurID, $tokenReference) {
+    $tokenID = $this->savePaymentToken(array_merge($params, [
+        'payment_processor_id' => $params['processor_id'] ?? $params['payment_processor_id'],
+        'token' => $tokenReference,
+        'is_transactional' => FALSE,
+      ]
+    ));
     $contributionRecur = civicrm_api3('ContributionRecur', 'getsingle', ['id' => $contributionRecurID]);
     civicrm_api3('contribution_recur', 'create', [
       'id' => $contributionRecurID,
-      'payment_token_id' => $token['id'],
+      'payment_token_id' => $tokenID,
       'is_transactional' => FALSE,
       'next_sched_contribution_date' => CRM_Utils_Date::isoToMysql(
         date('Y-m-d 00:00:00', strtotime('+' . $contributionRecur['frequency_interval'] . ' ' . $contributionRecur['frequency_unit']))
@@ -1482,6 +1480,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (!empty($params['is_recur'])) {
       $this->doRecurPostApproval($params);
     }
+
     // and, at least with Way rapid, the createCreditCard call ignores any attempt to authorise.
     // that is likely to be a pattern.
     $action = CRM_Utils_Array::value('payment_action', $params, 'purchase');
@@ -1633,11 +1632,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws \CiviCRM_API3_Exception
    */
   protected function savePaymentToken(array $params): int {
+    if (empty($params['contact_id'])) {
+      $params['contact_id'] = $this->getContactID($params);
+    }
     $paymentToken = civicrm_api3('PaymentToken', 'create', [
-      'contact_id' => $params['contactID'],
+      'contact_id' => $params['contact_id'],
       'token' => $params['token'],
-      'payment_processor_id' => $this->_paymentProcessor['id'],
-      'created_id' => CRM_Core_Session::getLoggedInContactID(),
+      'payment_processor_id' => $params['payment_processor_id'] ?? $this->_paymentProcessor['id'],
+      'created_id' => CRM_Core_Session::getLoggedInContactID() ?? $params['contact_id'],
       'email' => $params['email'],
       'billing_first_name' => $params['billing_first_name'] ?? NULL,
       'billing_middle_name' => $params['billing_middle_name'] ?? NULL,
@@ -1647,6 +1649,24 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'ip_address' => CRM_Utils_System::ipAddress(),
     ]);
     return (int) $paymentToken['id'];
+  }
+
+  /**
+   * @param array $params
+   *
+   * @return mixed
+   * @throws \API_Exception
+   * @throws \Civi\API\Exception\UnauthorizedException
+   */
+  protected function getContactID() {
+    if ($this->propertyBag->has('contactID')) {
+      return $this->propertyBag->getContactID();
+    }
+    return (int) Contribution::get(FALSE)
+        ->addSelect('contact_id')
+        ->addWhere('id', '=', $this->propertyBag->getContributionID())
+        ->execute()
+        ->first()['contact_id'];
   }
 
 }
