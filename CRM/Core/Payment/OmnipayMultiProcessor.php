@@ -169,20 +169,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
         // mark order as complete
         if (!empty($params['is_recur'])) {
-          $paymentToken = civicrm_api3('PaymentToken', 'create', [
-            'contact_id' => $params['contactID'],
-            'token' => $params['token'],
-            'payment_processor_id' => $this->_paymentProcessor['id'],
-            'created_id' => CRM_Core_Session::getLoggedInContactID(),
-            'email' => $params['email'],
-            'billing_first_name' => CRM_Utils_Array::value('billing_first_name', $params),
-            'billing_middle_name' => CRM_Utils_Array::value('billing_middle_name', $params),
-            'billing_last_name' => CRM_Utils_Array::value('billing_last_name', $params),
-            'expiry_date' => $this->getCreditCardExpiry($params),
-            'masked_account_number' => $this->getMaskedCreditCardNumber($params),
-            'ip_address' => CRM_Utils_System::ipAddress(),
-          ]);
-          civicrm_api3('ContributionRecur', 'create', ['id' => $params['contributionRecurID'], 'payment_token_id' => $paymentToken['id']]);
+          $paymentTokenID = $this->savePaymentToken($params);
+          civicrm_api3('ContributionRecur', 'create', ['id' => $params['contributionRecurID'], 'payment_token_id' => $paymentTokenID]);
         }
         $params['trxn_id'] = $response->getTransactionReference();
         $params['payment_status_id'] = 1;
@@ -1625,6 +1613,31 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
       $response->confirm($this->getNotifyUrl());
     }
+  }
+
+  /**
+   * Save the payment token.
+   *
+   * @param array $params
+   *
+   * @return int
+   * @throws \CiviCRM_API3_Exception
+   */
+  protected function savePaymentToken(array $params): int {
+    $paymentToken = civicrm_api3('PaymentToken', 'create', [
+      'contact_id' => $params['contactID'],
+      'token' => $params['token'],
+      'payment_processor_id' => $this->_paymentProcessor['id'],
+      'created_id' => CRM_Core_Session::getLoggedInContactID(),
+      'email' => $params['email'],
+      'billing_first_name' => $params['billing_first_name'] ?? NULL,
+      'billing_middle_name' => $params['billing_middle_name'] ?? NULL,
+      'billing_last_name' => $params['billing_last_name'] ?? NULL,
+      'expiry_date' => $this->getCreditCardExpiry($params),
+      'masked_account_number' => $this->getMaskedCreditCardNumber($params),
+      'ip_address' => CRM_Utils_System::ipAddress(),
+    ]);
+    return (int) $paymentToken['id'];
   }
 
 }
