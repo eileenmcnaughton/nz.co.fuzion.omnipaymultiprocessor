@@ -156,7 +156,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if (!empty($params['token'])) {
         $response = $this->doTokenPayment($params);
       }
-      elseif (!empty($params['is_recur'])) {
+      // 'create_card_action' is a bit of a sagePay hack - see https://github.com/thephpleague/omnipay-sagepay/issues/157
+      // don't rely on it being unchanged - tests & comments are your friend.
+      elseif (!empty($params['is_recur']) && $this->getProcessorTypeMetadata('create_card_action') !== 'purchase') {
         $response = $this->gateway->createCard($this->getCreditCardOptions(array_merge($params, ['action' => 'Purchase']), $this->_component))->send();
       }
       else {
@@ -187,6 +189,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           Contribution::update(FALSE)
             ->addWhere('id', '=', $params['contributionID'])
             ->setValues(['trxn_id' => $response->getTransactionReference()])->execute();
+          // Save the transaction details for recurring if is-recur as a token
+          // @todo - consider always saving these & not updating the contribution at all.
+          if (!empty($params['is_recur'])) {
+            // Ideally this would be getToken - see https://github.com/thephpleague/omnipay-sagepay/issues/157
+            $this->storePaymentToken($params, (int) $params['contributionRecurID'], $response->getTransactionReference());
+          }
         }
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
         $this->cleanupClassForSerialization(TRUE);
@@ -812,11 +820,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
         if ($this->getLock() && $this->contribution['contribution_status_id:name'] !== 'Completed') {
           $this->gatewayConfirmContribution($response);
+          $trxnReference = $response->getTransactionReference();
           civicrm_api3('contribution', 'completetransaction', [
             'id' => $this->transaction_id,
-            'trxn_id' => $response->getTransactionReference(),
+            'trxn_id' => $trxnReference,
             'payment_processor_id' => $params['processor_id'],
           ]);
+          if (!empty($this->contribution['contribution_recur_id']) && $trxnReference) {
+            $this->updatePaymentTokenWithAnyExtraData($trxnReference);
+          }
         }
         if (!empty($this->contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != FALSE) {
           $this->storePaymentToken(array_merge($params, ['contact_id' => $contribution['contact_id']]), $this->contribution['contribution_recur_id'], $tokenReference);
@@ -1494,6 +1506,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (method_exists($this->gateway, 'completePurchase') && !isset($params['payment_action']) && empty($params['is_recur'])) {
       $action = 'completePurchase';
     }
+    elseif ($this->getProcessorTypeMetadata('token_pay_action')) {
+      $action = $this->getProcessorTypeMetadata('token_pay_action');
+    }
 
     $params['transactionReference'] = ($params['token']);
     $response = $this->gateway->$action($this->getCreditCardOptions(array_merge($params, ['cardTransactionType' => 'continuous'])))
@@ -1667,6 +1682,39 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         ->addWhere('id', '=', $this->propertyBag->getContributionID())
         ->execute()
         ->first()['contact_id'];
+  }
+
+  /**
+   * If the notification contains additional token information store it.
+   *
+   * This updates the payment token but only if that token is a json-encoded
+   * array, in which case it is potentially added to.
+   *
+   * In practice this means sagepay can add the  'txAuthNo' to the token.
+   *
+   * @param string $trxnReference
+   */
+  protected function updatePaymentTokenWithAnyExtraData(string $trxnReference) {
+    try {
+      $paymentToken = civicrm_api3('PaymentToken', 'get', [
+        'contribution_recur_id' => $this->contribution['contribution_recur_id'],
+        'options' => ['limit' => 1, 'sort' => 'id DESC'],
+        'sequential' => TRUE,
+      ]);
+      if (!empty($paymentToken['values'])) {
+        // Hmm this check is a bit unclear - sagepay is a json array
+        // but it'a also probably the only other with a reference at this point...
+        // comments & tests are your friends.
+        if (is_array(json_decode($trxnReference, TRUE))) {
+          civicrm_api3('PaymentToken', 'create', [
+            'id' => $paymentToken['id'],
+            'token' => $trxnReference
+          ]);
+        }
+      }
+    } catch (CiviCRM_API3_Exception $e) {
+      $this->log('possible error saving token', ['error' => $e->getMessage()]);
+    }
   }
 
 }

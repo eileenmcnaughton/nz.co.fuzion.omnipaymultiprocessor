@@ -77,6 +77,8 @@ return [
       // Hopefully temporary fix.
       // https://github.com/thephpleague/omnipay-sagepay/pull/158
       'is_pass_null_for_empty_card' => TRUE,
+      'create_card_action' => 'purchase',
+      'token_pay_action' => 'repeatPurchase',
     ],
     'params' =>
       [
@@ -89,6 +91,7 @@ return [
         'class_name' => 'Payment_OmnipayMultiProcessor',
         'billing_mode' => 4,
         'payment_type' => 3,
+        'is_recur' => TRUE,
       ],
   ],
 ];

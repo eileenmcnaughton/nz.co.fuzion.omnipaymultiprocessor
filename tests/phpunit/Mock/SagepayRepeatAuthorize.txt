@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+Date: Thu, 20 Feb 2020 10:25:00 GMT
+
+VPSProtocol=3.00
+Status=OK
+StatusDetail=0000 : The Authorisation was Successful.
+VPSTxId={
+ B4453DF4-E7D1-1CF3-ED60-6DA4AEA78D08
+}
+SecurityKey=BEY5QUAYGL
+TxAuthNo=8365828
+BankAuthCode=999777"
