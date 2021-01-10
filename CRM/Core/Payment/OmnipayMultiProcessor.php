@@ -1356,11 +1356,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
-   * @param $params
+   * Get the card number with privacy changes.
+   *
+   * @param array $params
    *
    * @return string
    */
-  protected function getMaskedCreditCardNumber(&$params) {
+  protected function getMaskedCreditCardNumber(array $params) {
     if (empty($params['credit_card_number'])) {
       return '';
     }
