@@ -560,9 +560,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'cancelUrl' => $this->getCancelUrl($this->getQfKey(), CRM_Utils_Array::value('participantID', $params)),
       'notifyUrl' => $this->getNotifyUrl(),
       'card' => $this->getCreditCardObjectParams($params),
-      'cardReference' => CRM_Utils_Array::value('token', $params),
-      'transactionReference' => CRM_Utils_Array::value('token', $params),
-      'cardTransactionType' => CRM_Utils_Array::value('cardTransactionType', $params),
+      'cardReference' => $params['token'] ?? NULL,
+      'transactionReference' => $params['token'] ?? NULL,
+      'cardTransactionType' => $params['cardTransactionType'] ?? NULL,
     ];
     if (!empty($params['action'])) {
       $creditCardOptions['action'] = 'Purchase';
