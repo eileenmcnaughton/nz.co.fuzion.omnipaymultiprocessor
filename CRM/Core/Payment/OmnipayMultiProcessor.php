@@ -462,7 +462,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @param array $params
    *
-   * @return array
+   * @return array|null
    */
   private function getCreditCardObjectParams($params) {
     $billingID = $locationTypes = CRM_Core_BAO_LocationType::getBilling();
@@ -515,6 +515,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           }
         }
       }
+    }
+    if (empty(array_filter($cardFields)) && $this->getProcessorTypeMetadata('is_pass_null_for_empty_card')) {
+      // sagepay hack - see https://github.com/thephpleague/omnipay-sagepay/issues/157#issuecomment-757448484
+      return NULL;
     }
     return $cardFields;
   }
@@ -578,7 +582,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $creditCardOptions = array_merge($creditCardOptions, $this->getProcessorPassThroughFields());
 
     CRM_Utils_Hook::alterPaymentProcessorParams($this, $params, $creditCardOptions);
-    $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
+    // This really is a hack just for sagepay. I meant to filter all
+    // empty but other processors expect it to be an object. Test cover exists.
+    // https://github.com/thephpleague/omnipay-sagepay/pull/158
+    if (!empty($creditCardOptions['card'])) {
+      $creditCardOptions['card'] = array_merge($creditCardOptions['card'], $this->getSensitiveCreditCardObjectOptions($params));
+    }
     return $creditCardOptions;
   }
 

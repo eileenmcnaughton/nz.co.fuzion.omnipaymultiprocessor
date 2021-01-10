@@ -74,6 +74,9 @@ return [
       'ipn_processing_delay' => 0,
       // See https://github.com/thephpleague/omnipay-sagepay/pull/154
       'pass_through_fields' => ['billingForShipping' => 1],
+      // Hopefully temporary fix.
+      // https://github.com/thephpleague/omnipay-sagepay/pull/158
+      'is_pass_null_for_empty_card' => TRUE,
     ],
     'params' =>
       [
