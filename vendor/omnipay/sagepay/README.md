@@ -34,7 +34,7 @@ Table of Contents
          * [Server Notification Handler](#server-notification-handler)
       * [Sage Pay Form Methods](#sage-pay-form-methods)
          * [Form Authorize](#form-authorize)
-         * [Form completeAuthorise](#form-completeauthorise)
+         * [Form completeAuthorize](#form-completeauthorize)
          * [Form Purchase](#form-purchase)
       * [Sage Pay Shared Methods (Direct and Server)](#sage-pay-shared-methods-direct-and-server)
          * [Repeat Authorize/Purchase](#repeat-authorizepurchase)
@@ -285,9 +285,8 @@ The `$creditCard` object will provide the billing and shipping details:
 use Omnipay\Common\CreditCard;
 
 $creditCard = new CreditCard([
-    'firstName' => 'Joe',
-    'lastName' => 'Bloggs',
-    //
+    'billingFirstName' => 'Joe',
+    'billingLastName' => 'Bloggs',
     'billingAddress1' => 'Billing Address 1',
     'billingAddress2' => 'Billing Address 2',
     //'billingState' => '',
@@ -299,6 +298,8 @@ $creditCard = new CreditCard([
     'email' =>  'test@example.com',
     'clientIp' => '123.123.123.123',
     //
+    'shippingFirstName' => 'Joe',
+    'shippingLastName' => 'Bloggs',
     'shippingAddress1' => '99',
     'shippingState' => 'NY',
     'shippingCity' => 'City1',
@@ -316,6 +317,21 @@ $creditCard = new CreditCard([
   though *some* banks insist it is present and valid.
 * This gateway lives on an extended ASCII ISO 8859-1 back end.
   Really. Do any characterset conversions in your merchant site to avoid surprises.
+* Both billing and shipping name and address is required.
+  However, you can use the `billingForShipping` flag to set the shipping details
+  to what you supply as the billing details.
+
+```php
+// Use the billing name and address for the shipping name and address too.
+$gateway->setBillingForShipping(true);
+
+// or
+
+$response = $gateway->authorize([
+    'billingForShipping' => true,
+    ...
+]);
+```
 
 ```php
 // Create a unique transaction ID to track this transaction.
@@ -336,7 +352,7 @@ $surchargeXml = '<surcharges>'
 // Send the authorize request.
 // Some optional parameters are shown commented out.
 
-$response = $gateway->authorize(array(
+$response = $gateway->authorize([
     'amount' => '9.99',
     'currency' => 'GBP',
     'card' => $card,
@@ -349,7 +365,7 @@ $response = $gateway->authorize(array(
     // 'token' => $token,
     // 'cardReference' => $cardReference,
     // 'useAuthenticate' => true,
-))->send();
+])->send();
 
 If `useAuthenticate` is set, then the `authorize` will use the `AUTHENTICATE`/`AUTHORISE`
 method of reserving the transaction details.
@@ -459,16 +475,16 @@ The URL for the notification handler is set in the authorize or payment message:
 
 $transactionId = {create a unique transaction id};
 
-$items = array(
-    array(
+$items = [
+    [
         'name' => 'My Product Name',
         'description' => 'My Product Description',
         'quantity' => 1,
         'price' => 9.99,
-    )
-);
+    ]
+];
 
-$response = $gateway->purchase(array(
+$response = $gateway->purchase([
     'amount' => 9.99,
     'currency' => 'GBP',
     // Just the name and address, NOT CC details.
@@ -478,7 +494,7 @@ $response = $gateway->purchase(array(
     'transactionId' => $transactionId,
     'description' => 'test',
     'items' => $items,
-))->send();
+])->send();
 
 // Before redirecting, save `$response->getSecurityKey()` in the database,
 // retrievable by `$transactionId`.
@@ -682,25 +698,37 @@ $response = $gateway->authorize([
 ```
 
 The `$response` will be a `POST` redirect, which will take the user to the gateway.
-At the gateway, the user will authenticate or authorise their credit card,
+At the gateway, the user will authenticate or authorize their credit card,
 perform any 3D Secure actions that may be requested, then will return to the
 merchant site.
 
-### Form completeAuthorise
+Like `Server` and `Direct`, you can use either the `DEFERRED` or the `AUTHENTICATE`
+method to reserve the amount.
+
+### Form completeAuthorize
 
 To get the result details, the transaction is "completed" on the
 user's return. This will be at your `returnUrl` endpoint:
 
 ```php
 // The result will be read and decrypted from the return URL (or failure URL)
-// query parameters:
+// query parameters.
+// You MUST provide the original expected transactionId, which is validated
+// against the transactionId provided in the server request.
+// This prevents different payments getting mixed up.
 
-$result = $gateway->completeAuthorize()->send();
+$completeRequest = $gateway->completeAuthorize(['transactionId' => $originalTransactionId]);
+$result = $completeRequest->send();
 
 $result->isSuccessful();
 $result->getTransactionReference();
 // etc.
 ```
+
+Note that if `send()` throws an exception here due to a `transactionId` mismatch,
+you can still access the decryoted data that was brought back with the user as
+`$completeRequest->getData()`.
+You will need to log this for later analysis.
 
 If you already have the encrypted response string, then it can be passed in.
 However, you would normally leave it for the driver to read it for you from
@@ -727,9 +755,6 @@ for wildly different amounts.
 In a future release, the `completeAuthorize()` method will expect the
 `transactionId` to be supplied and it must match before it will
 return a success status.
-
-Like `Server` and `Direct`, you can use either the `DEFERRED` or the `AUTHENTICATE`
-method to reserve the amount.
 
 ### Form Purchase
 
@@ -994,15 +1019,15 @@ If you want to include VAT amount in the item array you must use
 `\Omnipay\SagePay\Extend\Item` as follows.
 
 ```php
-$items = array(
-    array(new \Omnipay\SagePay\Extend\Item(array(
+$items = [
+    [new \Omnipay\SagePay\Extend\Item([
         'name' => 'My Product Name',
         'description' => 'My Product Description',
         'quantity' => 1,
         'price' => 9.99,
         'vat' => 1.665, // VAT amount, not percentage
-    ))
-);
+    ]]
+];
 ```
 
 # Support
