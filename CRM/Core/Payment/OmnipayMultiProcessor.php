@@ -831,7 +831,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           }
         }
         if (!empty($this->contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != FALSE) {
-          $this->storePaymentToken(array_merge($params, ['contact_id' => $contribution['contact_id']]), $this->contribution['contribution_recur_id'], $tokenReference);
+          $this->storePaymentToken(array_merge($params, ['contact_id' => $this->contribution['contact_id']]), $this->contribution['contribution_recur_id'], $tokenReference);
         }
       }
       catch (CiviCRM_API3_Exception $e) {
