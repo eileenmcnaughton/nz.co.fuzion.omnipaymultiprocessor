@@ -948,6 +948,20 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @param null|object $response
    */
   protected function redirectOrExit($outcome, $response = NULL) {
+    // Session is reset for event registration for unknown reason.
+    // set the component so that the url is build correctly.
+    if (!empty($this->transaction_id)) {
+      $participantCount = civicrm_api3('ParticipantPayment', 'getcount', [
+        'contribution_id' => $this->transaction_id,
+      ]);
+      if ($participantCount) {
+        $this->_component = 'event';
+      }
+      else {
+        $this->_component = 'contribute';
+      }
+    }
+
     switch ($outcome) {
       case 'fail':
         $userMsg = E::ts('Your payment was not successful. Please try again');
@@ -1718,4 +1732,3 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
 }
-
