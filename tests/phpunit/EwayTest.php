@@ -111,6 +111,9 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
   protected function createContributionPage($processor, $isEncrypted = FALSE) {
     $processorID = $processor['id'];
 
+    // submit form values
+    $priceSet = $this->callAPISuccess('price_set', 'getsingle', ['name' => 'default_contribution_amount']);
+
     $contributionPageParams = [
       'title' => 'Help Support CiviCRM!',
       'financial_type_id' => 1,
@@ -128,23 +131,21 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
       'amount_block_is_active' => 1,
       'currency' => 'USD',
       'is_billing_required' => 0,
+      'price_set_id' => $priceSet['id'],
       'payment_processor' => $processorID,
     ];
     $contributionPageResult = $this->callAPISuccess('contribution_page', 'create', $contributionPageParams);
-
-    // submit form values
-    $priceSet = $this->callAPISuccess('price_set', 'getsingle', ['name' => 'default_contribution_amount']);
-
+    CRM_Price_BAO_PriceSet::addTo('civicrm_contribution_page', $contributionPageResult['id'], $priceSet['id']);
     $this->submitParams = [
       'id' => $contributionPageResult['id'],
       'email-5' => 'anthony_anderson@civicrm.org',
       'payment_processor_id' => $processorID,
       'amount' => 100.00,
+      'price_1' => 100,
       'tax_amount' => '',
       'currencyID' => 'AUD',
       'is_quick_config' => 1,
       'description' => 'Online Contribution: Help Support CiviCRM!',
-      'price_set_id' => $priceSet['id'],
       'credit_card_number' => $this->getCardNumber($isEncrypted),
       'credit_card_exp_date' => ['M' => 9, 'Y' => 2030],
       'cvv2' =>$this->getCvv($isEncrypted),
