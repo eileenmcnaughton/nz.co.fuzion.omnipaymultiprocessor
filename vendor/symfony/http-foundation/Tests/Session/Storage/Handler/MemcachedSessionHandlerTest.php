@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHan
  */
 class MemcachedSessionHandlerTest extends TestCase
 {
-    const PREFIX = 'prefix_';
-    const TTL = 1000;
+    private const PREFIX = 'prefix_';
+    private const TTL = 1000;
 
     /**
      * @var MemcachedSessionHandler
@@ -30,26 +30,30 @@ class MemcachedSessionHandlerTest extends TestCase
 
     protected $memcached;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        if (\defined('HHVM_VERSION')) {
-            $this->markTestSkipped('PHPUnit_MockObject cannot mock the Memcached class on HHVM. See https://github.com/sebastianbergmann/phpunit-mock-objects/pull/289');
-        }
-
         parent::setUp();
 
         if (version_compare(phpversion('memcached'), '2.2.0', '>=') && version_compare(phpversion('memcached'), '3.0.0b1', '<')) {
             $this->markTestSkipped('Tests can only be run with memcached extension 2.1.0 or lower, or 3.0.0b1 or higher');
         }
 
-        $this->memcached = $this->getMockBuilder('Memcached')->getMock();
+        $r = new \ReflectionClass(\Memcached::class);
+        $methodsToMock = array_map(function ($m) { return $m->name; }, $r->getMethods(\ReflectionMethod::IS_PUBLIC));
+        $methodsToMock = array_diff($methodsToMock, ['getDelayed','getDelayedByKey']);
+
+        $this->memcached = $this->getMockBuilder(\Memcached::class)
+            ->disableOriginalConstructor()
+            ->setMethods($methodsToMock)
+            ->getMock();
+
         $this->storage = new MemcachedSessionHandler(
             $this->memcached,
             ['prefix' => self::PREFIX, 'expiretime' => self::TTL]
         );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->memcached = null;
         $this->storage = null;
@@ -140,6 +144,6 @@ class MemcachedSessionHandlerTest extends TestCase
         $method = new \ReflectionMethod($this->storage, 'getMemcached');
         $method->setAccessible(true);
 
-        $this->assertInstanceOf('\Memcached', $method->invoke($this->storage));
+        $this->assertInstanceOf(\Memcached::class, $method->invoke($this->storage));
     }
 }

@@ -2,7 +2,7 @@
 
 **Mollie driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/thephpleague/omnipay-mollie.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-mollie)
+[![Unit Tests](https://github.com/thephpleague/omnipay-mollie/actions/workflows/run-tests.yml/badge.svg)](https://github.com/thephpleague/omnipay-mollie/actions/workflows/run-tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/mollie/version.png)](https://packagist.org/packages/omnipay/mollie)
 [![Total Downloads](https://poser.pugx.org/omnipay/mollie/d/total.png)](https://packagist.org/packages/omnipay/mollie)
 
@@ -177,13 +177,19 @@ $response = $gateway->createShipment(
 )->send();
 ```
 
+4. As long as the order is `created`, `authorized` or `shipping`, it may be cancelled (voided) 
+
+```php
+$response = $gateway->void(["transactionReference" => "ord_xxx"])->send();
+```
+
 ## Support
 
 If you are having general issues with Omnipay, we suggest posting on
 [Stack Overflow](http://stackoverflow.com/). Be sure to add the
 [omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
 
-If you want to keep up to date with release anouncements, discuss ideas for the project,
+If you want to keep up to date with release announcements, discuss ideas for the project,
 or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
 you can subscribe to.
 

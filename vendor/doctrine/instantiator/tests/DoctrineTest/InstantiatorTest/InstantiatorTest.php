@@ -25,6 +25,7 @@ use PDORow;
 use PharException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
 use function str_replace;
 use function uniqid;
 
@@ -38,10 +39,7 @@ class InstantiatorTest extends TestCase
     /** @var Instantiator */
     private $instantiator;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,16 +48,18 @@ class InstantiatorTest extends TestCase
 
     /**
      * @dataProvider getInstantiableClasses
+     * @phpstan-param class-string $className
      */
-    public function testCanInstantiate(string $className) : void
+    public function testCanInstantiate(string $className): void
     {
         self::assertInstanceOf($className, $this->instantiator->instantiate($className));
     }
 
     /**
      * @dataProvider getInstantiableClasses
+     * @phpstan-param class-string $className
      */
-    public function testInstantiatesSeparateInstances(string $className) : void
+    public function testInstantiatesSeparateInstances(string $className): void
     {
         $instance1 = $this->instantiator->instantiate($className);
         $instance2 = $this->instantiator->instantiate($className);
@@ -68,7 +68,7 @@ class InstantiatorTest extends TestCase
         self::assertNotSame($instance1, $instance2);
     }
 
-    public function testExceptionOnUnSerializationException() : void
+    public function testExceptionOnUnSerializationException(): void
     {
         $this->expectException(UnexpectedValueException::class);
 
@@ -77,25 +77,31 @@ class InstantiatorTest extends TestCase
 
     /**
      * @dataProvider getInvalidClassNames
+     * @phpstan-param class-string $invalidClassName
      */
-    public function testInstantiationFromNonExistingClass(string $invalidClassName) : void
+    public function testInstantiationFromNonExistingClass(string $invalidClassName): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         $this->instantiator->instantiate($invalidClassName);
     }
 
-    public function testInstancesAreNotCloned() : void
+    public function testInstancesAreNotCloned(): void
     {
         $className = 'TemporaryClass' . str_replace('.', '', uniqid('', true));
 
         eval('namespace ' . __NAMESPACE__ . '; class ' . $className . '{}');
 
-        $instance = $this->instantiator->instantiate(__NAMESPACE__ . '\\' . $className);
+        /**
+         * @phpstan-var class-string
+         */
+        $classNameWithNamespace = __NAMESPACE__ . '\\' . $className;
+
+        $instance = $this->instantiator->instantiate($classNameWithNamespace);
 
         $instance->foo = 'bar';
 
-        $instance2 = $this->instantiator->instantiate(__NAMESPACE__ . '\\' . $className);
+        $instance2 = $this->instantiator->instantiate($classNameWithNamespace);
 
         self::assertObjectNotHasAttribute('foo', $instance2);
     }
@@ -104,8 +110,10 @@ class InstantiatorTest extends TestCase
      * Provides a list of instantiable classes (existing)
      *
      * @return string[][]
+     *
+     * @phpstan-return list<array{class-string}>
      */
-    public function getInstantiableClasses() : array
+    public function getInstantiableClasses(): array
     {
         return [
             [stdClass::class],
@@ -134,7 +142,7 @@ class InstantiatorTest extends TestCase
      *
      * @return string[][]
      */
-    public function getInvalidClassNames() : array
+    public function getInvalidClassNames(): array
     {
         return [
             [self::class . str_replace('.', '', uniqid('', true))],

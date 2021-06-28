@@ -78,6 +78,21 @@ class RequestMatcherTest extends TestCase
         $this->assertSame($isMatch, $matcher->matches($request));
     }
 
+    public function testPort()
+    {
+        $matcher = new RequestMatcher();
+        $request = Request::create('', 'get', [], [], [], ['HTTP_HOST' => null, 'SERVER_PORT' => 8000]);
+
+        $matcher->matchPort(8000);
+        $this->assertTrue($matcher->matches($request));
+
+        $matcher->matchPort(9000);
+        $this->assertFalse($matcher->matches($request));
+
+        $matcher = new RequestMatcher(null, null, null, null, [], null, 8000);
+        $this->assertTrue($matcher->matches($request));
+    }
+
     public function getHostData()
     {
         return [
@@ -146,6 +161,19 @@ class RequestMatcherTest extends TestCase
         $this->assertTrue($matcher->matches($request));
 
         $matcher->matchAttribute('foo', 'babar');
+        $this->assertFalse($matcher->matches($request));
+    }
+
+    public function testAttributesWithClosure()
+    {
+        $matcher = new RequestMatcher();
+
+        $request = Request::create('/admin/foo');
+        $request->attributes->set('_controller', function () {
+            return new Response('foo');
+        });
+
+        $matcher->matchAttribute('_controller', 'babar');
         $this->assertFalse($matcher->matches($request));
     }
 }

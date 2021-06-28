@@ -1,9 +1,0 @@
-HTTP/1.1 400 Bad Request
-Content-Type: application/json
-
-{
-    "code": 17,
-    "category": 2,
-    "message": "Duplicate match on payment information",
-    "reference": null
-}

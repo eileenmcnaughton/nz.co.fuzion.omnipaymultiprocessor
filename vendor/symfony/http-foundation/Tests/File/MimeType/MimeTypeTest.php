@@ -12,11 +12,14 @@
 namespace Symfony\Component\HttpFoundation\Tests\File\MimeType;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
 /**
  * @requires extension fileinfo
+ * @group legacy
  */
 class MimeTypeTest extends TestCase
 {
@@ -38,7 +41,7 @@ class MimeTypeTest extends TestCase
 
     public function testGuessImageWithDirectory()
     {
-        $this->expectException('Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException');
+        $this->expectException(FileNotFoundException::class);
 
         MimeTypeGuesser::getInstance()->guess(__DIR__.'/../Fixtures/directory');
     }
@@ -60,23 +63,14 @@ class MimeTypeTest extends TestCase
         $this->assertEquals('application/octet-stream', MimeTypeGuesser::getInstance()->guess(__DIR__.'/../Fixtures/.unknownextension'));
     }
 
-    /**
-     * @requires PHP 7.0
-     */
     public function testGuessWithDuplicatedFileType()
     {
-        if ('application/zip' === MimeTypeGuesser::getInstance()->guess(__DIR__.'/../Fixtures/test.docx')) {
-            $this->addToAssertionCount(1);
-
-            return;
-        }
-
-        $this->assertSame('application/vnd.openxmlformats-officedocument.wordprocessingml.document', MimeTypeGuesser::getInstance()->guess(__DIR__.'/../Fixtures/test.docx'));
+        $this->assertContains(MimeTypeGuesser::getInstance()->guess(__DIR__.'/../Fixtures/test.docx'), ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip']);
     }
 
     public function testGuessWithIncorrectPath()
     {
-        $this->expectException('Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException');
+        $this->expectException(FileNotFoundException::class);
         MimeTypeGuesser::getInstance()->guess(__DIR__.'/../Fixtures/not_here');
     }
 
@@ -95,14 +89,14 @@ class MimeTypeTest extends TestCase
         @chmod($path, 0333);
 
         if ('0333' == substr(sprintf('%o', fileperms($path)), -4)) {
-            $this->expectException('Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException');
+            $this->expectException(AccessDeniedException::class);
             MimeTypeGuesser::getInstance()->guess($path);
         } else {
             $this->markTestSkipped('Can not verify chmod operations, change of file permissions failed');
         }
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         $path = __DIR__.'/../Fixtures/to_delete';
         if (file_exists($path)) {

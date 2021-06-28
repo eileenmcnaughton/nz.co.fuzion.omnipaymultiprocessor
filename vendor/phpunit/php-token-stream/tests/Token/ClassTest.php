@@ -154,7 +154,7 @@ class PHP_Token_ClassTest extends TestCase
     /**
      * @ticket https://github.com/sebastianbergmann/php-code-coverage/issues/424
      */
-    public function testAnonymousFunctionDoesNotAffectStartAndEndLineOfMethod()
+    public function testSomething()
     {
         $ts = new PHP_Token_Stream(TEST_FILES_PATH . 'php-code-coverage-issue-424.php');
 
