@@ -1,0 +1,9 @@
+HTTP/1.1 201 OK
+Date: Tue, 11 Feb 2014 02:34:58 GMT
+Content-type: text/html; charset=utf-8
+
+<UpdateTokenResponse>
+    <ErrorMsg/>
+    <Success>true</Success>
+    <TokenPAN>411111_000011111</TokenPAN>
+</UpdateTokenResponse>

@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Php72\\' => array($vendorDir . '/symfony/polyfill-php72'),
@@ -32,14 +32,16 @@ return array(
     'Omnipay\\NABTransact\\' => array($vendorDir . '/sudiptpa/omnipay-nabtransact/src'),
     'Omnipay\\Mollie\\' => array($vendorDir . '/omnipay/mollie/src'),
     'Omnipay\\Mercanet\\' => array($vendorDir . '/fuzion/omnipay-mercanet/src'),
+    'Omnipay\\FirstAtlanticCommerce\\' => array($vendorDir . '/emperorjm/omnipay-first-atlantic-commerce/src'),
     'Omnipay\\Eway\\' => array($vendorDir . '/omnipay/eway/src'),
     'Omnipay\\Cybersource\\' => array($vendorDir . '/dioscouri/omnipay-cybersource/src'),
     'Omnipay\\Common\\' => array($vendorDir . '/omnipay/common/src/Common'),
     'Omnipay\\AuthorizeNet\\' => array($vendorDir . '/omnipay/authorizenet/src'),
     'Money\\' => array($vendorDir . '/moneyphp/money/src'),
+    'League\\ISO3166\\' => array($vendorDir . '/league/iso3166/src'),
     'Http\\Promise\\' => array($vendorDir . '/php-http/promise/src'),
     'Http\\Mock\\' => array($vendorDir . '/php-http/mock-client/src'),
-    'Http\\Message\\' => array($vendorDir . '/php-http/message-factory/src', $vendorDir . '/php-http/message/src'),
+    'Http\\Message\\' => array($vendorDir . '/php-http/message/src', $vendorDir . '/php-http/message-factory/src'),
     'Http\\Discovery\\' => array($vendorDir . '/php-http/discovery/src'),
     'Http\\Client\\Common\\' => array($vendorDir . '/php-http/client-common/src'),
     'Http\\Client\\' => array($vendorDir . '/php-http/httplug/src'),
