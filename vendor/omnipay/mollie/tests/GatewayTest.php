@@ -4,6 +4,7 @@ namespace Omnipay\Mollie\Test;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Mollie\Gateway;
+use Omnipay\Mollie\Message\Request\CancelOrderRequest;
 use Omnipay\Mollie\Message\Request\CompletePurchaseRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerMandateRequest;
 use Omnipay\Mollie\Message\Request\CreateCustomerRequest;
@@ -28,7 +29,7 @@ class GatewayTest extends GatewayTestCase
      */
     protected $gateway;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -95,11 +96,10 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     */
     public function testThatRefundDoesntWorkWithoutAmount()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
+
         $request = $this->gateway->refund(
             array(
                 'apiKey'               => 'key',
@@ -211,5 +211,10 @@ class GatewayTest extends GatewayTestCase
         );
 
         $this->assertInstanceOf(CreateCustomerMandateRequest::class, $request);
+    }
+
+    public function testVoid()
+    {
+        $this->assertInstanceOf(CancelOrderRequest::class, $this->gateway->void());
     }
 }

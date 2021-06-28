@@ -33,7 +33,7 @@ class NativeSessionStorageTest extends TestCase
 {
     private $savePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->iniSet('session.save_handler', 'files');
         $this->iniSet('session.save_path', $this->savePath = sys_get_temp_dir().'/sftest');
@@ -42,21 +42,18 @@ class NativeSessionStorageTest extends TestCase
         }
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         session_write_close();
         array_map('unlink', glob($this->savePath.'/*'));
         if (is_dir($this->savePath)) {
-            rmdir($this->savePath);
+            @rmdir($this->savePath);
         }
 
         $this->savePath = null;
     }
 
-    /**
-     * @return NativeSessionStorage
-     */
-    protected function getStorage(array $options = [])
+    protected function getStorage(array $options = []): NativeSessionStorage
     {
         $storage = new NativeSessionStorage($options);
         $storage->registerBag(new AttributeBag());
@@ -74,14 +71,14 @@ class NativeSessionStorageTest extends TestCase
 
     public function testRegisterBagException()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $storage = $this->getStorage();
         $storage->getBag('non_existing');
     }
 
     public function testRegisterBagForAStartedSessionThrowsException()
     {
-        $this->expectException('LogicException');
+        $this->expectException(\LogicException::class);
         $storage = $this->getStorage();
         $storage->start();
         $storage->registerBag(new AttributeBag());
@@ -197,10 +194,6 @@ class NativeSessionStorageTest extends TestCase
 
     public function testSessionOptions()
     {
-        if (\defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM is not handled in this test case.');
-        }
-
         $options = [
             'url_rewriter.tags' => 'a=href',
             'cache_expire' => '200',
@@ -214,7 +207,7 @@ class NativeSessionStorageTest extends TestCase
 
     public function testSetSaveHandlerException()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $storage = $this->getStorage();
         $storage->setSaveHandler(new \stdClass());
     }
@@ -224,22 +217,22 @@ class NativeSessionStorageTest extends TestCase
         $this->iniSet('session.save_handler', 'files');
         $storage = $this->getStorage();
         $storage->setSaveHandler();
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy', $storage->getSaveHandler());
+        $this->assertInstanceOf(SessionHandlerProxy::class, $storage->getSaveHandler());
         $storage->setSaveHandler(null);
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy', $storage->getSaveHandler());
+        $this->assertInstanceOf(SessionHandlerProxy::class, $storage->getSaveHandler());
         $storage->setSaveHandler(new SessionHandlerProxy(new NativeFileSessionHandler()));
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy', $storage->getSaveHandler());
+        $this->assertInstanceOf(SessionHandlerProxy::class, $storage->getSaveHandler());
         $storage->setSaveHandler(new NativeFileSessionHandler());
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy', $storage->getSaveHandler());
+        $this->assertInstanceOf(SessionHandlerProxy::class, $storage->getSaveHandler());
         $storage->setSaveHandler(new SessionHandlerProxy(new NullSessionHandler()));
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy', $storage->getSaveHandler());
+        $this->assertInstanceOf(SessionHandlerProxy::class, $storage->getSaveHandler());
         $storage->setSaveHandler(new NullSessionHandler());
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy', $storage->getSaveHandler());
+        $this->assertInstanceOf(SessionHandlerProxy::class, $storage->getSaveHandler());
     }
 
     public function testStarted()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(\RuntimeException::class);
         $storage = $this->getStorage();
 
         $this->assertFalse($storage->getSaveHandler()->isActive());

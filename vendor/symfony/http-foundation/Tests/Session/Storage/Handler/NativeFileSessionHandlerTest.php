@@ -27,9 +27,8 @@ class NativeFileSessionHandlerTest extends TestCase
 {
     public function testConstruct()
     {
-        $storage = new NativeSessionStorage(['name' => 'TESTING'], new NativeFileSessionHandler(sys_get_temp_dir()));
+        new NativeSessionStorage(['name' => 'TESTING'], new NativeFileSessionHandler(sys_get_temp_dir()));
 
-        $this->assertEquals('files', $storage->getSaveHandler()->getSaveHandlerName());
         $this->assertEquals('user', ini_get('session.save_handler'));
 
         $this->assertEquals(sys_get_temp_dir(), ini_get('session.save_path'));
@@ -61,7 +60,7 @@ class NativeFileSessionHandlerTest extends TestCase
 
     public function testConstructException()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         new NativeFileSessionHandler('something;invalid;with;too-many-args');
     }
 

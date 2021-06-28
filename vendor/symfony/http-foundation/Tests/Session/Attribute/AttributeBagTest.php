@@ -28,7 +28,7 @@ class AttributeBagTest extends TestCase
      */
     private $bag;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->array = [
             'hello' => 'world',
@@ -45,11 +45,11 @@ class AttributeBagTest extends TestCase
                 ],
             ],
         ];
-        $this->bag = new AttributeBag('_sf2');
+        $this->bag = new AttributeBag('_sf');
         $this->bag->initialize($this->array);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->bag = null;
         $this->array = [];
@@ -67,7 +67,7 @@ class AttributeBagTest extends TestCase
 
     public function testGetStorageKey()
     {
-        $this->assertEquals('_sf2', $this->bag->getStorageKey());
+        $this->assertEquals('_sf', $this->bag->getStorageKey());
         $attributeBag = new AttributeBag('test');
         $this->assertEquals('test', $attributeBag->getStorageKey());
     }

@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpFoundation\Tests;
 
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +24,7 @@ class ResponseTest extends ResponseTestCase
     {
         $response = Response::create('foo', 301, ['Foo' => 'bar']);
 
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(301, $response->getStatusCode());
         $this->assertEquals('bar', $response->headers->get('foo'));
     }
@@ -253,7 +254,7 @@ class ResponseTest extends ResponseTestCase
 
     public function testIsValidateable()
     {
-        $response = new Response('', 200, ['Last-Modified' => $this->createDateTimeOneHourAgo()->format(DATE_RFC2822)]);
+        $response = new Response('', 200, ['Last-Modified' => $this->createDateTimeOneHourAgo()->format(\DATE_RFC2822)]);
         $this->assertTrue($response->isValidateable(), '->isValidateable() returns true if Last-Modified is present');
 
         $response = new Response('', 200, ['ETag' => '"12345"']);
@@ -266,7 +267,7 @@ class ResponseTest extends ResponseTestCase
     public function testGetDate()
     {
         $oneHourAgo = $this->createDateTimeOneHourAgo();
-        $response = new Response('', 200, ['Date' => $oneHourAgo->format(DATE_RFC2822)]);
+        $response = new Response('', 200, ['Date' => $oneHourAgo->format(\DATE_RFC2822)]);
         $date = $response->getDate();
         $this->assertEquals($oneHourAgo->getTimestamp(), $date->getTimestamp(), '->getDate() returns the Date header if present');
 
@@ -274,9 +275,9 @@ class ResponseTest extends ResponseTestCase
         $date = $response->getDate();
         $this->assertEquals(time(), $date->getTimestamp(), '->getDate() returns the current Date if no Date header present');
 
-        $response = new Response('', 200, ['Date' => $this->createDateTimeOneHourAgo()->format(DATE_RFC2822)]);
+        $response = new Response('', 200, ['Date' => $this->createDateTimeOneHourAgo()->format(\DATE_RFC2822)]);
         $now = $this->createDateTimeNow();
-        $response->headers->set('Date', $now->format(DATE_RFC2822));
+        $response->headers->set('Date', $now->format(\DATE_RFC2822));
         $date = $response->getDate();
         $this->assertEquals($now->getTimestamp(), $date->getTimestamp(), '->getDate() returns the date when the header has been modified');
 
@@ -299,13 +300,13 @@ class ResponseTest extends ResponseTestCase
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'must-revalidate');
-        $response->headers->set('Expires', $this->createDateTimeOneHourLater()->format(DATE_RFC2822));
+        $response->headers->set('Expires', $this->createDateTimeOneHourLater()->format(\DATE_RFC2822));
         $this->assertEquals(3600, $response->getMaxAge(), '->getMaxAge() falls back to Expires when no max-age or s-maxage directive present');
 
         $response = new Response();
         $response->headers->set('Cache-Control', 'must-revalidate');
         $response->headers->set('Expires', -1);
-        $this->assertEquals('Sat, 01 Jan 00 00:00:00 +0000', $response->getExpires()->format(DATE_RFC822));
+        $this->assertLessThanOrEqual(time() - 2 * 86400, $response->getExpires()->format('U'));
 
         $response = new Response();
         $this->assertNull($response->getMaxAge(), '->getMaxAge() returns null if no freshness information available');
@@ -364,7 +365,7 @@ class ResponseTest extends ResponseTestCase
         $this->assertNull($response->headers->get('Age'), '->expire() does not set the Age when the response is expired');
 
         $response = new Response();
-        $response->headers->set('Expires', date(DATE_RFC2822, time() + 600));
+        $response->headers->set('Expires', date(\DATE_RFC2822, time() + 600));
         $response->expire();
         $this->assertNull($response->headers->get('Expires'), '->expire() removes the Expires header when the response is fresh');
     }
@@ -381,15 +382,15 @@ class ResponseTest extends ResponseTestCase
         $this->assertNull($response->getTtl(), '->getTtl() returns null when no Expires or Cache-Control headers are present');
 
         $response = new Response();
-        $response->headers->set('Expires', $this->createDateTimeOneHourLater()->format(DATE_RFC2822));
+        $response->headers->set('Expires', $this->createDateTimeOneHourLater()->format(\DATE_RFC2822));
         $this->assertEquals(3600, $response->getTtl(), '->getTtl() uses the Expires header when no max-age is present');
 
         $response = new Response();
-        $response->headers->set('Expires', $this->createDateTimeOneHourAgo()->format(DATE_RFC2822));
+        $response->headers->set('Expires', $this->createDateTimeOneHourAgo()->format(\DATE_RFC2822));
         $this->assertLessThan(0, $response->getTtl(), '->getTtl() returns negative values when Expires is in past');
 
         $response = new Response();
-        $response->headers->set('Expires', $response->getDate()->format(DATE_RFC2822));
+        $response->headers->set('Expires', $response->getDate()->format(\DATE_RFC2822));
         $response->headers->set('Age', 0);
         $this->assertSame(0, $response->getTtl(), '->getTtl() correctly handles zero');
 
@@ -460,18 +461,10 @@ class ResponseTest extends ResponseTestCase
 
     public function testDefaultContentType()
     {
-        $headerMock = $this->getMockBuilder('Symfony\Component\HttpFoundation\ResponseHeaderBag')->setMethods(['set'])->getMock();
-        $headerMock->expects($this->at(0))
-            ->method('set')
-            ->with('Content-Type', 'text/html');
-        $headerMock->expects($this->at(1))
-            ->method('set')
-            ->with('Content-Type', 'text/html; charset=UTF-8');
-
         $response = new Response('foo');
-        $response->headers = $headerMock;
-
         $response->prepare(new Request());
+
+        $this->assertSame('text/html; charset=UTF-8', $response->headers->get('Content-Type'));
     }
 
     public function testContentTypeCharset()
@@ -502,6 +495,20 @@ class ResponseTest extends ResponseTestCase
         $response->prepare(new Request());
 
         $this->assertEquals('text/html; charset=UTF-8', $response->headers->get('content-type'));
+    }
+
+    /**
+     * Same URL cannot produce different Content-Type based on the value of the Accept header,
+     * unless explicitly stated in the response object.
+     */
+    public function testPrepareDoesNotSetContentTypeBasedOnRequestAcceptHeader()
+    {
+        $response = new Response('foo');
+        $request = Request::create('/');
+        $request->headers->set('Accept', 'application/json');
+        $response->prepare($request);
+
+        $this->assertSame('text/html; charset=UTF-8', $response->headers->get('content-type'));
     }
 
     public function testPrepareSetContentType()
@@ -578,6 +585,24 @@ class ResponseTest extends ResponseTestCase
         $this->assertFalse($response->headers->has('expires'));
     }
 
+    public function testPrepareSetsCookiesSecure()
+    {
+        $cookie = Cookie::create('foo', 'bar');
+
+        $response = new Response('foo');
+        $response->headers->setCookie($cookie);
+
+        $request = Request::create('/', 'GET');
+        $response->prepare($request);
+
+        $this->assertFalse($cookie->isSecure());
+
+        $request = Request::create('https://localhost/', 'GET');
+        $response->prepare($request);
+
+        $this->assertTrue($cookie->isSecure());
+    }
+
     public function testSetCache()
     {
         $response = new Response();
@@ -586,7 +611,7 @@ class ResponseTest extends ResponseTestCase
             $response->setCache(['wrong option' => 'value']);
             $this->fail('->setCache() throws an InvalidArgumentException if an option is not supported');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('InvalidArgumentException', $e, '->setCache() throws an InvalidArgumentException if an option is not supported');
+            $this->assertInstanceOf(\InvalidArgumentException::class, $e, '->setCache() throws an InvalidArgumentException if an option is not supported');
             $this->assertStringContainsString('"wrong option"', $e->getMessage());
         }
 
@@ -668,6 +693,22 @@ class ResponseTest extends ResponseTestCase
         $this->assertTrue($response->isImmutable());
     }
 
+    public function testSetDate()
+    {
+        $response = new Response();
+        $response->setDate(\DateTime::createFromFormat(\DateTime::ATOM, '2013-01-26T09:21:56+0100', new \DateTimeZone('Europe/Berlin')));
+
+        $this->assertEquals('2013-01-26T08:21:56+00:00', $response->getDate()->format(\DateTime::ATOM));
+    }
+
+    public function testSetDateWithImmutable()
+    {
+        $response = new Response();
+        $response->setDate(\DateTimeImmutable::createFromFormat(\DateTime::ATOM, '2013-01-26T09:21:56+0100', new \DateTimeZone('Europe/Berlin')));
+
+        $this->assertEquals('2013-01-26T08:21:56+00:00', $response->getDate()->format(\DateTime::ATOM));
+    }
+
     public function testSetExpires()
     {
         $response = new Response();
@@ -681,10 +722,30 @@ class ResponseTest extends ResponseTestCase
         $this->assertEquals($response->getExpires()->getTimestamp(), $now->getTimestamp());
     }
 
+    public function testSetExpiresWithImmutable()
+    {
+        $response = new Response();
+
+        $now = $this->createDateTimeImmutableNow();
+        $response->setExpires($now);
+
+        $this->assertEquals($response->getExpires()->getTimestamp(), $now->getTimestamp());
+    }
+
     public function testSetLastModified()
     {
         $response = new Response();
         $response->setLastModified($this->createDateTimeNow());
+        $this->assertNotNull($response->getLastModified());
+
+        $response->setLastModified(null);
+        $this->assertNull($response->getLastModified());
+    }
+
+    public function testSetLastModifiedWithImmutable()
+    {
+        $response = new Response();
+        $response->setLastModified($this->createDateTimeImmutableNow());
         $this->assertNotNull($response->getLastModified());
 
         $response->setLastModified(null);
@@ -855,7 +916,7 @@ class ResponseTest extends ResponseTestCase
      */
     public function testSetContentInvalid($content)
     {
-        $this->expectException('UnexpectedValueException');
+        $this->expectException(\UnexpectedValueException::class);
         $response = new Response();
         $response->setContent($content);
     }
@@ -885,7 +946,7 @@ class ResponseTest extends ResponseTestCase
     public function testNoDeprecationsAreTriggered()
     {
         new DefaultResponse();
-        $this->getMockBuilder(Response::class)->getMock();
+        $this->createMock(Response::class);
 
         // we just need to ensure that subclasses of Response can be created without any deprecations
         // being triggered if the subclass does not override any final methods
@@ -927,6 +988,13 @@ class ResponseTest extends ResponseTestCase
         return $date->setTimestamp(time());
     }
 
+    protected function createDateTimeImmutableNow()
+    {
+        $date = new \DateTimeImmutable();
+
+        return $date->setTimestamp(time());
+    }
+
     protected function provideResponse()
     {
         return new Response();
@@ -955,7 +1023,11 @@ class ResponseTest extends ResponseTestCase
             ],
         ]);
 
-        $ianaHttpStatusCodes->loadXML(file_get_contents('https://www.iana.org/assignments/http-status-codes/http-status-codes.xml', false, $context));
+        if (!$rawStatusCodes = file_get_contents('https://www.iana.org/assignments/http-status-codes/http-status-codes.xml', false, $context)) {
+            $this->markTestSkipped('The IANA server is throttling the list of status codes');
+        }
+
+        $ianaHttpStatusCodes->loadXML($rawStatusCodes);
         if (!$ianaHttpStatusCodes->relaxNGValidate(__DIR__.'/schema/http-status-codes.rng')) {
             self::fail('Invalid IANA\'s HTTP status code list.');
         }
@@ -997,7 +1069,7 @@ class ResponseTest extends ResponseTestCase
 
 class StringableObject
 {
-    public function __toString()
+    public function __toString(): string
     {
         return 'Foo';
     }

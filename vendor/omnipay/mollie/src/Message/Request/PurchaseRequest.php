@@ -85,6 +85,23 @@ class PurchaseRequest extends AbstractMollieRequest
     /**
      * @return string
      */
+    public function getMandateId()
+    {
+        return $this->getParameter('mandateId');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setMandateId($value)
+    {
+        return $this->setParameter('mandateId', $value);
+    }
+    
+    /**
+     * @return string
+     */
     public function getSequenceType()
     {
         return $this->getParameter('sequenceType');
@@ -98,6 +115,24 @@ class PurchaseRequest extends AbstractMollieRequest
     {
         return $this->setParameter('sequenceType', $value);
     }
+
+    /**
+     * @return string
+     */
+    public function getInclude()
+    {
+        return $this->getParameter('include');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setInclude($value)
+    {
+        return $this->setParameter('include', $value);
+    }
+
 
     /**
      * @return array
@@ -145,6 +180,10 @@ class PurchaseRequest extends AbstractMollieRequest
         if ($sequenceType = $this->getSequenceType()) {
             $data['sequenceType'] = $sequenceType;
         }
+        
+        if ($mandateId = $this->getMandateId()) {
+            $data['mandateId'] = $mandateId;
+        }
 
         return $data;
     }
@@ -155,7 +194,13 @@ class PurchaseRequest extends AbstractMollieRequest
      */
     public function sendData($data)
     {
-        $response = $this->sendRequest(self::POST, '/payments', $data);
+        $endpoint = '/payments';
+
+        if ($include = $this->getInclude()) {
+            $endpoint .= '?include=' . $include;
+        }
+
+        $response = $this->sendRequest(self::POST, $endpoint, $data);
 
         return $this->response = new PurchaseResponse($this, $response);
     }

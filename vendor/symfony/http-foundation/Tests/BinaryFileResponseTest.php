@@ -32,7 +32,7 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response = BinaryFileResponse::create($file, 404, [], true, ResponseHeaderBag::DISPOSITION_INLINE);
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertFalse($response->headers->has('ETag'));
-        $this->assertEquals('inline; filename="README.md"', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('inline; filename=README.md', $response->headers->get('Content-Disposition'));
     }
 
     public function testConstructWithNonAsciiFilename()
@@ -48,7 +48,7 @@ class BinaryFileResponseTest extends ResponseTestCase
 
     public function testSetContent()
     {
-        $this->expectException('LogicException');
+        $this->expectException(\LogicException::class);
         $response = new BinaryFileResponse(__FILE__);
         $response->setContent('foo');
     }
@@ -64,7 +64,7 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response = new BinaryFileResponse(__FILE__);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'föö.html');
 
-        $this->assertSame('attachment; filename="f__.html"; filename*=utf-8\'\'f%C3%B6%C3%B6.html', $response->headers->get('Content-Disposition'));
+        $this->assertSame('attachment; filename=f__.html; filename*=utf-8\'\'f%C3%B6%C3%B6.html', $response->headers->get('Content-Disposition'));
     }
 
     public function testSetContentDispositionGeneratesSafeFallbackFilenameForWronglyEncodedFilename()
@@ -75,7 +75,7 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $iso88591EncodedFilename);
 
         // the parameter filename* is invalid in this case (rawurldecode('f%F6%F6') does not provide a UTF-8 string but an ISO-8859-1 encoded one)
-        $this->assertSame('attachment; filename="f__.html"; filename*=utf-8\'\'f%F6%F6.html', $response->headers->get('Content-Disposition'));
+        $this->assertSame('attachment; filename=f__.html; filename*=utf-8\'\'f%F6%F6.html', $response->headers->get('Content-Disposition'));
     }
 
     /**
@@ -149,6 +149,7 @@ class BinaryFileResponseTest extends ResponseTestCase
             ['bytes=30-', 30, 5, 'bytes 30-34/35'],
             ['bytes=30-30', 30, 1, 'bytes 30-30/35'],
             ['bytes=30-34', 30, 5, 'bytes 30-34/35'],
+            ['bytes=30-40', 30, 5, 'bytes 30-34/35'],
         ];
     }
 
@@ -203,7 +204,29 @@ class BinaryFileResponseTest extends ResponseTestCase
             // Syntactical invalid range-request should also return the full resource
             ['bytes=20-10'],
             ['bytes=50-40'],
+            // range units other than bytes must be ignored
+            ['unknown=10-20'],
         ];
+    }
+
+    public function testRangeOnPostMethod()
+    {
+        $request = Request::create('/', 'POST');
+        $request->headers->set('Range', 'bytes=10-20');
+        $response = BinaryFileResponse::create(__DIR__.'/File/Fixtures/test.gif', 200, ['Content-Type' => 'application/octet-stream']);
+
+        $file = fopen(__DIR__.'/File/Fixtures/test.gif', 'r');
+        $data = fread($file, 35);
+        fclose($file);
+
+        $this->expectOutputString($data);
+        $response = clone $response;
+        $response->prepare($request);
+        $response->sendContent();
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('35', $response->headers->get('Content-Length'));
+        $this->assertNull($response->headers->get('Content-Range'));
     }
 
     public function testUnpreparedResponseSendsFullFile()
@@ -242,7 +265,7 @@ class BinaryFileResponseTest extends ResponseTestCase
     {
         return [
             ['bytes=-40'],
-            ['bytes=30-40'],
+            ['bytes=40-50'],
         ];
     }
 
@@ -309,7 +332,7 @@ class BinaryFileResponseTest extends ResponseTestCase
         $response->prepare($request);
         $response->sendContent();
 
-        $this->assertFileNotExists($path);
+        $this->assertFileDoesNotExist($path);
     }
 
     public function testAcceptRangeOnUnsafeMethods()
@@ -335,7 +358,8 @@ class BinaryFileResponseTest extends ResponseTestCase
     {
         return [
             ['/var/www/var/www/files/foo.txt', '/var/www/=/files/', '/files/var/www/files/foo.txt'],
-            ['/home/foo/bar.txt', '/var/www/=/files/,/home/foo/=/baz/', '/baz/bar.txt'],
+            ['/home/Foo/bar.txt', '/var/www/=/files/,/home/Foo/=/baz/', '/baz/bar.txt'],
+            ['/home/Foo/bar.txt', '"/var/www/"="/files/", "/home/Foo/"="/baz/"', '/baz/bar.txt'],
             ['/tmp/bar.txt', '"/var/www/"="/files/", "/home/Foo/"="/baz/"', null],
         ];
     }
@@ -354,7 +378,7 @@ class BinaryFileResponseTest extends ResponseTestCase
         return new BinaryFileResponse(__DIR__.'/../README.md', 200, ['Content-Type' => 'application/octet-stream']);
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         $path = __DIR__.'/../Fixtures/to_delete';
         if (file_exists($path)) {

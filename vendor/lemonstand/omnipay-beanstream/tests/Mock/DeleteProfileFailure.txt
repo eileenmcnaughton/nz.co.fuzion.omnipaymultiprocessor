@@ -1,9 +1,0 @@
-HTTP/1.1 400 Bad Request
-Content-Type: application/json
-
-{
-    "code": 15,
-    "category": 3,
-    "message": "Customer code to modify does not exist",
-    "reference": null
-}

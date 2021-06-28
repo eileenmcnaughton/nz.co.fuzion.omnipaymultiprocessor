@@ -17,6 +17,8 @@ jobs:
 
       - name: PHPStan
         uses: docker://oskarstark/phpstan-ga
+        env:
+          REQUIRE_DEV: true
         with:
           args: analyze --no-progress
 
@@ -29,6 +31,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: PHP-CS-Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga
+        uses: docker://oskarstark/php-cs-fixer-ga:2.19.0
         with:
           args: --dry-run --diff-format udiff
