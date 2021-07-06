@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Pass all due recurring contributions to the processor to action (if possible).
  *
@@ -65,12 +66,13 @@ function civicrm_api3_job_process_recurring($params) {
         'id' => $recurringPayment['id'],
         'failure_count' => $recurringPayment['failure_count'] + 1,
       ]);
-      civicrm_api3('Contribution', 'create', [
+      if (!empty($pending['id'])) {
+        civicrm_api3('Contribution', 'create', [
           'id' => $pending['id'],
           'contribution_status_id' => 'Failed',
           'debug' => $params['debug'] ?? 0,
-        ]
-      );
+        ]);
+      }
       $result[$recurringPayment['id']]['error'] = $e->getMessage();
       $result['failed']['ids'] = $recurringPayment['id'];
     }
