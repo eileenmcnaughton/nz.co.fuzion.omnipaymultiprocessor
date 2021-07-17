@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'edb05a0115420e8dc2b51ed6df1818a58204ce17',
+    'reference' => 'd6fed2c58c718ae6783bfa36e577a7b4931a444b',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'edb05a0115420e8dc2b51ed6df1818a58204ce17',
+      'reference' => 'd6fed2c58c718ae6783bfa36e577a7b4931a444b',
     ),
     'clue/stream-filter' => 
     array (
@@ -62,6 +62,16 @@
       ),
       'reference' => '6410c4b8352cb64218641457cef64997e6b784fb',
     ),
+    'emperorjm/omnipay-first-atlantic-commerce' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+        0 => '9999999-dev',
+      ),
+      'reference' => '381525ae5c64e9d035a3625c510f13818ec37ece',
+    ),
     'fuzion/omnipay-mercanet' => 
     array (
       'pretty_version' => 'dev-master',
@@ -102,6 +112,15 @@
       array (
         0 => '*',
       ),
+    ),
+    'league/iso3166' => 
+    array (
+      'pretty_version' => '1.0.2',
+      'version' => '1.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '22cd889f4f54ba668461824621d85e9d47a17839',
     ),
     'league/omnipay' => 
     array (

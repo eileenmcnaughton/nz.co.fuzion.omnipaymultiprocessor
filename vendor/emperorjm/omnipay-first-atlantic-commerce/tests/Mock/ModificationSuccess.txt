@@ -1,0 +1,13 @@
+HTTP/1.1 201 OK
+Date: Tue, 11 Feb 2014 02:34:58 GMT
+Content-type: text/html; charset=utf-8
+
+<TransactionModificationResponse>
+    <AcquirerId>464748</AcquirerId>
+    <MerchantId>123</MerchantId>
+    <OrderNumber>1234</OrderNumber>
+    <OriginalResponseCode>00</OriginalResponseCode>
+    <ReasonCode>1101</ReasonCode>
+    <ReasonCodeDescription>Success</ReasonCodeDescription>
+    <ResponseCode>1</ResponseCode>
+</TransactionModificationResponse>

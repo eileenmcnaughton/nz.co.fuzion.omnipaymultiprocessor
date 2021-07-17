@@ -1,0 +1,30 @@
+{
+    "name": "emperorjm/omnipay-first-atlantic-commerce",
+    "description": "First Atlantic Commerce driver for the Omnipay PHP payment processing library",
+    "keywords": [
+        "first atlantic commerce",
+        "fac",
+        "payment processing",
+        "omnipay",
+        "gateway"
+    ],
+    "homepage": "https://github.com/emperorjm/omnipay-first-atlantic-commerce",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Thompson",
+            "email": "adrian@fiwimarket.com"
+        }
+    ],
+    "require": {
+        "php": "^7",
+        "omnipay/common": "~3.0",
+        "league/iso3166": "~1.0.1"
+    },
+    "require-dev": {
+        "omnipay/tests": "~3.0"
+    },
+    "autoload": {
+        "psr-4": { "Omnipay\\FirstAtlanticCommerce\\" : "src" }
+    }
+}

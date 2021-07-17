@@ -1,0 +1,24 @@
+HTTP/1.1 201 OK
+Date: Tue, 11 Feb 2014 02:34:58 GMT
+Content-type: text/html; charset=utf-8
+
+<AuthorizeResponse xmlns="http://schemas.firstatlanticcommerce.com/gateway/data">
+    <ExtensionData/>
+    <AcquirerId>464748</AcquirerId>
+    <CreditCardTransactionResults>
+        <ExtensionData/>
+        <AVSResult/>
+        <AuthCode>123456</AuthCode>
+        <CVV2Result>M</CVV2Result>
+        <OriginalResponseCode>00</OriginalResponseCode>
+        <PaddedCardNumber>XXXXXXXXXXXX1111</PaddedCardNumber>
+        <ReasonCode>2</ReasonCode>
+        <ReasonCodeDescription>Transaction is declined.</ReasonCodeDescription>
+        <ReferenceNumber>307916543749</ReferenceNumber>
+        <ResponseCode>2</ResponseCode>
+        <TokenizedPAN/>
+    </CreditCardTransactionResults>
+    <MerchangtId>123</MerchangtId>
+    <Signature>qx6W+o50NL4XlqH0+Z/eSx3qrCU=</Signature>
+    <SignatureMethod>SHA1</SignatureMethod>
+</AuthorizeResponse>
