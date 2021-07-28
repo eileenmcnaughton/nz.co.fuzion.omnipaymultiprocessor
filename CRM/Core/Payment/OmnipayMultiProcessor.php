@@ -1589,6 +1589,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if (!$this->contribution) {
       $this->contribution = civicrm_api3('contribution', 'getsingle', [
         'id' => $this->transaction_id,
+        'is_test' => '',
         //'return' => 'contribution_status_id, contribution_recur_id, contact_id, contribution_contact_id',
       ]);
       $this->contribution['contribution_status_id:name'] = CRM_Core_PseudoConstant::getName('CRM_Contribute_BAO_Contribution', 'contribution_status_id', $this->contribution['contribution_status_id']);
