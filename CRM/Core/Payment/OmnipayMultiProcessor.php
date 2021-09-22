@@ -23,11 +23,9 @@
  | GNU Affero General Public License or the licensing of CiviCRM,     |
  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
  +--------------------------------------------------------------------+
-*/
+ */
 
 use Omnipay\Omnipay;
-use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidRequestException;
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\HandlerStack;
@@ -102,7 +100,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * Omnipay gateway.
    *
-   * @var AbstractGateway
+   * @var \Omnipay\Common\AbstractGateway
    */
   protected $gateway;
 
@@ -203,10 +201,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         CRM_Core_Session::storeSessionObjects(FALSE);
         if ($response->isTransparentRedirect()) {
           $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + [
-              'payment_processor_id' => $this->_paymentProcessor['id'],
-              'post_submit_url' => $response->getRedirectURL(),
-              'contact_id' => $params['contactID'],
-            ]);
+            'payment_processor_id' => $this->_paymentProcessor['id'],
+            'post_submit_url' => $response->getRedirectURL(),
+            'contact_id' => $params['contactID'],
+          ]);
           $url = CRM_Utils_System::url('civicrm/payment/details', ['key' => $params['qfKey']]);
           $this->log('success_redirect', ['url' => $url]);
           CRM_Utils_System::redirect($url);
@@ -383,9 +381,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       }
     }
     $processorFields = civicrm_api3('payment_processor_type', 'getsingle', [
-        'id' => $this->_paymentProcessor['payment_processor_type_id'],
-        'return' => $labelFields,
-      ]
+      'id' => $this->_paymentProcessor['payment_processor_type_id'],
+      'return' => $labelFields,
+    ]
     );
 
     foreach ($labelFields as $field => $label) {
@@ -401,7 +399,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return array mixed
    */
-  function getPreApprovalDetails($detail) {
+  public function getPreApprovalDetails($detail) {
     return $detail;
   }
 
@@ -627,7 +625,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     return $this->_paymentProcessor['payment_type'] == 1 ? $this->getCreditCardFormFields() : $this->getDirectDebitFormFields();
   }
 
-
   /**
    * Return an array of all the details about the fields potentially required for payment fields.
    *
@@ -718,14 +715,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function getBillingAddressFields($billingLocationID = NULL) {
     $fields = $this->getProcessorTypeMetadata('fields');
-    if (isset ($fields['billing_fields'])) {
+    if (isset($fields['billing_fields'])) {
       return $fields['billing_fields'];
     }
     if (!$this->isTransparentRedirect()) {
       return parent::getBillingAddressFields($billingLocationID);
     }
     $fields = $this->getProcessorTypeMetadata('transparent_redirect');
-    if (isset ($fields['billing_fields'])) {
+    if (isset($fields['billing_fields'])) {
       return $fields['billing_fields'];
     }
     $billingFields = [
@@ -734,12 +731,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'last_name' => 'billing_last_name',
     ];
     foreach ([
-               'street_address',
-               'city',
-               'state_province_id',
-               'postal_code',
-               'country_id',
-             ] as $addressField) {
+      'street_address',
+      'city',
+      'state_province_id',
+      'postal_code',
+      'country_id',
+    ] as $addressField) {
       $billingFields[$addressField] = 'billing_' . $addressField . '-' . CRM_Core_BAO_LocationType::getBilling();
     }
     return $billingFields;
@@ -975,6 +972,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
         }
         break;
+
       case 'success':
         $redirectUrl = $this->getStoredUrl('success');
         break;
@@ -1002,10 +1000,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected function storePaymentToken($params, $contributionRecurID, $tokenReference) {
     $tokenID = $this->savePaymentToken(array_merge($params, [
-        'payment_processor_id' => $params['processor_id'] ?? $params['payment_processor_id'],
-        'token' => $tokenReference,
-        'is_transactional' => FALSE,
-      ]
+      'payment_processor_id' => $params['processor_id'] ?? $params['payment_processor_id'],
+      'token' => $tokenReference,
+      'is_transactional' => FALSE,
+    ]
     ));
     $contributionRecur = civicrm_api3('ContributionRecur', 'getsingle', ['id' => $contributionRecurID]);
     civicrm_api3('contribution_recur', 'create', [
@@ -1175,15 +1173,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $this->gateway = NULL;
         CRM_Core_Session::storeSessionObjects(FALSE);
         if ($response->isTransparentRedirect()) {
-          $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
-              'payment_processor_id' => $this->_paymentProcessor['id'],
-              'post_submit_url' => $response->getRedirectURL(),
-              'contact_id' => $params['contactID'],
-            ));
-          CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/payment/details', array('key' => $params['qfKey'])));
+        $this->storeTransparentRedirectFormData($params['qfKey'], $response->getRedirectData() + array(
+        'payment_processor_id' => $this->_paymentProcessor['id'],
+        'post_submit_url' => $response->getRedirectURL(),
+        'contact_id' => $params['contactID'],
+        ));
+        CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/payment/details', array('key' => $params['qfKey'])));
         }
         $response->redirect();
-        */
+         */
       }
       else {
         $this->purgeSensitiveDataFromSession();
@@ -1308,10 +1306,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       if (isset($key['values']) && is_array($key['values'])) {
         foreach ($key['values'] as &$values) {
           foreach ([
-                     'credit_card_number',
-                     'cvv2',
-                     'credit_cate_type',
-                   ] as $fieldName) {
+            'credit_card_number',
+            'cvv2',
+            'credit_cate_type',
+          ] as $fieldName) {
             if (!empty($values[$fieldName])) {
               $values[$fieldName] = '';
             }
@@ -1575,7 +1573,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function getText($context, $params) {
     switch ($context) {
-      case 'contributionPageContinueText' :
+      case 'contributionPageContinueText':
         return ts('Click <strong>Continue</strong> to finalise your payment');
     }
     return parent::getText($context, $params);
@@ -1679,10 +1677,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       return $this->propertyBag->getContactID();
     }
     return (int) Contribution::get(FALSE)
-        ->addSelect('contact_id')
-        ->addWhere('id', '=', $this->propertyBag->getContributionID())
-        ->execute()
-        ->first()['contact_id'];
+      ->addSelect('contact_id')
+      ->addWhere('id', '=', $this->propertyBag->getContributionID())
+      ->execute()
+      ->first()['contact_id'];
   }
 
   /**
@@ -1709,14 +1707,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         if (is_array(json_decode($trxnReference, TRUE))) {
           civicrm_api3('PaymentToken', 'create', [
             'id' => $paymentToken['id'],
-            'token' => $trxnReference
+            'token' => $trxnReference,
           ]);
         }
       }
-    } catch (CiviCRM_API3_Exception $e) {
+    }
+    catch (CiviCRM_API3_Exception $e) {
       $this->log('possible error saving token', ['error' => $e->getMessage()]);
     }
   }
 
 }
-
