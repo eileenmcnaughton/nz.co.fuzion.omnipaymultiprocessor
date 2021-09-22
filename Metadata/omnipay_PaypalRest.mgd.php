@@ -77,6 +77,7 @@ return [
     ],
     'metadata' => [
       'suppress_submit_button' => 1,
+      'supports_cancel_recurring' => FALSE,
       'supports_preapproval' => 1,
       'payment_fields' => ['payment_token', 'PayerID', 'post_authorize'],
       'pass_through_fields' => [

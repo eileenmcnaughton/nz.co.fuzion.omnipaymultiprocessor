@@ -1081,7 +1081,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return bool
    */
   protected function supportsCancelRecurring() {
-    return TRUE;
+    return $this->getProcessorTypeMetadata('supports_cancel_recurring', TRUE);
   }
 
   public function cancelSubscription() {
@@ -1343,7 +1343,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return mixed
    */
-  protected function getProcessorTypeMetadata($parameter) {
+  protected function getProcessorTypeMetadata($parameter, $default = FALSE) {
     $entities = $this->getEntitiesMetadata();
     foreach ($entities as $entity) {
       if ($entity['entity'] === 'payment_processor_type') {
@@ -1357,7 +1357,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         }
       }
     }
-    return FALSE;
+    return $default;
   }
 
   /**
