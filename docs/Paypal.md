@@ -1,6 +1,6 @@
 The Paypal Checkout integration adds Paypal buttons to your page which launch an authorization popup
 
-![profile](../docs/PaypalCheckout/paypal_checkout.png)
+![profile](./PaypalCheckout/paypal_checkout.png)
 
 ## Advantages of Paypal checkout
 
@@ -30,19 +30,19 @@ In short, the following prerequisites should be met before Venmo button is visib
 To get started you need CiviCRM 5.13+, the Omnipay extension (you can install this from 'Add Extensions' on your extensions page), a clientId and a secret key. For information on how to set these up go to   https://developer.paypal.com/docs/api/overview/#get-credentials.
 
 Note that when it says log into dashboard there is actually a link at the top right hand corner which is what it refers to.
-![login](../docs/PaypalCheckout/papal-login.png)
+![login](./PaypalCheckout/papal-login.png)
 
 You will be directed to [create an app](https://developer.paypal.com/webapps/developer/applications/myapps).
 The screen is per below.
 You can give the app any name - the name doesn't matter
 
-![profile](../docs/PaypalCheckout/create_app.png) 
+![profile](./PaypalCheckout/create_app.png) 
 
 Once you have the credentials (client ID + secret key) you can add a payment processor through the normal CiviCRM interface
 (*Administer->CiviContribute->Payment Processors*).
 
 Enter the credentials into this screen:
-![add processor](../docs/PaypalCheckout/paypal_addprocessor.png)
+![add processor](./PaypalCheckout/paypal_addprocessor.png)
 
 
 ## Setting up recurring
