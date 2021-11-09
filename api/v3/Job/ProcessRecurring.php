@@ -31,13 +31,14 @@ function civicrm_api3_job_process_recurring($params) {
       $result[$recurringPayment['id']]['original_contribution'] = $originalContribution;
       $pending = civicrm_api3('Contribution', 'repeattransaction', [
         'original_contribution_id' => $originalContribution['id'],
+        'total_amount' => $recurringPayment['amount'],
         'contribution_status_id' => 'Pending',
         'payment_processor_id' => $paymentProcessorID,
         'is_email_receipt' => FALSE,
       ]);
 
       $payment = civicrm_api3('PaymentProcessor', 'pay', [
-        'amount' => $originalContribution['total_amount'],
+        'amount' => $recurringPayment['amount'],
         'currency' => $originalContribution['currency'],
         'payment_processor_id' => $paymentProcessorID,
         'contributionID' => $pending['id'],
