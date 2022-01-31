@@ -77,6 +77,15 @@ return [
       'is_pass_null_for_empty_card' => TRUE,
       'create_card_action' => 'purchase',
       'token_pay_action' => 'repeatPurchase',
+      'regions' => [
+        'billing-block' => [
+          [
+            'name' => 'sagepay_script',
+            'weight' => 500,
+            'script' => file_get_contents(__DIR__ . '/js/omnipay_SagePay.js'),
+          ],
+        ],
+      ],
     ],
     'params' =>
       [
