@@ -62,7 +62,6 @@ return [
       'fields' => [
         'billing_fields' => [
           'first_name' => 'billing_first_name',
-          'middle_name' => 'billing_middle_name',
           'last_name' => 'billing_last_name',
           'street_address' => "billing_street_address-{$billingLocationID}",
           'city' => "billing_city-{$billingLocationID}",
