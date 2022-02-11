@@ -35,7 +35,6 @@ use Omnipay\Common\Http\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as HttpPlugClient;
 use Civi\Api4\Contribution;
-use Civi\Payment\PropertyBag;
 
 /**
  * Class CRM_Core_Payment_OmnipayMultiProcessor.
@@ -240,12 +239,6 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->setProcessorFields();
     $this->setContributionReference(CRM_Utils_Array::value('contributionID', $params));
     $this->storeReturnUrls(CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
-    // Instantiate the core property bag in order to allow us to access the getAmount function.
-    // Note that there is no intention to integrate the PropertyBag more thoroughly until
-    // core processors have migrated.
-    $this->propertyBag = new PropertyBag();
-    $this->propertyBag->mergeLegacyInputParams($params);
-
   }
 
   /**
@@ -1648,9 +1641,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws \CiviCRM_API3_Exception
    */
   protected function savePaymentToken(array $params): int {
-    if (empty($params['contact_id'])) {
-      $params['contact_id'] = $this->getContactID($params);
-    }
+    $params['contact_id'] = $this->getContactID($params);
     $paymentToken = civicrm_api3('PaymentToken', 'create', [
       'contact_id' => $params['contact_id'],
       'token' => $params['token'],
@@ -1668,19 +1659,28 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * Get contact ID.
+   *
+   * Per https://docs.civicrm.org/dev/en/latest/extensions/payment-processors/create/#core-parameters
+   * it is a bug if contactID is not set but we still have extra
+   * efforts to check in case - these may be historical & obsolete.
+   *
    * @param array $params
    *
    * @return mixed
    * @throws \API_Exception
    * @throws \Civi\API\Exception\UnauthorizedException
    */
-  protected function getContactID() {
-    if ($this->propertyBag->has('contactID')) {
-      return $this->propertyBag->getContactID();
+  protected function getContactID(array $params) {
+    if (!empty($params['contactID'])) {
+      return $params['contactID'];
+    }
+    if (!empty($params['contact_id'])) {
+      return $params['contact_id'];
     }
     return (int) Contribution::get(FALSE)
         ->addSelect('contact_id')
-        ->addWhere('id', '=', $this->propertyBag->getContributionID())
+        ->addWhere('id', '=', $params['contributionID'])
         ->execute()
         ->first()['contact_id'];
   }

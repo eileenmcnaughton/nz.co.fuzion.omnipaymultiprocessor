@@ -62,12 +62,10 @@ return [
       'fields' => [
         'billing_fields' => [
           'first_name' => 'billing_first_name',
-          'middle_name' => 'billing_middle_name',
           'last_name' => 'billing_last_name',
           'street_address' => "billing_street_address-{$billingLocationID}",
           'city' => "billing_city-{$billingLocationID}",
           'country' => "billing_country_id-{$billingLocationID}",
-          'state_province' => "billing_state_province_id-{$billingLocationID}",
           'postal_code' => "billing_postal_code-{$billingLocationID}",
         ],
       ],
@@ -79,6 +77,15 @@ return [
       'is_pass_null_for_empty_card' => TRUE,
       'create_card_action' => 'purchase',
       'token_pay_action' => 'repeatPurchase',
+      'regions' => [
+        'billing-block' => [
+          [
+            'name' => 'sagepay_script',
+            'weight' => 500,
+            'script' => file_get_contents(__DIR__ . '/js/omnipay_SagePay.js'),
+          ],
+        ],
+      ],
     ],
     'params' =>
       [
