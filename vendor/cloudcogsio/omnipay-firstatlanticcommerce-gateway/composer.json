@@ -1,0 +1,30 @@
+{
+	"name" : "cloudcogsio/omnipay-firstatlanticcommerce-gateway",
+	"type" : "library",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Ricardo Assing",
+			"email" : "ricardo@tsiana.ca"
+		}
+	],
+	"keywords" : [
+		"cloudcogs",
+		"cloudcogs.io",
+		"first-atlantic-commerce",
+		"api",
+		"payment-gateway",
+		"omnipay"
+	],
+	"description" : "First Atlantic Commerce (FAC) Payment Gateway Driver for Omnipay",
+	"minimum-stability" : "dev",
+	"require" : {
+		"php" : "^7.2",
+		"omnipay/common" : "^3",
+		"league/iso3166" : "~2.1.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Omnipay\\FirstAtlanticCommerce\\" : "src"
+		}
+	}
+}

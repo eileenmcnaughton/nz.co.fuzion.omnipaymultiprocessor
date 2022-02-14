@@ -126,7 +126,7 @@ STR;
         $this->formatRequest($request)->shouldReturn($expectedMessage);
     }
 
-    function it_formats_the_response_with_size_limit(ResponseInterface $response, StreamInterface $stream)
+    function it_formats_the_response_with_size_limit(ResponseInterface $response, StreamInterface $stream, RequestInterface $request)
     {
         $this->beConstructedWith(18);
 
@@ -150,6 +150,7 @@ X-Param-Bar: bar
 This is an HTML st
 STR;
         $this->formatResponse($response)->shouldReturn($expectedMessage);
+        $this->formatResponseForRequest($response, $request)->shouldReturn($expectedMessage);
     }
 
     function it_formats_the_response_without_size_limit(ResponseInterface $response, StreamInterface $stream)
@@ -245,6 +246,27 @@ STR;
 GET /foo HTTP/1.1
 
 [binary stream omitted]
+STR;
+        $this->formatRequest($request)->shouldReturn($expectedMessage);
+    }
+
+    function it_allows_to_change_binary_detection(RequestInterface $request, StreamInterface $stream)
+    {
+        $this->beConstructedWith(1, '/\x01/');
+
+        $stream->isSeekable()->willReturn(true);
+        $stream->rewind()->shouldBeCalled();
+        $stream->__toString()->willReturn("\0");
+        $request->getBody()->willReturn($stream);
+        $request->getMethod()->willReturn('GET');
+        $request->getRequestTarget()->willReturn('/foo');
+        $request->getProtocolVersion()->willReturn('1.1');
+        $request->getHeaders()->willReturn([]);
+
+        $expectedMessage = <<<STR
+GET /foo HTTP/1.1
+
+\x0
 STR;
         $this->formatRequest($request)->shouldReturn($expectedMessage);
     }

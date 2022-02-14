@@ -65,6 +65,47 @@ The following gateways are provided by this package:
     }
 
 ```
+
+
+### NAB Transact SecureXML API with Risk Management
+
+```php
+    use Omnipay\Omnipay;
+    use Omnipay\Common\CreditCard;
+
+    $gateway = Omnipay::create('NABTransact_SecureXML');
+    $gateway->setMerchantId('XYZ0010');
+    $gateway->setTransactionPassword('abcd1234');
+    $gateway->setTestMode(true);
+    $gateway->setRiskManagement(true);
+
+    $card = new CreditCard([
+            'firstName' => 'Sujip',
+            'lastName' => 'Thapa',
+            'number'      => '4444333322221111',
+            'expiryMonth' => '06',
+            'expiryYear'  => '2030',
+            'cvv'         => '123',
+        ]
+    );
+
+    $transaction = $gateway->purchase([
+            'amount'        => '10.00',
+            'currency'      => 'AUD',
+            'transactionId' => 'XYZ100',
+            'card'          => $card,
+            'ip'            => '1.1.1.1',
+        ]
+    );
+
+    $response = $transaction->send();
+
+    if ($response->isSuccessful()) {
+        echo sprintf('Transaction %s was successful!', $response->getTransactionReference());
+    } else {
+        echo sprintf('Transaction %s failed: %s', $response->getTransactionReference(), $response->getMessage());
+    }
+
 ### NAB Transact DirectPost v2
 
 ```php

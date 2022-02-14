@@ -42,6 +42,22 @@ class SecureXMLGateway extends AbstractGateway
     /**
      * @return string
      */
+    public function getRiskManagement()
+    {
+        return $this->getParameter('riskManagement');
+    }
+
+    /**
+     * @param $value
+     */
+    public function setRiskManagement($value)
+    {
+        return $this->setParameter('riskManagement', $value);
+    }
+
+    /**
+     * @return string
+     */
     public function getTransactionPassword()
     {
         return $this->getParameter('transactionPassword');
@@ -82,6 +98,10 @@ class SecureXMLGateway extends AbstractGateway
      */
     public function purchase(array $parameters = [])
     {
+        if ($this->getRiskManagement()) {
+            return $this->createRequest('\Omnipay\NABTransact\Message\SecureXMLRiskPurchaseRequest', $parameters);
+        }
+
         return $this->createRequest('\Omnipay\NABTransact\Message\SecureXMLPurchaseRequest', $parameters);
     }
 

@@ -47,6 +47,20 @@ class SecureXMLGatewayTest extends GatewayTestCase
         $this->assertSame('10.00', $request->getAmount());
     }
 
+    public function testPurchaseRiskManaged()
+    {
+        $gateway = clone $this->gateway;
+        $gateway->setRiskManagement(true);
+        $request = $gateway->purchase(['card' => $this->getValidCard(), 'transactionId' => 'Test1234', 'ip' => '1.1.1.1', 'amount' => '25.00']);
+
+        $this->assertInstanceOf('\Omnipay\NABTransact\Message\SecureXMLRiskPurchaseRequest', $request);
+        $this->assertSame('25.00', $request->getAmount());
+        $this->assertContains(
+            '<BuyerInfo><ip>1.1.1.1</ip><firstName>Example</firstName><firstName>User</firstName><zipcode>12345</zipcode><town>Billstown</town><billingCountry>US</billingCountry></BuyerInfo>',
+            (string) $request->getData()->asXml()
+        );
+    }
+
     public function testRefund()
     {
         $request = $this->gateway->refund(['amount' => '10.00', 'transactionId' => 'Order-YKHU67']);

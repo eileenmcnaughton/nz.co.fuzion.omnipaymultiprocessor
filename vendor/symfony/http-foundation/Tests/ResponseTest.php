@@ -194,7 +194,7 @@ class ResponseTest extends ResponseTestCase
         $etagTwo = 'randomly_generated_etag_2';
 
         $request = new Request();
-        $request->headers->set('if_none_match', sprintf('%s, %s, %s', $etagOne, $etagTwo, 'etagThree'));
+        $request->headers->set('If-None-Match', sprintf('%s, %s, %s', $etagOne, $etagTwo, 'etagThree'));
 
         $response = new Response();
 
@@ -206,6 +206,38 @@ class ResponseTest extends ResponseTestCase
 
         $response->headers->set('ETag', '');
         $this->assertFalse($response->isNotModified($request));
+
+        // Test wildcard
+        $request = new Request();
+        $request->headers->set('If-None-Match', '*');
+
+        $response->headers->set('ETag', $etagOne);
+        $this->assertTrue($response->isNotModified($request));
+    }
+
+    public function testIsNotModifiedWeakEtag()
+    {
+        $etag = 'randomly_generated_etag';
+        $weakEtag = 'W/randomly_generated_etag';
+
+        $request = new Request();
+        $request->headers->set('If-None-Match', $etag);
+        $response = new Response();
+
+        $response->headers->set('ETag', $etag);
+        $this->assertTrue($response->isNotModified($request));
+
+        $response->headers->set('ETag', $weakEtag);
+        $this->assertTrue($response->isNotModified($request));
+
+        $request->headers->set('If-None-Match', $weakEtag);
+        $response = new Response();
+
+        $response->headers->set('ETag', $etag);
+        $this->assertTrue($response->isNotModified($request));
+
+        $response->headers->set('ETag', $weakEtag);
+        $this->assertTrue($response->isNotModified($request));
     }
 
     public function testIsNotModifiedLastModifiedAndEtag()
@@ -216,14 +248,14 @@ class ResponseTest extends ResponseTestCase
         $etag = 'randomly_generated_etag';
 
         $request = new Request();
-        $request->headers->set('if_none_match', sprintf('%s, %s', $etag, 'etagThree'));
+        $request->headers->set('If-None-Match', sprintf('%s, %s', $etag, 'etagThree'));
         $request->headers->set('If-Modified-Since', $modified);
 
         $response = new Response();
 
         $response->headers->set('ETag', $etag);
         $response->headers->set('Last-Modified', $after);
-        $this->assertFalse($response->isNotModified($request));
+        $this->assertTrue($response->isNotModified($request));
 
         $response->headers->set('ETag', 'non-existent-etag');
         $response->headers->set('Last-Modified', $before);
@@ -240,7 +272,7 @@ class ResponseTest extends ResponseTestCase
         $etag = 'randomly_generated_etag';
 
         $request = new Request();
-        $request->headers->set('if_none_match', sprintf('%s, %s', $etag, 'etagThree'));
+        $request->headers->set('If-None-Match', sprintf('%s, %s', $etag, 'etagThree'));
         $request->headers->set('If-Modified-Since', $modified);
 
         $response = new Response();
@@ -577,6 +609,12 @@ class ResponseTest extends ResponseTestCase
         $response->prepare($request);
         $this->assertEquals('no-cache', $response->headers->get('pragma'));
         $this->assertEquals('-1', $response->headers->get('expires'));
+
+        $response = new Response('foo');
+        $response->headers->remove('cache-control');
+        $response->prepare($request);
+        $this->assertFalse($response->headers->has('pragma'));
+        $this->assertFalse($response->headers->has('expires'));
 
         $request->server->set('SERVER_PROTOCOL', 'HTTP/1.1');
         $response = new Response('foo');
@@ -1009,25 +1047,10 @@ class ResponseTest extends ResponseTestCase
      */
     public function ianaCodesReasonPhrasesProvider()
     {
-        if (!\in_array('https', stream_get_wrappers(), true)) {
-            $this->markTestSkipped('The "https" wrapper is not available');
-        }
-
+        // XML taken from https://www.iana.org/assignments/http-status-codes/http-status-codes.xml
+        // (might not be up-to-date for older Symfony versions)
         $ianaHttpStatusCodes = new \DOMDocument();
-
-        $context = stream_context_create([
-            'http' => [
-                'method' => 'GET',
-                'timeout' => 30,
-                'user_agent' => __METHOD__,
-            ],
-        ]);
-
-        if (!$rawStatusCodes = file_get_contents('https://www.iana.org/assignments/http-status-codes/http-status-codes.xml', false, $context)) {
-            $this->markTestSkipped('The IANA server is throttling the list of status codes');
-        }
-
-        $ianaHttpStatusCodes->loadXML($rawStatusCodes);
+        $ianaHttpStatusCodes->load(__DIR__.'/Fixtures/xml/http-status-codes.xml');
         if (!$ianaHttpStatusCodes->relaxNGValidate(__DIR__.'/schema/http-status-codes.rng')) {
             self::fail('Invalid IANA\'s HTTP status code list.');
         }

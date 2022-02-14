@@ -1,5 +1,0 @@
-suites:
-    mock_suite:
-        namespace: Http\Mock
-        psr4_prefix: Http\Mock
-formatter.name: pretty
