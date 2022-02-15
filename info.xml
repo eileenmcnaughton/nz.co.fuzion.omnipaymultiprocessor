@@ -18,7 +18,7 @@
   <version>3.15</version>
   <develStage>stable</develStage>
   <compatibility>
-    <ver>5.37</ver>
+    <ver>5.45</ver>
   </compatibility>
   <comments>This module integrates the omnipay library with CiviCRM. This release is for Omnipay 3.x and requires php 7.1. All new development will be here but 2.x series will continue to work.</comments>
   <civix>
