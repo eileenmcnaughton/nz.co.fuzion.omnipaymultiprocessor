@@ -13,7 +13,6 @@ return array(
     'Symfony\\Polyfill\\Intl\\Idn\\' => array($vendorDir . '/symfony/polyfill-intl-idn'),
     'Symfony\\Component\\Mime\\' => array($vendorDir . '/symfony/mime'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
     'Omnipay\\WorldPay\\' => array($vendorDir . '/omnipay/worldpay/src'),
     'Omnipay\\Stripe\\' => array($vendorDir . '/omnipay/stripe/src'),

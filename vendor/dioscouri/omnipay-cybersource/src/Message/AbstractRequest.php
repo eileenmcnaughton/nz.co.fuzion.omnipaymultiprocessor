@@ -9,8 +9,8 @@ use Omnipay\Common\Message\RequestInterface;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $liveEndpoint = 'https://secureacceptance.cybersource.com/silent';
-    protected $testEndpoint = 'https://testsecureacceptance.cybersource.com/silent';
+    protected $liveEndpoint = 'https://secureacceptance.cybersource.com';
+    protected $testEndpoint = 'https://testsecureacceptance.cybersource.com';
     protected $endpoint = '';
     protected $isUsOrCanada = false;
 

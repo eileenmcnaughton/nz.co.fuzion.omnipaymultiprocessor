@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f8c73f70b210fd56992e78ccd02008bcbbb2a355',
+        'reference' => 'b63487db7a445cb9feaf16059112b009d073af9e',
         'name' => '__root__',
         'dev' => false,
     ),
@@ -16,25 +16,25 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f8c73f70b210fd56992e78ccd02008bcbbb2a355',
+            'reference' => 'b63487db7a445cb9feaf16059112b009d073af9e',
             'dev_requirement' => false,
         ),
         'cloudcogsio/omnipay-firstatlanticcommerce-gateway' => array(
-            'pretty_version' => 'v1.0.2',
-            'version' => '1.0.2.0',
+            'pretty_version' => 'v1.0.2.1',
+            'version' => '1.0.2.1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../cloudcogsio/omnipay-firstatlanticcommerce-gateway',
             'aliases' => array(),
-            'reference' => '5020d908a51719af49a354f94b3937bc6b2ff969',
+            'reference' => '5f427ddc4d8de5c69283257215bd821e6e7075f5',
             'dev_requirement' => false,
         ),
         'clue/stream-filter' => array(
-            'pretty_version' => 'v1.5.0',
-            'version' => '1.5.0.0',
+            'pretty_version' => 'v1.6.0',
+            'version' => '1.6.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../clue/stream-filter',
             'aliases' => array(),
-            'reference' => 'aeb7d8ea49c7963d3b581378955dbf5bc49aa320',
+            'reference' => 'd6169430c7731d8509da7aecd0af756a5747b78e',
             'dev_requirement' => false,
         ),
         'dioscouri/omnipay-cybersource' => array(
@@ -45,7 +45,7 @@
             'aliases' => array(
                 0 => '3.0.x-dev',
             ),
-            'reference' => '1f59de5d0eee27a3e021a61b7ad8e13b4afb7ea4',
+            'reference' => 'f57861a943ffcdcd12a13b2351cc1b9f6c1426d8',
             'dev_requirement' => false,
         ),
         'fuzion/omnipay-mercanet' => array(
@@ -62,13 +62,13 @@
         'guzzlehttp/guzzle' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '^6.0',
+                0 => '^6',
             ),
         ),
         'guzzlehttp/psr7' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '^1.6.1',
+                0 => '^1',
             ),
         ),
         'league/iso3166' => array(
@@ -184,9 +184,9 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../omnipay/stripe',
             'aliases' => array(
-                0 => '3.1.x-dev',
+                0 => '3.2.x-dev',
             ),
-            'reference' => '16f822d40c208a07301aed88509b3cb7f2efe450',
+            'reference' => '20812498efedc1079baae5fea96567fefd669105',
             'dev_requirement' => false,
         ),
         'omnipay/worldpay' => array(
@@ -240,7 +240,7 @@
             'aliases' => array(
                 0 => '2.x-dev',
             ),
-            'reference' => '191a0a1b41ed026b717421931f8d3bd2514ffbf9',
+            'reference' => 'f640739f80dfa1152533976e3c112477f69274eb',
             'dev_requirement' => false,
         ),
         'php-http/message' => array(
@@ -310,13 +310,10 @@
             ),
         ),
         'psr/log' => array(
-            'pretty_version' => '1.1.4',
-            'version' => '1.1.4.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../psr/log',
-            'aliases' => array(),
-            'reference' => 'd49695b909c3b7628b6289db5479a1c204601f11',
             'dev_requirement' => false,
+            'replaced' => array(
+                0 => '^1',
+            ),
         ),
         'razorpay/omnipay-razorpay' => array(
             'pretty_version' => 'dev-master',
@@ -344,7 +341,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-foundation',
             'aliases' => array(),
-            'reference' => '117c833ea873311d196325de96b7131a7bdee628',
+            'reference' => '60e8e42a4579551e5ec887d04380e2ab9e4cc314',
             'dev_requirement' => false,
         ),
         'symfony/mime' => array(
@@ -357,8 +354,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-intl-idn' => array(
-            'pretty_version' => 'v1.24.0',
-            'version' => '1.24.0.0',
+            'pretty_version' => 'v1.25.0',
+            'version' => '1.25.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-intl-idn',
             'aliases' => array(),
@@ -366,8 +363,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-intl-normalizer' => array(
-            'pretty_version' => 'v1.24.0',
-            'version' => '1.24.0.0',
+            'pretty_version' => 'v1.25.0',
+            'version' => '1.25.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-intl-normalizer',
             'aliases' => array(),
@@ -375,8 +372,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-mbstring' => array(
-            'pretty_version' => 'v1.24.0',
-            'version' => '1.24.0.0',
+            'pretty_version' => 'v1.25.0',
+            'version' => '1.25.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
@@ -384,8 +381,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-php72' => array(
-            'pretty_version' => 'v1.24.0',
-            'version' => '1.24.0.0',
+            'pretty_version' => 'v1.25.0',
+            'version' => '1.25.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php72',
             'aliases' => array(),
@@ -393,12 +390,12 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-php80' => array(
-            'pretty_version' => 'v1.24.0',
-            'version' => '1.24.0.0',
+            'pretty_version' => 'v1.25.0',
+            'version' => '1.25.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php80',
             'aliases' => array(),
-            'reference' => '57b712b08eddb97c762a8caa32c84e037892d2e9',
+            'reference' => '4407588e0d3f1f52efb65fbe92babe41f37fe50c',
             'dev_requirement' => false,
         ),
     ),

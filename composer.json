@@ -40,9 +40,10 @@
         "cloudcogsio/omnipay-firstatlanticcommerce-gateway" : "^1.0.2"
     },
     "replace": {
-      "guzzlehttp/guzzle": "^6.0",
-      "guzzlehttp/psr7": "^1.6.1",
+      "guzzlehttp/guzzle": "^6",
+      "guzzlehttp/psr7": "^1",
       "psr/http-message-implementation": "^1.0",
+      "psr/log" : "^1",
       "psr/http-message": "^1.0.1"
     },
     "require-dev": {

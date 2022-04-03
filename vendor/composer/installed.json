@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "cloudcogsio/omnipay-firstatlanticcommerce-gateway",
-            "version": "v1.0.2",
-            "version_normalized": "1.0.2.0",
+            "version": "v1.0.2.1",
+            "version_normalized": "1.0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudcogsio/omnipay-firstatlanticcommerce-gateway.git",
-                "reference": "5020d908a51719af49a354f94b3937bc6b2ff969"
+                "reference": "5f427ddc4d8de5c69283257215bd821e6e7075f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudcogsio/omnipay-firstatlanticcommerce-gateway/zipball/5020d908a51719af49a354f94b3937bc6b2ff969",
-                "reference": "5020d908a51719af49a354f94b3937bc6b2ff969",
+                "url": "https://api.github.com/repos/cloudcogsio/omnipay-firstatlanticcommerce-gateway/zipball/5f427ddc4d8de5c69283257215bd821e6e7075f5",
+                "reference": "5f427ddc4d8de5c69283257215bd821e6e7075f5",
                 "shasum": ""
             },
             "require": {
@@ -20,7 +20,7 @@
                 "omnipay/common": "^3",
                 "php": "^7.2"
             },
-            "time": "2022-02-08T23:34:29+00:00",
+            "time": "2022-03-08T05:30:25+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -49,23 +49,23 @@
             ],
             "support": {
                 "issues": "https://github.com/cloudcogsio/omnipay-firstatlanticcommerce-gateway/issues",
-                "source": "https://github.com/cloudcogsio/omnipay-firstatlanticcommerce-gateway/tree/v1.0.2"
+                "source": "https://github.com/cloudcogsio/omnipay-firstatlanticcommerce-gateway/tree/v1.0.2.1"
             },
             "install-path": "../cloudcogsio/omnipay-firstatlanticcommerce-gateway"
         },
         {
             "name": "clue/stream-filter",
-            "version": "v1.5.0",
-            "version_normalized": "1.5.0.0",
+            "version": "v1.6.0",
+            "version_normalized": "1.6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/clue/stream-filter.git",
-                "reference": "aeb7d8ea49c7963d3b581378955dbf5bc49aa320"
+                "reference": "d6169430c7731d8509da7aecd0af756a5747b78e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/stream-filter/zipball/aeb7d8ea49c7963d3b581378955dbf5bc49aa320",
-                "reference": "aeb7d8ea49c7963d3b581378955dbf5bc49aa320",
+                "url": "https://api.github.com/repos/clue/stream-filter/zipball/d6169430c7731d8509da7aecd0af756a5747b78e",
+                "reference": "d6169430c7731d8509da7aecd0af756a5747b78e",
                 "shasum": ""
             },
             "require": {
@@ -74,16 +74,16 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.36"
             },
-            "time": "2020-10-02T12:38:20+00:00",
+            "time": "2022-02-21T13:15:14+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
-                "psr-4": {
-                    "Clue\\StreamFilter\\": "src/"
-                },
                 "files": [
                     "src/functions_include.php"
-                ]
+                ],
+                "psr-4": {
+                    "Clue\\StreamFilter\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -108,7 +108,7 @@
             ],
             "support": {
                 "issues": "https://github.com/clue/stream-filter/issues",
-                "source": "https://github.com/clue/stream-filter/tree/v1.5.0"
+                "source": "https://github.com/clue/stream-filter/tree/v1.6.0"
             },
             "funding": [
                 {
@@ -129,12 +129,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dioscouri/omnipay-cybersource.git",
-                "reference": "1f59de5d0eee27a3e021a61b7ad8e13b4afb7ea4"
+                "reference": "f57861a943ffcdcd12a13b2351cc1b9f6c1426d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dioscouri/omnipay-cybersource/zipball/1f59de5d0eee27a3e021a61b7ad8e13b4afb7ea4",
-                "reference": "1f59de5d0eee27a3e021a61b7ad8e13b4afb7ea4",
+                "url": "https://api.github.com/repos/dioscouri/omnipay-cybersource/zipball/f57861a943ffcdcd12a13b2351cc1b9f6c1426d8",
+                "reference": "f57861a943ffcdcd12a13b2351cc1b9f6c1426d8",
                 "shasum": ""
             },
             "require": {
@@ -144,7 +144,8 @@
                 "omnipay/tests": "~3.0",
                 "squizlabs/php_codesniffer": "^3"
             },
-            "time": "2018-11-25T22:15:24+00:00",
+            "time": "2022-03-04T06:27:46+00:00",
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -178,6 +179,10 @@
                 "payment",
                 "purchase"
             ],
+            "support": {
+                "issues": "https://github.com/dioscouri/omnipay-cybersource/issues",
+                "source": "https://github.com/dioscouri/omnipay-cybersource/tree/master"
+            },
             "install-path": "../dioscouri/omnipay-cybersource"
         },
         {
@@ -1017,12 +1022,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-stripe.git",
-                "reference": "16f822d40c208a07301aed88509b3cb7f2efe450"
+                "reference": "20812498efedc1079baae5fea96567fefd669105"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/16f822d40c208a07301aed88509b3cb7f2efe450",
-                "reference": "16f822d40c208a07301aed88509b3cb7f2efe450",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/20812498efedc1079baae5fea96567fefd669105",
+                "reference": "20812498efedc1079baae5fea96567fefd669105",
                 "shasum": ""
             },
             "require": {
@@ -1033,12 +1038,12 @@
                 "phpro/grumphp": "^0.14",
                 "squizlabs/php_codesniffer": "^3"
             },
-            "time": "2021-08-08T10:49:23+00:00",
+            "time": "2022-03-22T10:58:41+00:00",
             "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1.x-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "installation-source": "source",
@@ -1073,7 +1078,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/omnipay-stripe/issues",
-                "source": "https://github.com/thephpleague/omnipay-stripe/tree/master"
+                "source": "https://github.com/thephpleague/omnipay-stripe/tree/v3.2.0"
             },
             "install-path": "../omnipay/stripe"
         },
@@ -1287,12 +1292,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/httplug.git",
-                "reference": "191a0a1b41ed026b717421931f8d3bd2514ffbf9"
+                "reference": "f640739f80dfa1152533976e3c112477f69274eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/httplug/zipball/191a0a1b41ed026b717421931f8d3bd2514ffbf9",
-                "reference": "191a0a1b41ed026b717421931f8d3bd2514ffbf9",
+                "url": "https://api.github.com/repos/php-http/httplug/zipball/f640739f80dfa1152533976e3c112477f69274eb",
+                "reference": "f640739f80dfa1152533976e3c112477f69274eb",
                 "shasum": ""
             },
             "require": {
@@ -1305,7 +1310,7 @@
                 "friends-of-phpspec/phpspec-code-coverage": "^4.1",
                 "phpspec/phpspec": "^5.1 || ^6.0"
             },
-            "time": "2020-07-13T15:43:23+00:00",
+            "time": "2022-02-21T09:52:22+00:00",
             "default-branch": true,
             "type": "library",
             "extra": {
@@ -1342,7 +1347,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/httplug/issues",
-                "source": "https://github.com/php-http/httplug/tree/2.2.0"
+                "source": "https://github.com/php-http/httplug/tree/2.3.0"
             },
             "install-path": "../php-http/httplug"
         },
@@ -1589,59 +1594,6 @@
             "install-path": "../psr/http-client"
         },
         {
-            "name": "psr/log",
-            "version": "1.1.4",
-            "version_normalized": "1.1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "time": "2021-05-03T11:20:27+00:00",
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "installation-source": "source",
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for logging libraries",
-            "homepage": "https://github.com/php-fig/log",
-            "keywords": [
-                "log",
-                "psr",
-                "psr-3"
-            ],
-            "support": {
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
-            },
-            "install-path": "../psr/log"
-        },
-        {
             "name": "razorpay/omnipay-razorpay",
             "version": "dev-master",
             "version_normalized": "dev-master",
@@ -1776,12 +1728,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "117c833ea873311d196325de96b7131a7bdee628"
+                "reference": "60e8e42a4579551e5ec887d04380e2ab9e4cc314"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/117c833ea873311d196325de96b7131a7bdee628",
-                "reference": "117c833ea873311d196325de96b7131a7bdee628",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/60e8e42a4579551e5ec887d04380e2ab9e4cc314",
+                "reference": "60e8e42a4579551e5ec887d04380e2ab9e4cc314",
                 "shasum": ""
             },
             "require": {
@@ -1794,7 +1746,7 @@
                 "predis/predis": "~1.0",
                 "symfony/expression-language": "^3.4|^4.0|^5.0"
             },
-            "time": "2022-02-04T18:26:35+00:00",
+            "time": "2022-03-04T07:06:13+00:00",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -1921,8 +1873,8 @@
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.24.0",
-            "version_normalized": "1.24.0.0",
+            "version": "v1.25.0",
+            "version_normalized": "1.25.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
@@ -1991,7 +1943,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -2011,8 +1963,8 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.24.0",
-            "version_normalized": "1.24.0.0",
+            "version": "v1.25.0",
+            "version_normalized": "1.25.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
@@ -2078,7 +2030,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -2098,8 +2050,8 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.24.0",
-            "version_normalized": "1.24.0.0",
+            "version": "v1.25.0",
+            "version_normalized": "1.25.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -2164,7 +2116,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -2184,8 +2136,8 @@
         },
         {
             "name": "symfony/polyfill-php72",
-            "version": "v1.24.0",
-            "version_normalized": "1.24.0.0",
+            "version": "v1.25.0",
+            "version_normalized": "1.25.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php72.git",
@@ -2243,7 +2195,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php72/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-php72/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -2263,23 +2215,23 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.24.0",
-            "version_normalized": "1.24.0.0",
+            "version": "v1.25.0",
+            "version_normalized": "1.25.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9"
+                "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/57b712b08eddb97c762a8caa32c84e037892d2e9",
-                "reference": "57b712b08eddb97c762a8caa32c84e037892d2e9",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/4407588e0d3f1f52efb65fbe92babe41f37fe50c",
+                "reference": "4407588e0d3f1f52efb65fbe92babe41f37fe50c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
             },
-            "time": "2021-09-13T13:58:33+00:00",
+            "time": "2022-03-04T08:16:47+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2329,7 +2281,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.25.0"
             },
             "funding": [
                 {
