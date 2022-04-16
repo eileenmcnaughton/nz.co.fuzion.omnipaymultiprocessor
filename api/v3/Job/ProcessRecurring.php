@@ -29,15 +29,17 @@ function civicrm_api3_job_process_recurring($params) {
         'contribution_test' => CRM_Utils_Array::value('is_test', $recurringPayment['is_test']),
       ]);
       $result[$recurringPayment['id']]['original_contribution'] = $originalContribution;
+      $totalAmount = $recurringPayment['amount'] ?? $originalContribution['total_amount'];
       $pending = civicrm_api3('Contribution', 'repeattransaction', [
         'original_contribution_id' => $originalContribution['id'],
         'contribution_status_id' => 'Pending',
         'payment_processor_id' => $paymentProcessorID,
         'is_email_receipt' => FALSE,
+        'total_amount' => $totalAmount,
       ]);
 
       $payment = civicrm_api3('PaymentProcessor', 'pay', [
-        'amount' => $originalContribution['total_amount'],
+        'amount' => $totalAmount,
         'currency' => $originalContribution['currency'],
         'payment_processor_id' => $paymentProcessorID,
         'contributionID' => $pending['id'],
