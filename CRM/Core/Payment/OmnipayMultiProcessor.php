@@ -556,7 +556,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   protected function getCreditCardOptions(array $params): array {
     $creditCardOptions = [
-      'amount' => $this->getAmount($params),
+      'amount' => $params['amount'],
       'currency' => $this->getCurrency($params),
       'description' => $this->getPaymentDescription($params),
       'transactionId' => $this->formatted_transaction_id,
