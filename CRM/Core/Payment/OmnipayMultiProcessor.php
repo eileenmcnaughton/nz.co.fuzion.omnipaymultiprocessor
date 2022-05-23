@@ -823,7 +823,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
             $this->updatePaymentTokenWithAnyExtraData($trxnReference);
           }
         }
-        if (!empty($this->contribution['contribution_recur_id']) && ($tokenReference = $response->getCardReference()) != FALSE) {
+        if (!empty($this->contribution['contribution_recur_id']) && method_exists($response, 'getCardReference') && ($tokenReference = $response->getCardReference()) != FALSE) {
           $this->storePaymentToken(array_merge($params, ['contact_id' => $this->contribution['contact_id']]), $this->contribution['contribution_recur_id'], $tokenReference);
         }
       }
