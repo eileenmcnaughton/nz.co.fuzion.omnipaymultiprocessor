@@ -1,0 +1,38 @@
+{
+  "name": "hounddd/omnipay-systempay",
+  "type": "library",
+  "description": "SystemPay driver for the Omnipay payment processing library",
+  "keywords": [
+    "gateway",
+    "merchant",
+    "omnipay",
+    "pay",
+    "payment",
+    "systempay"
+  ],
+  "homepage": "https://github.com/hounddd/omnipay-systempay",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hounddd",
+      "homepage": "https://github.com/hounddd"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Omnipay\\SystemPay\\": "src/"
+    }
+  },
+  "require": {
+    "omnipay/common": "~3.0"
+  },
+  "require-dev": {
+    "omnipay/tests": "~3.0",
+    "squizlabs/php_codesniffer": "^3"
+  },
+  "scripts": {
+    "test": "phpunit",
+    "check-style": "phpcs -p --standard=PSR2 src/",
+    "fix-style": "phpcbf -p --standard=PSR2 src/"
+  }
+}

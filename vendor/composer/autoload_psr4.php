@@ -15,6 +15,7 @@ return array(
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
     'Omnipay\\WorldPay\\' => array($vendorDir . '/omnipay/worldpay/src'),
+    'Omnipay\\SystemPay\\' => array($vendorDir . '/hounddd/omnipay-systempay/src'),
     'Omnipay\\Stripe\\' => array($vendorDir . '/omnipay/stripe/src'),
     'Omnipay\\SecurePay\\' => array($vendorDir . '/omnipay/securepay/src'),
     'Omnipay\\SagePay\\' => array($vendorDir . '/omnipay/sagepay/src'),

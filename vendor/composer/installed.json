@@ -250,6 +250,63 @@
             "install-path": "../fuzion/omnipay-mercanet"
         },
         {
+            "name": "hounddd/omnipay-systempay",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hounddd/omnipay-systempay.git",
+                "reference": "580b3812635c3923f0cc920c76b51510ca3c8eb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hounddd/omnipay-systempay/zipball/580b3812635c3923f0cc920c76b51510ca3c8eb0",
+                "reference": "580b3812635c3923f0cc920c76b51510ca3c8eb0",
+                "shasum": ""
+            },
+            "require": {
+                "omnipay/common": "~3.0"
+            },
+            "require-dev": {
+                "omnipay/tests": "~3.0",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "time": "2022-07-07T09:49:38+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\SystemPay\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hounddd",
+                    "homepage": "https://github.com/hounddd"
+                }
+            ],
+            "description": "SystemPay driver for the Omnipay payment processing library",
+            "homepage": "https://github.com/hounddd/omnipay-systempay",
+            "keywords": [
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "systempay"
+            ],
+            "support": {
+                "issues": "https://github.com/Hounddd/omnipay-systempay/issues",
+                "source": "https://github.com/Hounddd/omnipay-systempay/tree/master"
+            },
+            "install-path": "../hounddd/omnipay-systempay"
+        },
+        {
             "name": "league/iso3166",
             "version": "2.1.5",
             "version_normalized": "2.1.5.0",
