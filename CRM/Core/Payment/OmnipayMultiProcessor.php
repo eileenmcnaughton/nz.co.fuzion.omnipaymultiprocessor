@@ -879,7 +879,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    *
    * @return bool
    */
-  protected function getLock() {
+  protected function getLock(): bool {
     $this->lock = Civi::lockManager()->acquire('data.contribute.contribution.' . $this->transaction_id);
     return $this->lock->isAcquired();
   }
