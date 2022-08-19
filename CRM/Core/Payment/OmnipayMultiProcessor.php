@@ -25,6 +25,7 @@
  +--------------------------------------------------------------------+
 */
 
+use Civi\Core\Lock\LockInterface;
 use Omnipay\Omnipay;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Exception\InvalidRequestException;
@@ -52,6 +53,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     'signature',
     'subject',
   ];
+
+  /**
+   * Lock interface for the mysql lock.
+   *
+   * Note this releases the lock on __destruct so needs
+   * to outlive calls to `getLock`.
+   *
+   * @var LockInterface
+   */
+  protected $lock;
 
   /**
    * Retrieved contribution.
@@ -859,30 +870,18 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * Get a lock so we don't process browser return & ipn return at the same time.
    *
-   * Paralell processing notably results in 2 receipts.
+   * Parallel processing notably results in 2 receipts.
    *
-   * Currently mysql 5.7.5+ will process a cross-session lock. If we can't do that
-   * then we should be tardy on the processing of the ipn response.
+   * Note a previous version of this function made a rooky error
+   * and used a local variable for $lock. The lock is released
+   * when the `LockInterface` is uninstantiated so it needs
+   * to be retained on the class.
    *
    * @return bool
    */
   protected function getLock() {
-    $mysqlVersion = CRM_Core_DAO::singleValueQuery('SELECT VERSION()');
-    if (stripos($mysqlVersion, 'mariadb') === FALSE
-      && version_compare($mysqlVersion, '5.7.5', '>=')
-    ) {
-      $lock = Civi::lockManager()->acquire('data.contribute.contribution.' . $this->transaction_id);
-      return $lock->isAcquired();
-    }
-    if (empty(CRM_Core_Session::singleton()->getLoggedInContactID())) {
-      $delay = $this->getProcessorTypeMetadata('ipn_processing_delay');
-      if (!is_numeric($delay)) {
-        $delay = 45;
-      }
-      // So far the best way of telling the difference is the session.
-      sleep($delay);
-    }
-    return TRUE;
+    $this->lock = Civi::lockManager()->acquire('data.contribute.contribution.' . $this->transaction_id);
+    return $this->lock->isAcquired();
   }
 
   public function queryPaymentPlans($params) {
