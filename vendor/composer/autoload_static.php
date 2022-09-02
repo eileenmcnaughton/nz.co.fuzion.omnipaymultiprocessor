@@ -34,6 +34,7 @@ class ComposerStaticInit7c7bccbe7d16fd96ad45f827acd06a81
         'O' => 
         array (
             'Omnipay\\WorldPay\\' => 17,
+            'Omnipay\\SystemPay\\' => 18,
             'Omnipay\\Stripe\\' => 15,
             'Omnipay\\SecurePay\\' => 18,
             'Omnipay\\SagePay\\' => 16,
@@ -107,6 +108,10 @@ class ComposerStaticInit7c7bccbe7d16fd96ad45f827acd06a81
         'Omnipay\\WorldPay\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/worldpay/src',
+        ),
+        'Omnipay\\SystemPay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hounddd/omnipay-systempay/src',
         ),
         'Omnipay\\Stripe\\' => 
         array (

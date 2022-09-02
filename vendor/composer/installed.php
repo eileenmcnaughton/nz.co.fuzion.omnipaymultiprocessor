@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'b63487db7a445cb9feaf16059112b009d073af9e',
+        'reference' => '0df10641a05844d6dbd78419cd64ae29d2301ad0',
         'name' => '__root__',
         'dev' => false,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'b63487db7a445cb9feaf16059112b009d073af9e',
+            'reference' => '0df10641a05844d6dbd78419cd64ae29d2301ad0',
             'dev_requirement' => false,
         ),
         'cloudcogsio/omnipay-firstatlanticcommerce-gateway' => array(
@@ -70,6 +70,17 @@
             'replaced' => array(
                 0 => '^1',
             ),
+        ),
+        'hounddd/omnipay-systempay' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../hounddd/omnipay-systempay',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => '580b3812635c3923f0cc920c76b51510ca3c8eb0',
+            'dev_requirement' => false,
         ),
         'league/iso3166' => array(
             'pretty_version' => '2.1.5',

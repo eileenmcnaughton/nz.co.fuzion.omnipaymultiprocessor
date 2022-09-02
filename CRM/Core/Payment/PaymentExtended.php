@@ -395,6 +395,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     }
     $this->history = [];
     $this->client = NULL;
+    $this->lock = NULL;
     $this->guzzleClient = NULL;
     if ($isIncludeGateWay) {
       $this->gateway = NULL;
