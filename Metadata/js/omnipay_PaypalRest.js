@@ -1,10 +1,9 @@
 // @see https://developer.paypal.com/docs/checkout/integrate/
 (function($) {
-  var form = $('#billing-payment-block').closest('form');
-  var qfKey = $('[name=qfKey]', form).val();
+  var scriptName = 'omnipayPaypal';
 
   if (typeof CRM.vars.omnipay === 'undefined') {
-    console.log('CRM.vars.omnipay not defined! Not a Omnipay processor?');
+    CRM.payment.debugging(scriptName, 'CRM.vars.omnipay not defined! Not a Omnipay processor?');
     return;
   }
 
@@ -12,16 +11,46 @@
     paypal.Buttons({
 
         onInit: function(data, actions) {
+
+          $('[type="submit"][formnovalidate="1"]',
+            '[type="submit"][formnovalidate="formnovalidate"]',
+            '[type="submit"].cancel',
+            '[type="submit"].webform-previous'
+          ).on('click', function() {
+            CRM.payment.debugging(scriptName, 'adding submitdontprocess: ' + this.id);
+            CRM.payment.form.dataset.submitdontprocess = 'true';
+          });
+
+          $(CRM.payment.getBillingSubmit()).on('click', function() {
+            CRM.payment.debugging(scriptName, 'clearing submitdontprocess');
+            CRM.payment.form.dataset.submitdontprocess = 'false';
+          });
+
+          $(CRM.payment.form).on('submit', function(event) {
+            if (CRM.payment.form.dataset.submitdontprocess === 'true') {
+              CRM.payment.debugging(scriptName, 'non-payment submit detected - not submitting payment');
+              event.preventDefault();
+              return true;
+            }
+            if (document.getElementById('payment_token') && (document.getElementById('payment_token').value !== 'Authorisation token') &&
+                document.getElementById('PayerID') && (document.getElementById('PayerID').value !== 'Payer ID')) {
+              return true;
+            }
+            CRM.payment.debugging(scriptName, 'Unable to submit - paypal not executed');
+            event.preventDefault();
+            return true;
+          });
+
           // Set up the buttons.
-          if (form.valid()) {
+          if ($(CRM.payment.form).valid()) {
             actions.enable();
           }
           else {
             actions.disable();
           }
 
-          form.on('blur keyup change', 'input', function (event) {
-            if (form.valid()) {
+          $(CRM.payment.form).on('blur keyup change', 'input', function (event) {
+            if ($(CRM.payment.form).valid()) {
               actions.enable();
             }
             else {
@@ -54,6 +83,7 @@
           var frequencyUnit = $('#frequency_unit').val() ? $('#frequency_interval').val() : CRM.vars.omnipay.frequency_unit;
           var isRecur = $('#is_recur').is(":checked");
           var recurText = isRecur ? ' recurring' : '';
+          var qfKey = $('[name=qfKey]', $(CRM.payment.form)).val();
 
           return new Promise(function (resolve, reject) {
             CRM.api3('PaymentProcessor', 'preapprove', {
@@ -97,11 +127,12 @@
           }
           document.getElementById('PayerID').value = data['payerID'];
           document.getElementById('payment_token').value = paymentToken;
-          form.submit();
+
+         // CRM.$(CRM.payment.getBillingSubmit()).click();
         },
 
         onError: function(err) {
-          console.log(err);
+          CRM.payment.debugging(scriptName, err);
           alert('Site is not correctly configured to process payments');
         }
 
