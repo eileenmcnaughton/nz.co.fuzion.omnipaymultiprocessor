@@ -22,7 +22,7 @@ return [
         'postal_code' => "billing_postal_code-{$billingLocationID}",
       ],
       'transparent_redirect' => [
-        'fields' => Civi::settings()->get('omnipay_cybersource_hosted') ? [] : [
+        'fields' => [
           'card_type' => [
             'core_field_name' => 'credit_card_type',
             'options' => [
