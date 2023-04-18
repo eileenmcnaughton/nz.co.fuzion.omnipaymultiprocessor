@@ -9,12 +9,6 @@
  * @throws CiviCRM_API3_Exception
  */
 function civicrm_api3_payment_processor_preapprove($params) {
-  foreach ($params as $key => $value) {
-    if (substr($key, 0, 3) === 'api') {
-      throw new CRM_Core_Exception('Invalid params');
-    }
-  }
-
   $processor = Civi\Payment\System::singleton()->getById($params['payment_processor_id']);
   $processor->setPaymentProcessor(civicrm_api3('PaymentProcessor', 'getsingle', array('id' => $params['payment_processor_id'])));
   $result = $processor->doPreApproval($params);

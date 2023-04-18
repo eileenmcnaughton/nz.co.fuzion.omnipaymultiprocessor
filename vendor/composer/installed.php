@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '0df10641a05844d6dbd78419cd64ae29d2301ad0',
+        'reference' => '509a0fc0004c7e76134675376fd7ad4c373cfbf7',
         'name' => '__root__',
         'dev' => false,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '0df10641a05844d6dbd78419cd64ae29d2301ad0',
+            'reference' => '509a0fc0004c7e76134675376fd7ad4c373cfbf7',
             'dev_requirement' => false,
         ),
         'cloudcogsio/omnipay-firstatlanticcommerce-gateway' => array(
