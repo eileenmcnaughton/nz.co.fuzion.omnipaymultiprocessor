@@ -66,6 +66,7 @@ return [
           'street_address' => "billing_street_address-{$billingLocationID}",
           'city' => "billing_city-{$billingLocationID}",
           'country' => "billing_country_id-{$billingLocationID}",
+          'state_province' => "billing_state_province_id-{$billingLocationID}",
           'postal_code' => "billing_postal_code-{$billingLocationID}",
         ],
       ],
