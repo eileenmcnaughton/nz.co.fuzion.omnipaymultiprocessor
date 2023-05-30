@@ -16,6 +16,7 @@ The following payment processors are supported:
 * Paybox System
 * Payment Express - PXPay, PxFusion
 * [PayPal Checkout](https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor/blob/master/docs/Paypal.md)
+* SagePay
 
 ## Configuration
 
@@ -30,7 +31,7 @@ CiviCRM's Administer > System Settings > Payment Processors, then use a URL simi
 `https://example.org/civicrm/payment/ipn/XX` (where `https://example.org` is your actual
 site URL and `XX` is the processor ID).
 
-This extension creates `ProcessRecurring` schedule job on installation. It passes all 
+This extension creates `ProcessRecurring` schedule job on installation. It passes all
 due recur contributions and is configured to execute `Hourly`.
 
 
@@ -42,7 +43,7 @@ There may be some risk in some instances of there being a duplication (especiall
 It is possible to define a prefix that will be prepended to the contribution id one the latest
 CiviCRM code. This is only supported by non-UI configuration for now as the code is in the 5.x version. Once it is released I will see about improving configurability.
 
-However, once you have a suitable CiviCRM version you need to 
+However, once you have a suitable CiviCRM version you need to
 a) add a payment processor option to cg_extends (civicrm/admin/options?gid=57&reset=1) ie.
 value - 'PaymentProcessor'
 name - 'civicrm_payment_processor'
@@ -50,7 +51,7 @@ title - 'Payment Processors'
 
 b) create a custom data group for payment processors
 
-c) create a field in that custom data group for the value to be prepended. 
+c) create a field in that custom data group for the value to be prepended.
 IMPORTANT - the name of this field must be Transaction_Prefix
 
 note - Mercanet does not support '-' characters in this prefix. Untested on other processors.
