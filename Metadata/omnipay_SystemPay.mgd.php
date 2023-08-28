@@ -55,6 +55,11 @@ return [
   [
     'name'   => 'OmniPay - SystemPay',
     'entity' => 'payment_processor_type',
+    'metadata' => [
+      // We add this hack in order to bypass the "PHP Fatal error:  Uncaught Error: Call to undefined method Omnipay\SystemPay\Gateway::createCard()" error
+      // For obscur reasons, in some cases, https://github.com/agencenous/nz.co.fuzion.omnipaymultiprocessor/blob/master/CRM/Core/Payment/OmnipayMultiProcessor.php#L172 expects the class to have a createCard() method
+	    'create_card_action' => 'purchase',
+    ],
     'params' => [
       'version'         => 3,
       'title'           => 'OmniPay - SystemPay',
