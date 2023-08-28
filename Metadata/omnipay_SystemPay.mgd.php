@@ -71,6 +71,7 @@ return [
       'subject_label'   => 'Algorithm',  // the signature algorithm chosen in the shop configuration
       'billing_mode'    => 4,
       'payment_type'    => 1,
+      'is_recur'        => true,
     ],
   ],
 ];
