@@ -17,15 +17,6 @@ function omnipaymultiprocessor_civicrm_config(&$config) {
 }
 
 /**
- * Implementation of hook_civicrm_xmlMenu
- *
- * @param $files array(string)
- */
-function omnipaymultiprocessor_civicrm_xmlMenu(&$files) {
-  _omnipaymultiprocessor_civix_civicrm_xmlMenu($files);
-}
-
-/**
  * Implementation of hook_civicrm_install
  */
 function omnipaymultiprocessor_civicrm_install() {
@@ -33,36 +24,10 @@ function omnipaymultiprocessor_civicrm_install() {
 }
 
 /**
- * Implementation of hook_civicrm_uninstall
- */
-function omnipaymultiprocessor_civicrm_uninstall() {
-  _omnipaymultiprocessor_civix_civicrm_uninstall();
-}
-
-/**
  * Implementation of hook_civicrm_enable
  */
 function omnipaymultiprocessor_civicrm_enable() {
   _omnipaymultiprocessor_civix_civicrm_enable();
-}
-
-/**
- * Implementation of hook_civicrm_disable
- */
-function omnipaymultiprocessor_civicrm_disable() {
-  return _omnipaymultiprocessor_civix_civicrm_disable();
-}
-
-/**
- * Implements hook_civicrm_managed().
- *
- * Generate a list of entities to create/deactivate/delete when this module
- * is installed, disabled, uninstalled.
- *
- * @param array $entities
- */
-function omnipaymultiprocessor_civicrm_managed(&$entities) {
-  _omnipaymultiprocessor_civix_civicrm_managed($entities);
 }
 
 /**
@@ -93,10 +58,6 @@ function omnipaymultiprocessor_civicrm_navigationMenu(&$menu) {
     'permission' => 'administer payment processors',
 
   ]);
-}
-
-function omnipaymultiprocessor_civicrm_alterSettingsFolders(&$metaDataFolders) {
-  _omnipaymultiprocessor_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
 function omnipaymultiprocessor_civicrm_preProcess($formName, &$form) {
