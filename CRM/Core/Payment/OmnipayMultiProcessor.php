@@ -96,6 +96,15 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   }
 
   /**
+   * For PHP8.1
+   * https://www.php.net/manual/en/language.oop5.magic.php#object.serialize
+   */
+  public function __serialize(): array {
+    //$this->cleanupClassForSerialization(TRUE);
+    return get_object_vars($this);
+  }
+
+  /**
    * Unserialize
    *
    * https://www.php.net/manual/en/class.serializable.php
@@ -105,6 +114,16 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   public function unserialize($data) {
     $values = unserialize($data);
     foreach ($values as $key => $value) {
+      $this->$key = $value;
+    }
+  }
+
+  /**
+   * For PHP8.1
+   * https://www.php.net/manual/en/language.oop5.magic.php#object.unserialize
+   */
+  public function __unserialize(array $data): void {
+    foreach ($data as $key => $value) {
       $this->$key = $value;
     }
   }
