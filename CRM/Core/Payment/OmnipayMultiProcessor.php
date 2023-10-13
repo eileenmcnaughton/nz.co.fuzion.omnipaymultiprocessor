@@ -1327,7 +1327,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $entities = Civi::cache()->get('omnipay_entities_metadata');
     if (!$entities) {
       $entities = [];
-      omnipaymultiprocessor_civicrm_managed($entities);
+      _omnipaymultiprocessor_civix_populate_entities($entities);
       Civi::cache()->set('omnipay_entities_metadata', $entities);
     }
     return $entities;
