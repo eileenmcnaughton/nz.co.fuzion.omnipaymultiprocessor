@@ -36,14 +36,6 @@ class IPNTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface, 
       ->apply();
   }
 
-  public function setUp() {
-    parent::setUp();
-  }
-
-  public function tearDown() {
-    parent::tearDown();
-  }
-
   /**
    * Example: Test that a version is returned.
    *

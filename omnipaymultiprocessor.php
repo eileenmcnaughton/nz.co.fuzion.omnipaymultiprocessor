@@ -8,9 +8,9 @@ use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
  *
  * @param $config
  */
-function omnipaymultiprocessor_civicrm_config(&$config) {
+function omnipaymultiprocessor_civicrm_config($config) {
   _omnipaymultiprocessor_civix_civicrm_config($config);
-  $extRoot = dirname(__FILE__) . DIRECTORY_SEPARATOR;
+  $extRoot = __DIR__ . DIRECTORY_SEPARATOR;
   $include_path = $extRoot . DIRECTORY_SEPARATOR . 'vendor' . PATH_SEPARATOR . get_include_path( );
   set_include_path( $include_path );
   require_once 'vendor/autoload.php';
@@ -36,7 +36,7 @@ function omnipaymultiprocessor_civicrm_enable() {
  * @param array $params
  * @param array $permissions
  */
-function omnipaymultiprocessor_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+function omnipaymultiprocessor_civicrm_alterAPIPermissions(string $entity, $action, $params, &$permissions) {
   $permissions['payment_processor']['preapprove'] = ['make online contributions'];
 }
 
@@ -60,7 +60,7 @@ function omnipaymultiprocessor_civicrm_navigationMenu(&$menu) {
   ]);
 }
 
-function omnipaymultiprocessor_civicrm_preProcess($formName, &$form) {
+function omnipaymultiprocessor_civicrm_preProcess($formName, $form) {
   if ($formName === 'CRM_Contribute_Form_Contribution_Main') {
     $form->assign('isJsValidate', TRUE);
     if (!empty($form->_values['is_recur'])) {
