@@ -32,14 +32,6 @@ class api_PayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterfa
       ->apply();
   }
 
-  public function setUp() {
-    parent::setUp();
-  }
-
-  public function tearDown() {
-    parent::tearDown();
-  }
-
   /**
    * Test the pre-approval function.
    *
