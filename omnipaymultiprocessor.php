@@ -101,6 +101,7 @@ function omnipaymultiprocessor_civicrm_alterPaymentProcessorParams($instance, $p
     if($payment_processor_type_name === 'omnipay_SystemPay' && isset($creditCardOptions['token']) && $creditCardOptions['token']){
       $rawTokenData = $creditCardOptions['token'];
       $creditCardOptions['token'] = [];
+      $creditCardOptions['token']['vads_page_action'] = 'REGISTER_PAY_SUBSCRIBE';
       $creditCardOptions['token']['vads_sub_amount'] = $creditCardOptions['amount']*100;
       $creditCardOptions['token']['vads_sub_currency'] = $creditCardOptions['currency'];
       $creditCardOptions['token']['vads_subscription'] = $rawTokenData['contributionRecurID'];
