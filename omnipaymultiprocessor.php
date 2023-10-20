@@ -109,7 +109,7 @@ function omnipaymultiprocessor_civicrm_alterPaymentProcessorParams($instance, $p
       $creditCardOptions['token']['vads_sub_effect_date'] = date('Ymd', strtotime('+'.$rawTokenData['frequencyInterval'].' '.$rawTokenData['frequencyUnit']));
       
       // Manage frequency
-      $creditCardOptions['token']['vads_sub_desc'] = 'RRULE:FREQ='.(strtoupper($rawTokenData['frequencyUnit']).'LY').';INTERVAL='.$rawTokenData['frequencyInterval'];
+      $creditCardOptions['token']['vads_sub_desc'] = 'RRULE:FREQ='.(strtoupper($rawTokenData['frequencyUnit']=='day'?'dai':$rawTokenData['frequencyUnit']).'LY').';INTERVAL='.$rawTokenData['frequencyInterval'];
 
       // TODO: implement this option
       // $creditCardOptions['token']['vads_sub_init_amount'] = null;
