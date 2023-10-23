@@ -3,6 +3,8 @@
 require_once 'omnipaymultiprocessor.civix.php';
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 
+define ('OMNIPAYMULTIPROCESSOR_DIRECTORY', __DIR__);
+
 /**
  * Implementation of hook_civicrm_config
  *
