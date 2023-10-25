@@ -1354,7 +1354,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * Copied from civix as was being internally used.
    */
   private function populateEntities(&$entities) {
-    $mgdFiles = CRM_Utils_File::findFiles(OMNIPAYMULTIPROCESSOR_DIRECTORY, '*.mgd.php');
+    $mgdFiles = CRM_Utils_File::findFiles(E::path(), '*.mgd.php');
     sort($mgdFiles);
     foreach ($mgdFiles as $file) {
       $es = include $file;
