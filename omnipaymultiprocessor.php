@@ -100,6 +100,9 @@ function omnipaymultiprocessor_civicrm_alterPaymentProcessorParams($instance, $p
     // Custom data tranformation for recurring contributions in SystemPay
     if($payment_processor_type_name === 'omnipay_SystemPay' && isset($creditCardOptions['token']) && $creditCardOptions['token']){
       $rawTokenData = $creditCardOptions['token'];
+      if(empty($rawTokenData['contributionRecurID'])){
+        return;
+      }
       $creditCardOptions['token'] = [];
       $creditCardOptions['token']['vads_page_action'] = 'REGISTER_PAY_SUBSCRIBE';
       $creditCardOptions['token']['vads_sub_amount'] = $creditCardOptions['amount']*100;
