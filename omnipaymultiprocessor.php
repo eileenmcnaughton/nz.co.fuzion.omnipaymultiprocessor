@@ -118,6 +118,10 @@ function omnipaymultiprocessor_civicrm_alterPaymentProcessorParams($instance, $p
       // TODO: implement this option
       // $creditCardOptions['token']['vads_sub_init_amount'] = null;
       // $creditCardOptions['token']['vads_sub_init_amount_number'] = null;
+
+      if(isset($rawTokenData['token'])){
+        $creditCardOptions['token'] = array_merge($creditCardOptions['token'], $rawTokenData['token']);
+      }
     }
   }
 }
