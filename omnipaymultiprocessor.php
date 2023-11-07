@@ -2,6 +2,18 @@
 
 require_once 'omnipaymultiprocessor.civix.php';
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use \Symfony\Component\DependencyInjection\ContainerBuilder;
+
+/**
+ * Implements hook_civicrm_container()
+ *
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_container/
+ */
+function omnipaymultiprocessor_civicrm_container(ContainerBuilder $container) {
+  $container->addCompilerPass(new Civi\OmnipayMultiProcessor\ActionProvider\CompilerPass(), PassConfig::TYPE_OPTIMIZE);
+}
+
 
 /**
  * Implementation of hook_civicrm_config
