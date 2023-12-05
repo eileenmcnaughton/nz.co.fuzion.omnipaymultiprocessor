@@ -582,7 +582,21 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'cardReference' => $params['token'] ?? NULL,
       'transactionReference' => $params['token'] ?? NULL,
       'cardTransactionType' => $params['cardTransactionType'] ?? NULL,
+      'token' => null
     ];
+    
+    // CiviCRM data related to recurring contributions
+    // We store it in the `token` attribute
+    // as suggested in https://omnipay.thephpleague.com/api/recurring-billing/
+    if(isset($params['is_recur'])){
+      $creditCardOptions['token'] = [
+        'isRecur' => $params['is_recur'] ?? FALSE,
+        'frequencyInterval' => $params['frequency_interval'] ?? NULL,
+        'frequencyUnit' => $params['frequency_unit'] ?? NULL,
+        'contributionRecurID' => $params['contributionRecurID'] ?? NULL,
+      ];
+    }
+
     if (!empty($params['action'])) {
       $creditCardOptions['action'] = 'Purchase';
     }

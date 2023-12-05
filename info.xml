@@ -15,8 +15,8 @@
     <url desc="Licensing">http://civicrm.org/licensing</url>
   </urls>
   <releaseDate>2023-11-21</releaseDate>
-  <version>3.22</version>
-  <develStage>stable</develStage>
+  <version>3.22.patched</version>
+  <develStage>dev</develStage>
   <compatibility>
     <ver>5.67</ver>
   </compatibility>

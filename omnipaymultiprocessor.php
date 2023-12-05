@@ -92,3 +92,48 @@ function omnipaymultiprocessor_civicrm_preProcess($formName, $form) {
   }
 
 }
+
+function omnipaymultiprocessor_civicrm_alterPaymentProcessorParams($instance, $params, &$creditCardOptions){
+  if($instance instanceof CRM_Core_Payment_OmnipayMultiProcessor ) {
+    $payment_processor_id = $params['payment_processor_id'];
+
+    $payment_processor_types = civicrm_api4('PaymentProcessor', 'get', [
+      'select' => [
+        'payment_processor_type_id.name',
+      ],
+      'where' => [
+        ['id', '=', $payment_processor_id],
+      ],
+      'limit' => 1,
+      'checkPermissions' => false,
+    ]);
+    $payment_processor_type_name = $payment_processor_types->first()['payment_processor_type_id.name'];
+
+    // Custom data tranformation for recurring contributions in SystemPay
+    if($payment_processor_type_name === 'omnipay_SystemPay' && isset($creditCardOptions['token']) && $creditCardOptions['token']){
+      $rawTokenData = $creditCardOptions['token'];
+      if(empty($rawTokenData['contributionRecurID'])){
+        return;
+      }
+      $creditCardOptions['token'] = [];
+      $creditCardOptions['token']['vads_page_action'] = 'REGISTER_PAY_SUBSCRIBE';
+      $creditCardOptions['token']['vads_sub_amount'] = $creditCardOptions['amount']*100;
+      $creditCardOptions['token']['vads_sub_currency'] = $creditCardOptions['currency'];
+      $creditCardOptions['token']['vads_subscription'] = $rawTokenData['contributionRecurID'];
+      
+      // Next payment should occur after 1 interval
+      $creditCardOptions['token']['vads_sub_effect_date'] = date('Ymd', strtotime('+'.$rawTokenData['frequencyInterval'].' '.$rawTokenData['frequencyUnit']));
+      
+      // Manage frequency
+      $creditCardOptions['token']['vads_sub_desc'] = 'RRULE:FREQ='.(strtoupper($rawTokenData['frequencyUnit']=='day'?'dai':$rawTokenData['frequencyUnit']).'LY').';INTERVAL='.$rawTokenData['frequencyInterval'];
+
+      // TODO: implement this option
+      // $creditCardOptions['token']['vads_sub_init_amount'] = null;
+      // $creditCardOptions['token']['vads_sub_init_amount_number'] = null;
+
+      if(isset($rawTokenData['token'])){
+        $creditCardOptions['token'] = array_merge($creditCardOptions['token'], $rawTokenData['token']);
+      }
+    }
+  }
+}

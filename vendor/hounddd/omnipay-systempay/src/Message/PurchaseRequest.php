@@ -27,24 +27,33 @@ class PurchaseRequest extends AbstractRequest
         $data['vads_site_id'] = $this->getMerchantId();
         $data['vads_ctx_mode'] = $this->getTestMode() ? 'TEST' : 'PRODUCTION';
         $data['vads_trans_id'] = str_pad($this->getTransactionId(), 6, '0', STR_PAD_LEFT);
+        $data['vads_order_id'] = str_pad($this->getTransactionId(), 6, '0', STR_PAD_LEFT);
         $data['vads_trans_date'] = $this->getTransactionDate() ? $this->getTransactionDate() : date('YmdHis');
         $data['vads_amount'] = $this->getAmountInteger();
         $data['vads_currency'] = $this->getCurrencyNumeric();
         $data['vads_action_mode'] = 'INTERACTIVE';
         $data['vads_page_action'] = 'PAYMENT';
         $data['vads_version'] = 'V2';
-        $data['vads_payment_config'] = 'SINGLE';
+        $data['vads_payment_config'] = $this->getPaymentConfig();
         $data['vads_capture_delay'] = 0;
         $data['vads_validation_mode'] = 0;
         $data['vads_url_success'] = $this->getSuccessUrl();
         $data['vads_url_cancel'] = $this->getCancelUrl();
         $data['vads_url_error'] = $this->getErrorUrl();
         $data['vads_url_refused'] = $this->getRefusedUrl();
-        $data['vads_order_id'] = $this->getOrderId();
         $data['vads_payment_cards'] = $this->getPaymentCards();
 
         if (null !== $this->getNotifyUrl()) {
             $data['vads_url_check'] = $this->getNotifyUrl();
+        }
+
+        $subscription = $this->getToken();
+        if($subscription){
+            foreach($subscription as $key=>$value){
+                $data[$key] = $value;
+            }
+            $data['vads_sub_currency'] = $this->getCurrencyNumeric();
+            // $data['vads_url_check_src'] = '';
         }
 
         // Customer infos
