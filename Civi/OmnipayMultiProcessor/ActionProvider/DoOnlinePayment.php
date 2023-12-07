@@ -38,6 +38,7 @@ class DoOnlinePayment extends AbstractAction {
     $cancelurl = $parameters->getParameter('cancel_url');
 
     $contribution = \Civi\Api4\Contribution::get(FALSE)
+      ->addSelect('balance_amount', 'currency')
       ->addWhere('id', '=', $parameters->getParameter('contribution_id'))
       ->execute()
       ->first();
@@ -47,7 +48,7 @@ class DoOnlinePayment extends AbstractAction {
         ->addWhere('id', '=', $parameters->getParameter('contribution_id'))
         ->execute();
     }
-    $paymentParams['amount'] = (float) $contribution['total_amount'];
+    $paymentParams['amount'] = (float) $contribution['balance_amount'];
     $paymentParams['currency'] = $contribution['currency'];
 
     if ($parameters->doesParameterExists('payment_processor')) {
