@@ -157,7 +157,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'payment_status_id' => array_search('Completed', CRM_Contribute_BAO_Contribution::buildOptions('contribution_status_id', 'validate')),
       ];
     }
-
+    if (is_object($params)) {
+      CRM_Core_Error::deprecatedWarning('A property bag object has been passed into the Omnipay processor. As of CiviCRM 5.69 the PropertyBag does not meet the recurring contribution contract https://docs.civicrm.org/dev/en/latest/extensions/payment-processors/paymentclass/#recurring-contribution-parameters & should not be passed in. This is not an Omnipay bug but a bug in the calling function and would have been the follow on fix had https://github.com/civicrm/civicrm-core/pull/28719 not been merged');
+    }
+    if (!empty($params['is_recur']) && !empty($params['isRecur'])) {
+      // This would happen if someone tried to pass PropertyBag in as params
+      throw new \Civi\Payment\Exception\PaymentProcessorException(' This looks like a recurring contribution but does not pass in the right values');
+    }
     $params['component'] = strtolower($component);
     $this->initialize($params);
     $this->saveBillingAddressIfRequired($params);
