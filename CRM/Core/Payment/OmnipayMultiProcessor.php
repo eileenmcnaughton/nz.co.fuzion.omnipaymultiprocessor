@@ -157,6 +157,23 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         'payment_status_id' => array_search('Completed', CRM_Contribute_BAO_Contribution::buildOptions('contribution_status_id', 'validate')),
       ];
     }
+    if (is_object($params)) {
+      // I recently tried to fix the checking in the Dummmy processor to be strict & enforce the documented payment
+      // processor contract for recurring. That work was reverted in core but it became apparent in the process that
+      // a) There is custom code passing the PropertyBag to the payment processors. I did think we decided to avoid passing
+      // propertyBag to payment processors as it seems to be a really complicated & brittle way to get around documenting
+      // the contract & patching code to meet the contact. However, if you are reading this you are probably using an
+      // extension that does pass the object out.
+      // b) it became apparent PropertyBag does not set the 'is_recur' value such that it is accessible to payment
+      // Processors like Omnipay & Authorize.net that rely on that value being passed. Core code does pass it
+      // and has done since 2014.
+      // c) I made a really good decision 2 years ago to officially pass off any engagement with PropertyBag to the
+      // rest of the core team. My recent experience made it clear to me that I should continue to avoid any
+      // engagement with the PropertyBag - so If you are reading this and choose to try to fix the extension or
+      // PropertyBag please do not ping me or otherwise try
+      // to involve me.
+      CRM_Core_Error::deprecatedWarning('A property bag object has been passed into the Omnipay processor. As of CiviCRM 5.69 this will mean that Omnipay (and Authorize.net, and others) will not behave as expected for recurring contributions. PropertyBag does not meet the recurring contribution contract https://docs.civicrm.org/dev/en/latest/extensions/payment-processors/paymentclass/#recurring-contribution-parameters & may not work properly. Core code does not pass the propertyBag to the payment processor so this is coming from an extension you are using');
+    }
 
     $params['component'] = strtolower($component);
     $this->initialize($params);
