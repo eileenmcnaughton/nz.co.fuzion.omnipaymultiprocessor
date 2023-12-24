@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b7c3e62db4a71348cf356176074083c",
+    "content-hash": "bfcac9f4663530ce400b2c843dbf7616",
     "packages": [
         {
             "name": "cloudcogsio/omnipay-firstatlanticcommerce-gateway",
@@ -919,30 +919,32 @@
         },
         {
             "name": "omnipay/sagepay",
-            "version": "3.2.3",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-sagepay.git",
-                "reference": "af116fddde38113fa82aff53c67a7d5ca739cf7b"
+                "reference": "1b079bdc6b18332dd3d019d46d08feea80fbb133"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-sagepay/zipball/af116fddde38113fa82aff53c67a7d5ca739cf7b",
-                "reference": "af116fddde38113fa82aff53c67a7d5ca739cf7b",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-sagepay/zipball/1b079bdc6b18332dd3d019d46d08feea80fbb133",
+                "reference": "1b079bdc6b18332dd3d019d46d08feea80fbb133",
                 "shasum": ""
             },
             "require": {
                 "omnipay/common": "~3.0",
-                "php": "^5.6|^7"
+                "php": "^7.3|^8"
             },
             "require-dev": {
-                "omnipay/tests": "~3.0",
+                "http-interop/http-factory-guzzle": "^1.2",
+                "omnipay/tests": "^4.1",
+                "phpspec/prophecy-phpunit": "^2.0",
                 "squizlabs/php_codesniffer": "^3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -982,9 +984,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/omnipay-sagepay/issues",
-                "source": "https://github.com/thephpleague/omnipay-sagepay/tree/3.2.3"
+                "source": "https://github.com/thephpleague/omnipay-sagepay/tree/4.1.1"
             },
-            "time": "2019-08-19T15:18:37+00:00"
+            "time": "2023-11-15T16:47:47+00:00"
         },
         {
             "name": "omnipay/securepay",
@@ -4476,7 +4478,6 @@
         "omnipay/eway": 20,
         "omnipay/mollie": 20,
         "sudiptpa/omnipay-nabtransact": 20,
-        "omnipay/sagepay": 20,
         "omnipay/securepay": 20,
         "omnipay/stripe": 20,
         "omnipay/worldpay": 20,
@@ -4490,10 +4491,12 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-json": "*"
+    },
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2.0"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.6.0"
 }
