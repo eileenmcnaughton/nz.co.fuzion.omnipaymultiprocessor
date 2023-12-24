@@ -4,10 +4,13 @@ namespace Omnipay\SagePay\Message;
 
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Tests\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ResponseTest extends TestCase
 {
-    public function setUp()
+    use ProphecyTrait;
+
+    public function setUp(): void
     {
         $this->getMockRequest()->shouldReceive('getTransactionId')->andReturn('123456');
     }
@@ -56,7 +59,7 @@ class ResponseTest extends TestCase
         $this->assertTrue($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertNull($response->getMessage());
-        $this->assertSame('https://test.sagepay.com/Simulator/3DAuthPage.asp', $response->getRedirectUrl());
+        $this->assertSame('https://sandbox.opayo.eu.elavon.com/Simulator/3DAuthPage.asp', $response->getRedirectUrl());
 
         $redirectData = $response->getRedirectData();
         $this->assertSame('065379457749061954', $redirectData['MD']);

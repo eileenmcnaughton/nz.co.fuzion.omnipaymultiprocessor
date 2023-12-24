@@ -11,6 +11,8 @@ use Mockery as m;
 
 class ServerNotifyRequestTest extends TestCase
 {
+    protected $request;
+
     public function testServerNotifyResponseSuccess()
     {
         parent::setUp();
@@ -62,8 +64,8 @@ class ServerNotifyRequestTest extends TestCase
 
         $this->request->setSecurityKey('JEUPDN1N7E');
 
-        // With the security key added, the signatue check will now be valid,
-        // i.e. an untampered inbound notification.
+        // With the security key added, the signature check will now be valid,
+        // i.e. an un-tampered inbound notification.
 
         $this->assertTrue($this->request->isValid());
 
@@ -123,7 +125,7 @@ class ServerNotifyRequestTest extends TestCase
             $this->getHttpRequest()
         );
 
-        // The transactino reference in Response and ServerNotifyTrait
+        // The transaction reference in Response and ServerNotifyTrait
         // will return null if there is no transaction data provided
         // by the gateway.
 
@@ -184,11 +186,10 @@ class ServerNotifyRequestTest extends TestCase
         $this->request->error('https://www.example.com/', 'detail');
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
-     */
     public function testConfirmInvalidSignature()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidResponseException::class);
+
         $this->request = new ServerNotifyRequest(
             $this->getHttpClient(),
             $this->getHttpRequest()
@@ -200,11 +201,10 @@ class ServerNotifyRequestTest extends TestCase
         $this->request->confirm('https://www.example.com/', 'detail');
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidResponseException
-     */
     public function testErrorInvalidSignature()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidResponseException::class);
+
         $this->request = new ServerNotifyRequest(
             $this->getHttpClient(),
             $this->getHttpRequest()
@@ -227,7 +227,7 @@ class ServerNotifyRequestTest extends TestCase
     }
 
     /**
-     * sendRequest lets you return a raw message with no additinal
+     * sendRequest lets you return a raw message with no additional
      * checks on the validity of what was received.
      */
     public function testSendResponse()
