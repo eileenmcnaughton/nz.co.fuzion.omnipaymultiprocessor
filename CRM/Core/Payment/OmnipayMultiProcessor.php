@@ -179,6 +179,12 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->initialize($params);
     $this->saveBillingAddressIfRequired($params);
 
+    // "token" only gets set when coming in via a contribution page.
+    // Otherwise we need to set it from the actual parameter that's set on the form
+    if (!empty($params['paymentToken']) && empty($params['token'])) {
+      $params['token'] = $params['paymentToken'];
+    }
+
     try {
       if (!empty($params['token'])) {
         $response = $this->doTokenPayment($params);
@@ -342,7 +348,13 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         $jsVariables[$clientSideKey] = $this->_paymentProcessor[$key];
       }
     }
-    CRM_Core_Resources::singleton()->addVars('omnipay', $jsVariables);
+
+    \Civi::resources()->addVars('omnipay', $jsVariables);
+    // Assign to smarty so we can add via tpl for drupal webform / default processor on contribution page because addVars doesn't work in that context
+    //   until https://github.com/civicrm/civicrm-core/pull/18141 is merged
+    //   Then we can set 'billing-block' above and remove the assign/tpl
+    $form->assign('omnipayJSVars', $jsVariables);
+
     if (is_array($regions)) {
       foreach ($regions as $region => $additions) {
         foreach ($additions as $addition) {

@@ -77,7 +77,7 @@ function omnipaymultiprocessor_civicrm_preProcess($formName, $form) {
     $form->assign('isJsValidate', TRUE);
     if (!empty($form->_values['is_recur'])) {
       $recurOptions = [
-        'is_recur_interval' =>  $form->_values['is_recur_interval'],
+        'is_recur_interval' => $form->_values['is_recur_interval'],
         'frequency_unit' => $form->_values['recur_frequency_unit'],
         'is_recur_installments' => $form->_values['is_recur_installments'],
       ];
@@ -85,10 +85,19 @@ function omnipaymultiprocessor_civicrm_preProcess($formName, $form) {
       if (!$recurOptions['is_recur_interval']) {
         $recurOptions['frequency_interval'] = 1;
       }
-     CRM_Core_Resources::singleton()->addVars(
+      CRM_Core_Resources::singleton()->addVars(
         'omnipay', $recurOptions
-     );
+      );
     }
   }
+}
 
+/**
+ * Implements hook_civicrm_check().
+ *
+ * @throws \CiviCRM_API3_Exception
+ */
+function omnipaymultiprocessor_civicrm_check(&$messages) {
+  $checks = new CRM_Omnipaymultiprocessor_Check($messages);
+  $messages = $checks->checkRequirements();
 }
