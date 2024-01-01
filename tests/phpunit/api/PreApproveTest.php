@@ -51,6 +51,7 @@ class api_PreApproveTest extends \PHPUnit\Framework\TestCase implements Headless
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Rest',
       'user_name' => 'abc',
+      'name' => 'PayPal_Rest',
       'password' => 'def',
       'is_test' => 1,
     ]);
