@@ -583,6 +583,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @throws \CRM_Core_Exception
    */
   protected function getCreditCardOptions(array $params): array {
+    // There is no specific contract around
+    // participantID or eventID - see https://docs.civicrm.org/dev/en/latest/extensions/payment-processors/paymentclass/#core-parameters
+    // This is best-effort.
+    $participantID = $params['participantID'] ?? NULL;
+    $eventID = $params['eventID'] ?? NULL;
     $creditCardOptions = [
       'amount' => $params['amount'],
       'currency' => $this->getCurrency($params),
@@ -590,7 +595,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'transactionId' => $this->formatted_transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getReturnUrl(),
-      'cancelUrl' => $this->getCancelUrl($this->getQfKey(), CRM_Utils_Array::value('participantID', $params)),
+      'cancelUrl' => $this->getCancelUrl($this->getQfKey(), $participantID),
       'errorUrl' => $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID),
       'notifyUrl' => $this->getNotifyUrl(),
       'refusedUrl' => $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID),
