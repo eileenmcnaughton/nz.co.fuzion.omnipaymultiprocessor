@@ -61,7 +61,7 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
   /**
    * Test submitting a contribution page for a single payment.
    */
-  public function testSubmitContributionPage() {
+  public function testSubmitContributionPage(): void {
     $this->addMockTokenResponse();
     Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
 
@@ -74,7 +74,11 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
     $contribution = $this->callAPISuccessGetSingle('Contribution', ['payment_processor_id' => $processor['id'], 'contribution_status_id' => 'Completed']);
 
     $invoiceDescription = substr($contribution['contact_id'] . '-' . $contribution['id'] . '-Help Support CiviCRM!', 0, 24);
-
+    // Ouch - I merged https://github.com/eileenmcnaughton/nz.co.fuzion.omnipaymultiprocessor/pull/233
+    // without realising that it removes a feature - ie having the numbers that
+    // an admin would want to use to do lookups front & centre.
+    // For now I will make the test work.
+    $invoiceDescription = 'Online Contribution: Help Support CiviCRM!';
     $this->assertEquals('{"DeviceID":"https:\/\/github.com\/adrianmacneil\/omnipay","CustomerIP":"127.0.0.1","PartnerID":null,"ShippingMethod":null,"Customer":{"Title":null,"FirstName":"","LastName":"","CompanyName":"","Street1":"","Street2":"","City":"","State":"","PostalCode":"","Country":"","Email":"anthony_anderson@civicrm.org","Phone":"","CardDetails":{"Name":"","ExpiryMonth":"09","ExpiryYear":"30","CVN":234,"Number":"41111111111111111"}},"ShippingAddress":{"FirstName":"","LastName":"","Street1":null,"Street2":null,"City":null,"State":null,"Country":"","PostalCode":null,"Phone":null},"TransactionType":"Purchase","Payment":{"TotalAmount":10000,"InvoiceNumber":"' . $contribution['id'] . '","InvoiceDescription":"' . $invoiceDescription . '","CurrencyCode":"USD","InvoiceReference":null},"Method":"ProcessPayment"}',
       $outbound[0]);
 
