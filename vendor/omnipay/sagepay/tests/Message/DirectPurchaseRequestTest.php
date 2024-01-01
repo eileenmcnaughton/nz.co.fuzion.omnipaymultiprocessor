@@ -6,7 +6,7 @@ use Omnipay\Tests\TestCase;
 
 class DirectPurchaseRequestTest extends DirectAuthorizeRequestTest
 {
-    // VISA incurrs a surcharge of 2.5% when used.
+    // VISA incurs a surcharge of 2.5% when used.
     const SURCHARGE_XML = '<surcharges><surcharge>'
         . '<paymentType>VISA</paymentType><percentage>2.50</percentage>'
         . '</surcharge></surcharges>';
@@ -16,7 +16,7 @@ class DirectPurchaseRequestTest extends DirectAuthorizeRequestTest
      */
     protected $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

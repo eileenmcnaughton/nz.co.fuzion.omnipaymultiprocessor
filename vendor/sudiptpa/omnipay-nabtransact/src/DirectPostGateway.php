@@ -11,11 +11,6 @@ use Omnipay\Common\AbstractGateway;
  */
 class DirectPostGateway extends AbstractGateway
 {
-    /**
-     * @var bool
-     */
-    public $transparentRedirect = true;
-
     public function getName()
     {
         return 'NABTransact Direct Post';
@@ -60,6 +55,19 @@ class DirectPostGateway extends AbstractGateway
     public function setTransactionPassword($value)
     {
         return $this->setParameter('transactionPassword', $value);
+    }
+
+    public function getHasEMV3DSEnabled()
+    {
+        return $this->getParameter('hasEMV3DSEnabled');
+    }
+
+    /**
+     * @param $value
+     */
+    public function setHasEMV3DSEnabled($value)
+    {
+        return $this->setParameter('hasEMV3DSEnabled', $value);
     }
 
     /**

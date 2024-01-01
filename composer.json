@@ -57,6 +57,9 @@
     "config": {
         "platform": {
             "php": "7.3.0"
+        },
+        "allow-plugins": {
+            "php-http/discovery": false
         }
     }
 }

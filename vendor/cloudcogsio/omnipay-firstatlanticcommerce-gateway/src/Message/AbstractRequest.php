@@ -8,6 +8,7 @@ namespace Omnipay\FirstAtlanticCommerce\Message;
 use Omnipay\FirstAtlanticCommerce\Constants;
 use Omnipay\FirstAtlanticCommerce\Support\TransactionCode;
 use Omnipay\FirstAtlanticCommerce\Exception\GatewayHTTPException;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 implements \Omnipay\FirstAtlanticCommerce\Support\FACParametersInterface
@@ -16,6 +17,7 @@ implements \Omnipay\FirstAtlanticCommerce\Support\FACParametersInterface
 
     const PARAM_CACHE_TRANSACTION = 'cacheTransaction';
     const PARAM_CACHE_REQUEST = 'cacheRequest';
+    const EXCEPTION_LOG = 'exception.log';
 
     protected $data = [];
     protected $XMLDoc;
@@ -95,34 +97,64 @@ implements \Omnipay\FirstAtlanticCommerce\Support\FACParametersInterface
                 $this->XMLDoc->asXML($this->TransactionCacheDir.$this->getMessageClassName().'Request_'.$this->getTransactionId().'.xml');
         }
 
-        switch ($httpResponse->getStatusCode())
-        {
-            case "200":
-                $responseContent = $httpResponse->getBody()->getContents();
-                $responseClassName = __NAMESPACE__."\\".$this->FACServices[$this->getMessageClassName()]["response"];
+        if ($httpResponse instanceof ResponseInterface) {
 
-                $responseXML = new \SimpleXMLElement($responseContent);
-                $responseXML->registerXPathNamespace("fac", Constants::PLATFORM_XML_NS);
+            switch ($httpResponse->getStatusCode()) {
+                case "200":
+                    $responseContent = $httpResponse->getBody()->getContents();
+                    $responseClassName = __NAMESPACE__ . "\\" . $this->FACServices[$this->getMessageClassName()]["response"];
 
-                if($this->getCacheTransaction())
-                {
-                    if (!is_dir($this->TransactionCacheDir))
-                    {
-                        $cacheDirExists = mkdir($this->TransactionCacheDir);
+                    if ($this->getCacheTransaction()) {
+                        if (!is_dir($this->TransactionCacheDir)) {
+                            $cacheDirExists = mkdir($this->TransactionCacheDir);
+                        } else {
+                            $cacheDirExists = true;
+                        }
+
+                        if ($cacheDirExists) {
+                            file_put_contents($this->TransactionCacheDir . self::EXCEPTION_LOG, date("Y-m-d H:i:s") . " FAC Response String\n", FILE_APPEND);
+                            file_put_contents($this->TransactionCacheDir . self::EXCEPTION_LOG, "START\n" . $responseContent . "\nEND\n", FILE_APPEND);
+                            file_put_contents($this->TransactionCacheDir . self::EXCEPTION_LOG, "HEADERS START\n", FILE_APPEND);
+                        }
+
+                        $headers = $httpResponse->getHeaders();
+                        foreach ($headers as $h => $header) {
+                            file_put_contents($this->TransactionCacheDir . self::EXCEPTION_LOG, strtoupper($h) . ": " . implode("\n", $header) . "\n\n", FILE_APPEND);
+                        }
+
+                        file_put_contents($this->TransactionCacheDir . self::EXCEPTION_LOG, "HEADERS END\n", FILE_APPEND);
                     }
-                    else
+
+                    try {
+                        $responseXML = new \SimpleXMLElement($responseContent);
+                    } catch (\Exception $e)
                     {
-                        $cacheDirExists = true;
+                        if ($this->getCacheTransaction() && $cacheDirExists)
+                            file_put_contents($this->TransactionCacheDir.self::EXCEPTION_LOG,  "Exception: ".$e->getMessage()."\n", FILE_APPEND);
+
+                        throw $e;
                     }
 
-                    if ($cacheDirExists)
-                        $responseXML->asXML($this->TransactionCacheDir.$this->getMessageClassName().'Response_'.$this->getTransactionId().'.xml');
-                }
+                    $responseXML->registerXPathNamespace("fac", Constants::PLATFORM_XML_NS);
 
-                return $this->response = new $responseClassName($this, $responseXML);
+                    if ($this->getCacheTransaction()) {
+                        if (!is_dir($this->TransactionCacheDir)) {
+                            $cacheDirExists = mkdir($this->TransactionCacheDir);
+                        } else {
+                            $cacheDirExists = true;
+                        }
 
-            default:
-                throw new GatewayHTTPException($httpResponse->getReasonPhrase(), $httpResponse->getStatusCode());
+                        if ($cacheDirExists)
+                            $responseXML->asXML($this->TransactionCacheDir . $this->getMessageClassName() . 'Response_' . $this->getTransactionId() . '.xml');
+                    }
+
+                    return $this->response = new $responseClassName($this, $responseXML);
+
+                default:
+                    throw new GatewayHTTPException($httpResponse->getReasonPhrase(), $httpResponse->getStatusCode());
+            }
+        } else {
+            throw new \Exception("Invalid HTTP Response.");
         }
     }
 

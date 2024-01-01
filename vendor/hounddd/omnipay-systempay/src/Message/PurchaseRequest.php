@@ -33,7 +33,7 @@ class PurchaseRequest extends AbstractRequest
         $data['vads_action_mode'] = 'INTERACTIVE';
         $data['vads_page_action'] = 'PAYMENT';
         $data['vads_version'] = 'V2';
-        $data['vads_payment_config'] = 'SINGLE';
+        $data['vads_payment_config'] = $this->getPaymentConfig();
         $data['vads_capture_delay'] = 0;
         $data['vads_validation_mode'] = 0;
         $data['vads_url_success'] = $this->getSuccessUrl();
@@ -45,6 +45,15 @@ class PurchaseRequest extends AbstractRequest
 
         if (null !== $this->getNotifyUrl()) {
             $data['vads_url_check'] = $this->getNotifyUrl();
+        }
+
+        $subscription = $this->getToken();
+        if($subscription){
+            foreach($subscription as $key=>$value){
+                $data[$key] = $value;
+            }
+            $data['vads_sub_currency'] = $this->getCurrencyNumeric();
+            // $data['vads_url_check_src'] = '';
         }
 
         // Customer infos

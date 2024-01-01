@@ -49,6 +49,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('transactionPassword', $value);
     }
 
+    public function getHasEMV3DSEnabled()
+    {
+        return $this->getParameter('hasEMV3DSEnabled');
+    }
+
+    /**
+     * @param $value
+     */
+    public function setHasEMV3DSEnabled($value)
+    {
+        return $this->setParameter('hasEMV3DSEnabled', $value);
+    }
+
     /**
      * @return string
      */

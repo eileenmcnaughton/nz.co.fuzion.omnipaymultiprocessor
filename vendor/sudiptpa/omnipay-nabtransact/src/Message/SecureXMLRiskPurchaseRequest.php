@@ -45,8 +45,11 @@ class SecureXMLRiskPurchaseRequest extends SecureXMLAbstractRequest
         $xml = $this->getBasePaymentXMLWithCard();
 
         $buyer = $xml->addChild('BuyerInfo');
+
         $buyer->addChild('ip', $this->getIp('ip'));
+
         $card = $this->getCard();
+
         if ($firstName = $card->getFirstName()) {
             $buyer->addChild('firstName', $firstName);
         }

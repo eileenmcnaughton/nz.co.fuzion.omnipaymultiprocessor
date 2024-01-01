@@ -6,6 +6,7 @@
  */
 use Omnipay\FirstAtlanticCommerce\Constants;
 use Omnipay\FirstAtlanticCommerce\Message\AbstractRequest;
+use Omnipay\FirstAtlanticCommerce\Message\Authorize;
 
 return [
     /*
@@ -23,6 +24,7 @@ return [
      */
 
     'testMode'                          => false,
+    Authorize::PARAM_IGNORE_START_DATE  => true, // remove "StartDate" from FAC request
     Constants::AUTHORIZE_OPTION_3DS     => true, // Default 3DS transactions
     Constants::CONFIG_KEY_FACID         => '', // First Atlantic Commerce ID
     Constants::CONFIG_KEY_FACPWD        => '', // First Atlantic Commerce Processing Password

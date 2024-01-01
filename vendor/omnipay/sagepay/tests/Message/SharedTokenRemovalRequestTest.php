@@ -11,7 +11,7 @@ class SharedTokenRemovalRequestTest extends TestCase
      */
     private $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new SharedTokenRemovalRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
@@ -26,7 +26,7 @@ class SharedTokenRemovalRequestTest extends TestCase
 
         $this->assertSame('{ABCDE-ABCD-ABCD-ABCD-ABCDE}', $data['Token']);
         $this->assertSame('REMOVETOKEN', $data['TxType']);
-        $this->assertSame('3.00', $data['VPSProtocol']);
+        $this->assertSame('4.00', $data['VPSProtocol']);
         $this->assertSame('testvendor', $data['Vendor']);
         $this->assertArrayNotHasKey('AccountType', $data);
 
