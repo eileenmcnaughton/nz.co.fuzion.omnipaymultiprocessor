@@ -27,7 +27,7 @@
         "omnipay/eway": "^3.0@dev",
         "omnipay/mollie": "^5.1@dev",
         "sudiptpa/omnipay-nabtransact": "^3.0@dev",
-        "omnipay/sagepay": "^3.0@dev",
+        "omnipay/sagepay": "^4.1",
         "omnipay/securepay": "^3.0@dev",
         "omnipay/stripe": "^3.0@dev",
         "omnipay/worldpay": "^3.0@dev",
@@ -56,7 +56,7 @@
     "minimum-stability": "dev",
     "config": {
         "platform": {
-            "php": "7.2.0"
+            "php": "7.3.0"
         }
     }
 }
