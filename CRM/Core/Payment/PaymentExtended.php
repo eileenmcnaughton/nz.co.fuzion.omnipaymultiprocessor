@@ -81,6 +81,11 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   protected $history = [];
 
   /**
+   * @var String
+   */
+  protected $returnUrl;
+
+  /**
    * @return \CRM_Utils_SystemLogger
    */
   public function getLog() {
@@ -127,6 +132,31 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
       ),
       TRUE, NULL, FALSE, TRUE
     );
+  }
+
+  /**
+   * Get the URL for return.
+   * Default value is the notify url
+   *
+   * @return string
+   */
+  protected function getReturnUrl() {
+    if (isset($this->returnUrl)) {
+      return $this->returnUrl;
+    }
+    return $this->getNotifyUrl(TRUE);
+  }
+
+  /**
+   * Sets or unsets the return url.
+   * If the return url is not set it is set to notify url
+   *
+   * @param string|NULL $returnUrl
+   *
+   * @return void
+   */
+  public function setReturnUrl(string $returnUrl = null) {
+    $this->returnUrl = $returnUrl;
   }
 
   /**

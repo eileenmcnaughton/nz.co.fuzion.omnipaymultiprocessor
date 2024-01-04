@@ -572,7 +572,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'description' => substr($params['description'], 0, 64),
       'transactionId' => $this->formatted_transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
-      'returnUrl' => $this->getNotifyUrl(TRUE),
+      'returnUrl' => $this->getReturnUrl(),
       'cancelUrl' => $this->getCancelUrl($this->getQfKey(), CRM_Utils_Array::value('participantID', $params)),
       'errorUrl' => $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID),
       'notifyUrl' => $this->getNotifyUrl(),
@@ -1174,8 +1174,14 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           // This is kinda tricky - in that it's not denoted on that class anywhere
           // & as we integrate more we might need to refine this early return
           // to be metadata based or to have some jsv4 specific paypal class.
-          return ['pre_approval_parameters' => ['token' => $response->getTransactionReference()]];
+          return [
+            'pre_approval_parameters' => ['token' => $response->getTransactionReference()],
+            'redirect_url' => $response->getRedirectURL(),
+          ];
         }
+        return [
+          'redirect_url' => $response->getRedirectURL(),
+        ];
         /*
          * This is what we expect to do but no current processors.
         $isTransparentRedirect = ($response->isTransparentRedirect() || !empty($this->gateway->transparentRedirect));
