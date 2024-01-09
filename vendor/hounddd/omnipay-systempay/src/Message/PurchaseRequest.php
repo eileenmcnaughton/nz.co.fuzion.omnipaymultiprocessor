@@ -27,6 +27,7 @@ class PurchaseRequest extends AbstractRequest
         $data['vads_site_id'] = $this->getMerchantId();
         $data['vads_ctx_mode'] = $this->getTestMode() ? 'TEST' : 'PRODUCTION';
         $data['vads_trans_id'] = str_pad($this->getTransactionId(), 6, '0', STR_PAD_LEFT);
+        $data['vads_order_id'] = str_pad($this->getTransactionId(), 6, '0', STR_PAD_LEFT);
         $data['vads_trans_date'] = $this->getTransactionDate() ? $this->getTransactionDate() : date('YmdHis');
         $data['vads_amount'] = $this->getAmountInteger();
         $data['vads_currency'] = $this->getCurrencyNumeric();
@@ -40,7 +41,6 @@ class PurchaseRequest extends AbstractRequest
         $data['vads_url_cancel'] = $this->getCancelUrl();
         $data['vads_url_error'] = $this->getErrorUrl();
         $data['vads_url_refused'] = $this->getRefusedUrl();
-        $data['vads_order_id'] = $this->getOrderId();
         $data['vads_payment_cards'] = $this->getPaymentCards();
 
         if (null !== $this->getNotifyUrl()) {

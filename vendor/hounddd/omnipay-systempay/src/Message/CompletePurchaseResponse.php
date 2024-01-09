@@ -49,7 +49,7 @@ class CompletePurchaseResponse extends AbstractResponse
 
     public function getTransactionId()
     {
-        return isset($this->data['vads_trans_id']) ? $this->data['vads_trans_id'] : null;
+        return isset($this->data['vads_order_id']) ? (int) $this->data['vads_order_id'] : null;
     }
 
     public function getUuid()
