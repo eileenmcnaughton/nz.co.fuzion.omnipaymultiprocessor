@@ -4,6 +4,7 @@ vendor/bin/
 vendor/doctrine/
 vendor/hamcrest/
 vendor/mockery/
+vendor/myclabs/
 vendor/nikic/
 vendor/omnipay/tests
 vendor/phar-io
