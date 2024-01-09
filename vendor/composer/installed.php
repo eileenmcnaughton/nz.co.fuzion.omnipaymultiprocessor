@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4b6101977249d49e7c35436e516175f2cd414ff9',
+        'reference' => '42c71d8ae8dcdc22afebbd05320687103590c3de',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4b6101977249d49e7c35436e516175f2cd414ff9',
+            'reference' => '42c71d8ae8dcdc22afebbd05320687103590c3de',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -104,14 +104,12 @@
             'dev_requirement' => true,
         ),
         'hounddd/omnipay-systempay' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '932ef9cf92a353e4d2d00ea2bec9ab52a697a1d4',
+            'pretty_version' => 'v3.0.3',
+            'version' => '3.0.3.0',
+            'reference' => '6fc677c670f1dec98292cc725dc826fe6f4eb784',
             'type' => 'library',
             'install_path' => __DIR__ . '/../hounddd/omnipay-systempay',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
+            'aliases' => array(),
             'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(
@@ -317,7 +315,7 @@
         'php-http/client-common' => array(
             'pretty_version' => '2.x-dev',
             'version' => '2.9999999.9999999.9999999-dev',
-            'reference' => '1e19c059b0e4d5f717bf5d524d616165aeab0612',
+            'reference' => '74da2cdfd93e7deb5da5e5136997d46cd03bb89d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/client-common',
             'aliases' => array(),
@@ -342,7 +340,7 @@
         'php-http/guzzle6-adapter' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '9d1a45eb1c59f12574552e81fb295e9e53430a56',
+            'reference' => 'd1c6c9c0d73c6b910a2efa4cc72da249d9dadaeb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/guzzle6-adapter',
             'aliases' => array(
@@ -353,7 +351,7 @@
         'php-http/httplug' => array(
             'pretty_version' => '2.x-dev',
             'version' => '2.9999999.9999999.9999999-dev',
-            'reference' => '625ad742c360c8ac580fcc647a1541d29e257f67',
+            'reference' => '074c34abccbd8cd7e2128568c2d0e512e7282049',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/httplug',
             'aliases' => array(),
@@ -397,7 +395,7 @@
         'php-http/promise' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '44a67cb59f708f826f3bec35f22030b3edb90119',
+            'reference' => '13d7636b425728576c2c7b8ffd92803f9e11cc2d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/promise',
             'aliases' => array(),
@@ -451,7 +449,7 @@
         'phpunit/phpunit' => array(
             'pretty_version' => '9.6.x-dev',
             'version' => '9.6.9999999.9999999-dev',
-            'reference' => 'd83362787fe210a371eeee448fb289a63bbe5560',
+            'reference' => '241c4aa189ef1f3b7608de2da5510a59f1d22a01',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(),
