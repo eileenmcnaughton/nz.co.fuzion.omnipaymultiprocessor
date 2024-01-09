@@ -3,6 +3,11 @@
   var form = $('#billing-payment-block').closest('form');
   var qfKey = $('[name=qfKey]', form).val();
 
+  if (typeof CRM.vars.omnipay === 'undefined') {
+    console.log('CRM.vars.omnipay not defined! Not a Omnipay processor?');
+    return;
+  }
+
   function renderPaypal() {
     paypal.Buttons({
 
@@ -70,7 +75,10 @@
           }
 
           document.getElementById('paypal-button-container').style.visibility = "hidden";
-          document.getElementById('crm-submit-buttons').style.display = 'block';
+          var crmSubmitButtons = document.getElementById('crm-submit-buttons');
+          if (crmSubmitButtons) {
+            crmSubmitButtons.style.display = 'block';
+          }
           document.getElementById('PayerID').value = data['payerID'];
           document.getElementById('payment_token').value = paymentToken;
           form.submit();

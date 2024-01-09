@@ -18,7 +18,7 @@ trait ServerNotifyTrait
      */
     public function getSignature()
     {
-        return strtolower($this->getDataItem('VPSSignature'));
+        return strtolower($this->getDataItem('VPSSignature') ?? '');
     }
 
     /**
@@ -56,7 +56,7 @@ trait ServerNotifyTrait
             $this->getTransactionId(),
             $this->getStatus(),
             $this->getTxAuthNo(),
-            strtolower($this->getVendor()),
+            strtolower($this->getVendor() ?? ''),
             $this->getAVSCV2(),
             ($this->getTxType() === Response::TXTYPE_TOKEN ? $this->getToken() : ''),
             // As saved in the merchant application.
@@ -89,6 +89,10 @@ trait ServerNotifyTrait
                     $this->getExpiryDate(),
                     $this->getFraudResponse(),
                     $this->getBankAuthCode(),
+                    // New for protocol v4.00
+                    $this->getACSTransID(),
+                    $this->getDSTransID(),
+                    $this->getSchemeTraceID(),
                 )
             );
         }

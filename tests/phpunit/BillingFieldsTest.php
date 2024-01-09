@@ -1,14 +1,10 @@
 <?php
 
-use Civi\Api4\Contact;
 use Civi\Test\HeadlessInterface;
 use Civi\Test\HookInterface;
 use Civi\Test\TransactionalInterface;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Civi\Test\Api3TestTrait;
-use Civi\Api4\ContributionRecur;
-use Civi\Api4\Contribution;
 
 /**
  * Sage pay tests for one-off payment.
@@ -51,6 +47,7 @@ class BillingFieldsTest extends TestCase implements HeadlessInterface, HookInter
       'payment_processor_type_id' => 'omnipay_SagePay_Server',
       'user_name' => 'sagepay_user',
       'is_test' => 1,
+      'name' => 'SagePay',
       'sequential' => 1,
     ])['values'][0]['id'];
 
@@ -59,7 +56,7 @@ class BillingFieldsTest extends TestCase implements HeadlessInterface, HookInter
     ]);
   }
 
-  public function testStateProvinceNotMandatoryInSagePay() {
+  public function testStateProvinceNotMandatoryInSagePay(): void {
     $processor = new CRM_Core_Payment_OmnipayMultiProcessor('live', $this->processor);
     $fields = $processor->getBillingAddressFields(5);
     $this->assertArrayNotHasKey('state_province', $fields);

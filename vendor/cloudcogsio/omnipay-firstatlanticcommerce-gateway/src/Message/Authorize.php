@@ -17,7 +17,7 @@ class Authorize extends AbstractRequest
     const MESSAGE_PART_SHIPPING_DETAILS = "ShippingDetails";
     const MESSAGE_PART_3DS_DETAILS = "ThreeDSecureDetails";
     const MESSAGE_PART_RECURRING_DETAILS = "RecurringDetails";
-    const MESSAHE_PART_FRAUD_DETAILS = "FraudDetails";
+    const MESSAGE_PART_FRAUD_DETAILS = "FraudDetails";
 
     const PARAM_SIGNATURE = 'Signature';
     const PARAM_ACQUIRERID = 'AcquirerId';
@@ -36,6 +36,7 @@ class Authorize extends AbstractRequest
     const PARAM_CARD_CVV2 = "CardCVV2";
     const PARAM_CARD_ISSUE_NUMBER = "IssueNumber";
     const PARAM_CARD_START_DATE = "StartDate";
+    const PARAM_IGNORE_START_DATE = 'ignoreStartDate';
 
     const PARAM_BILLING_FIRSTNAME = "BillToFirstName";
     const PARAM_BILLING_LASTNAME = "BillToLastName";
@@ -129,7 +130,10 @@ class Authorize extends AbstractRequest
         foreach ($this->TransactionDetailsRequirement as $param => $requirement)
         {
             $field = $this->TransactionDetails[$param];
-            $this->TransactionDetails[$param] = substr($field, $requirement[1], $requirement[2]);
+
+            if (!empty($field)) {
+                $this->TransactionDetails[$param] = substr($field, $requirement[1], $requirement[2]);
+            }
 
             switch ($requirement[0])
             {
@@ -164,14 +168,20 @@ class Authorize extends AbstractRequest
         $CardDetails[self::PARAM_CARD_EXPIRY_DATE] = $CreditCard->getExpiryDate("my");
         $CardDetails[self::PARAM_CARD_CVV2] = $CreditCard->getCvv();
         $CardDetails[self::PARAM_CARD_ISSUE_NUMBER] = $CreditCard->getIssueNumber();
-        $CardDetails[self::PARAM_CARD_START_DATE] = $CreditCard->getStartDate("my");
 
-        if ($CardDetails[self::PARAM_CARD_START_DATE] == "1299") unset($CardDetails[self::PARAM_CARD_START_DATE]);
+        if ($this->getParameter(self::PARAM_IGNORE_START_DATE) === false) {
+            $CardDetails[self::PARAM_CARD_START_DATE] = $CreditCard->getStartDate("my");
+
+            if ($CardDetails[self::PARAM_CARD_START_DATE] == "1299") unset($CardDetails[self::PARAM_CARD_START_DATE]);
+        }
 
         foreach ($this->CardDetailsRequirement as $param => $requirement)
         {
             $field = (isset($CardDetails[$param]))?$CardDetails[$param]:null;
-            $CardDetails[$param] = substr($field, $requirement[1], $requirement[2]);
+
+            if (!empty($field)) {
+                $CardDetails[$param] = substr($field, $requirement[1], $requirement[2]);
+            }
 
             switch ($requirement[0])
             {
@@ -227,7 +237,10 @@ class Authorize extends AbstractRequest
         foreach ($this->BillingDetailsRequirement as $param => $requirement)
         {
             $field = (isset($BillingDetails[$param]))?$BillingDetails[$param]:null;
-            $BillingDetails[$param] = substr($field, $requirement[1], $requirement[2]);
+
+            if (!empty($field)) {
+                $BillingDetails[$param] = substr($field, $requirement[1], $requirement[2]);
+            }
 
             switch ($requirement[0])
             {

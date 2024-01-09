@@ -28,14 +28,16 @@ class DirectPostCompletePurchaseRequest extends DirectPostAbstractRequest
      */
     public function generateResponseFingerprint($data)
     {
-        $hash = implode('|', [
+        $hashable = [
             $data['merchant'],
             $this->getTransactionPassword(),
             $data['refid'],
             $this->getAmount(),
             $data['timestamp'],
             $data['summarycode'],
-        ]);
+        ];
+
+        $hash = implode('|', $hashable);
 
         return hash_hmac('sha256', $hash, $this->getTransactionPassword());
     }

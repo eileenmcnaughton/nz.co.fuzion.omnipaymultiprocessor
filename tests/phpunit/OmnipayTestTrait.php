@@ -12,9 +12,10 @@ trait OmnipayTestTrait {
    *
    * @return array
    */
-  protected function createTestProcessor($type) {
+  protected function createTestProcessor(string $type): array {
     return $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_' . $type,
+      'name' => 'omnipay_' . $type,
       'user_name' => 'abd',
       'password' => 'def',
       'is_test' => 1,
