@@ -589,7 +589,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $participantID = $params['participantID'] ?? NULL;
     $eventID = $params['eventID'] ?? NULL;
     $creditCardOptions = [
-      'amount' => $params['amount'],
+      'amount' => \Civi::format()->moneyNumber($params['amount'], $this->getCurrency($params)),
       'currency' => $this->getCurrency($params),
       'description' => substr(($params['description'] ?? ''), 0, 64),
       'transactionId' => $this->formatted_transaction_id,
