@@ -335,7 +335,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'currency' => $form->getCurrency(),
       'is_test' => $this->_is_test,
       'title' => $form->getTitle(),
+      'validate' => [],
     ];
+    if (is_a($form, 'CRM_Contribute_Form_Contribution_Main')) {
+      $jsVariables['validate'] = ['entity' => 'ContributionPage', 'params' => ['id' =>  $form->_id, 'action' => 'submit']];
+    }
     $clientSideCredentials = $this->getProcessorTypeMetadata('client_side_credentials');
     if ($clientSideCredentials) {
       foreach ($clientSideCredentials as $key => $clientSideKey) {
