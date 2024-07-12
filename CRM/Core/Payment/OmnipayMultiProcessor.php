@@ -591,7 +591,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $creditCardOptions = [
       'amount' => \Civi::format()->machineMoney($params['amount'], $this->getCurrency($params)),
       'currency' => $this->getCurrency($params),
-      'description' => substr(($params['description'] ?? ''), 0, 64),
+      'description' => mb_substr(($params['description'] ?? ''), 0, 64, 'UTF-8'),
       'transactionId' => $this->formatted_transaction_id,
       'clientIp' => CRM_Utils_System::ipAddress(),
       'returnUrl' => $this->getReturnUrl(),
