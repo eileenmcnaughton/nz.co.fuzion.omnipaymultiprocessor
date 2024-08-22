@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '9df3abcf0ca3fe98464b5fed47d1f6b7c1351e5c',
+        'reference' => '3b0f38223a0747760d04553696c1732d98a7c80a',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '9df3abcf0ca3fe98464b5fed47d1f6b7c1351e5c',
+            'reference' => '3b0f38223a0747760d04553696c1732d98a7c80a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -119,9 +119,9 @@
             'dev_requirement' => false,
         ),
         'omnipay/common' => array(
-            'pretty_version' => 'v3.2.1',
-            'version' => '3.2.1.0',
-            'reference' => '80545e9f4faab0efad36cc5f1e11a184dda22baf',
+            'pretty_version' => 'v3.3.0',
+            'version' => '3.3.0.0',
+            'reference' => '2eca3823e9069e2c36b6007a090577d5584f9518',
             'type' => 'library',
             'install_path' => __DIR__ . '/../omnipay/common',
             'aliases' => array(),
@@ -170,9 +170,9 @@
             'dev_requirement' => false,
         ),
         'omnipay/sagepay' => array(
-            'pretty_version' => '4.1.1',
-            'version' => '4.1.1.0',
-            'reference' => '1b079bdc6b18332dd3d019d46d08feea80fbb133',
+            'pretty_version' => '4.1.2',
+            'version' => '4.1.2.0',
+            'reference' => '2a2dd855aecff2c200040702b480fbd3a86d93e6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../omnipay/sagepay',
             'aliases' => array(),
@@ -214,21 +214,21 @@
         'php-http/async-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'php-http/discovery' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '664ded67cc61abcaa5b77d27581777483d1c843d',
+            'reference' => 'ed16f5209c597c564da6efa54f771e8bda743f07',
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../php-http/discovery',
             'aliases' => array(),
@@ -237,7 +237,7 @@
         'php-http/guzzle6-adapter' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '9d1a45eb1c59f12574552e81fb295e9e53430a56',
+            'reference' => 'd1c6c9c0d73c6b910a2efa4cc72da249d9dadaeb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/guzzle6-adapter',
             'aliases' => array(
@@ -248,7 +248,7 @@
         'php-http/httplug' => array(
             'pretty_version' => '2.x-dev',
             'version' => '2.9999999.9999999.9999999-dev',
-            'reference' => '625ad742c360c8ac580fcc647a1541d29e257f67',
+            'reference' => '87779285e14780b0a85209bfed8abd9d5fe0322e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/httplug',
             'aliases' => array(),
@@ -257,7 +257,7 @@
         'php-http/message' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => 'fb1298fb3891b897f25500cf50afe16b66e90079',
+            'reference' => 'ba03180f3b4844aea9c2f475978a8b231aef21a5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/message',
             'aliases' => array(),
@@ -283,7 +283,7 @@
         'php-http/promise' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '44a67cb59f708f826f3bec35f22030b3edb90119',
+            'reference' => 'fc85b1fba37c169a69a07ef0d5a8075770cc1f83',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/promise',
             'aliases' => array(),
@@ -303,8 +303,8 @@
         'psr/http-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '*',
             ),
         ),
         'psr/http-factory-implementation' => array(
@@ -357,7 +357,7 @@
         'symfony/deprecation-contracts' => array(
             'pretty_version' => '2.5.x-dev',
             'version' => '2.5.9999999.9999999-dev',
-            'reference' => '80d075412b557d41002320b96a096ca65aa2c98d',
+            'reference' => 'd36279a5a4bc7f3ca2c412839f10d7c0aa2c1a02',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
             'aliases' => array(),
@@ -366,7 +366,7 @@
         'symfony/http-foundation' => array(
             'pretty_version' => '5.4.x-dev',
             'version' => '5.4.9999999.9999999-dev',
-            'reference' => '4da1713e88cf9c44bd4bf65f54772681222fcbec',
+            'reference' => '9c375b2abef0b657aa0b7612b763df5c12a465ab',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-foundation',
             'aliases' => array(),
@@ -375,7 +375,7 @@
         'symfony/polyfill-mbstring' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '42292d99c55abe617799667f454222c54c60e229',
+            'reference' => '8740a072b86292957feb42703edde77fcfca84fb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
@@ -384,7 +384,7 @@
         'symfony/polyfill-php80' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '6caa57379c4aec19c0a12a38b59b26487dcfe4b5',
+            'reference' => '77fa7995ac1b21ab60769b7323d600a991a90433',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php80',
             'aliases' => array(),
