@@ -51,6 +51,7 @@ class api_PreApproveTest extends \PHPUnit\Framework\TestCase implements Headless
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Rest',
       'user_name' => 'abc',
+      'name' => 'PayPal_Rest',
       'password' => 'def',
       'is_test' => 1,
     ]);
@@ -104,6 +105,7 @@ class api_PreApproveTest extends \PHPUnit\Framework\TestCase implements Headless
     Civi::$statics['Omnipay_Test_Config'] = ['client' => $this->getHttpClient()];
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Rest',
+      'name' => 'PayPal_Rest',
       'user_name' => 'AWzymvrczbgFT9CuhILzNXnXFyLXsxa8lacr_TJbOT4ytdRuaKnr73t1kOIdwbSTmnjTuajgKaiZCjqR',
       'password' => 'EANpVE9liVxABP173oGLic1fhoK2gixGeVCrXjR4Q_dpO2FLMMTtyYSmhhe5IZDaQaPUsmc4Jkx7CQGy',
       'is_test' => 1,

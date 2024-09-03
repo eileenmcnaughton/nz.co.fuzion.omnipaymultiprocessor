@@ -14,7 +14,6 @@ function omnipaymultiprocessor_civicrm_container(ContainerBuilder $container) {
   $container->addCompilerPass(new Civi\OmnipayMultiProcessor\ActionProvider\CompilerPass(), PassConfig::TYPE_OPTIMIZE);
 }
 
-
 /**
  * Implementation of hook_civicrm_config
  *

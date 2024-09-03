@@ -1,53 +1,62 @@
-# Omnipay: Sage Pay
+# Omnipay: Sage Pay (now Opayo by Elavon)
 
-**Sage Pay driver for the Omnipay PHP payment processing library**
+**Sage Pay/Opayo driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/thephpleague/omnipay-sagepay.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-sagepay)
+[![Unit Tests](https://github.com/thephpleague/omnipay-sagepay/actions/workflows/run-tests.yml/badge.svg)](https://github.com/thephpleague/omnipay-sagepay/actions/workflows/run-tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/omnipay/sagepay/version.png)](https://packagist.org/packages/omnipay/sagepay)
 [![Total Downloads](https://poser.pugx.org/omnipay/sagepay/d/total.png)](https://packagist.org/packages/omnipay/sagepay)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic,
 multi-gateway payment processing library for PHP.
 This package implements Sage Pay support for Omnipay.
-This version supports PHP ^5.6 and PHP ^7.
+This version supports PHP ^7.3 and PHP ^8.
 
 This is the `master` branch of Omnipay, handling Omnipay version `3.x`.
 For the `2.x` branch, please visit https://github.com/thephpleague/omnipay-sagepay/tree/2.x
 
+From version 4.1.1 the new Opayo URLs are used in place of the old Sage Pay URLs.
+These new URLs will be mandatory from March 2023, so you must upgrade by then.
+The upgrade 4.0 to 4.1.1 should be seamless; all classes remain in the
+`Omnipay\SagePay` namespace.
+
 Table of Contents
 =================
 
-   * [Omnipay: Sage Pay](#omnipay-sage-pay)
-   * [Table of Contents](#table-of-contents)
-   * [Installation](#installation)
-   * [Basic Usage](#basic-usage)
-   * [Supported Methods](#supported-methods)
-      * [Sage Pay Direct Methods](#sage-pay-direct-methods)
-         * [Direct Authorize/Purchase](#direct-authorizepurchase)
-            * [Redirect (3D Secure)](#redirect-3d-secure)
-            * [Redirect Return](#redirect-return)
-         * [Direct Create Card](#direct-create-card)
-      * [Sage Pay Server Methods](#sage-pay-server-methods)
-         * [Server Gateway](#server-gateway)
-         * [Server Authorize/Purchase](#server-authorizepurchase)
-         * [Server Create Card](#server-create-card)
-         * [Server Notification Handler](#server-notification-handler)
-      * [Sage Pay Form Methods](#sage-pay-form-methods)
-         * [Form Authorize](#form-authorize)
-         * [Form completeAuthorise](#form-completeauthorise)
-         * [Form Purchase](#form-purchase)
-      * [Sage Pay Shared Methods (Direct and Server)](#sage-pay-shared-methods-direct-and-server)
-         * [Repeat Authorize/Purchase](#repeat-authorizepurchase)
-         * [Capture](#capture)
-         * [Delete Card](#delete-card)
-   * [Token Billing](#token-billing)
-      * [Generating a Token or CardReference](#generating-a-token-or-cardreference)
-      * [Using a Token or CardReference](#using-a-token-or-cardreference)
-   * [Basket format](#basket-format)
-      * [Sage 50 Accounts Software Integration](#sage-50-accounts-software-integration)
-   * [Account Types](#account-types)
-   * [VAT](#vat)
-   * [Support](#support)
+<!-- TOC -->
+
+- [Omnipay: Sage Pay](#omnipay-sage-pay)
+- [Installation](#installation)
+- [Basic Usage](#basic-usage)
+- [Supported Methods](#supported-methods)
+    - [Sage Pay Direct Methods](#sage-pay-direct-methods)
+        - [Direct Authorize/Purchase](#direct-authorizepurchase)
+            - [Redirect (3D Secure)](#redirect-3d-secure)
+            - [Redirect Return](#redirect-return)
+        - [Direct Create Card](#direct-create-card)
+    - [Sage Pay Server Methods](#sage-pay-server-methods)
+        - [Server Gateway](#server-gateway)
+        - [Server Authorize/Purchase](#server-authorizepurchase)
+        - [Server Create Card](#server-create-card)
+        - [Server Notification Handler](#server-notification-handler)
+    - [Sage Pay Form Methods](#sage-pay-form-methods)
+        - [Form Authorize](#form-authorize)
+        - [Form completeAuthorize](#form-completeauthorize)
+        - [Form Purchase](#form-purchase)
+    - [Sage Pay Shared Methods (Direct and Server)](#sage-pay-shared-methods-direct-and-server)
+        - [Repeat Authorize/Purchase](#repeat-authorizepurchase)
+        - [Capture](#capture)
+        - [Delete Card](#delete-card)
+- [Token Billing](#token-billing)
+    - [Generating a Token or CardReference](#generating-a-token-or-cardreference)
+    - [Using a Token or CardReference](#using-a-token-or-cardreference)
+- [Basket format](#basket-format)
+    - [Sage 50 Accounts Software Integration](#sage-50-accounts-software-integration)
+- [Account Types](#account-types)
+- [VAT](#vat)
+- [Support](#support)
+- [References](#references)
+
+<!-- /TOC -->
 
 # Installation
 
@@ -285,9 +294,8 @@ The `$creditCard` object will provide the billing and shipping details:
 use Omnipay\Common\CreditCard;
 
 $creditCard = new CreditCard([
-    'firstName' => 'Joe',
-    'lastName' => 'Bloggs',
-    //
+    'billingFirstName' => 'Joe',
+    'billingLastName' => 'Bloggs',
     'billingAddress1' => 'Billing Address 1',
     'billingAddress2' => 'Billing Address 2',
     //'billingState' => '',
@@ -299,6 +307,8 @@ $creditCard = new CreditCard([
     'email' =>  'test@example.com',
     'clientIp' => '123.123.123.123',
     //
+    'shippingFirstName' => 'Joe',
+    'shippingLastName' => 'Bloggs',
     'shippingAddress1' => '99',
     'shippingState' => 'NY',
     'shippingCity' => 'City1',
@@ -316,6 +326,21 @@ $creditCard = new CreditCard([
   though *some* banks insist it is present and valid.
 * This gateway lives on an extended ASCII ISO 8859-1 back end.
   Really. Do any characterset conversions in your merchant site to avoid surprises.
+* Both billing and shipping name and address is required.
+  However, you can use the `billingForShipping` flag to set the shipping details
+  to what you supply as the billing details.
+
+```php
+// Use the billing name and address for the shipping name and address too.
+$gateway->setBillingForShipping(true);
+
+// or
+
+$response = $gateway->authorize([
+    'billingForShipping' => true,
+    ...
+]);
+```
 
 ```php
 // Create a unique transaction ID to track this transaction.
@@ -336,7 +361,7 @@ $surchargeXml = '<surcharges>'
 // Send the authorize request.
 // Some optional parameters are shown commented out.
 
-$response = $gateway->authorize(array(
+$response = $gateway->authorize([
     'amount' => '9.99',
     'currency' => 'GBP',
     'card' => $card,
@@ -349,7 +374,7 @@ $response = $gateway->authorize(array(
     // 'token' => $token,
     // 'cardReference' => $cardReference,
     // 'useAuthenticate' => true,
-))->send();
+])->send();
 
 If `useAuthenticate` is set, then the `authorize` will use the `AUTHENTICATE`/`AUTHORISE`
 method of reserving the transaction details.
@@ -459,16 +484,16 @@ The URL for the notification handler is set in the authorize or payment message:
 
 $transactionId = {create a unique transaction id};
 
-$items = array(
-    array(
+$items = [
+    [
         'name' => 'My Product Name',
         'description' => 'My Product Description',
         'quantity' => 1,
         'price' => 9.99,
-    )
-);
+    ]
+];
 
-$response = $gateway->purchase(array(
+$response = $gateway->purchase([
     'amount' => 9.99,
     'currency' => 'GBP',
     // Just the name and address, NOT CC details.
@@ -478,7 +503,7 @@ $response = $gateway->purchase(array(
     'transactionId' => $transactionId,
     'description' => 'test',
     'items' => $items,
-))->send();
+])->send();
 
 // Before redirecting, save `$response->getSecurityKey()` in the database,
 // retrievable by `$transactionId`.
@@ -682,25 +707,37 @@ $response = $gateway->authorize([
 ```
 
 The `$response` will be a `POST` redirect, which will take the user to the gateway.
-At the gateway, the user will authenticate or authorise their credit card,
+At the gateway, the user will authenticate or authorize their credit card,
 perform any 3D Secure actions that may be requested, then will return to the
 merchant site.
 
-### Form completeAuthorise
+Like `Server` and `Direct`, you can use either the `DEFERRED` or the `AUTHENTICATE`
+method to reserve the amount.
+
+### Form completeAuthorize
 
 To get the result details, the transaction is "completed" on the
 user's return. This will be at your `returnUrl` endpoint:
 
 ```php
 // The result will be read and decrypted from the return URL (or failure URL)
-// query parameters:
+// query parameters.
+// You MUST provide the original expected transactionId, which is validated
+// against the transactionId provided in the server request.
+// This prevents different payments getting mixed up.
 
-$result = $gateway->completeAuthorize()->send();
+$completeRequest = $gateway->completeAuthorize(['transactionId' => $originalTransactionId]);
+$result = $completeRequest->send();
 
 $result->isSuccessful();
 $result->getTransactionReference();
 // etc.
 ```
+
+Note that if `send()` throws an exception here due to a `transactionId` mismatch,
+you can still access the decryoted data that was brought back with the user as
+`$completeRequest->getData()`.
+You will need to log this for later analysis.
 
 If you already have the encrypted response string, then it can be passed in.
 However, you would normally leave it for the driver to read it for you from
@@ -727,9 +764,6 @@ for wildly different amounts.
 In a future release, the `completeAuthorize()` method will expect the
 `transactionId` to be supplied and it must match before it will
 return a success status.
-
-Like `Server` and `Direct`, you can use either the `DEFERRED` or the `AUTHENTICATE`
-method to reserve the amount.
 
 ### Form Purchase
 
@@ -936,7 +970,7 @@ or not, so can be used multiple times.
 
 # Basket format
 
-Sagepay currently supports two different formats for sending cart/item information to them:  
+Sagepay currently supports two different formats for sending cart/item information to them:
  - [BasketXML](http://www.sagepay.co.uk/support/12/36/protocol-3-00-basket-xml)
  - [Basket](http://www.sagepay.co.uk/support/error-codes/3021-invalid-basket-format-invalid)
 
@@ -956,28 +990,28 @@ The Basket format can be used for Sage 50 Accounts Software Integration:
 > reconcile the transactions on your account within your financial software.
 > If you wish to link a transaction to a specific product record this can be done through the Basket field
   in the transaction registration post.
-> Please note the following integration is not currently available when using BasketXML fields. 
+> Please note the following integration is not currently available when using BasketXML fields.
 > In order for the download of transactions to affect a product record the first entry in a basket line needs
   to be the product code of the item within square brackets. For example:
-  
+
 ```
 4:[PR001]Pioneer NSDV99 DVD-Surround Sound System:1:424.68:74.32:499.00:499.00
 ```
 
 You can either prepend this onto the description or using `\Omnipay\SagePay\Extend\Item` you can use `setProductCode`
-which will take care of pre-pending `[]` for you. 
+which will take care of pre-pending `[]` for you.
 
 # Account Types
 
 Your Sage Pay account will use separate merchant accounts for difference transaction sources.
 The sources are specified by the `accountType` parameter, and take one of three values:
 
-* "E" Omnipay\SagePay\Message\AbstractRequest::ACCOUNT_TYPE_E (default)  
+* "E" Omnipay\SagePay\Message\AbstractRequest::ACCOUNT_TYPE_E (default)
   For ecommerce transactions, entered in your application by the end user.
-* "M" Omnipay\SagePay\Message\AbstractRequest::ACCOUNT_TYPE_M  
+* "M" Omnipay\SagePay\Message\AbstractRequest::ACCOUNT_TYPE_M
   MOTO transactions taken by telephone or postal forms or faxes, entered by an operator.
   The operator may ask for a CVV when taking a telephone order.
-* "C" Omnipay\SagePay\Message\AbstractRequest::ACCOUNT_TYPE_C  
+* "C" Omnipay\SagePay\Message\AbstractRequest::ACCOUNT_TYPE_C
   For repeat transactions, generated by the merchant site without any human intervention.
 
 The "M" MOTO and "C" account types will also disable any 3D-Secure validation that may
@@ -994,15 +1028,15 @@ If you want to include VAT amount in the item array you must use
 `\Omnipay\SagePay\Extend\Item` as follows.
 
 ```php
-$items = array(
-    array(new \Omnipay\SagePay\Extend\Item(array(
+$items = [
+    [new \Omnipay\SagePay\Extend\Item([
         'name' => 'My Product Name',
         'description' => 'My Product Description',
         'quantity' => 1,
         'price' => 9.99,
         'vat' => 1.665, // VAT amount, not percentage
-    ))
-);
+    ]]
+];
 ```
 
 # Support
@@ -1017,3 +1051,7 @@ you can subscribe to.
 
 If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/thephpleague/omnipay-sagepay/issues),
 or better yet, fork the library and submit a pull request.
+
+#References
+- [Sage pay tokens using token management](https://www.opayo.co.uk/file/2501/download-document/Token_System_Integration_and_Protocol_Guidelines3.00.pdf)
+- [Other sage pay transaction types for Server method](https://developer-eu.elavon.com/docs/opayo-shared-api)

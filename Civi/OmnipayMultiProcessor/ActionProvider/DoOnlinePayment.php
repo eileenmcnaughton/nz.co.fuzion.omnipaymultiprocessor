@@ -32,14 +32,35 @@ class DoOnlinePayment extends AbstractAction {
    * @throws \Exception
    */
   protected function doAction(ParameterBagInterface $parameters, ParameterBagInterface $output) {
-    $paymentParams['contribution_id'] = $parameters->getParameter('contribution_id');
-    $paymentParams['amount'] = (float) $parameters->getParameter('total_amount');
-    $paymentParams['currency'] = $parameters->getParameter('currency');
+    $paymentParams['contributionID'] = $parameters->getParameter('contribution_id');
     $paymentParams['description'] = $parameters->getParameter('description');
     $successUrl = $parameters->getParameter('success_url');
     $cancelurl = $parameters->getParameter('cancel_url');
 
-    $paymentProcessor = $this->getPaymentProcessorByName($this->configuration->getParameter('payment_processor'));
+    $contribution = \Civi\Api4\Contribution::get(FALSE)
+      ->addSelect('balance_amount', 'currency')
+      ->addWhere('id', '=', $parameters->getParameter('contribution_id'))
+      ->execute()
+      ->first();
+    if (empty($contribution['trxn_id'])) {
+      \Civi\Api4\Contribution::update(FALSE)
+        ->addValue('trxn_id', $parameters->getParameter('contribution_id'))
+        ->addWhere('id', '=', $parameters->getParameter('contribution_id'))
+        ->execute();
+    }
+    $paymentParams['amount'] = (float) $contribution['balance_amount'];
+    $paymentParams['currency'] = $contribution['currency'];
+
+    if ($parameters->doesParameterExists('payment_processor')) {
+      $paymentProcessorId = $parameters->getParameter('payment_processor');
+    } elseif ($this->configuration->doesParameterExists('payment_processor')) {
+      $paymentProcessorId = $this->configuration->getParameter('payment_processor');
+    }
+    if (!$paymentProcessorId) {
+      throw new ExecutionException('Invalid Payment Processor');
+    }
+
+    $paymentProcessor = $this->getPaymentProcessorByName($paymentProcessorId);
     if (!$paymentProcessor) {
       throw new ExecutionException('Invalid Payment Processor');
     }
@@ -74,7 +95,7 @@ class DoOnlinePayment extends AbstractAction {
       $paymentProcessorOptions[$paymentProcessor['name']] = $paymentProcessor['title'];
     }
     return new SpecificationBag(array(
-      new Specification('payment_processor', 'String', E::ts('Payment Processor'), TRUE, null, null, $paymentProcessorOptions),
+      new Specification('payment_processor', 'String', E::ts('Payment Processor'), FALSE, null, null, $paymentProcessorOptions),
     ));
   }
 
@@ -84,13 +105,16 @@ class DoOnlinePayment extends AbstractAction {
    * @return SpecificationBag
    */
   public function getParameterSpecification() {
+    $paymentProcessorOptions = [];
+    foreach($this->getPaymentProcessors() as $paymentProcessor) {
+      $paymentProcessorOptions[$paymentProcessor['name']] = $paymentProcessor['title'];
+    }
     return new SpecificationBag([
       new Specification('contribution_id', 'Integer', E::ts('Contribution ID'), TRUE),
-      new Specification('total_amount', 'Float', E::ts('Amount'), TRUE),
-      new OptionGroupSpecification('currency', 'currencies_enabled', E::ts('Currency'), TRUE),
       new Specification('success_url', 'String', E::ts('Success URL'), TRUE),
       new Specification('cancel_url', 'String', E::ts('Cancel URL'), TRUE),
       new Specification('description', 'String', E::ts('Payment Description'), TRUE),
+      new Specification('payment_processor', 'String', E::ts('Payment Processor'), FALSE, null, null, $paymentProcessorOptions),
     ]);
   }
 

@@ -53,6 +53,7 @@ class api_ProcessRecurringTest extends \PHPUnit\Framework\TestCase implements He
 
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Rest',
+      'name' => 'PayPal_Rest',
       'user_name' => 'ABC',
       'password' => 'DEF',
       'is_test' => 1,

@@ -59,6 +59,7 @@ class api_PayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterfa
 
     $processor = $this->callAPISuccess('PaymentProcessor', 'create', [
       'payment_processor_type_id' => 'omnipay_PayPal_Rest',
+      'name' => 'PayPal_Rest',
       'user_name' => 'abc',
       'password' => 'def',
       'is_test' => 1,

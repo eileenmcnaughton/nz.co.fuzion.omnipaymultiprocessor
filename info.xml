@@ -14,11 +14,11 @@
     <url desc="Support">http://forum.civicrm.org</url>
     <url desc="Licensing">http://civicrm.org/licensing</url>
   </urls>
-  <releaseDate>2023-11-21</releaseDate>
-  <version>3.22</version>
+  <releaseDate>2024-06-01</releaseDate>
+  <version>3.24</version>
   <develStage>stable</develStage>
   <compatibility>
-    <ver>5.67</ver>
+    <ver>5.69</ver>
   </compatibility>
   <comments>This module integrates the omnipay library with CiviCRM. This release is for Omnipay 3.x and requires php 7.1. All new development will be here but 2.x series will continue to work.</comments>
   <civix>
@@ -29,7 +29,7 @@
     <mixin>menu-xml@1.0.0</mixin>
     <mixin>mgd-php@1.0.0</mixin>
     <mixin>setting-php@1.0.0</mixin>
-    <mixin>smarty-v2@1.0.0</mixin>
+    <mixin>smarty-v2@1.0.1</mixin>
   </mixins>
   <classloader>
     <psr0 prefix="CRM_" path="."/>

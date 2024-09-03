@@ -7,7 +7,12 @@
 [![Total Downloads](https://poser.pugx.org/hounddd/omnipay-systempay/d/total.png)](https://packagist.org/packages/hounddd/omnipay-systempay)
 
 [Omnipay](https://github.com/omnipay/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements SecurePay support for Omnipay.
+processing library for PHP 5.3+. This package implements SystemPay support for Omnipay.
+
+SystemPay is the technical platform for the following digital payment solutions: 
+- Cyberplus Paiement (Banque Populaire)
+- Paiement Express (Banque Populaire)
+- SP Plus (Caisse d'Épargne)
 
 ## Installation
 

@@ -8,7 +8,15 @@ class ServerGatewayTest extends GatewayTestCase
 {
     protected $error_3082_text = '3082 : The Description value is too long.';
 
-    public function setUp()
+    protected $purchaseOptions;
+    protected $captureOptions;
+    protected $completePurchaseOptions;
+    protected $voidOptions;
+    protected $abortOptions;
+    protected $refundOptions;
+    protected $repeatOptions;
+
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -76,7 +84,7 @@ class ServerGatewayTest extends GatewayTestCase
         $this->assertTrue($response->isRedirect());
         $this->assertSame('{"SecurityKey":"IK776BWNHN","VPSTxId":"{1E7D9C70-DBE2-4726-88EA-D369810D801D}","VendorTxCode":"123"}', $response->getTransactionReference());
         $this->assertSame('Server transaction registered successfully.', $response->getMessage());
-        $this->assertSame('https://test.sagepay.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
+        $this->assertSame('https://sandbox.opayo.eu.elavon.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
     }
 
     public function testAuthorizeFailure()
@@ -112,9 +120,14 @@ class ServerGatewayTest extends GatewayTestCase
                 'DeclineCode' => '00',
                 'ExpiryDate' => '0722',
                 'BankAuthCode' => '999777',
+                // New fields for protocol v4.0
+                'ACSTransID' => 'abcuuid',
+                'DSTransID' => '123uuid',
+                'SchemeTraceID' => 'V123',
                 'VPSSignature' => md5(
                     '{F955C22E-F67B-4DA3-8EA3-6DAC68FA59D2}'
                     . '438791' . 'OK' . 'bexamplecJEUPDN1N7Edefghijklm' . '00' . '0722' . '999777'
+                    . 'abcuuid' . '123uuid' . 'V123'
                 ),
             )
         );
@@ -129,11 +142,9 @@ class ServerGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidResponseException
-     */
     public function testCompleteAuthorizeInvalid()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidResponseException::class);
         $response = $this->gateway->completeAuthorize($this->completePurchaseOptions)->send();
     }
 
@@ -147,7 +158,7 @@ class ServerGatewayTest extends GatewayTestCase
         $this->assertTrue($response->isRedirect());
         $this->assertSame('{"SecurityKey":"IK776BWNHN","VPSTxId":"{1E7D9C70-DBE2-4726-88EA-D369810D801D}","VendorTxCode":"123"}', $response->getTransactionReference());
         $this->assertSame('Server transaction registered successfully.', $response->getMessage());
-        $this->assertSame('https://test.sagepay.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
+        $this->assertSame('https://sandbox.opayo.eu.elavon.com/Simulator/VSPServerPaymentPage.asp?TransactionID={1E7D9C70-DBE2-4726-88EA-D369810D801D}', $response->getRedirectUrl());
     }
 
     public function testPurchaseFailure()
@@ -190,11 +201,9 @@ class ServerGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
-    /**
-     * @expectedException Omnipay\Common\Exception\InvalidResponseException
-     */
     public function testCompletePurchaseInvalid()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidResponseException::class);
         $response = $this->gateway->completePurchase($this->completePurchaseOptions)->send();
     }
 

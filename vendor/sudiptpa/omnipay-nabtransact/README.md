@@ -105,6 +105,7 @@ The following gateways are provided by this package:
     } else {
         echo sprintf('Transaction %s failed: %s', $response->getTransactionReference(), $response->getMessage());
     }
+```
 
 ### NAB Transact DirectPost v2
 
@@ -113,8 +114,8 @@ The following gateways are provided by this package:
 
     $gateway->setMerchantId('XYZ0010');
     $gateway->setTransactionPassword('abcd1234');
-
     $gateway->setTestMode(true);
+    $gateway->setHasEMV3DSEnabled(true);
 
     $card = new CreditCard(array(
         'firstName' => 'Sujip',
@@ -128,8 +129,10 @@ The following gateways are provided by this package:
     $response = $gateway->purchase(array(
         'amount' => '12.00',
         'transactionId' => 'ORDER-ZYX8',
+        'transactionReference' => '11fc42b0-bb7a-41a4-8b3c-096b3fd4d402'
         'currency' => 'AUD',
         'card' => $card,
+        'clientIp' => '192.168.1.1'
     ))
         ->send();
 
@@ -185,6 +188,7 @@ The following gateways are provided by this package:
     $response = $gateway->completePurchase(array(
         'amount' => '12.00',
         'transactionId' => '1234566789205067',
+        'transactionReference' => '11fc42b0-bb7a-41a4-8b3c-096b3fd4d402'
         'currency' => 'AUD',
         'returnUrl' => 'http://example.com/payment/response',
     ))

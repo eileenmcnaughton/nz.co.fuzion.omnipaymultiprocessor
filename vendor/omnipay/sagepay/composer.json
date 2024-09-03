@@ -34,21 +34,28 @@
         }
     },
     "require": {
-        "php": "^5.6|^7",
+        "php": "^7.3|^8",
         "omnipay/common": "~3.0"
     },
     "require-dev": {
-        "omnipay/tests": "~3.0",
-        "squizlabs/php_codesniffer": "^3"
+        "omnipay/tests": "^4.1",
+        "squizlabs/php_codesniffer": "^3",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "http-interop/http-factory-guzzle": "^1.2"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "4.0-dev"
         }
     },
     "scripts": {
         "test": "phpunit",
         "check-style": "phpcs -p --standard=PSR2 src/",
         "fix-style": "phpcbf -p --standard=PSR2 src/"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
     }
 }

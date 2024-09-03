@@ -6,7 +6,9 @@ use Omnipay\Tests\TestCase;
 
 class SharedCaptureRequestTest extends TestCase
 {
-    public function setUp()
+    protected $request;
+
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -25,24 +27,23 @@ class SharedCaptureRequestTest extends TestCase
 
         $this->assertSame('RELEASE', $this->request->getTxType());
 
-        // User authenticate explicity true.
+        // User authenticate explicitly true.
 
         $this->request->setUseAuthenticate(true);
 
         $this->assertSame('AUTHORISE', $this->request->getTxType());
 
-        // User authenticate explicity false (back to the default).
+        // User authenticate explicitly false (back to the default).
 
         $this->request->setUseAuthenticate(false);
 
         $this->assertSame('RELEASE', $this->request->getTxType());
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     */
     public function testMissingAmount()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
+
         $this->request->getData();
     }
 
@@ -60,22 +61,20 @@ class SharedCaptureRequestTest extends TestCase
         $this->assertSame('4255', $data['TxAuthNo']);
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     */
     public function testAuthMissingDescription()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
+
         $this->request->setAmount(123.45);
         $this->request->setUseAuthenticate(true);
 
         $this->request->getData();
     }
 
-    /**
-     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
-     */
     public function testAuthMissingTransactionId()
     {
+        $this->expectException(\Omnipay\Common\Exception\InvalidRequestException::class);
+
         $this->request->setAmount(123.45);
         $this->request->setDescription('desc');
         $this->request->setUseAuthenticate(true);
