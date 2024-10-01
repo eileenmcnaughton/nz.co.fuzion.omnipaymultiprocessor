@@ -88,7 +88,7 @@ class ResponseHeaderBag extends HeaderBag
     /**
      * {@inheritdoc}
      */
-    public function all(?string $key = null)
+    public function all(?string $key = null): array
     {
         $headers = parent::all();
 
@@ -164,7 +164,7 @@ class ResponseHeaderBag extends HeaderBag
     /**
      * {@inheritdoc}
      */
-    public function hasCacheControlDirective(string $key)
+    public function hasCacheControlDirective(string $key): bool
     {
         return \array_key_exists($key, $this->computedCacheControl);
     }
@@ -172,7 +172,7 @@ class ResponseHeaderBag extends HeaderBag
     /**
      * {@inheritdoc}
      */
-    public function getCacheControlDirective(string $key)
+    public function getCacheControlDirective(string $key): string|bool|null
     {
         return $this->computedCacheControl[$key] ?? null;
     }
