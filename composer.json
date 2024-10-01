@@ -56,7 +56,7 @@
     "minimum-stability": "dev",
     "config": {
         "platform": {
-            "php": "7.3.0"
+            "php": "7.4.0"
         },
         "allow-plugins": {
             "php-http/discovery": false
