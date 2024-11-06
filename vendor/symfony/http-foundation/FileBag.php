@@ -21,12 +21,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class FileBag extends ParameterBag
 {
-    private const FILE_KEYS = ['error', 'name', 'size', 'tmp_name', 'type'];
+    private static $fileKeys = array('error', 'name', 'size', 'tmp_name', 'type');
 
     /**
-     * @param array|UploadedFile[] $parameters An array of HTTP files
+     * @param array $parameters An array of HTTP files
      */
-    public function __construct(array $parameters = [])
+    public function __construct(array $parameters = array())
     {
         $this->replace($parameters);
     }
@@ -34,16 +34,16 @@ class FileBag extends ParameterBag
     /**
      * {@inheritdoc}
      */
-    public function replace(array $files = [])
+    public function replace(array $files = array())
     {
-        $this->parameters = [];
+        $this->parameters = array();
         $this->add($files);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function set(string $key, $value)
+    public function set($key, $value)
     {
         if (!\is_array($value) && !$value instanceof UploadedFile) {
             throw new \InvalidArgumentException('An uploaded file must be an array or an instance of UploadedFile.');
@@ -55,7 +55,7 @@ class FileBag extends ParameterBag
     /**
      * {@inheritdoc}
      */
-    public function add(array $files = [])
+    public function add(array $files = array())
     {
         foreach ($files as $key => $file) {
             $this->set($key, $file);
@@ -67,7 +67,7 @@ class FileBag extends ParameterBag
      *
      * @param array|UploadedFile $file A (multi-dimensional) array of uploaded file information
      *
-     * @return UploadedFile[]|UploadedFile|null
+     * @return UploadedFile[]|UploadedFile|null A (multi-dimensional) array of UploadedFile instances
      */
     protected function convertFileInformation($file)
     {
@@ -76,19 +76,21 @@ class FileBag extends ParameterBag
         }
 
         $file = $this->fixPhpFilesArray($file);
-        $keys = array_keys($file);
-        sort($keys);
+        if (\is_array($file)) {
+            $keys = array_keys($file);
+            sort($keys);
 
-        if (self::FILE_KEYS == $keys) {
-            if (\UPLOAD_ERR_NO_FILE == $file['error']) {
-                $file = null;
+            if ($keys == self::$fileKeys) {
+                if (UPLOAD_ERR_NO_FILE == $file['error']) {
+                    $file = null;
+                } else {
+                    $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type'], $file['size'], $file['error']);
+                }
             } else {
-                $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type'], $file['error'], false);
-            }
-        } else {
-            $file = array_map(function ($v) { return $v instanceof UploadedFile || \is_array($v) ? $this->convertFileInformation($v) : $v; }, $file);
-            if (array_keys($keys) === $keys) {
-                $file = array_filter($file);
+                $file = array_map(array($this, 'convertFileInformation'), $file);
+                if (array_keys($keys) === $keys) {
+                    $file = array_filter($file);
+                }
             }
         }
 
@@ -109,30 +111,32 @@ class FileBag extends ParameterBag
      *
      * @return array
      */
-    protected function fixPhpFilesArray(array $data)
+    protected function fixPhpFilesArray($data)
     {
-        // Remove extra key added by PHP 8.1.
-        unset($data['full_path']);
+        if (!\is_array($data)) {
+            return $data;
+        }
+
         $keys = array_keys($data);
         sort($keys);
 
-        if (self::FILE_KEYS != $keys || !isset($data['name']) || !\is_array($data['name'])) {
+        if (self::$fileKeys != $keys || !isset($data['name']) || !\is_array($data['name'])) {
             return $data;
         }
 
         $files = $data;
-        foreach (self::FILE_KEYS as $k) {
+        foreach (self::$fileKeys as $k) {
             unset($files[$k]);
         }
 
         foreach ($data['name'] as $key => $name) {
-            $files[$key] = $this->fixPhpFilesArray([
+            $files[$key] = $this->fixPhpFilesArray(array(
                 'error' => $data['error'][$key],
                 'name' => $name,
                 'type' => $data['type'][$key],
                 'tmp_name' => $data['tmp_name'][$key],
                 'size' => $data['size'][$key],
-            ]);
+            ));
         }
 
         return $files;

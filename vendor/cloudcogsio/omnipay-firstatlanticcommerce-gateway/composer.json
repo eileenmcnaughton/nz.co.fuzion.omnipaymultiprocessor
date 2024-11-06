@@ -18,9 +18,8 @@
 	"description" : "First Atlantic Commerce (FAC) Payment Gateway Driver for Omnipay",
 	"minimum-stability" : "dev",
 	"require" : {
-		"php" : "^7.2",
-		"omnipay/common" : "^3",
-		"league/iso3166" : "~2.1.0"
+		"omnipay/common" : "*",
+		"league/iso3166" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {

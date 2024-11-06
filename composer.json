@@ -13,6 +13,10 @@
             "url":  "https://github.com/eileenmcnaughton/omnipay-paypal.git"
         },
         {
+          "type": "git",
+          "url":  "https://github.com/eileenmcnaughton/omnipay-firstatlanticcommerce-gateway.git"
+        },
+        {
             "type": "vcs",
             "url":  "https://github.com/adixon/omnipay-beanstream.git"
         }
@@ -20,7 +24,7 @@
     ],
     "require":
     {
-        "league/omnipay": "~3.0",
+        "league/omnipay": "*",
         "psr/log": "^1.0@dev",
         "omnipay/paypal": "^3.0@dev",
         "omnipay/authorizenet": "^3.0@dev",
@@ -37,7 +41,7 @@
         "fuzion/omnipay-mercanet": "^3.0@dev",
         "razorpay/omnipay-razorpay": "^3.0@dev",
         "clue/stream-filter": "^1.4.1",
-        "cloudcogsio/omnipay-firstatlanticcommerce-gateway" : "^1.0.2",
+        "cloudcogsio/omnipay-firstatlanticcommerce-gateway" : "*",
         "hounddd/omnipay-systempay": "dev-master",
         "ext-json": "*"
     },
@@ -56,7 +60,7 @@
     "minimum-stability": "dev",
     "config": {
         "platform": {
-            "php": "7.4.0"
+            "php": "8.0.2"
         },
         "allow-plugins": {
             "php-http/discovery": false

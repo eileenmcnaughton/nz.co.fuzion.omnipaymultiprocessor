@@ -86,12 +86,6 @@ final class Mbstring
     public static function mb_convert_encoding($s, $toEncoding, $fromEncoding = null)
     {
         if (\is_array($s)) {
-            if (\PHP_VERSION_ID < 70200) {
-                trigger_error('mb_convert_encoding() expects parameter 1 to be string, array given', \E_USER_WARNING);
-
-                return null;
-            }
-
             $r = [];
             foreach ($s as $str) {
                 $r[] = self::mb_convert_encoding($str, $toEncoding, $fromEncoding);
@@ -430,12 +424,6 @@ final class Mbstring
 
     public static function mb_check_encoding($var = null, $encoding = null)
     {
-        if (\PHP_VERSION_ID < 70200 && \is_array($var)) {
-            trigger_error('mb_check_encoding() expects parameter 1 to be string, array given', \E_USER_WARNING);
-
-            return null;
-        }
-
         if (null === $encoding) {
             if (null === $var) {
                 return false;

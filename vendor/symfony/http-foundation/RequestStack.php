@@ -11,9 +11,6 @@
 
 namespace Symfony\Component\HttpFoundation;
 
-use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
 /**
  * Request stack that controls the lifecycle of requests.
  *
@@ -24,7 +21,7 @@ class RequestStack
     /**
      * @var Request[]
      */
-    private $requests = [];
+    private $requests = array();
 
     /**
      * Pushes a Request on the stack.
@@ -50,7 +47,7 @@ class RequestStack
     public function pop()
     {
         if (!$this->requests) {
-            return null;
+            return;
         }
 
         return array_pop($this->requests);
@@ -65,33 +62,21 @@ class RequestStack
     }
 
     /**
-     * Gets the main request.
+     * Gets the master Request.
      *
-     * Be warned that making your code aware of the main request
+     * Be warned that making your code aware of the master request
      * might make it un-compatible with other features of your framework
      * like ESI support.
-     */
-    public function getMainRequest(): ?Request
-    {
-        if (!$this->requests) {
-            return null;
-        }
-
-        return $this->requests[0];
-    }
-
-    /**
-     * Gets the master request.
      *
      * @return Request|null
-     *
-     * @deprecated since symfony/http-foundation 5.3, use getMainRequest() instead
      */
     public function getMasterRequest()
     {
-        trigger_deprecation('symfony/http-foundation', '5.3', '"%s()" is deprecated, use "getMainRequest()" instead.', __METHOD__);
+        if (!$this->requests) {
+            return;
+        }
 
-        return $this->getMainRequest();
+        return $this->requests[0];
     }
 
     /**
@@ -101,7 +86,7 @@ class RequestStack
      * might make it un-compatible with other features of your framework
      * like ESI support.
      *
-     * If current Request is the main request, it returns null.
+     * If current Request is the master request, it returns null.
      *
      * @return Request|null
      */
@@ -109,20 +94,10 @@ class RequestStack
     {
         $pos = \count($this->requests) - 2;
 
-        return $this->requests[$pos] ?? null;
-    }
-
-    /**
-     * Gets the current session.
-     *
-     * @throws SessionNotFoundException
-     */
-    public function getSession(): SessionInterface
-    {
-        if ((null !== $request = end($this->requests) ?: null) && $request->hasSession()) {
-            return $request->getSession();
+        if (!isset($this->requests[$pos])) {
+            return;
         }
 
-        throw new SessionNotFoundException();
+        return $this->requests[$pos];
     }
 }
