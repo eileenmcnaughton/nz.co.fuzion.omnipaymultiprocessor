@@ -2,6 +2,8 @@
 
 This extension provides support for multiple payment processors in CiviCRM.
 
+Note the latest release does NOT support php 7.4
+
 ## Supported processors
 
 The following payment processors are supported:
