@@ -24,7 +24,7 @@
     ],
     "require":
     {
-        "league/omnipay": "*",
+        "league/omnipay": "^3",
         "psr/log": "^1.0@dev",
         "omnipay/paypal": "^3.0@dev",
         "omnipay/authorizenet": "^3.0@dev",

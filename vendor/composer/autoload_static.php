@@ -7,8 +7,9 @@ namespace Composer\Autoload;
 class ComposerStaticInit9c661977280eba00f26021522edd8f5f
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '9c67151ae59aff4788964ce8eb2a0f43' => __DIR__ . '/..' . '/clue/stream-filter/src/functions_include.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '8cff32064859f4559445b89279f3199c' => __DIR__ . '/..' . '/php-http/message/src/filters.php',
     );
 
@@ -16,13 +17,11 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'Symfony\\Contracts\\EventDispatcher\\' => 34,
             'Symfony\\Component\\HttpFoundation\\' => 33,
-            'Symfony\\Component\\EventDispatcher\\' => 34,
         ),
         'P' => 
         array (
-            'Psr\\EventDispatcher\\' => 20,
+            'Psr\\Http\\Client\\' => 16,
         ),
         'O' => 
         array (
@@ -53,8 +52,11 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
         ),
         'H' => 
         array (
+            'Http\\Promise\\' => 13,
             'Http\\Message\\' => 13,
             'Http\\Discovery\\' => 15,
+            'Http\\Client\\' => 12,
+            'Http\\Adapter\\Guzzle7\\' => 21,
         ),
         'C' => 
         array (
@@ -67,21 +69,13 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Contracts\\EventDispatcher\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
-        ),
         'Symfony\\Component\\HttpFoundation\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
-        'Symfony\\Component\\EventDispatcher\\' => 
+        'Psr\\Http\\Client\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
-        ),
-        'Psr\\EventDispatcher\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
         'Omnipay\\WorldPay\\' => 
         array (
@@ -155,6 +149,10 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
         array (
             0 => __DIR__ . '/..' . '/league/iso3166/src',
         ),
+        'Http\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/promise/src',
+        ),
         'Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-http/message/src',
@@ -164,38 +162,17 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
         array (
             0 => __DIR__ . '/..' . '/php-http/discovery/src',
         ),
+        'Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/httplug/src',
+        ),
+        'Http\\Adapter\\Guzzle7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/guzzle7-adapter/src',
+        ),
         'Clue\\StreamFilter\\' => 
         array (
             0 => __DIR__ . '/..' . '/clue/stream-filter/src',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'O' => 
-        array (
-            'Omnipay' => 
-            array (
-                0 => __DIR__ . '/..' . '/league/omnipay/src',
-            ),
-        ),
-        'G' => 
-        array (
-            'Guzzle\\Stream' => 
-            array (
-                0 => __DIR__ . '/..' . '/guzzle/stream',
-            ),
-            'Guzzle\\Parser' => 
-            array (
-                0 => __DIR__ . '/..' . '/guzzle/parser',
-            ),
-            'Guzzle\\Http' => 
-            array (
-                0 => __DIR__ . '/..' . '/guzzle/http',
-            ),
-            'Guzzle\\Common' => 
-            array (
-                0 => __DIR__ . '/..' . '/guzzle/common',
-            ),
         ),
     );
 
@@ -209,7 +186,6 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit9c661977280eba00f26021522edd8f5f::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit9c661977280eba00f26021522edd8f5f::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit9c661977280eba00f26021522edd8f5f::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit9c661977280eba00f26021522edd8f5f::$classMap;
 
         }, null, ClassLoader::class);

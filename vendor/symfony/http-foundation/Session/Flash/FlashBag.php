@@ -14,20 +14,18 @@ namespace Symfony\Component\HttpFoundation\Session\Flash;
 /**
  * FlashBag flash message container.
  *
- * \IteratorAggregate implementation is deprecated and will be removed in 3.0.
- *
  * @author Drak <drak@zikula.org>
  */
-class FlashBag implements FlashBagInterface, \IteratorAggregate
+class FlashBag implements FlashBagInterface
 {
-    private $name = 'flashes';
-    private $flashes = array();
-    private $storageKey;
+    private string $name = 'flashes';
+    private array $flashes = [];
+    private string $storageKey;
 
     /**
      * @param string $storageKey The key used to store flashes in the session
      */
-    public function __construct($storageKey = '_sf2_flashes')
+    public function __construct(string $storageKey = '_symfony_flashes')
     {
         $this->storageKey = $storageKey;
     }
@@ -35,12 +33,12 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -56,7 +54,7 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function add($type, $message)
+    public function add(string $type, mixed $message)
     {
         $this->flashes[$type][] = $message;
     }
@@ -64,7 +62,7 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function peek($type, array $default = array())
+    public function peek(string $type, array $default = []): array
     {
         return $this->has($type) ? $this->flashes[$type] : $default;
     }
@@ -72,7 +70,7 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function peekAll()
+    public function peekAll(): array
     {
         return $this->flashes;
     }
@@ -80,7 +78,7 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function get($type, array $default = array())
+    public function get(string $type, array $default = []): array
     {
         if (!$this->has($type)) {
             return $default;
@@ -96,10 +94,10 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function all()
+    public function all(): array
     {
         $return = $this->peekAll();
-        $this->flashes = array();
+        $this->flashes = [];
 
         return $return;
     }
@@ -107,7 +105,7 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function set($type, $messages)
+    public function set(string $type, string|array $messages)
     {
         $this->flashes[$type] = (array) $messages;
     }
@@ -123,15 +121,15 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function has($type)
+    public function has(string $type): bool
     {
-        return array_key_exists($type, $this->flashes) && $this->flashes[$type];
+        return \array_key_exists($type, $this->flashes) && $this->flashes[$type];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function keys()
+    public function keys(): array
     {
         return array_keys($this->flashes);
     }
@@ -139,7 +137,7 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function getStorageKey()
+    public function getStorageKey(): string
     {
         return $this->storageKey;
     }
@@ -147,22 +145,8 @@ class FlashBag implements FlashBagInterface, \IteratorAggregate
     /**
      * {@inheritdoc}
      */
-    public function clear()
+    public function clear(): mixed
     {
         return $this->all();
-    }
-
-    /**
-     * Returns an iterator for flashes.
-     *
-     * @deprecated since version 2.4, to be removed in 3.0.
-     *
-     * @return \ArrayIterator An \ArrayIterator instance
-     */
-    public function getIterator()
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.4 and will be removed in 3.0.', E_USER_DEPRECATED);
-
-        return new \ArrayIterator($this->all());
     }
 }
