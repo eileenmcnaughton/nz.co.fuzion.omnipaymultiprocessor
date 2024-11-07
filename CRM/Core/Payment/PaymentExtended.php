@@ -414,21 +414,32 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
   /**
    * Unset various objects that will fail to serialize when the form is stored to session.
    *
+   * @param object $object (by reference)
+   * @param bool $isIncludeGateWay Should we also unset the gateway.
+   */
+  protected function cleanupObjectForSerialization(&$object, $isIncludeGateWay = FALSE) {
+    if (\Civi::settings()->get('omnipay_developer_mode') && !empty($object->history)) {
+      $object->logHttpTraffic(FALSE);
+    }
+    $object->history = [];
+    $object->client = NULL;
+    $object->lock = NULL;
+    $object->guzzleClient = NULL;
+    if ($isIncludeGateWay) {
+      $object->gateway = NULL;
+    }
+  }
+
+  /**
+   * Unset various objects that will fail to serialize when the form is stored to session.
+   *
    * @param bool $isIncludeGateWay
    *   Should we also unset the gateway.
    *   (possibly the default here should be TRUE but we want to be sure we are not
    *   unsetting it when it is still being used.)
+   *   For retro-compatibilty, this still transforms the current entity.
    */
   protected function cleanupClassForSerialization($isIncludeGateWay = FALSE) {
-    if (\Civi::settings()->get('omnipay_developer_mode') && !empty($this->history)) {
-      $this->logHttpTraffic(FALSE);
-    }
-    $this->history = [];
-    $this->client = NULL;
-    $this->lock = NULL;
-    $this->guzzleClient = NULL;
-    if ($isIncludeGateWay) {
-      $this->gateway = NULL;
-    }
+    $this->cleanupObjectForSerialization($this, $isIncludeGateWay);
   }
 }
