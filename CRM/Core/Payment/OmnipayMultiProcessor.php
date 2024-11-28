@@ -845,9 +845,11 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     if ($response->isSuccessful()) {
       try {
         //cope with CRM14950 not being implemented
-        $this->loadContribution();
 
-        if ($this->getLock() && $this->contribution['contribution_status_id:name'] !== 'Completed') {
+        $lock = Civi::lockManager()->acquire('data.contribute.contribution.' . $this->transaction_id, 5);
+
+        $this->loadContribution();
+        if ($this->contribution['contribution_status_id:name'] !== 'Completed') {
           $this->gatewayConfirmContribution($response);
           $trxnReference = $response->getTransactionReference();
           civicrm_api3('contribution', 'completetransaction', [
