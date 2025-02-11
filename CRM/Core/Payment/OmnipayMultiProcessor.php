@@ -1597,7 +1597,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @param $type
    * @param $details
    */
-  public function log($type, $details) {
+  public function log($type, $details): void {
     if (\Civi::settings()->get('omnipay_developer_mode')) {
       $this->getLog()->debug('omnipay_' . $type, $details);
       $this->logHttpTraffic();
