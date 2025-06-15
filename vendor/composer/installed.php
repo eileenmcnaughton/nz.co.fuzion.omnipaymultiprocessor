@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'b1d803315fa19109b4f6b30d3c25f0924c59b158',
+        'reference' => '38d2a54fc395510b8bfe40a8a7b3265ead4fc560',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'b1d803315fa19109b4f6b30d3c25f0924c59b158',
+            'reference' => '38d2a54fc395510b8bfe40a8a7b3265ead4fc560',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -87,7 +87,7 @@
         'league/iso3166' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c25add31bdfb820d3db5b3f693bc7c5bec659876',
+            'reference' => 'eefa8172d122b77197d8ce4463eb6268227cc2ea',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/iso3166',
             'aliases' => array(
@@ -100,7 +100,7 @@
             'version' => 'dev-master',
             'reference' => 'a7f9a497853bcfaa5b97f4fe8ce8d2f5ac413f9e',
             'type' => 'metapackage',
-            'install_path' => NULL,
+            'install_path' => null,
             'aliases' => array(
                 0 => '3.2.x-dev',
             ),
@@ -125,9 +125,9 @@
             'dev_requirement' => false,
         ),
         'omnipay/common' => array(
-            'pretty_version' => 'v3.3.0',
-            'version' => '3.3.0.0',
-            'reference' => '2eca3823e9069e2c36b6007a090577d5584f9518',
+            'pretty_version' => 'v3.4.0',
+            'version' => '3.4.0.0',
+            'reference' => '83552de28815c5e46f66360c4d52c3a82a7d5efc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../omnipay/common',
             'aliases' => array(),
@@ -147,7 +147,7 @@
         'omnipay/mollie' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '8df39aeaae5a18e92729ec7780ef144e185cedff',
+            'reference' => 'f134958ae0d4983601db85a4b6385a1446bdf21b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../omnipay/mollie',
             'aliases' => array(
@@ -243,7 +243,7 @@
         'php-http/guzzle7-adapter' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '3b623a6123c51754317ed3d64e9a7ed396aa86cc',
+            'reference' => '03a415fde709c2f25539790fecf4d9a31bc3d0eb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/guzzle7-adapter',
             'aliases' => array(),
@@ -261,7 +261,7 @@
         'php-http/message' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '06dd5e8562f84e641bf929bfe699ee0f5ce8080a',
+            'reference' => 'a1c3b1e24d07f986c6867bf632ffa168e4eeaaef',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/message',
             'aliases' => array(),
@@ -335,7 +335,7 @@
         'psr/log' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => '^1',
+                0 => '^1.0 || ^2.0 || ^3.0',
             ),
         ),
         'razorpay/omnipay-razorpay' => array(
@@ -379,7 +379,7 @@
         'symfony/polyfill-mbstring' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '2369cb908b33d7b7518cce042615de430142497f',
+            'reference' => '6d857f4d76bd4b343eac26d6b539585d2bc56493',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
