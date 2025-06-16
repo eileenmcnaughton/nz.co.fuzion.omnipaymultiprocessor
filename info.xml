@@ -18,10 +18,9 @@
   <version>3.25</version>
   <develStage>stable</develStage>
   <compatibility>
-    <ver>5.79</ver>
+    <ver>6.3</ver>
   </compatibility>
   <php_compatibility>
-    <ver>8.0</ver>
     <ver>8.1</ver>
     <ver>8.2</ver>
     <ver>8.3</ver>
@@ -33,13 +32,13 @@
   <comments>This module integrates the omnipay library with CiviCRM. This release is for Omnipay 3.x and requires php 7.1. All new development will be here but 2.x series will continue to work.</comments>
   <civix>
     <namespace>CRM/Omnipaymultiprocessor</namespace>
-    <format>23.02.1</format>
+    <format>25.01.1</format>
   </civix>
   <mixins>
     <mixin>menu-xml@1.0.0</mixin>
     <mixin>mgd-php@1.0.0</mixin>
     <mixin>setting-php@1.0.0</mixin>
-    <mixin>smarty-v2@1.0.1</mixin>
+    <mixin>smarty@1.0.3</mixin>
   </mixins>
   <classloader>
     <psr0 prefix="CRM_" path="."/>
