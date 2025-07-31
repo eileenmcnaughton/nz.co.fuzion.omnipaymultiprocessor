@@ -64,6 +64,7 @@ class api_PreApproveTest extends \PHPUnit\Framework\TestCase implements Headless
       'component' => 'contribute',
       'version' => 3,
       'email' => 'blah@example.org',
+      'validate' => []
     ])['values'][0];
     $this->assertEquals('EC-9T988732661526452', $preApproval['token']);
 

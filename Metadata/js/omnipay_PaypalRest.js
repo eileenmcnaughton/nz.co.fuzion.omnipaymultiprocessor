@@ -38,6 +38,7 @@
           var paymentAmount = calculateTotalFee();
           var isRecur = $('#is_recur').is(":checked");
           var recurText = isRecur ? ' recurring' : '';
+          var validate = CRM.vars.omnipay.validate;
 
           return new Promise(function (resolve, reject) {
             CRM.api3('PaymentProcessor', 'preapprove', {
@@ -50,6 +51,7 @@
                 'frequency_unit' : frequencyUnit,
                 'frequency_interval' : frequencyInterval,
                 'description' : CRM.vars.omnipay.title + ' ' + CRM.formatMoney(paymentAmount) + recurText,
+                'validate' : validate,
               }
             ).then(function (result) {
                 if (result['is_error'] === 1) {
