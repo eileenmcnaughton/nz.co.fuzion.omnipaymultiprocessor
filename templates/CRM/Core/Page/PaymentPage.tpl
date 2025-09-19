@@ -15,7 +15,7 @@
         >
         {* this is a hack in core & it's a hack here... *}
         {if $core_field_name == 'cvv2'}
-          <span class="cvv2-icon" title="{ts}Usually the last 3-4 digits in the signature area on the back of the card.{/ts}"> </span>
+          <span class="cvv2-icon" title="{ts escape='htmlattribute'}Usually the last 3-4 digits in the signature area on the back of the card.{/ts}"> </span>
         {/if}
         {if $core_field_name == 'credit_card_type'}
           <div class="crm-credit_card_type-icons"></div>
@@ -68,7 +68,7 @@
   {/foreach}
   {if empty($display_fields)}<p>{ts}Please Click the pay now button if you are not automatically redirected{/ts}</p>{/if}
 
-  <input class='form-submit default crm-form-submit' type="submit" value="{ts}Pay now{/ts}">
+  <input class='form-submit default crm-form-submit' type="submit" value="{ts escape='htmlattribute'}Pay now{/ts}">
   {* jQuery validate *}
   {include file="CRM/Form/validate.tpl"}
 </form>
