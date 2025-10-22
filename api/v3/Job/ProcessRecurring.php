@@ -25,8 +25,8 @@ function civicrm_api3_job_process_recurring($params) {
       $originalContribution = civicrm_api3('Contribution', 'getsingle', [
         'contribution_recur_id' => $recurringPayment['id'],
         'options' => ['limit' => 1],
-        'is_test' => CRM_Utils_Array::value('is_test', $recurringPayment['is_test']),
-        'contribution_test' => CRM_Utils_Array::value('is_test', $recurringPayment['is_test']),
+        'is_test' => $recurringPayment['is_test']['is_test'] ?? NULL,
+        'contribution_test' => $recurringPayment['is_test']['is_test'] ?? NULL,
       ]);
       $result[$recurringPayment['id']]['original_contribution'] = $originalContribution;
       $totalAmount = $recurringPayment['amount'] ?? $originalContribution['total_amount'];

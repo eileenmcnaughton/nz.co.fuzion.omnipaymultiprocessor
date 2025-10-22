@@ -393,7 +393,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
           $processor = civicrm_api3('PaymentProcessor',
             'getsingle', ['id' => $this->_paymentProcessor['id']]
           );
-          return CRM_Utils_Array::value($paymentField['name'], $processor);
+          return $processor[$paymentField['name']] ?? NULL;
         }
     }
   }
