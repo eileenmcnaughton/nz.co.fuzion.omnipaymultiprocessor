@@ -249,7 +249,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *
    * @return string
    *
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public function getPaymentTypeLabel() {
     if (!isset($this->payment_type_label)) {
@@ -324,7 +324,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * Get array of fields that should be displayed on the payment form.
    *
    * @return array
-   * @throws CiviCRM_API3_Exception
+   * @throws CRM_Core_Exception
    */
   public function getPaymentFormFields() {
     $paymentType = civicrm_api3('option_value', 'getvalue', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type', 'return' => 'name'));
@@ -383,7 +383,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *
    * @return string
    *
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   protected function getPrefix() {
     $paymentFields = civicrm_api3('PaymentProcessor', 'getfields', []);

@@ -45,7 +45,7 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
   }
 
   /**
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public function testTransparentDirectDisplayFields() {
     $processor = $this->createTestProcessor('Eway_Rapid');
