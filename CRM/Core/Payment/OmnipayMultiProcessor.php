@@ -265,8 +265,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->ensurePaymentProcessorTypeIsSet();
     $this->createGatewayObject();
     $this->setProcessorFields();
-    $this->setContributionReference(CRM_Utils_Array::value('contributionID', $params));
-    $this->storeReturnUrls(CRM_Utils_Array::value('participantID', $params), CRM_Utils_Array::value('eventID', $params));
+    $this->setContributionReference($params['contributionID'] ?? NULL);
+    $this->storeReturnUrls($params['participantID'] ?? $params['eventID'] ?? NULL);
   }
 
   /**
@@ -784,7 +784,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $params = array_merge($_GET, $_REQUEST);
     if (empty($params['payment_processor_id'])) {
       // CRM-16422 we need to be prepared for the payment processor id to be in the url instead.
-      $q = explode('/', CRM_Utils_Array::value('q', $params, ''));
+      $q = explode('/', $params['q'] ?? '');
       $lastParam = array_pop($q);
       if (is_numeric($lastParam)) {
         $params['processor_id'] = $lastParam;
@@ -1541,7 +1541,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
 
     // and, at least with Way rapid, the createCreditCard call ignores any attempt to authorise.
     // that is likely to be a pattern.
-    $action = CRM_Utils_Array::value('payment_action', $params, 'purchase');
+    $action = $params['payment_action'] ?? 'purchase';
     // This is a bit tricky. With Paypal there are 2 flows
     // 1) you get a token from paypal checkout but there is no recurring - this token needs to be 'completed'
     // 2) you have a recurring payment token that we can bill against. However, is_recur is not
