@@ -42,7 +42,7 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
   /**
    * Setup for test.
    *
-   * @throws \API_Exception
+   * @throws \CRM_Core_Exception
    * @throws \CRM_Core_Exception
    */
   public function setUp():void {
@@ -79,7 +79,7 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
    * must be saved as part of the `trxn_id` JSON.
    *
    * @throws \CRM_Core_Exception
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public function testDoSinglePayment(): void {
     Civi::$statics['Omnipay_Test_Config'] = [ 'client' => $this->getHttpClient() ];
@@ -130,7 +130,7 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
    * must be saved as part of the `trxn_id` JSON.
    *
    * @throws \CRM_Core_Exception
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public function testDoRecurPayment(): void {
     $this->setMockHttpResponse([

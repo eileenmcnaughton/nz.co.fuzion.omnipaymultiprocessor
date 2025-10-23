@@ -37,7 +37,7 @@ class BillingFieldsTest extends TestCase implements HeadlessInterface, HookInter
   /**
    * Setup for test.
    *
-   * @throws \API_Exception
+   * @throws \CRM_Core_Exception
    * @throws \CRM_Csore_Exception
    */
   public function setUp():void {

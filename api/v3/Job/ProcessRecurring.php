@@ -7,7 +7,7 @@
  *
  * @return array
  *   API result array.
- * @throws CiviCRM_API3_Exception
+ * @throws CRM_Core_Exception
  */
 function civicrm_api3_job_process_recurring($params) {
   $omnipayProcessors = civicrm_api3('PaymentProcessor', 'get', ['class_name' => 'Payment_OmnipayMultiProcessor', 'domain_id' => CRM_Core_Config::domainID()]);
@@ -62,7 +62,7 @@ function civicrm_api3_job_process_recurring($params) {
       $result['success']['ids'] = $recurringPayment['id'];
 
     }
-    catch (CiviCRM_API3_Exception $e) {
+    catch (CRM_Core_Exception $e) {
       // Failed - what to do?
       civicrm_api3('ContributionRecur', 'create', [
         'id' => $recurringPayment['id'],

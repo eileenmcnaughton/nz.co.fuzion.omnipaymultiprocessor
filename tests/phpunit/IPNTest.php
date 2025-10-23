@@ -39,7 +39,7 @@ class IPNTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface, 
   /**
    * Example: Test that a version is returned.
    *
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    * @throws \CRM_Core_Exception
    */
   public function testIPN() {

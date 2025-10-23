@@ -5,8 +5,8 @@
  *
  * @param array $params
  *
- * @throws API_Exception
- * @throws CiviCRM_API3_Exception
+ * @throws CRM_Core_Exception
+ * @throws CRM_Core_Exception
  *
  * @return array
  *   API Result array

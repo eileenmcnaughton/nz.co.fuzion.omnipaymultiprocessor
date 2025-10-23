@@ -14,7 +14,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
    * Page run function.
    *
    * @return string
-   * @throws \CiviCRM_API3_Exception
+   * @throws \CRM_Core_Exception
    */
   public function run() {
     $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, TRUE));
