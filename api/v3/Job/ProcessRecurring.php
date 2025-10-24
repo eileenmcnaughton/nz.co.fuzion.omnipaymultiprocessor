@@ -45,7 +45,7 @@ function civicrm_api3_job_process_recurring($params) {
         'contributionID' => $pending['id'],
         'contribution_id' => $pending['id'],
         'contactID' => $originalContribution['contact_id'],
-        'description' => ts('Repeat payment, original was ' . $originalContribution['id']),
+        'description' => ts('Repeat payment, original was %1', [1 => $originalContribution['id']]),
         'token' => civicrm_api3('PaymentToken', 'getvalue', [
           'id' => $recurringPayment['payment_token_id'],
           'return' => 'token',
