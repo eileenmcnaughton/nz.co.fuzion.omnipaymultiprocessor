@@ -12,7 +12,7 @@ PHP library to make working with money safer, easier, and fun!
 
 > "If I had a dime for every time I've seen someone use FLOAT to store currency, I'd have $999.997634" -- [Bill Karwin](https://twitter.com/billkarwin/status/347561901460447232)
 
-In short: You shouldn't represent monetary values by a float. Wherever
+In short: You shouldn't represent monetary values by a float Wherever
 you need to represent money, use this Money value object. Since version
 3.0 this library uses [strings internally](https://github.com/moneyphp/money/pull/136)
 in order to support unlimited integers.
@@ -39,7 +39,9 @@ The documentation is available at http://moneyphp.org
 This library requires the [BCMath PHP extension](https://www.php.net/manual/en/book.bc.php). There might be additional dependencies for specific feature, e.g. the
 Swap exchange implementation, check the documentation for more information.
 
-Version 4 requires PHP 8.0. For older version of PHP, use version 3 of this library.
+Version 4 requires PHP 8.0. For older version of PHP, use version 3 of this library. From version 4.5 this package
+will only support [PHP versions that actually receive updates by PHP itself](https://www.php.net/supported-versions.php).
+If you want to use the package with older PHP versions, you can of course use older versions of this package.
 
 
 ## Install

@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'f1628d73f7662c3d1eb6bf9b74a0720fc2d3187b',
+        'reference' => '25f7a2dfc53791dc52d1799b791e6e67ce1f3611',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f1628d73f7662c3d1eb6bf9b74a0720fc2d3187b',
+            'reference' => '25f7a2dfc53791dc52d1799b791e6e67ce1f3611',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -33,7 +33,7 @@
         'clue/stream-filter' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => 'b27b3b4bd1d0b28ca9ba477150515eb1b84826a4',
+            'reference' => 'b2eb64756f9f66292c2043f4021f4205839ad5ed',
             'type' => 'library',
             'install_path' => __DIR__ . '/../clue/stream-filter',
             'aliases' => array(),
@@ -87,7 +87,7 @@
         'league/iso3166' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'eefa8172d122b77197d8ce4463eb6268227cc2ea',
+            'reference' => '281cb48e6e9806299fbdefc574da0a987785f313',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/iso3166',
             'aliases' => array(
@@ -98,7 +98,7 @@
         'league/omnipay' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'a7f9a497853bcfaa5b97f4fe8ce8d2f5ac413f9e',
+            'reference' => '9cb6293949647b8878b2e3371930e0a69c552073',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -107,9 +107,9 @@
             'dev_requirement' => false,
         ),
         'moneyphp/money' => array(
-            'pretty_version' => 'v4.4.0',
-            'version' => '4.4.0.0',
-            'reference' => '5e60aebf09f709dd4ea16bf85e66d65301c0d172',
+            'pretty_version' => 'v4.8.0',
+            'version' => '4.8.0.0',
+            'reference' => 'b358727ea5a5cd2d7475e59c31dfc352440ae7ec',
             'type' => 'library',
             'install_path' => __DIR__ . '/../moneyphp/money',
             'aliases' => array(),
@@ -287,7 +287,7 @@
         'php-http/promise' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '12e12043e9ed9ddc6ea8481593fb230150227416',
+            'reference' => '139f40d45c25fd4192489c199df598421440821f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-http/promise',
             'aliases' => array(),
@@ -359,18 +359,20 @@
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => '3.0.x-dev',
-            'version' => '3.0.9999999.9999999-dev',
-            'reference' => 'c30dd04b9a303689a26d7986f7cffce04203a107',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '63afe740e99a13ba87ec199bb07bbdee937a5b62',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '3.6.x-dev',
+            ),
             'dev_requirement' => false,
         ),
         'symfony/http-foundation' => array(
-            'pretty_version' => 'v6.4.22',
-            'version' => '6.4.22.0',
-            'reference' => '6b7c97fe1ddac8df3cc9ba6410c8abc683e148ae',
+            'pretty_version' => '6.4.x-dev',
+            'version' => '6.4.9999999.9999999-dev',
+            'reference' => '716e385be31c2305a5700c0cdc892ae63f7c58c0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/http-foundation',
             'aliases' => array(),
@@ -388,7 +390,7 @@
         'symfony/polyfill-php83' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
-            'reference' => '2fb86d65e2d424369ad2905e83b236a8805ba491',
+            'reference' => '17f6f9a6b1735c0f163024d959f700cfbc5155e5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php83',
             'aliases' => array(),

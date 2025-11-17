@@ -3,7 +3,12 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use Money\Currencies;
+use Money\Currencies\ISOCurrencies;
 use Money\Currency;
+use Money\Formatter\DecimalMoneyFormatter;
+use Money\Money;
+use Money\Parser\DecimalMoneyParser;
+use Money\Teller;
 
 (static function (): void {
     $buffer = <<<'PHP'
@@ -13,7 +18,11 @@ declare(strict_types=1);
 
 namespace Money;
 
-use InvalidArgumentException;
+use Money\Currencies\ISOCurrencies;
+use Money\Formatter\DecimalMoneyFormatter;
+use Money\Parser\DecimalMoneyParser;
+
+use function array_shift;
 
 /**
  * This is a generated file. Do not edit it manually!
@@ -21,25 +30,34 @@ use InvalidArgumentException;
 PHPDOC
  * @psalm-immutable
  */
-trait MoneyFactory
+trait TellerFactory
 {
     /**
-     * Convenience factory method for a Money object.
+     * Convenience factory method for a Teller object.
      *
      * <code>
-     * $fiveDollar = Money::USD(500);
+     * $teller = Teller::USD();
      * </code>
      *
      * @param non-empty-string          $method
-     * @param array{numeric-string|int} $arguments
-     *
-     * @throws InvalidArgumentException If amount is not integer(ish).
-     *
-     * @psalm-pure
+     * @param array{0?: Money::ROUND_*} $arguments
      */
-    public static function __callStatic(string $method, array $arguments): Money
+    public static function __callStatic(string $method, array $arguments): Teller
     {
-        return new Money($arguments[0], new Currency($method));
+        $currency     = new Currency($method);
+        $currencies   = new ISOCurrencies();
+        $parser       = new DecimalMoneyParser($currencies);
+        $formatter    = new DecimalMoneyFormatter($currencies);
+        $roundingMode = empty($arguments)
+            ? Money::ROUND_HALF_UP
+            : (int) array_shift($arguments);
+
+        return new Teller(
+            $currency,
+            $parser,
+            $formatter,
+            $roundingMode
+        );
     }
 }
 
@@ -66,10 +84,10 @@ PHP;
             $code = strtoupper(preg_replace('/\s+/', '', $formatter->format($extracted[1])) . $extracted[2]);
         }
 
-        $methodBuffer .= sprintf(" * @method static Money %s(numeric-string|int \$amount)\n", $code);
+        $methodBuffer .= sprintf(" * @method static Teller %s(int \$roundingMode = Money::ROUND_HALF_UP)\n", $code);
     }
 
     $buffer = str_replace('PHPDOC', rtrim($methodBuffer), $buffer);
 
-    file_put_contents(__DIR__.'/../src/MoneyFactory.php', $buffer);
+    file_put_contents(__DIR__.'/../src/TellerFactory.php', $buffer);
 })();

@@ -23,14 +23,14 @@ final class ISOCurrencies implements Currencies
     /**
      * Map of known currencies indexed by code.
      *
-     * @psalm-var non-empty-array<non-empty-string, array{
+     * @phpstan-var non-empty-array<non-empty-string, array{
      *     alphabeticCode: non-empty-string,
      *     currency: non-empty-string,
-     *     minorUnit: positive-int|0,
+     *     minorUnit: non-negative-int,
      *     numericCode: positive-int
      * }>|null
      */
-    private static ?array $currencies = null;
+    private static array|null $currencies = null;
 
     public function contains(Currency $currency): bool
     {
@@ -61,7 +61,7 @@ final class ISOCurrencies implements Currencies
     }
 
     /**
-     * @psalm-return Traversable<int, Currency>
+     * @phpstan-return Traversable<int, Currency>
      */
     public function getIterator(): Traversable
     {
@@ -78,10 +78,10 @@ final class ISOCurrencies implements Currencies
     /**
      * Returns a map of known currencies indexed by code.
      *
-     * @psalm-return non-empty-array<non-empty-string, array{
+     * @phpstan-return non-empty-array<non-empty-string, array{
      *     alphabeticCode: non-empty-string,
      *     currency: non-empty-string,
-     *     minorUnit: positive-int|0,
+     *     minorUnit: non-negative-int,
      *     numericCode: positive-int
      * }>
      */
@@ -95,10 +95,10 @@ final class ISOCurrencies implements Currencies
     }
 
     /**
-     * @psalm-return non-empty-array<non-empty-string, array{
+     * @phpstan-return non-empty-array<non-empty-string, array{
      *     alphabeticCode: non-empty-string,
      *     currency: non-empty-string,
-     *     minorUnit: positive-int|0,
+     *     minorUnit: non-negative-int,
      *     numericCode: positive-int
      * }>
      */

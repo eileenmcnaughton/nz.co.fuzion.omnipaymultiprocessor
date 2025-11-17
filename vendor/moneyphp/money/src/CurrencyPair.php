@@ -20,26 +20,13 @@ use function sprintf;
 final class CurrencyPair implements JsonSerializable
 {
     /**
-     * Currency to convert from.
+     * @phpstan-param numeric-string $conversionRatio
      */
-    private Currency $baseCurrency;
-
-    /**
-     * Currency to convert to.
-     */
-    private Currency $counterCurrency;
-
-    /** @psalm-var numeric-string */
-    private string $conversionRatio;
-
-    /**
-     * @psalm-param numeric-string $conversionRatio
-     */
-    public function __construct(Currency $baseCurrency, Currency $counterCurrency, string $conversionRatio)
-    {
-        $this->counterCurrency = $counterCurrency;
-        $this->baseCurrency    = $baseCurrency;
-        $this->conversionRatio = $conversionRatio;
+    public function __construct(
+        private readonly Currency $baseCurrency,
+        private readonly Currency $counterCurrency,
+        private readonly string $conversionRatio
+    ) {
     }
 
     /**
@@ -61,8 +48,6 @@ final class CurrencyPair implements JsonSerializable
             throw new InvalidArgumentException(sprintf('Cannot create currency pair from ISO string "%s", format of string is invalid', $iso));
         }
 
-        assert($matches[1] !== '');
-        assert($matches[2] !== '');
         assert(is_numeric($matches[3]));
 
         return new self(new Currency($matches[1]), new Currency($matches[2]), $matches[3]);
@@ -87,7 +72,7 @@ final class CurrencyPair implements JsonSerializable
     /**
      * Returns the conversion ratio.
      *
-     * @psalm-return numeric-string
+     * @phpstan-return numeric-string
      */
     public function getConversionRatio(): string
     {
@@ -95,7 +80,7 @@ final class CurrencyPair implements JsonSerializable
     }
 
     /**
-     * Checks if an other CurrencyPair has the same parameters as this.
+     * Checks if another CurrencyPair has the same parameters as this.
      */
     public function equals(CurrencyPair $other): bool
     {
@@ -105,9 +90,9 @@ final class CurrencyPair implements JsonSerializable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
-     * @psalm-return array{baseCurrency: Currency, counterCurrency: Currency, ratio: numeric-string}
+     * @phpstan-return array{baseCurrency: Currency, counterCurrency: Currency, ratio: numeric-string}
      */
     public function jsonSerialize(): array
     {

@@ -11,8 +11,6 @@ use Money\Exception\UnresolvableCurrencyPairException;
 use Money\Exchange;
 use Swap\Swap;
 
-use function assert;
-use function is_numeric;
 use function sprintf;
 
 /**
@@ -20,11 +18,8 @@ use function sprintf;
  */
 final class SwapExchange implements Exchange
 {
-    private Swap $swap;
-
-    public function __construct(Swap $swap)
+    public function __construct(private readonly Swap $swap)
     {
-        $this->swap = $swap;
     }
 
     public function quote(Currency $baseCurrency, Currency $counterCurrency): CurrencyPair
@@ -36,8 +31,6 @@ final class SwapExchange implements Exchange
         }
 
         $rateValue = sprintf('%.14F', $rate->getValue());
-
-        assert(is_numeric($rateValue));
 
         return new CurrencyPair($baseCurrency, $counterCurrency, $rateValue);
     }

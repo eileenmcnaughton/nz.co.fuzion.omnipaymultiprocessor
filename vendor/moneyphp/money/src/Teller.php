@@ -4,63 +4,21 @@ declare(strict_types=1);
 
 namespace Money;
 
-use Money\Currencies\ISOCurrencies;
-use Money\Formatter\DecimalMoneyFormatter;
-use Money\Parser\DecimalMoneyParser;
-
-use function array_shift;
 use function is_float;
 
 final class Teller
 {
+    use TellerFactory;
+
     /**
-     * Convenience factory method for a Teller object.
-     *
-     * <code>
-     * $teller = Teller::USD();
-     * </code>
-     *
-     * @param non-empty-string $method
-     * @param array{0?: int}   $arguments
-     *
-     * @return Teller
+     * @param Money::ROUND_* $roundingMode
      */
-    public static function __callStatic(string $method, array $arguments): self
-    {
-        $currency     = new Currency($method);
-        $currencies   = new ISOCurrencies();
-        $parser       = new DecimalMoneyParser($currencies);
-        $formatter    = new DecimalMoneyFormatter($currencies);
-        $roundingMode = empty($arguments)
-            ? Money::ROUND_HALF_UP
-            : (int) array_shift($arguments);
-
-        return new self(
-            $currency,
-            $parser,
-            $formatter,
-            $roundingMode
-        );
-    }
-
-    private Currency $currency;
-
-    private MoneyFormatter $formatter;
-
-    private MoneyParser $parser;
-
-    private int $roundingMode = Money::ROUND_HALF_UP;
-
     public function __construct(
-        Currency $currency,
-        MoneyParser $parser,
-        MoneyFormatter $formatter,
-        int $roundingMode = Money::ROUND_HALF_UP
+        private readonly Currency $currency,
+        private readonly MoneyParser $parser,
+        private readonly MoneyFormatter $formatter,
+        private readonly int $roundingMode = Money::ROUND_HALF_UP
     ) {
-        $this->currency     = $currency;
-        $this->parser       = $parser;
-        $this->formatter    = $formatter;
-        $this->roundingMode = $roundingMode;
     }
 
     /**
@@ -146,9 +104,9 @@ final class Teller
     /**
      * Adds a series of monetary amounts to each other in sequence.
      *
-     * @param mixed   $amount a monetary amount
-     * @param mixed   $other  another monetary amount
-     * @param mixed[] $others subsequent other monetary amounts
+     * @param mixed $amount a monetary amount
+     * @param mixed $other  another monetary amount
+     * @param mixed $others subsequent other monetary amounts
      *
      * @return string the calculated monetary amount
      */
@@ -165,9 +123,9 @@ final class Teller
     /**
      * Subtracts a series of monetary amounts from each other in sequence.
      *
-     * @param mixed   $amount a monetary amount
-     * @param mixed   $other  another monetary amount
-     * @param mixed[] $others subsequent monetary amounts
+     * @param mixed $amount a monetary amount
+     * @param mixed $other  another monetary amount
+     * @param mixed $others subsequent monetary amounts
      */
     public function subtract(mixed $amount, mixed $other, mixed ...$others): string
     {
@@ -251,7 +209,7 @@ final class Teller
      * Allocates a monetary amount among N targets.
      *
      * @param mixed $amount a monetary amount
-     * @psalm-param positive-int $n the number of targets
+     * @phpstan-param positive-int $n the number of targets
      *
      * @return string[] the calculated monetary amounts
      */

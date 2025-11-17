@@ -27,13 +27,6 @@
     'minorUnit' => 2,
     'numericCode' => 51,
   ),
-  'ANG' => 
-  array (
-    'alphabeticCode' => 'ANG',
-    'currency' => 'Netherlands Antillean Guilder',
-    'minorUnit' => 2,
-    'numericCode' => 532,
-  ),
   'AOA' => 
   array (
     'alphabeticCode' => 'AOA',
@@ -257,13 +250,6 @@
     'currency' => 'Costa Rican Colon',
     'minorUnit' => 2,
     'numericCode' => 188,
-  ),
-  'CUC' => 
-  array (
-    'alphabeticCode' => 'CUC',
-    'currency' => 'Peso Convertible',
-    'minorUnit' => 2,
-    'numericCode' => 931,
   ),
   'CUP' => 
   array (
@@ -902,13 +888,6 @@
     'minorUnit' => 2,
     'numericCode' => 925,
   ),
-  'SLL' => 
-  array (
-    'alphabeticCode' => 'SLL',
-    'currency' => 'Leone',
-    'minorUnit' => 2,
-    'numericCode' => 694,
-  ),
   'SOS' => 
   array (
     'alphabeticCode' => 'SOS',
@@ -1112,6 +1091,13 @@
     'minorUnit' => 2,
     'numericCode' => 882,
   ),
+  'XAD' => 
+  array (
+    'alphabeticCode' => 'XAD',
+    'currency' => 'Arab Accounting Dinar',
+    'minorUnit' => 2,
+    'numericCode' => 396,
+  ),
   'XAF' => 
   array (
     'alphabeticCode' => 'XAF',
@@ -1167,6 +1153,13 @@
     'currency' => 'East Caribbean Dollar',
     'minorUnit' => 2,
     'numericCode' => 951,
+  ),
+  'XCG' => 
+  array (
+    'alphabeticCode' => 'XCG',
+    'currency' => 'Caribbean Guilder',
+    'minorUnit' => 2,
+    'numericCode' => 532,
   ),
   'XDR' => 
   array (
@@ -1252,11 +1245,11 @@
     'minorUnit' => 2,
     'numericCode' => 967,
   ),
-  'ZWL' => 
+  'ZWG' => 
   array (
-    'alphabeticCode' => 'ZWL',
-    'currency' => 'Zimbabwe Dollar',
+    'alphabeticCode' => 'ZWG',
+    'currency' => 'Zimbabwe Gold',
     'minorUnit' => 2,
-    'numericCode' => 932,
+    'numericCode' => 924,
   ),
 );

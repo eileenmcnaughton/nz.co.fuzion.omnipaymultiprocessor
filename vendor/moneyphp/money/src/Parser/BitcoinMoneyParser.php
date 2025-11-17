@@ -23,11 +23,8 @@ use function substr;
  */
 final class BitcoinMoneyParser implements MoneyParser
 {
-    private int $fractionDigits;
-
-    public function __construct(int $fractionDigits)
+    public function __construct(private readonly int $fractionDigits)
     {
-        $this->fractionDigits = $fractionDigits;
     }
 
     public function parse(string $money, Currency|null $fallbackCurrency = null): Money
@@ -59,7 +56,6 @@ final class BitcoinMoneyParser implements MoneyParser
             $decimal = '0';
         }
 
-        /** @psalm-var numeric-string $decimal */
         return new Money($decimal, $currency);
     }
 }
