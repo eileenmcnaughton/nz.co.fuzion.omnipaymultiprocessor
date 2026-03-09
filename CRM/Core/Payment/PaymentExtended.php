@@ -110,7 +110,6 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param array $paymentProcessor
    */
   public function __construct($mode, &$paymentProcessor) {
-    $this->_mode = $mode;
     $this->_is_test = ($mode == 'live') ? FALSE : TRUE;
     $this->_paymentProcessor = $paymentProcessor;
   }
