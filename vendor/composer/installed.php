@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '25f7a2dfc53791dc52d1799b791e6e67ce1f3611',
+        'reference' => '13a388462ed2294173d24d67c58cb5ad57db8199',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '25f7a2dfc53791dc52d1799b791e6e67ce1f3611',
+            'reference' => '13a388462ed2294173d24d67c58cb5ad57db8199',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -153,6 +153,15 @@
             'aliases' => array(
                 0 => '5.5.x-dev',
             ),
+            'dev_requirement' => false,
+        ),
+        'omnipay/payfast' => array(
+            'pretty_version' => 'v3.1.0',
+            'version' => '3.1.0.0',
+            'reference' => '64fc450cbca608cbb3f6e9f99be39fa05600dc23',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../omnipay/payfast',
+            'aliases' => array(),
             'dev_requirement' => false,
         ),
         'omnipay/paymentexpress' => array(
