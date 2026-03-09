@@ -35,6 +35,7 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
             'Omnipay\\Razorpay\\' => 17,
             'Omnipay\\PaymentExpress\\' => 23,
             'Omnipay\\PayPal\\' => 15,
+            'Omnipay\\PayFast\\' => 16,
             'Omnipay\\NABTransact\\' => 20,
             'Omnipay\\Mollie\\' => 15,
             'Omnipay\\Mercanet\\' => 17,
@@ -114,6 +115,10 @@ class ComposerStaticInit9c661977280eba00f26021522edd8f5f
         'Omnipay\\PayPal\\' => 
         array (
             0 => __DIR__ . '/..' . '/omnipay/paypal/src',
+        ),
+        'Omnipay\\PayFast\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/omnipay/payfast/src',
         ),
         'Omnipay\\NABTransact\\' => 
         array (

@@ -18,6 +18,7 @@ return array(
     'Omnipay\\Razorpay\\' => array($vendorDir . '/razorpay/omnipay-razorpay/src'),
     'Omnipay\\PaymentExpress\\' => array($vendorDir . '/omnipay/paymentexpress/src'),
     'Omnipay\\PayPal\\' => array($vendorDir . '/omnipay/paypal/src'),
+    'Omnipay\\PayFast\\' => array($vendorDir . '/omnipay/payfast/src'),
     'Omnipay\\NABTransact\\' => array($vendorDir . '/sudiptpa/omnipay-nabtransact/src'),
     'Omnipay\\Mollie\\' => array($vendorDir . '/omnipay/mollie/src'),
     'Omnipay\\Mercanet\\' => array($vendorDir . '/fuzion/omnipay-mercanet/src'),
