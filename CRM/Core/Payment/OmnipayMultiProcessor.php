@@ -125,7 +125,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function __unserialize(array $data): void {
     foreach ($data as $key => $value) {
-      $this->$key = $value;
+      if (property_exists($this, $key)) {
+        $this->$key = $value;
+      }
     }
   }
 
