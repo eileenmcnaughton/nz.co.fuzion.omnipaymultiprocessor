@@ -82,7 +82,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @var \Civi\Payment\PropertyBag
    */
   protected $propertyBag;
-  
+
   /**
    * For PHP8.1
    * https://www.php.net/manual/en/language.oop5.magic.php#object.serialize
@@ -93,7 +93,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
     $this->cleanupObjectForSerialization($data, TRUE);
     return (array) $data;
   }
-  
+
   /**
    * Serialize, first removing gateway
    *
@@ -102,7 +102,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return string
    */
   public function serialize(): string {
-    return serialize($this->serialize());
+    return serialize($this->__serialize());
   }
 
   /**
@@ -120,7 +120,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
   /**
    * For PHP8.1
    * https://www.php.net/manual/en/language.oop5.magic.php#object.unserialize
-   * 
+   *
    * @param array $data
    */
   public function __unserialize(array $data): void {
