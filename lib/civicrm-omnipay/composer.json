@@ -63,7 +63,7 @@
     },
     "process-timeout": 300,
     "platform": {
-      "php": "8.5"
+      "php": "8.1"
     }
   }
 }

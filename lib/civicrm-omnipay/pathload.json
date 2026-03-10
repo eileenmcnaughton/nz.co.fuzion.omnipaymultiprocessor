@@ -1,4 +1,4 @@
-called installed{
+{
     "autoload": {
         "psr-4": {
             "CiviOmniPay\\Omnipay\\FirstAtlanticCommerce\\": [

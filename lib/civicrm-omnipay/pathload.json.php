@@ -65,7 +65,6 @@ function buildPathloadJson(array $installed, array $scoper): array {
 }
 
 $scoper = require __DIR__ . '/scoper.inc.php';
-echo "called installed";
 $installed = json_decode(file_get_contents(
   __DIR__ . '/vendor/composer/installed.json'
 ), TRUE);
