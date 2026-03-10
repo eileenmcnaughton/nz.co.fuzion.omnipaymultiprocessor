@@ -26,14 +26,12 @@
 */
 
 use Civi\Core\Lock\LockInterface;
-use Omnipay\Omnipay;
-use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidRequestException;
+use CiviOmniPay\Omnipay\Omnipay;
+use CiviOmniPay\Omnipay\Common\AbstractGateway;
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\HandlerStack;
-use Omnipay\Common\Http\Client;
-use GuzzleHttp\Client as GuzzleClient;
+use CiviOmniPay\Omnipay\Common\Http\Client;
 use Http\Adapter\Guzzle6\Client as HttpPlugClient;
 use Civi\Api4\Contribution;
 
