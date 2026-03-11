@@ -29,10 +29,10 @@ use Civi\Core\Lock\LockInterface;
 use CiviOmniPay\Omnipay\Omnipay;
 use CiviOmniPay\Omnipay\Common\AbstractGateway;
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\HandlerStack;
+use CiviOmniPay\GuzzleHttp\Middleware;
+use CiviOmniPay\GuzzleHttp\HandlerStack;
 use CiviOmniPay\Omnipay\Common\Http\Client;
-use Http\Adapter\Guzzle6\Client as HttpPlugClient;
+use CiviOmniPay\Http\Adapter\Guzzle6\Client as HttpPlugClient;
 use Civi\Api4\Contribution;
 
 /**

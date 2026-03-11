@@ -1,12 +1,12 @@
 <?php
 
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Middleware;
-use Psr\Http\Message\ResponseInterface;
-use Omnipay\Common\Http\Client;
-use Http\Mock\Client as MockClient;
+use CiviOmniPay\GuzzleHttp\Handler\MockHandler;
+use CiviOmniPay\GuzzleHttp\HandlerStack;
+use CiviOmniPay\GuzzleHttp\Psr7\Response;
+use CiviOmniPay\GuzzleHttp\Middleware;
+use CiviOmniPay\Psr\Http\Message\ResponseInterface;
+use CiviOmniPay\Omnipay\Common\Http\Client;
+use CiviOmniPay\Http\Mock\Client as MockClient;
 
 /**
  * Class GuzzleTestTrait

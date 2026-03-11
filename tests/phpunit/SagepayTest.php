@@ -4,7 +4,7 @@ use Civi\Api4\Contact;
 use Civi\Test\HeadlessInterface;
 use Civi\Test\HookInterface;
 use Civi\Test\TransactionalInterface;
-use GuzzleHttp\Psr7\Response;
+use CiviOmniPay\GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Civi\Test\Api3TestTrait;
 use Civi\Api4\ContributionRecur;
