@@ -154,7 +154,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    *
    * @return void
    */
-  public function setReturnUrl(string $returnUrl = null) {
+  public function setReturnUrl(?string $returnUrl = null) {
     $this->returnUrl = $returnUrl;
   }
 
