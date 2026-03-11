@@ -5,7 +5,7 @@
     "files": [
         "composer.json",
         "composer.lock",
-        "pathload.json"
+        "pathload.main.php"
     ],
     "directories": [
         "vendor/composer"

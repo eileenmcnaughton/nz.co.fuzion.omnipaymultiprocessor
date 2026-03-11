@@ -14,7 +14,7 @@ function task_build() {
     mkdir -p "$DIST_DIR"
   fi
 
-  php pathload.json.php > pathload.json
+  php generate-pathload.main.php "$LIB_NAME" "$LIB_VER" > pathload.main.php
   run_box compile -v
 
   mv vendor.phar ../../dist/"${LIB_NAME}@${LIB_VER}.phar"
@@ -22,7 +22,7 @@ function task_build() {
 
 ## Remove temporary files
 function task_clean() {
-  rm -rf vendor pathload.json
+  rm -rf vendor pathload.json pathload.main.php
 }
 
 ## Display hep screen
