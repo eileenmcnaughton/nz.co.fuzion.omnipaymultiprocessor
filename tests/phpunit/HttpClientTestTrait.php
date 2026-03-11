@@ -116,7 +116,7 @@ trait HttpClientTestTrait {
   {
     $ref = new ReflectionObject($this);
     $dir = dirname($ref->getFileName());
-    return \GuzzleHttp\Psr7\parse_response(file_get_contents($dir . '/Mock/' . $path));
+    return \CiviOmniPay\GuzzleHttp\Psr7\Message::parseResponse(file_get_contents($dir . '/Mock/' . $path));
   }
 
   /**

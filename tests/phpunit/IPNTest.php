@@ -4,7 +4,7 @@ use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 use Civi\Test\HeadlessInterface;
 use Civi\Test\HookInterface;
 use Civi\Test\TransactionalInterface;
-use Symfony\Component\HttpFoundation\Request;
+use CiviOmniPay\Symfony\Component\HttpFoundation\Request;
 
 /**
  * FIXME - Add test description.
