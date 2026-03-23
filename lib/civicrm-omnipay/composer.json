@@ -44,7 +44,9 @@
     "clue/stream-filter": "^1.7",
     "cloudcogsio/omnipay-firstatlanticcommerce-gateway": "*@dev",
     "hounddd/omnipay-systempay": "dev-master",
-    "ext-json": "*"
+    "ext-json": "*",
+    "omnipay/payfast": "^3.1",
+    "cloudcogsio/omnipay-powertranz-3ds2-gateway": "^1.0"
   },
   "replace": {
     "psr/log": "^1.0 || ^2.0 || ^3.0"
