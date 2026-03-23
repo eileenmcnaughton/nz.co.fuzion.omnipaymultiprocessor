@@ -1,0 +1,63 @@
+{
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/eileenmcnaughton/omnipay-razorpay.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/eileenmcnaughton/omnipay-eway.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/eileenmcnaughton/omnipay-paypal.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/eileenmcnaughton/omnipay-firstatlanticcommerce-gateway.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/adixon/omnipay-beanstream.git"
+    }
+  ],
+  "require": {
+    "league/omnipay": "^3",
+    "guzzlehttp/guzzle": "^7.0",
+    "psr/log": "~1.0 || ~2.0 || ~3.0",
+    "php-http/mock-client": "^1",
+    "omnipay/tests": "*@dev",
+    "omnipay/paypal": "^3.0@dev",
+    "omnipay/authorizenet": "^3.0@dev",
+    "omnipay/eway": "^3.0@dev",
+    "omnipay/mollie": "^5.1@dev",
+    "sudiptpa/omnipay-nabtransact": "^3.0@dev",
+    "omnipay/sagepay": "^4.1",
+    "omnipay/securepay": "^3.0@dev",
+    "omnipay/stripe": "^3.0@dev",
+    "omnipay/worldpay": "^3.0@dev",
+    "omnipay/paymentexpress": "^3.0@dev",
+    "omnipay/common": "^3.5",
+    "dioscouri/omnipay-cybersource": "^3.0@dev",
+    "fuzion/omnipay-mercanet": "^3.0@dev",
+    "razorpay/omnipay-razorpay": "^3.0@dev",
+    "clue/stream-filter": "^1.7",
+    "cloudcogsio/omnipay-firstatlanticcommerce-gateway": "*@dev",
+    "hounddd/omnipay-systempay": "dev-master",
+    "ext-json": "*"
+  },
+  "replace": {
+    "psr/log": "^1.0 || ^2.0 || ^3.0"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": false
+    },
+    "process-timeout": 300,
+    "platform": {
+      "php": "8.1"
+    }
+  }
+}

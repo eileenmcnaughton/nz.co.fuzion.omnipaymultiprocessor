@@ -4,7 +4,7 @@ use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 use Civi\Test\HeadlessInterface;
 use Civi\Test\HookInterface;
 use Civi\Test\TransactionalInterface;
-use GuzzleHttp\Psr7\Response;
+use CiviOmniPay\GuzzleHttp\Psr7\Response;
 
 /**
  * FIXME - Add test description.

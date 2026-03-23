@@ -1,8 +1,8 @@
 <?php
 
-use Omnipay\Common\Http\Client;
-use Omnipay\SagePay\Message\ServerNotifyRequest;
-use Symfony\Component\HttpFoundation\Request;
+use CiviOmniPay\Omnipay\Common\Http\Client;
+use CiviOmniPay\Omnipay\SagePay\Message\ServerNotifyRequest;
+use CiviOmniPay\Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SagepayTestTrait
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 trait SagepayTestTrait {
 
-  use \Omnipay\SagePay\Traits\ServerNotifyTrait;
+  use \CiviOmniPay\Omnipay\SagePay\Traits\ServerNotifyTrait;
 
   protected function getNewContributionPage($processorID): array {
     return [

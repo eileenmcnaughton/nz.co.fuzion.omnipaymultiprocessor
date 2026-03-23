@@ -21,10 +21,8 @@ function omnipaymultiprocessor_civicrm_container(ContainerBuilder $container) {
  */
 function omnipaymultiprocessor_civicrm_config($config) {
   _omnipaymultiprocessor_civix_civicrm_config($config);
-  $extRoot = __DIR__ . DIRECTORY_SEPARATOR;
-  $include_path = $extRoot . DIRECTORY_SEPARATOR . 'vendor' . PATH_SEPARATOR . get_include_path( );
-  set_include_path( $include_path );
-  require_once 'vendor/autoload.php';
+  pathload()->addSearchDir(__DIR__ . '/dist');
+  pathload()->addNamespace('civicrm-omnipay@8', ['CiviOmniPay\\']);
 }
 
 /**

@@ -15,6 +15,8 @@ class BillingFieldsTest extends TestCase implements HeadlessInterface, HookInter
   use Api3TestTrait;
   use HttpClientTestTrait;
 
+  protected $processor;
+
   /**
    * ID of payment processor created for test.
    *

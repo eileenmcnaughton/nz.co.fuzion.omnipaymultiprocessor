@@ -26,15 +26,13 @@
 */
 
 use Civi\Core\Lock\LockInterface;
-use Omnipay\Omnipay;
-use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Exception\InvalidRequestException;
+use CiviOmniPay\Omnipay\Omnipay;
+use CiviOmniPay\Omnipay\Common\AbstractGateway;
 use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\HandlerStack;
-use Omnipay\Common\Http\Client;
-use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client as HttpPlugClient;
+use CiviOmniPay\GuzzleHttp\Middleware;
+use CiviOmniPay\GuzzleHttp\HandlerStack;
+use CiviOmniPay\Omnipay\Common\Http\Client;
+use CiviOmniPay\Http\Adapter\Guzzle6\Client as HttpPlugClient;
 use Civi\Api4\Contribution;
 
 /**
@@ -125,7 +123,9 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    */
   public function __unserialize(array $data): void {
     foreach ($data as $key => $value) {
-      $this->$key = $value;
+      if (property_exists($this, $key)) {
+        $this->$key = $value;
+      }
     }
   }
 

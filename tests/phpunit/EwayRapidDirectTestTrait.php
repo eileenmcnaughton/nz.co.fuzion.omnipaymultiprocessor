@@ -1,6 +1,6 @@
 <?php
 
-use GuzzleHttp\Psr7\Response;
+use CiviOmniPay\GuzzleHttp\Psr7\Response;
 
 /**
  * Class EwayRapidDirectTestTrait
