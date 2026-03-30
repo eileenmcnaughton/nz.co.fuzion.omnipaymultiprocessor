@@ -99,7 +99,7 @@ class EwayTest extends \PHPUnit\Framework\TestCase implements HeadlessInterface,
 
     $contribution = $this->callAPISuccessGetSingle('Contribution', ['payment_processor_id' => $processor['id'], 'contribution_status_id' => 'Completed']);
 
-    $invoiceDescription = substr($contribution['contact_id'] . '-' . $contribution['id'] . '-Help Support CiviCRM!', 0, 24);
+    $invoiceDescription = 'Online Contribution: Help Support CiviCRM!';
 
     $this->assertEquals($this->getRequest($contribution, $invoiceDescription),
       $outbound[0]);

@@ -27,6 +27,12 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
    */
   protected $paymentProcessorID;
 
+  private mixed $ids;
+
+  private mixed $_contribution;
+
+  private $_new;
+
   /**
    * @return \Civi\Test\CiviEnvBuilder
    * @throws \CRM_Extension_Exception_ParseException
@@ -42,7 +48,6 @@ class SagepayTest extends TestCase implements HeadlessInterface, HookInterface, 
   /**
    * Setup for test.
    *
-   * @throws \CRM_Core_Exception
    * @throws \CRM_Core_Exception
    */
   public function setUp():void {

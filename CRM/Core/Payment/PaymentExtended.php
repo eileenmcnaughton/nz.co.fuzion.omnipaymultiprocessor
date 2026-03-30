@@ -38,6 +38,10 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    */
   protected $_is_test = FALSE;
 
+  protected $guzzleClient = NULL;
+
+  protected $client = NULL;
+
   /**
    * Component - event or contribute
    * @var string
@@ -354,7 +358,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param integer|null $contribution_id Contribution ID
    */
   protected function setContributionReference($contribution_id, $prefixAction = 'add') {
-    $prefix = $this->getPrefix();
+    $prefix = (string) $this->getPrefix();
     if ($contribution_id) {
       if ($prefixAction === 'strip') {
         $this->transaction_id = substr($contribution_id, strlen($prefix));
