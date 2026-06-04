@@ -588,8 +588,8 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       $cardFields[$cardField] = isset($params[$civicrmField]) ? $params[$civicrmField] : '';
     }
     if (!empty($params['credit_card_exp_date'])) {
-      $cardFields['expiryMonth'] = $params['credit_card_exp_date']['M'];
-      $cardFields['expiryYear'] = $params['credit_card_exp_date']['Y'];
+      $cardFields['expiryMonth'] = $params['month'];
+      $cardFields['expiryYear'] = $params['year'];
     }
     return $cardFields;
   }
@@ -1530,10 +1530,10 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
    * @return false|string
    */
   protected function getCreditCardExpiry($params) {
-    if (empty($params['credit_card_exp_date'])) {
+    if (empty($params['year']) || empty($params['month'])) {
       return FALSE;
     }
-    return date("Y-m-t", strtotime($params['credit_card_exp_date']['Y'] . '-' . $params['credit_card_exp_date']['M']));
+    return date("Y-m-t", strtotime($params['year'] . '-' . $params['month']));
   }
 
   /**
