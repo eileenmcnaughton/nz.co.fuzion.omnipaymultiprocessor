@@ -42,6 +42,7 @@
         "razorpay/omnipay-razorpay": "^3.0@dev",
         "clue/stream-filter": "^1.4.1",
         "cloudcogsio/omnipay-firstatlanticcommerce-gateway" : "*",
+        "cloudcogsio/omnipay-powertranz-3ds2-gateway" : "*",
         "hounddd/omnipay-systempay": "dev-master",
         "ext-json": "*"
     },
