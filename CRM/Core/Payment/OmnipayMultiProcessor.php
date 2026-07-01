@@ -259,6 +259,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
           CRM_Utils_System::redirect($url);
         }
         $response->redirect();
+        CRM_Utils_System::civiExit();
       }
       else {
         return $this->handleError('alert', 'failed processor transaction ' . $this->_paymentProcessor['payment_processor_type'], [$response->getCode() => $response->getMessage()]);
@@ -870,11 +871,44 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         if ($this->getLock() && $this->contribution['contribution_status_id:name'] !== 'Completed') {
           $this->gatewayConfirmContribution($response);
           $trxnReference = $response->getTransactionReference();
-          civicrm_api3('contribution', 'completetransaction', [
-            'id' => $this->transaction_id,
-            'trxn_id' => $trxnReference,
-            'payment_processor_id' => $params['processor_id'],
-          ]);
+          $contributionStatus = $this->contribution['contribution_status_id:name'] ?? '';
+          if (in_array($contributionStatus, ['Partially paid', 'Pending'], TRUE)) {
+            // The contribution already carries an outstanding balance (e.g. it received an
+            // earlier partial payment, or is a pay-later contribution being settled now).
+            // completetransaction() would record the FULL original contribution amount as
+            // paid rather than the amount the processor actually reports for this
+            // transaction, corrupting the balance (see dev/financial#174). Route through
+            // Payment::create instead, which records only the actual amount and lets core
+            // recompute the balance/status.
+            $balanceAmount = (float) (civicrm_api4('Contribution', 'get', [
+              'select' => ['balance_amount'],
+              'where' => [['id', '=', $this->transaction_id]],
+            ])->first()['balance_amount'] ?? 0);
+            $paymentAmount = (float) $response->getAmount();
+            // Guard against processors that don't report an amount here, and never
+            // register more than the outstanding balance.
+            if ($paymentAmount <= 0 || $paymentAmount > $balanceAmount) {
+              $paymentAmount = $balanceAmount;
+            }
+            if ($paymentAmount > 0) {
+              civicrm_api4('Payment', 'create', [
+                'values' => [
+                  'contribution_id' => (int) $this->transaction_id,
+                  'total_amount' => $paymentAmount,
+                  'trxn_id' => $trxnReference,
+                  'payment_processor_id' => (int) ($params['processor_id'] ?? 0),
+                  'trxn_date' => date('Y-m-d H:i:s'),
+                ],
+              ]);
+            }
+          }
+          else {
+            civicrm_api3('contribution', 'completetransaction', [
+              'id' => $this->transaction_id,
+              'trxn_id' => $trxnReference,
+              'payment_processor_id' => $params['processor_id'],
+            ]);
+          }
           if (!empty($this->contribution['contribution_recur_id']) && $trxnReference) {
             $this->updatePaymentTokenWithAnyExtraData($trxnReference);
           }
