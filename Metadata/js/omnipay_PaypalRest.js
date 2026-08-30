@@ -31,7 +31,7 @@
           });
         },
 
-        createBillingAgreement: function (data, actions) {
+        createOrder: function (data, actions) {
 
           var frequencyInterval = $('#frequency_interval').val() || 1;
           var frequencyUnit = $('#frequency_unit').val() ? $('#frequency_interval').val() : CRM.vars.omnipay.frequency_unit;
@@ -93,7 +93,7 @@
       .render('#paypal-button-container');
   }
 
-  var paypalScriptURL = 'https://www.paypal.com/sdk/js?client-id=' + CRM.vars.omnipay.client_id + '&currency=' + CRM.vars.omnipay.currency + '&commit=false&vault=true';
+  var paypalScriptURL = 'https://www.paypal.com/sdk/js?client-id=' + CRM.vars.omnipay.client_id + '&currency=' + CRM.vars.omnipay.currency + '&commit=false&enable-funding=venmo'
   CRM.loadScript(paypalScriptURL, false).done(renderPaypal);
 
 
