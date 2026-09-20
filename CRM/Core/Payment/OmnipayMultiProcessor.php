@@ -713,7 +713,7 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
       'errorUrl' => $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID),
       'notifyUrl' => $this->getNotifyUrl(),
       'refusedUrl' => $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID),
-      'successUrl' => $this->getReturnSuccessUrl($this->getQfKey()),
+      'successUrl' => $this->getReturnSuccessUrl($this->getQfKey(), $participantID, $eventID),
       'card' => $this->getCreditCardObjectParams($params),
       'cardReference' => $params['token'] ?? NULL,
       'transactionReference' => $params['token'] ?? NULL,

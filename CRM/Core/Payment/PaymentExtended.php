@@ -122,17 +122,27 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * Get URL to return the browser to on success.
    *
    * @param string $qfKey
+   * @param int|null $participantID
+   * @param int|null $entityID
    *
    * @return string
    */
-  protected function getReturnSuccessUrl($qfKey) {
+  protected function getReturnSuccessUrl($qfKey, $participantID = NULL, $entityID = NULL) {
     if (isset($this->successUrl)) {
       return $this->successUrl;
     }
-    return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
-        '_qf_ThankYou_display' => 1,
-        'qfKey' => $qfKey,
-      ),
+    $params = array(
+      '_qf_ThankYou_display' => 1,
+      'qfKey' => $qfKey,
+    );
+    if ($this->_component == 'event' && !$entityID && $participantID) {
+      $entityID = \Civi\Api4\Participant::get(FALSE)->addWhere('id', '=', $participantID)
+        ->addSelect('event_id')->execute()->single()['event_id'] ?? NULL;
+    }
+    if ($entityID) {
+      $params['id'] = (int) $entityID;
+    }
+    return CRM_Utils_System::url($this->getBaseReturnUrl(), $params,
       TRUE, NULL, FALSE, TRUE
     );
   }
@@ -220,7 +230,7 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @param int $eventID
    */
   protected function storeReturnUrls($participantID = NULL, $eventID = NULL) {
-    CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($this->getQfKey()));
+    CRM_Core_Session::singleton()->set("ipn_success_url_{$this->transaction_id}", $this->getReturnSuccessUrl($this->getQfKey(), $participantID, $eventID));
     CRM_Core_Session::singleton()->set("ipn_fail_url_{$this->transaction_id}", $this->getReturnFailUrl($this->getQfKey(), $participantID, $eventID));
   }
 
