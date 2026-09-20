@@ -964,11 +964,73 @@ class CRM_Core_Payment_OmnipayMultiProcessor extends CRM_Core_Payment_PaymentExt
         if ($this->getLock() && $this->contribution['contribution_status_id:name'] !== 'Completed') {
           $this->gatewayConfirmContribution($response);
           $trxnReference = $response->getTransactionReference();
-          civicrm_api3('contribution', 'completetransaction', [
-            'id' => $this->transaction_id,
-            'trxn_id' => $trxnReference,
-            'payment_processor_id' => $params['processor_id'],
-          ]);
+          $contributionStatus = $this->contribution['contribution_status_id:name'] ?? '';
+          // Not every gateway response carries an amount: getAmount() is defined on the
+          // request in Omnipay, and only some drivers add it to their response (Mollie
+          // does, Mercanet does not). Without an amount there is nothing to base a
+          // payment on, so those gateways keep the previous behaviour.
+          $paymentAmount = method_exists($response, 'getAmount') ? (float) $response->getAmount() : 0.0;
+          // Payment::create ignores a currency of its own and books in the currency of
+          // the contribution, so an amount the gateway reports in another currency would
+          // be recorded as if it were the contribution's own.
+          $responseCurrency = method_exists($response, 'getCurrency') ? $response->getCurrency() : NULL;
+          if ($responseCurrency && $responseCurrency !== ($this->contribution['currency'] ?? $responseCurrency)) {
+            Civi::log()->warning('OmnipayMultiProcessor: gateway reported {reported} for contribution {id}, which is in {expected}; leaving this notification to the previous behaviour.', [
+              'reported' => $responseCurrency,
+              'id' => $this->transaction_id,
+              'expected' => $this->contribution['currency'] ?? '',
+            ]);
+            $paymentAmount = 0.0;
+          }
+          if ($paymentAmount > 0 && in_array($contributionStatus, ['Partially paid', 'Pending'], TRUE)) {
+            // Record what the processor says was charged, rather than assuming this
+            // transaction settles the whole contribution. completetransaction() records
+            // the FULL original amount, which corrupts the balance whenever the
+            // contribution has an outstanding balance smaller than its total - an
+            // earlier partial payment, or a pay-later contribution (see
+            // dev/financial#174). Payment::create records this amount and calls
+            // completeOrder() itself once the balance reaches zero, so receipts and
+            // membership/participant updates still happen for a payment in full.
+            $balanceAmount = (float) (civicrm_api4('Contribution', 'get', [
+              'select' => ['balance_amount'],
+              'where' => [['id', '=', $this->transaction_id]],
+            ])->first()['balance_amount'] ?? 0);
+            if ($paymentAmount > $balanceAmount) {
+              // More was charged than is outstanding. Record it as reported and leave the
+              // difference visible rather than silently trimming it to the balance.
+              Civi::log()->warning('OmnipayMultiProcessor: processor reported {paid} for contribution {id} with an outstanding balance of {balance}; recording the reported amount.', [
+                'paid' => $paymentAmount,
+                'id' => $this->transaction_id,
+                'balance' => $balanceAmount,
+              ]);
+            }
+            // A gateway that does not get its 200 will send the notification again. The
+            // status check above catches that once the contribution is Completed, but not
+            // while it is still Partially paid, so check this reference has not been
+            // recorded already.
+            $alreadyRecorded = $trxnReference && civicrm_api3('Payment', 'get', [
+              'contribution_id' => $this->transaction_id,
+              'trxn_id' => $trxnReference,
+            ])['count'];
+            if (!$alreadyRecorded) {
+              civicrm_api4('Payment', 'create', [
+                'values' => [
+                  'contribution_id' => (int) $this->transaction_id,
+                  'total_amount' => $paymentAmount,
+                  'trxn_id' => $trxnReference,
+                  'payment_processor_id' => (int) ($params['processor_id'] ?? 0),
+                  'trxn_date' => date('Y-m-d H:i:s'),
+                ],
+              ]);
+            }
+          }
+          else {
+            civicrm_api3('contribution', 'completetransaction', [
+              'id' => $this->transaction_id,
+              'trxn_id' => $trxnReference,
+              'payment_processor_id' => $params['processor_id'],
+            ]);
+          }
           if (!empty($this->contribution['contribution_recur_id']) && $trxnReference) {
             $this->updatePaymentTokenWithAnyExtraData($trxnReference);
           }
