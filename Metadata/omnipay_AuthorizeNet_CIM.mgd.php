@@ -35,11 +35,11 @@
  * database as appropriate. For more details, see "hook_civicrm_managed" at:
  * http://wiki.civicrm.org/confluence/display/CRMDOC/Hook+Reference
  */
-return array(
-    array(
+return [
+    [
         'name' => 'OmniPay - Authorize CIM',
         'entity' => 'payment_processor_type',
-        'params' => array(
+        'params' => [
             'version' => 3,
             'title' => 'OmniPay - Authorize CIM',
             'name' => 'omnipay_AuthorizeNet_CIM',
@@ -52,7 +52,7 @@ return array(
             'url_api_default' => 'https://api.authorize.net/xml/v1/request.api',
             'billing_mode' => 1,
             'payment_type' => 1,
-        ),
-        'metadata' => array('supports_preapproval' => 1),
-    ),
-);
+        ],
+        'metadata' => ['supports_preapproval' => 1],
+    ],
+];

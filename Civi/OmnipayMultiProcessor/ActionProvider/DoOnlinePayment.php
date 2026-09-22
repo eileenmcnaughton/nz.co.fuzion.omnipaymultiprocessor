@@ -79,9 +79,9 @@ class DoOnlinePayment extends AbstractAction {
    * @return \Civi\ActionProvider\Parameter\SpecificationBag
    */
   public function getOutputSpecification() {
-    return new SpecificationBag(array(
+    return new SpecificationBag([
       new Specification('redirect_url', 'String', E::ts('Redirect URL'), false),
-    ));
+    ]);
   }
 
   /**
@@ -94,9 +94,9 @@ class DoOnlinePayment extends AbstractAction {
     foreach($this->getPaymentProcessors() as $paymentProcessor) {
       $paymentProcessorOptions[$paymentProcessor['name']] = $paymentProcessor['title'];
     }
-    return new SpecificationBag(array(
+    return new SpecificationBag([
       new Specification('payment_processor', 'String', E::ts('Payment Processor'), FALSE, null, null, $paymentProcessorOptions),
-    ));
+    ]);
   }
 
   /**

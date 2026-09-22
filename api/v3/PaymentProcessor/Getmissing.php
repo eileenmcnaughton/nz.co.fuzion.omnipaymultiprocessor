@@ -16,8 +16,8 @@ function civicrm_api3_payment_processor_getmissing($params) {
   unset($params['lazy_logging']);
   $result = civicrm_api3('PaymentProcessor', 'query', $params);
   $params['lazy_logging']  = $lazyLogging;
-  $missing = array();
-  $contributionStatuses = civicrm_api3('Contribution', 'getoptions', array('field' => 'contribution_status_id'));
+  $missing = [];
+  $contributionStatuses = civicrm_api3('Contribution', 'getoptions', ['field' => 'contribution_status_id']);
   $contributionStatusFilter = empty($params['contribution_status_id']) ? NULL : $contributionStatuses['values'][$params['contribution_status_id']];
   $first = TRUE;
   foreach ($result['values'] as $payment) {
@@ -33,7 +33,7 @@ function civicrm_api3_payment_processor_getmissing($params) {
       }
     }
     try {
-      civicrm_api3('Contribution', 'getsingle', array('trxn_id' => $payment['trxn_id']));
+      civicrm_api3('Contribution', 'getsingle', ['trxn_id' => $payment['trxn_id']]);
     }
     catch (Exception $e) {
       $missing[$payment['trxn_id']] = $payment;
@@ -58,20 +58,20 @@ function civicrm_api3_payment_processor_getmissing($params) {
  * @param array $params
  */
 function _civicrm_api3_payment_processor_getmissing_spec(&$params) {
-  $params['contribution_recur_id'] = array(
+  $params['contribution_recur_id'] = [
     'title' => 'Contribution Recur ID',
     'type' => CRM_Utils_Type::T_INT,
-  );
-  $params['contribution_status_id'] = array(
+  ];
+  $params['contribution_status_id'] = [
     'title' => 'Contribution Status ID',
     'type' => CRM_Utils_Type::T_INT,
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'optionGroupName' => 'contributionStatus',
       'keyColumn' => 'name',
-    ),
-  );
-  $params['is_recur'] = array(
+    ],
+  ];
+  $params['is_recur'] = [
     'title' => 'Is recurring?',
     'type' => CRM_Utils_Type::T_BOOLEAN,
-  );
+  ];
 }

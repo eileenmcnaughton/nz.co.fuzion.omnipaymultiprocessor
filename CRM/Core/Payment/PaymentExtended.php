@@ -129,10 +129,10 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
     if (isset($this->successUrl)) {
       return $this->successUrl;
     }
-    return CRM_Utils_System::url($this->getBaseReturnUrl(), array(
+    return CRM_Utils_System::url($this->getBaseReturnUrl(), [
         '_qf_ThankYou_display' => 1,
         'qfKey' => $qfKey,
-      ),
+      ],
       TRUE, NULL, FALSE, TRUE
     );
   }
@@ -256,11 +256,11 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    */
   public function getPaymentTypeLabel() {
     if (!isset($this->payment_type_label)) {
-      $this->payment_type_label = civicrm_api3('OptionValue', 'getvalue', array(
+      $this->payment_type_label = civicrm_api3('OptionValue', 'getvalue', [
         'option_group_id' => 'payment_type',
         'return' => 'label',
         'value' => $this->_paymentProcessor['payment_type'],
-      ));
+      ]);
     }
     return $this->payment_type_label;
   }
@@ -330,11 +330,11 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @throws CRM_Core_Exception
    */
   public function getPaymentFormFields() {
-    $paymentType = civicrm_api3('option_value', 'getvalue', array('value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type', 'return' => 'name'));
+    $paymentType = civicrm_api3('option_value', 'getvalue', ['value' => $this->_paymentProcessor['payment_type'], 'option_group_id' => 'payment_type', 'return' => 'name']);
     $fn = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $paymentType))) . 'FormFields';
     if ($fn === 'getCreditCardFormFields' && $this->_paymentProcessor['billing_mode'] == 4) {
       //@todo this is a traditional off-site processor
-      return array();
+      return [];
     }
     return $this->$fn();
   }
@@ -344,8 +344,8 @@ abstract class CRM_Core_Payment_PaymentExtended extends CRM_Core_Payment {
    * @return array
    */
   protected function getCreditCardOffSitePostFormFields() {
-    return array(
-    );
+    return [
+    ];
   }
 
   /**
