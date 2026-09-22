@@ -12,9 +12,9 @@
  *   API Result array
  */
 function civicrm_api3_payment_processor_query($params) {
-  $processor = civicrm_api3('payment_processor', 'getsingle', array('id' => $params['payment_processor_id']));
+  $processor = civicrm_api3('payment_processor', 'getsingle', ['id' => $params['payment_processor_id']]);
   $responder = new CRM_Core_Payment_OmnipayMultiProcessor(($processor['is_test'] ? 'test' : 'live'), $processor);
-  $gatewayParams = array();
+  $gatewayParams = [];
   if (!empty($params['start_date_time'])) {
     $gatewayParams['startTimestamp'] = strtotime($params['start_date_time']);
   }
@@ -22,9 +22,9 @@ function civicrm_api3_payment_processor_query($params) {
     $gatewayParams['endTimestamp'] = strtotime($params['end_date_time']);
   }
   $result = $responder->query($gatewayParams);
-  $payments = array();
+  $payments = [];
   foreach ($result as $id => /*@var \Omnipay\Common\Message\QueryDetailResponse $response*/ $response) {
-    $payment = array(
+    $payment = [
       'first_name' => $response->getFirstName(),
       'last_name' => $response->getLastName(),
       'invoice_id' => $response->getTransactionId(),
@@ -39,7 +39,7 @@ function civicrm_api3_payment_processor_query($params) {
       'contribution_source' => $response->getDescription(),
       'receive_date' => date('Y-m-d H:i:s', strtotime($response->getTransactionDate())),
       'settled_date' => date('Y-m-d H:i:s', strtotime($response->getSettlementDate())),
-    );
+    ];
     if ($response->isSuccessful()) {
       $payment['contribution_status_id'] = 'Completed';
     }
@@ -62,12 +62,12 @@ function civicrm_api3_payment_processor_query($params) {
  * @param array $params
  */
 function _civicrm_api3_payment_processor_query_spec(&$params) {
-  $params['contribution_recur_id'] = array(
+  $params['contribution_recur_id'] = [
     'title' => 'Contribution Recur ID',
     'type' => CRM_Utils_Type::T_INT,
-  );
-  $params['is_recur'] = array(
+  ];
+  $params['is_recur'] = [
     'title' => 'Is recurring?',
     'type' => CRM_Utils_Type::T_BOOLEAN,
-  );
+  ];
 }

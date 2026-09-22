@@ -10,7 +10,7 @@
 function civicrm_api3_payment_notification_create($params) {
   if (!empty($params['system_log_id'])) {
     // lets replace params with this rather than allow altering
-    $log = civicrm_api3('system_log', 'getsingle', array('id' => $params['system_log_id'], 'return' => 'context, message'));
+    $log = civicrm_api3('system_log', 'getsingle', ['id' => $params['system_log_id'], 'return' => 'context, message']);
     $params = json_decode($log['context'], TRUE);
   }
   if (empty($params['processor_id']) && stristr($log['message'], 'processor_id=')) {

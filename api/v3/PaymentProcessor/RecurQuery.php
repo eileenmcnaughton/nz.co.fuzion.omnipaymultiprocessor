@@ -12,15 +12,15 @@
  *   API Result array
  */
 function civicrm_api3_payment_processor_recur_query($params) {
-  $processor = civicrm_api3('payment_processor', 'getsingle', array('id' => $params['payment_processor_id']));
+  $processor = civicrm_api3('payment_processor', 'getsingle', ['id' => $params['payment_processor_id']]);
   $responder = new CRM_Core_Payment_OmnipayMultiProcessor('live', $processor);
   $result = $responder->queryPaymentPlans($params);
   $count = 0;
   foreach ($result as $id => $row) {
     try {
-      civicrm_api3('ContributionRecur', 'getsingle', array(
+      civicrm_api3('ContributionRecur', 'getsingle', [
         'processor_id' => $row['id'],
-      ));
+      ]);
     }
     catch (Exception $e) {
       $count++;
@@ -37,8 +37,8 @@ function civicrm_api3_payment_processor_recur_query($params) {
  * @param array $params
  */
 function _civicrm_api3_payment_processor_recur_query_spec(&$params) {
-  $params['contribution_recur_id'] = array(
+  $params['contribution_recur_id'] = [
     'title' => 'Contribution Recur ID',
     'type' => CRM_Utils_Type::T_INT,
-  );
+  ];
 }

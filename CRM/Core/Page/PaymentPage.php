@@ -19,7 +19,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
   public function run() {
     $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, TRUE));
     $paymentProcessorID = $formData['payment_processor_id'];
-    $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', array('id' => $paymentProcessorID));
+    $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', ['id' => $paymentProcessorID]);
     $contactID = $formData['contact_id'];
 
     /** @var \CRM_Core_Payment_OmnipayMultiProcessor $processor */
@@ -31,7 +31,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
         $displayFields[$fieldName]['options']['year'] = $this->getDateFieldsYearOptions($displayField);
       }
       if (!empty($displayField['contact_api']) && !empty($contactID)) {
-        $contact = civicrm_api3('Contact', 'get', array('id' => $contactID, 'sequential' => 1, 'options' => array('limit' => 1)));
+        $contact = civicrm_api3('Contact', 'get', ['id' => $contactID, 'sequential' => 1, 'options' => ['limit' => 1]]);
         $displayFields[$fieldName]['options']['value'] = !empty($contact['values'][0]['display_name']) ? $contact['values'][0]['display_name'] : '';
       }
     }
@@ -68,11 +68,11 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
    * @return array
    */
   protected function getDateFieldsYearOptions($field) {
-    $options = array();
+    $options = [];
     $defaults = ['minYear' => date('Y'), 'maxYear' => date('Y') + 10];
     $attributes = array_merge($defaults, CRM_Utils_Array::value('attributes', $field, []));
 
-    $field['options']['year'] = array();
+    $field['options']['year'] = [];
     $digits = CRM_Utils_Array::value('year_digits', $field, 4);
     $year = $attributes['minYear'];
     while ($year <= $attributes['maxYear']) {
