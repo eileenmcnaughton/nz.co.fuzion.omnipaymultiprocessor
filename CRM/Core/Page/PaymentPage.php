@@ -17,7 +17,7 @@ class CRM_Core_Page_PaymentPage extends CRM_Core_Page {
    * @throws \CRM_Core_Exception
    */
   public function run() {
-    $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', CRM_Core_DAO::$_nullObject, TRUE));
+    $formData = $this->getTransparentRedirectFormData(CRM_Utils_Request::retrieve('key', 'String', NULL, TRUE));
     $paymentProcessorID = $formData['payment_processor_id'];
     $paymentProcessor = civicrm_api3('payment_processor', 'getsingle', ['id' => $paymentProcessorID]);
     $contactID = $formData['contact_id'];
