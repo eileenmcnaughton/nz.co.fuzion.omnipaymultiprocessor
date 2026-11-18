@@ -8,7 +8,7 @@ use CRM_Omnipaymultiprocessor_ExtensionUtil as E;
 
 class CompilerPass implements CompilerPassInterface {
 
-  public function process(ContainerBuilder $container) {
+  public function process(ContainerBuilder $container): void {
     if ($container->hasDefinition('action_provider')) {
       $actionProviderDefinition = $container->getDefinition('action_provider');
       $actionProviderDefinition->addMethodCall('addAction',
